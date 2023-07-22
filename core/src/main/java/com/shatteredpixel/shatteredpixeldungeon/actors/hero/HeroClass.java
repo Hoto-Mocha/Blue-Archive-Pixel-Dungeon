@@ -76,7 +76,7 @@ import com.watabou.utils.DeviceCompat;
 
 public enum HeroClass {
 
-	WARRIOR( HeroSubClass.BERSERKER, HeroSubClass.GLADIATOR ),
+	ARIS( HeroSubClass.BERSERKER, HeroSubClass.GLADIATOR ),
 	MAGE( HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),
 	ROGUE( HeroSubClass.ASSASSIN, HeroSubClass.FREERUNNER ),
 	HUNTRESS( HeroSubClass.SNIPER, HeroSubClass.WARDEN ),
@@ -108,7 +108,7 @@ public enum HeroClass {
 		new ScrollOfIdentify().identify();
 
 		switch (this) {
-			case WARRIOR:
+			case ARIS:
 				initWarrior( hero );
 				break;
 
@@ -142,7 +142,7 @@ public enum HeroClass {
 
 	public Badges.Badge masteryBadge() {
 		switch (this) {
-			case WARRIOR:
+			case ARIS:
 				return Badges.Badge.MASTERY_WARRIOR;
 			case MAGE:
 				return Badges.Badge.MASTERY_MAGE;
@@ -246,7 +246,7 @@ public enum HeroClass {
 
 	public ArmorAbility[] armorAbilities(){
 		switch (this) {
-			case WARRIOR: default:
+			case ARIS: default:
 				return new ArmorAbility[]{new HeroicLeap(), new Shockwave(), new Endure()};
 			case MAGE:
 				return new ArmorAbility[]{new ElementalBlast(), new WildMagic(), new WarpBeacon()};
@@ -261,8 +261,8 @@ public enum HeroClass {
 
 	public String spritesheet() {
 		switch (this) {
-			case WARRIOR: default:
-				return Assets.Sprites.WARRIOR;
+			case ARIS: default:
+				return Assets.Sprites.ARIS;
 			case MAGE:
 				return Assets.Sprites.MAGE;
 			case ROGUE:
@@ -276,8 +276,8 @@ public enum HeroClass {
 
 	public String splashArt(){
 		switch (this) {
-			case WARRIOR: default:
-				return Assets.Splashes.WARRIOR;
+			case ARIS: default:
+				return Assets.Splashes.ARIS;
 			case MAGE:
 				return Assets.Splashes.MAGE;
 			case ROGUE:
@@ -294,7 +294,7 @@ public enum HeroClass {
 		if (DeviceCompat.isDebug()) return true;
 
 		switch (this){
-			case WARRIOR: default:
+			case ARIS: default:
 				return true;
 			case MAGE:
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_MAGE);

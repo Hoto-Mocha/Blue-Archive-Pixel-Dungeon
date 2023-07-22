@@ -99,7 +99,7 @@ abstract public class ClassArmor extends Armor {
 		ClassArmor classArmor = null;
 		
 		switch (owner.heroClass) {
-			case WARRIOR:
+			case ARIS:
 				classArmor = new WarriorArmor();
 				BrokenSeal seal = armor.checkSeal();
 				if (seal != null) {

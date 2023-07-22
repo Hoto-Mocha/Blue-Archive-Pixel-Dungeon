@@ -371,8 +371,8 @@ public class Hero extends Char {
 
 	public int talentPointsAvailable(int tier){
 		if (lvl < (Talent.tierLevelThresholds[tier] - 1)
-			|| (tier == 3 && subClass == HeroSubClass.NONE)
-			|| (tier == 4 && armorAbility == null)) {
+				|| (tier == 3 && subClass == HeroSubClass.NONE)
+				|| (tier == 4 && armorAbility == null)) {
 			return 0;
 		} else if (lvl >= Talent.tierLevelThresholds[tier+1]){
 			return Talent.tierLevelThresholds[tier+1] - Talent.tierLevelThresholds[tier] - talentPointsSpent(tier) + bonusTalentPoints(tier);
@@ -685,11 +685,6 @@ public class Hero extends Char {
 	}
 	
 	public float attackDelay() {
-		if (buff(Talent.LethalMomentumTracker.class) != null){
-			buff(Talent.LethalMomentumTracker.class).detach();
-			return 0;
-		}
-
 		float delay = 1f;
 
 		if (!RingOfForce.fightingUnarmed(this)) {
@@ -1365,6 +1360,10 @@ public class Hero extends Char {
 			break;
 		default:
 		}
+
+		if (Dungeon.hero.buff(Talent.EmpoweringMagic.class) != null) {
+			damage = Math.round(damage * (1 + 0.125f*Dungeon.hero.pointsInTalent(Talent.EMPOWERING_MAGIC)));
+		}
 		
 		return damage;
 	}
@@ -1808,11 +1807,20 @@ public class Hero extends Char {
 				GLog.p( Messages.get(this, "new_level") );
 				sprite.showStatus( CharSprite.POSITIVE, Messages.get(Hero.class, "level_up") );
 				Sample.INSTANCE.play( Assets.Sounds.LEVELUP );
-				if (lvl < Talent.tierLevelThresholds[Talent.MAX_TALENT_TIERS+1]){
-					GLog.newLine();
-					GLog.p( Messages.get(this, "new_talent") );
-					StatusPane.talentBlink = 10f;
-					WndHero.lastIdx = 1;
+				if (lvl < Talent.tierLevelThresholds[3]) {
+					if (lvl < Talent.tierLevelThresholds[Talent.MAX_TALENT_TIERS+1]){
+						GLog.newLine();
+						GLog.p( Messages.get(this, "new_talent") );
+						StatusPane.talentBlink = 10f;
+						WndHero.lastIdx = 1;
+					}
+				} else {
+					if (lvl < Talent.tierLevelThresholds[Talent.MAX_TALENT_TIERS+1]){
+						GLog.newLine();
+						GLog.p( Messages.get(this, "new_talent") );
+						StatusPane.talentBlink = 10f;
+						WndHero.lastIdx = 1;
+					}
 				}
 			}
 			

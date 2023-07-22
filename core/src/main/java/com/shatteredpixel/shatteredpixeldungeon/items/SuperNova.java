@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items;
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -26,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
@@ -58,6 +60,7 @@ public class SuperNova extends Item {
 
         if (action.equals(AC_SHOOT)) {
             if (hero.buff(SuperNovaCooldown.class) != null) {
+                usesTargeting = false;
                 hero.yellW(Messages.get(Hero.class, "aris_supernova_cooldown"));
             } else {
                 usesTargeting = true;
@@ -68,6 +71,20 @@ public class SuperNova extends Item {
         }
     }
 
+    public int min() {
+        return Math.round((hero.lvl*2 +
+                Dungeon.depth)*(1+0.5f*hero.pointsInTalent(Talent.BALANCE_COLLAPSE)));
+    }
+
+    public int max() {
+        return Math.round((hero.lvl*5 +
+                Dungeon.depth*2)*(1+0.5f*hero.pointsInTalent(Talent.BALANCE_COLLAPSE)));
+    }
+
+    public int maxDistance() {
+        return 5+2*hero.lvl;
+    }
+
     private CellSelector.Listener shooter = new CellSelector.Listener() {
         @Override
         public void onSelect( Integer target ) {
@@ -76,7 +93,7 @@ public class SuperNova extends Item {
                     hero.yellP(Messages.get(Hero.class, "aris_cannot_self"));
                 } else {
                     boolean terrainAffected = false;
-                    int maxDistance = 5+2*hero.lvl;
+                    int maxDistance = maxDistance();
                     Ballistica beam = new Ballistica(curUser.pos, target, Ballistica.WONT_STOP);
                     ArrayList<Char> chars = new ArrayList<>();
                     for (int c : beam.subPath(1, maxDistance)) {
@@ -100,7 +117,7 @@ public class SuperNova extends Item {
                         }
                     }
                     for (Char ch : chars) {
-                        ch.damage( Random.NormalIntRange(ch.HT/2, hero.lvl*5+Dungeon.depth*2), this );
+                        ch.damage( Random.NormalIntRange(min(), max()), this );
                         ch.sprite.centerEmitter().burst( PurpleParticle.BURST, Random.IntRange( 1, 2 ) );
                         ch.sprite.flash();
                     }
@@ -108,9 +125,10 @@ public class SuperNova extends Item {
                     curUser.sprite.zap(target);
                     int cell = beam.path.get(Math.min(beam.dist, maxDistance));
                     curUser.sprite.parent.add(new Beam.DeathRay(curUser.sprite.center(), DungeonTilemap.raisedTileCenterToWorld( cell )));
-                    Dungeon.hero.yellP(Messages.get(Hero.class, "aris_supernova_" + Integer.toString(Random.Int(3)+1)));
+                    Dungeon.hero.yellP(Messages.get(Hero.class, "aris_supernova_" + (Random.Int(3)+1)));
                 }
-                Buff.affect(hero, SuperNovaCooldown.class).set(50);
+                Buff.affect(hero, SuperNovaCooldown.class).set(70-10*hero.pointsInTalent(Talent.ACCEL_ENERGY));
+                Buff.affect(hero, Talent.EmpoweringMagic.class, 5);
                 hero.spendAndNext(Actor.TICK);
             }
         }
@@ -191,5 +209,10 @@ public class SuperNova extends Item {
     @Override
     public int value() {
         return -1;
+    }
+
+    @Override
+    public String desc() {
+        return Messages.get(this, "desc", maxDistance(), min(), max());
     }
 }

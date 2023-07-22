@@ -45,6 +45,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.He
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Shockwave;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.Waterskin;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
@@ -109,7 +110,7 @@ public enum HeroClass {
 
 		switch (this) {
 			case ARIS:
-				initWarrior( hero );
+				initAris( hero );
 				break;
 
 			case MAGE:
@@ -156,11 +157,14 @@ public enum HeroClass {
 		return null;
 	}
 
-	private static void initWarrior( Hero hero ) {
+	private static void initAris( Hero hero ) {
 		(hero.belongings.weapon = new WornShortsword()).identify();
 		ThrowingStone stones = new ThrowingStone();
 		stones.quantity(3).collect();
-		Dungeon.quickslot.setSlot(0, stones);
+		Dungeon.quickslot.setSlot(1, stones);
+		SuperNova superNova = new SuperNova();
+		superNova.collect();
+		Dungeon.quickslot.setSlot(0, superNova);
 
 		if (hero.belongings.armor != null){
 			hero.belongings.armor.affixSeal(new BrokenSeal());

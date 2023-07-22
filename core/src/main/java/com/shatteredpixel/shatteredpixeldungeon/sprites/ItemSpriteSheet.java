@@ -721,6 +721,12 @@ public class ItemSpriteSheet {
 		assignItemRect(HALLS_PAGE,  10, 11);
 	}
 
+	private static final int UNIQUE_WEAPON 	= 								xy(1, 33);
+	public static final int SUPER_NOVA 		= UNIQUE_WEAPON+0;
+	static {
+		assignItemRect(SUPER_NOVA, 	16, 16);
+	}
+
 	//for smaller 8x8 icons that often accompany an item sprite
 	public static class Icons {
 

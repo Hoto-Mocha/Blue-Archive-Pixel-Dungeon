@@ -157,10 +157,6 @@ public class TitleScene extends PixelScene {
 		btnBadges.icon(Icons.get(Icons.BADGES));
 		add(btnBadges);
 
-		StyledButton btnNews = new NewsButton(GREY_TR, Messages.get(this, "news"));
-		btnNews.icon(Icons.get(Icons.NEWS));
-		add(btnNews);
-
 		StyledButton btnChanges = new ChangesButton(GREY_TR, Messages.get(this, "changes"));
 		btnChanges.icon(Icons.get(Icons.CHANGES));
 		add(btnChanges);
@@ -186,21 +182,19 @@ public class TitleScene extends PixelScene {
 			btnPlay.setRect(title.x-50, topRegion+GAP, ((title.width()+100)/2)-1, BTN_HEIGHT);
 			align(btnPlay);
 			btnSupport.setRect(btnPlay.right()+2, btnPlay.top(), btnPlay.width(), BTN_HEIGHT);
-			btnRankings.setRect(btnPlay.left(), btnPlay.bottom()+ GAP, (btnPlay.width()*.67f)-1, BTN_HEIGHT);
-			btnBadges.setRect(btnRankings.left(), btnRankings.bottom()+GAP, btnRankings.width(), BTN_HEIGHT);
-			btnNews.setRect(btnRankings.right()+2, btnRankings.top(), btnRankings.width(), BTN_HEIGHT);
-			btnChanges.setRect(btnNews.left(), btnNews.bottom() + GAP, btnRankings.width(), BTN_HEIGHT);
-			btnSettings.setRect(btnNews.right()+2, btnNews.top(), btnRankings.width(), BTN_HEIGHT);
-			btnAbout.setRect(btnSettings.left(), btnSettings.bottom() + GAP, btnRankings.width(), BTN_HEIGHT);
+			btnRankings.setRect(btnPlay.left(), btnPlay.bottom()+ GAP, btnPlay.width(), BTN_HEIGHT);
+			btnBadges.setRect(btnRankings.left(), btnRankings.bottom()+GAP, (btnPlay.width()*.67f)-1, BTN_HEIGHT);
+			btnChanges.setRect(btnBadges.right()+2, btnBadges.top(), btnBadges.width(), BTN_HEIGHT);
+			btnSettings.setRect(btnRankings.right()+2, btnRankings.top(), btnRankings.width(), BTN_HEIGHT);
+			btnAbout.setRect(btnChanges.right()+2, btnSettings.bottom() + GAP, btnBadges.width(), BTN_HEIGHT);
 		} else {
 			btnPlay.setRect(title.x, topRegion+GAP, title.width(), BTN_HEIGHT);
 			align(btnPlay);
 			btnSupport.setRect(btnPlay.left(), btnPlay.bottom()+ GAP, btnPlay.width(), BTN_HEIGHT);
-			btnRankings.setRect(btnPlay.left(), btnSupport.bottom()+ GAP, (btnPlay.width()/2)-1, BTN_HEIGHT);
-			btnBadges.setRect(btnRankings.right()+2, btnRankings.top(), btnRankings.width(), BTN_HEIGHT);
-			btnNews.setRect(btnRankings.left(), btnRankings.bottom()+ GAP, btnRankings.width(), BTN_HEIGHT);
-			btnChanges.setRect(btnNews.right()+2, btnNews.top(), btnNews.width(), BTN_HEIGHT);
-			btnSettings.setRect(btnNews.left(), btnNews.bottom()+GAP, btnRankings.width(), BTN_HEIGHT);
+			btnRankings.setRect(btnPlay.left(), btnSupport.bottom()+ GAP, btnPlay.width(), BTN_HEIGHT);
+			btnBadges.setRect(btnRankings.right()+2, btnRankings.top(), (btnPlay.width()/2)-1, BTN_HEIGHT);
+			btnChanges.setRect(btnRankings.left(), btnBadges.bottom()+GAP, btnPlay.width(), BTN_HEIGHT);
+			btnSettings.setRect(btnRankings.left(), btnRankings.bottom()+GAP, btnRankings.width(), BTN_HEIGHT);
 			btnAbout.setRect(btnSettings.right()+2, btnSettings.top(), btnSettings.width(), BTN_HEIGHT);
 		}
 

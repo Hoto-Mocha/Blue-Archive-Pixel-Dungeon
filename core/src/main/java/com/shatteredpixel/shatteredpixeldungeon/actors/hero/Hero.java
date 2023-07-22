@@ -1465,8 +1465,14 @@ public class Hero extends Char {
 			if (isAlive()) {
 				if (flashIntensity >= 1/6f) {
 					Sample.INSTANCE.play(Assets.Sounds.HEALTH_CRITICAL, 1/3f + flashIntensity * 2f);
+					if (Random.Int(3) == 0) {
+						Dungeon.hero.yellN(Messages.get(this, Dungeon.hero.heroClass.name() + "_health_critical_" + Integer.toString(Random.Int(3)+1)));
+					}
 				} else {
 					Sample.INSTANCE.play(Assets.Sounds.HEALTH_WARN, 1/3f + flashIntensity * 4f);
+					if (Random.Int(3) == 0) {
+						Dungeon.hero.yellN(Messages.get(this, Dungeon.hero.heroClass.name() + "_health_warn" + Integer.toString(Random.Int(3)+1)));
+					}
 				}
 				//hero gets interrupted on taking serious damage, regardless of any other factor
 				interrupt();
@@ -1972,6 +1978,8 @@ public class Hero extends Char {
 				
 		Dungeon.hero.belongings.identify();
 
+		Dungeon.hero.yellN(Messages.get(Hero.class, Dungeon.hero.heroClass.name() + "_die"));
+
 		int pos = Dungeon.hero.pos;
 
 		ArrayList<Integer> passable = new ArrayList<>();
@@ -2368,5 +2376,30 @@ public class Hero extends Char {
 
 	public static interface Doom {
 		public void onDeath();
+	}
+
+	public void yellI( String str ) {
+		GLog.newLine();
+		GLog.i( "%s: \"%s\" ", Messages.titleCase(name()), str );
+	}
+
+	public void yellP( String str ) {
+		GLog.newLine();
+		GLog.p( "%s: \"%s\" ", Messages.titleCase(name()), str );
+	}
+
+	public void yellN( String str ) {
+		GLog.newLine();
+		GLog.n( "%s: \"%s\" ", Messages.titleCase(name()), str );
+	}
+
+	public void yellW( String str ) {
+		GLog.newLine();
+		GLog.w( "%s: \"%s\" ", Messages.titleCase(name()), str );
+	}
+
+	public void yellH( String str ) {
+		GLog.newLine();
+		GLog.h( "%s: \"%s\" ", Messages.titleCase(name()), str );
 	}
 }

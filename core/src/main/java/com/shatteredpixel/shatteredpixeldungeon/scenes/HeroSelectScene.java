@@ -90,7 +90,7 @@ public class HeroSelectScene extends PixelScene {
 		Badges.loadGlobal();
 		Journal.loadGlobal();
 
-		background = new Image(HeroClass.WARRIOR.splashArt()){
+		background = new Image(HeroClass.ARIS.splashArt()){
 			@Override
 			public void update() {
 				if (GamesInProgress.selectedClass != null) {
@@ -169,6 +169,9 @@ public class HeroSelectScene extends PixelScene {
 		add(infoButton);
 
 		for (HeroClass cl : HeroClass.values()){
+			//TODO IMPORTANT NEED TO BE EDITED WHEN CLASS IS ADDED
+			if (cl == HeroClass.MAGE) break;
+
 			HeroBtn button = new HeroBtn(cl);
 			add(button);
 			heroBtns.add(button);

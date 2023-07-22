@@ -1465,13 +1465,13 @@ public class Hero extends Char {
 			if (isAlive()) {
 				if (flashIntensity >= 1/6f) {
 					Sample.INSTANCE.play(Assets.Sounds.HEALTH_CRITICAL, 1/3f + flashIntensity * 2f);
-					if (Random.Int(3) == 0) {
+					if (Random.Int(2) == 0) {
 						Dungeon.hero.yellN(Messages.get(this, Dungeon.hero.heroClass.name() + "_health_critical_" + Integer.toString(Random.Int(3)+1)));
 					}
 				} else {
 					Sample.INSTANCE.play(Assets.Sounds.HEALTH_WARN, 1/3f + flashIntensity * 4f);
-					if (Random.Int(3) == 0) {
-						Dungeon.hero.yellN(Messages.get(this, Dungeon.hero.heroClass.name() + "_health_warn" + Integer.toString(Random.Int(3)+1)));
+					if (Random.Int(2) == 0) {
+						Dungeon.hero.yellN(Messages.get(this, Dungeon.hero.heroClass.name() + "_health_warn_" + Integer.toString(Random.Int(3)+1)));
 					}
 				}
 				//hero gets interrupted on taking serious damage, regardless of any other factor

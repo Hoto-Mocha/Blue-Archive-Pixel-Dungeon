@@ -170,7 +170,7 @@ public class TitleScene extends PixelScene {
 				ShatteredPixelDungeon.switchScene( AboutScene.class );
 			}
 		};
-		btnAbout.icon(Icons.get(Icons.SHPX));
+		btnAbout.icon(Icons.get(Icons.ARIS));
 		add(btnAbout);
 		
 		final int BTN_HEIGHT = 20;
@@ -352,7 +352,7 @@ public class TitleScene extends PixelScene {
 
 		public SupportButton( Chrome.Type type, String label ){
 			super(type, label);
-			icon(Icons.get(Icons.GOLD));
+			icon(Icons.get(Icons.WARNING));
 			textColor(Window.TITLE_COLOR);
 		}
 

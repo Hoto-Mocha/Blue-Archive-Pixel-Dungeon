@@ -39,6 +39,7 @@ public enum Icons {
 	CHANGES,
 	PREFS,
 	SHPX,
+	ARIS,
 
 	//rankings and hero select icons, spacing for 16x16
 	STAIRS,
@@ -151,6 +152,9 @@ public enum Icons {
 				break;
 			case SHPX:
 				icon.frame( icon.texture.uvRectBySize( 119, 0, 16, 16 ) );
+				break;
+			case ARIS:
+				icon.frame( icon.texture.uvRectBySize( 144, 0, 12, 15 ) );
 				break;
 
 			case STAIRS:

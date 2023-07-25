@@ -75,6 +75,10 @@ public class HeroIcon extends Image {
 	public static final int WEAPON_SWAP     = 37;
 	public static final int MONK_ABILITIES  = 38;
 
+	public static final int ARIS_EX_SUPERNOVA  	= 40;
+	public static final int ARIS_EX_CHARGE		= 41;
+
+
 	public HeroIcon(HeroSubClass subCls){
 		super( Assets.Interfaces.HERO_ICONS );
 		if (film == null){

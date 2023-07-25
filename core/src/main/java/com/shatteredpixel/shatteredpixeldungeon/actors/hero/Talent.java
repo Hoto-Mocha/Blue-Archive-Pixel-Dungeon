@@ -82,16 +82,18 @@ import java.util.LinkedHashMap;
 
 public enum Talent {
 
+
+
 	//Warrior T1
 	FOR_LIGHT(0), ROBOTS_INTUITION(1), TEST_SUBJECT(2), ACCEL_ENERGY(3),
 	//Warrior T2
 	IRON_STOMACH(4), RESTORED_WILLPOWER(5), RUNIC_TRANSFERENCE(6), EMPOWERING_MAGIC(7), BALANCE_COLLAPSE(8),
 	//Warrior T3
-	HOLD_FAST(9, 3), STRONGMAN(10, 3),
+	ROBOT_CLEANER(9, 3), STRONGMAN(10, 3),
 	//Berserker T3
-	ENDLESS_RAGE(11, 3), DEATHLESS_FURY(12, 3), ENRAGED_CATALYST(13, 3),
+	ENERGY_DRAIN(11, 3), PIEZOELECTRICITY(12, 3), HOLYSWORD(13, 3),
 	//Gladiator T3
-	CLEAVE(14, 3), LETHAL_DEFENSE(15, 3), ENHANCED_COMBO(16, 3),
+	INCREASING_OUTPUT(14, 3), OVERCHARGE(15, 3), CHARGE_ACCEL(16, 3),
 	//Heroic Leap T4
 	BODY_SLAM(17, 4), IMPACT_WAVE(18, 4), DOUBLE_JUMP(19, 4),
 	//Shockwave T4
@@ -808,7 +810,7 @@ public enum Talent {
 		//tier 3
 		switch (cls){
 			case ARIS: default:
-				Collections.addAll(tierTalents, HOLD_FAST, STRONGMAN);
+				Collections.addAll(tierTalents, ROBOT_CLEANER, STRONGMAN);
 				break;
 			case MAGE:
 				Collections.addAll(tierTalents, EMPOWERING_SCROLLS, ALLY_WARP);
@@ -850,11 +852,11 @@ public enum Talent {
 
 		//tier 3
 		switch (cls){
-			case BERSERKER: default:
-				Collections.addAll(tierTalents, ENDLESS_RAGE, DEATHLESS_FURY, ENRAGED_CATALYST);
+			case ARIS_EX_SUPERNOVA: default:
+				Collections.addAll(tierTalents, ENERGY_DRAIN, PIEZOELECTRICITY, HOLYSWORD);
 				break;
-			case GLADIATOR:
-				Collections.addAll(tierTalents, CLEAVE, LETHAL_DEFENSE, ENHANCED_COMBO);
+			case ARIS_EX_CHARGE:
+				Collections.addAll(tierTalents, INCREASING_OUTPUT, OVERCHARGE, CHARGE_ACCEL);
 				break;
 			case BATTLEMAGE:
 				Collections.addAll(tierTalents, EMPOWERED_STRIKE, MYSTICAL_CHARGE, EXCESS_CHARGE);

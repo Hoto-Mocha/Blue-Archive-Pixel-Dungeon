@@ -166,11 +166,12 @@ public class StartScene extends PixelScene {
 				}
 			} else {
 				
-				if (info.subClass != HeroSubClass.NONE){
-					name.text(Messages.titleCase(info.subClass.title()));
-				} else {
-					name.text(Messages.titleCase(info.heroClass.title()));
-				}
+//				if (info.subClass != HeroSubClass.NONE){
+//					name.text(Messages.titleCase(info.subClass.title()));
+//				} else {
+//					name.text(Messages.titleCase(info.heroClass.title()));
+//				}
+				name.text(Messages.titleCase(info.heroClass.title()));
 				
 				if (hero == null){
 					hero = new Image(info.heroClass.spritesheet(), 0, 15*info.armorTier, 12, 15);

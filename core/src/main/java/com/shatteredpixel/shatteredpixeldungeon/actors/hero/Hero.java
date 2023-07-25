@@ -361,6 +361,14 @@ public class Hero extends Char {
 		Talent.onTalentUpgraded(this, talent);
 	}
 
+	public void resetTalent() {
+		for (LinkedHashMap<Talent, Integer> tier : talents){
+			for (Talent f : tier.keySet()){
+				tier.put(f, 0);
+			}
+		}
+	}
+
 	public int talentPointsSpent(int tier){
 		int total = 0;
 		for (int i : talents.get(tier-1).values()){
@@ -395,7 +403,8 @@ public class Hero extends Char {
 	}
 	
 	public String className() {
-		return subClass == null || subClass == HeroSubClass.NONE ? heroClass.title() : subClass.title();
+		//return subClass == null || subClass == HeroSubClass.NONE ? heroClass.title() : subClass.title();
+		return heroClass.title();
 	}
 
 	@Override
@@ -539,7 +548,7 @@ public class Hero extends Char {
 		Combo.ParryTracker parry = buff(Combo.ParryTracker.class);
 		if (parry != null){
 			parry.parried = true;
-			if (buff(Combo.class).getComboCount() < 9 || pointsInTalent(Talent.ENHANCED_COMBO) < 2){
+			if (buff(Combo.class).getComboCount() < 9 /*|| pointsInTalent(Talent.ENHANCED_COMBO) < 2*/){
 				parry.detach();
 			}
 			return Messages.get(Monk.class, "parried");
@@ -1308,9 +1317,9 @@ public class Hero extends Char {
 	
 	public void rest( boolean fullRest ) {
 		spendAndNextConstant( TIME_TO_REST );
-		if (hasTalent(Talent.HOLD_FAST)){
-			Buff.affect(this, HoldFast.class).pos = pos;
-		}
+//		if (hasTalent(Talent.HOLD_FAST)){
+//			Buff.affect(this, HoldFast.class).pos = pos;
+//		}
 		if (hasTalent(Talent.PATIENT_STRIKE)){
 			Buff.affect(Dungeon.hero, Talent.PatientStrikeTracker.class).pos = Dungeon.hero.pos;
 		}

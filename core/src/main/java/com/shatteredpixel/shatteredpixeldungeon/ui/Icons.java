@@ -43,7 +43,7 @@ public enum Icons {
 
 	//rankings and hero select icons, spacing for 16x16
 	STAIRS,
-	WARRIOR,
+	HERO_ARIS,
 	MAGE,
 	ROGUE,
 	HUNTRESS,
@@ -160,8 +160,8 @@ public enum Icons {
 			case STAIRS:
 				icon.frame( icon.texture.uvRectBySize( 0, 16, 13, 16 ) );
 				break;
-			case WARRIOR:
-				icon.frame( icon.texture.uvRectBySize( 16, 16, 9, 15 ) );
+			case HERO_ARIS:
+				icon.frame( icon.texture.uvRectBySize( 16, 16, 15, 12 ) );
 				break;
 			case MAGE:
 				icon.frame( icon.texture.uvRectBySize( 32, 16, 15, 14 ) );
@@ -403,7 +403,7 @@ public enum Icons {
 	public static Image get( HeroClass cl ) {
 		switch (cl) {
 			case ARIS:
-				return get( Icons.WARRIOR );
+				return get( Icons.HERO_ARIS );
 			case MAGE:
 				return get( Icons.MAGE );
 			case ROGUE:

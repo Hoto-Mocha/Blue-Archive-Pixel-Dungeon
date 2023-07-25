@@ -79,6 +79,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Elemental;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Tengu;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.MirrorImage;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.PrismaticImage;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -1127,5 +1128,14 @@ public abstract class Char extends Actor {
 
 	public static boolean hasProp( Char ch, Property p){
 		return (ch != null && ch.properties().contains(p));
+	}
+
+	public void heal(int amount) {
+		amount = Math.min( amount, this.HT - this.HP );
+		if (amount > 0 && this.isAlive()) {
+			this.HP += amount;
+			this.sprite.emitter().start( Speck.factory( Speck.HEALING ), 0.4f, 1 );
+			this.sprite.showStatus( CharSprite.POSITIVE, Integer.toString( amount ) );
+		}
 	}
 }

@@ -165,7 +165,7 @@ public class Berserk extends Buff implements ActionIndicator.Action {
 	}
 
 	public float enchantFactor(float chance){
-		return chance + ((Math.min(1f, power) * 0.15f) * ((Hero) target).pointsInTalent(Talent.ENRAGED_CATALYST));
+		return chance + ((Math.min(1f, power) * 0.15f)/* * ((Hero) target).pointsInTalent(Talent.ENRAGED_CATALYST)*/);
 	}
 
 	public float damageFactor(float dmg){
@@ -177,7 +177,7 @@ public class Berserk extends Buff implements ActionIndicator.Action {
 				&& state == State.NORMAL
 				&& power >= 1f
 				&& target.buff(WarriorShield.class) != null
-				&& ((Hero)target).hasTalent(Talent.DEATHLESS_FURY)){
+				/*&& ((Hero)target).hasTalent(Talent.DEATHLESS_FURY)*/){
 			startBerserking();
 			ActionIndicator.clearAction(this);
 		}
@@ -195,7 +195,7 @@ public class Berserk extends Buff implements ActionIndicator.Action {
 			turnRecovery = TURN_RECOVERY_START;
 			levelRecovery = 0;
 		} else {
-			levelRecovery = LEVEL_RECOVER_START - ((Hero)target).pointsInTalent(Talent.DEATHLESS_FURY);
+			levelRecovery = LEVEL_RECOVER_START/* - ((Hero)target).pointsInTalent(Talent.DEATHLESS_FURY)*/;
 			turnRecovery = 0;
 		}
 
@@ -218,7 +218,7 @@ public class Berserk extends Buff implements ActionIndicator.Action {
 	
 	public void damage(int damage){
 		if (state != State.NORMAL) return;
-		float maxPower = 1f + 0.1667f*((Hero)target).pointsInTalent(Talent.ENDLESS_RAGE);
+		float maxPower = 1f/* + 0.1667f*((Hero)target).pointsInTalent(Talent.ENDLESS_RAGE)*/;
 		power = Math.min(maxPower, power + (damage/(float)target.HT)/3f );
 		BuffIndicator.refreshHero(); //show new power immediately
 		powerLossBuffer = 3; //2 turns until rage starts dropping
@@ -299,13 +299,13 @@ public class Berserk extends Buff implements ActionIndicator.Action {
 	public float iconFadePercent() {
 		switch (state){
 			case NORMAL: default:
-				float maxPower = 1f + 0.1667f*((Hero)target).pointsInTalent(Talent.ENDLESS_RAGE);
+				float maxPower = 1f /*+ 0.1667f*((Hero)target).pointsInTalent(Talent.ENDLESS_RAGE)*/;
 				return (maxPower - power)/maxPower;
 			case BERSERK:
 				return 0f;
 			case RECOVERING:
 				if (levelRecovery > 0) {
-					return 1f - levelRecovery/(LEVEL_RECOVER_START-Dungeon.hero.pointsInTalent(Talent.DEATHLESS_FURY));
+					return 1f - levelRecovery/*/(LEVEL_RECOVER_START-Dungeon.hero.pointsInTalent(Talent.DEATHLESS_FURY))*/;
 				} else {
 					return 1f - turnRecovery/(float)TURN_RECOVERY_START;
 				}

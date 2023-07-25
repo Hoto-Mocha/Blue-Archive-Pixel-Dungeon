@@ -93,7 +93,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 		comboTime = 5f;
 
 		if (!enemy.isAlive() || (enemy.buff(Corruption.class) != null && enemy.HP == enemy.HT)){
-			comboTime = Math.max(comboTime, 15*((Hero)target).pointsInTalent(Talent.CLEAVE));
+			comboTime = Math.max(comboTime, 15/* *((Hero)target).pointsInTalent(Talent.CLEAVE)*/);
 		}
 
 		initialComboTime = comboTime;
@@ -352,15 +352,15 @@ public class Combo extends Buff implements ActionIndicator.Action {
 					trajectory = new Ballistica(trajectory.collisionPos, trajectory.path.get(trajectory.path.size() - 1), Ballistica.PROJECTILE);
 					//knock them back along that ballistica, ensuring they don't fall into a pit
 					int dist = 2;
-					if (enemy.isAlive() && count >= 7 && hero.pointsInTalent(Talent.ENHANCED_COMBO) >= 1) {
-						dist++;
-						Buff.prolong(enemy, Vertigo.class, 3);
-					} else if (!enemy.flying) {
-						while (dist > trajectory.dist ||
-								(dist > 0 && Dungeon.level.pit[trajectory.path.get(dist)])) {
-							dist--;
-						}
-					}
+					//if (enemy.isAlive() && count >= 7 && hero.pointsInTalent(Talent.ENHANCED_COMBO) >= 1) {
+					//	dist++;
+					//	Buff.prolong(enemy, Vertigo.class, 3);
+					//} else if (!enemy.flying) {
+					//	while (dist > trajectory.dist ||
+					//			(dist > 0 && Dungeon.level.pit[trajectory.path.get(dist)])) {
+					//		dist--;
+					//	}
+					//}
 					if (enemy.pos == oldPos) {
 						WandOfBlastWave.throwChar(enemy, trajectory, dist, true, false, hero);
 					}
@@ -387,12 +387,12 @@ public class Combo extends Buff implements ActionIndicator.Action {
 							ch.sprite.bloodBurstA(target.sprite.center(), aoeHit);
 							ch.sprite.flash();
 
-							if (!ch.isAlive()) {
-								if (hero.hasTalent(Talent.LETHAL_DEFENSE) && hero.buff(BrokenSeal.WarriorShield.class) != null) {
-									BrokenSeal.WarriorShield shield = hero.buff(BrokenSeal.WarriorShield.class);
-									shield.supercharge(Math.round(shield.maxShield() * hero.pointsInTalent(Talent.LETHAL_DEFENSE) / 3f));
-								}
-							}
+							//if (!ch.isAlive()) {
+							//	if (hero.hasTalent(Talent.LETHAL_DEFENSE) && hero.buff(BrokenSeal.WarriorShield.class) != null) {
+							//		BrokenSeal.WarriorShield shield = hero.buff(BrokenSeal.WarriorShield.class);
+							//		shield.supercharge(Math.round(shield.maxShield() * hero.pointsInTalent(Talent.LETHAL_DEFENSE) / 3f));
+							//	}
+							//}
 						}
 					}
 					break;
@@ -442,12 +442,12 @@ public class Combo extends Buff implements ActionIndicator.Action {
 				break;
 		}
 
-		if (!enemy.isAlive() || (!wasAlly && enemy.alignment == target.alignment)) {
-			if (hero.hasTalent(Talent.LETHAL_DEFENSE) && hero.buff(BrokenSeal.WarriorShield.class) != null){
-				BrokenSeal.WarriorShield shield = hero.buff(BrokenSeal.WarriorShield.class);
-				shield.supercharge(Math.round(shield.maxShield() * hero.pointsInTalent(Talent.LETHAL_DEFENSE)/3f));
-			}
-		}
+		//if (!enemy.isAlive() || (!wasAlly && enemy.alignment == target.alignment)) {
+		//	if (hero.hasTalent(Talent.LETHAL_DEFENSE) && hero.buff(BrokenSeal.WarriorShield.class) != null){
+		//		BrokenSeal.WarriorShield shield = hero.buff(BrokenSeal.WarriorShield.class);
+		//		shield.supercharge(Math.round(shield.maxShield() * hero.pointsInTalent(Talent.LETHAL_DEFENSE)/3f));
+		//	}
+		//}
 
 	}
 
@@ -464,8 +464,8 @@ public class Combo extends Buff implements ActionIndicator.Action {
 				GLog.w(Messages.get(Combo.class, "bad_target"));
 
 			} else if (!((Hero)target).canAttack(enemy)){
-				if (((Hero) target).pointsInTalent(Talent.ENHANCED_COMBO) < 3
-					|| Dungeon.level.distance(target.pos, enemy.pos) > 1 + target.buff(Combo.class).count/3){
+				if (/*((Hero) target).pointsInTalent(Talent.ENHANCED_COMBO) < 3
+					||*/ Dungeon.level.distance(target.pos, enemy.pos) > 1 + target.buff(Combo.class).count/3){
 					GLog.w(Messages.get(Combo.class, "bad_target"));
 				} else {
 					Ballistica c = new Ballistica(target.pos, enemy.pos, Ballistica.PROJECTILE);

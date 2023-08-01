@@ -45,7 +45,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Heroi
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Shockwave;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.SuperNova;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.TengusMask;
 import com.shatteredpixel.shatteredpixeldungeon.items.Waterskin;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
@@ -63,6 +63,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMirrorImage;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRage;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
@@ -79,7 +80,7 @@ import com.watabou.utils.DeviceCompat;
 
 public enum HeroClass {
 
-	ARIS( HeroSubClass.BERSERKER, HeroSubClass.GLADIATOR ),
+	ARIS( HeroSubClass.ARIS_EX_SUPERNOVA, HeroSubClass.ARIS_EX_CHARGE ),
 	MAGE( HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),
 	ROGUE( HeroSubClass.ASSASSIN, HeroSubClass.FREERUNNER ),
 	HUNTRESS( HeroSubClass.SNIPER, HeroSubClass.WARDEN ),
@@ -110,6 +111,8 @@ public enum HeroClass {
 
 		new PotionOfExperience().identify().quantity(30).collect();
 		new TengusMask().collect();
+		new ScrollOfUpgrade().identify().quantity(200).collect();
+		new ScrollOfTransmutation().identify().quantity(200).collect();
 
 		new ScrollOfIdentify().identify();
 

@@ -455,6 +455,10 @@ public enum Talent {
 				Dungeon.level.drop(toGive, hero.pos).sprite.drop();
 			}
 		}
+
+		if (talent == HOLYSWORD && hero.pointsInTalent(talent) == 3) {
+			Item.updateQuickslot();
+		}
 	}
 
 	public static class CachedRationsDropped extends CounterBuff{{revivePersists = true;}};

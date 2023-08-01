@@ -131,6 +131,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Quarterstaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RoundShield;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Sai;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Scimitar;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
@@ -1373,6 +1374,14 @@ public class Hero extends Char {
 		if (Dungeon.hero.buff(Talent.EmpoweringMagic.class) != null) {
 			damage = Math.round(damage * (1 + 0.125f*Dungeon.hero.pointsInTalent(Talent.EMPOWERING_MAGIC)));
 		}
+
+		if (Dungeon.hero.hasTalent(Talent.PIEZOELECTRICITY) && Dungeon.hero.buff(SuperNova.SuperNovaCooldown.class) != null) {
+			Dungeon.hero.buff(SuperNova.SuperNovaCooldown.class).hit();
+		}
+
+		if (enemy.HP <= damage && Random.Int(4) == 0) {
+			Dungeon.hero.yellP(Messages.get(Hero.class, heroClass.title() + "_enemy_defeated_" + (1 + Random.Int(5)))); //1~5 variable
+		}
 		
 		return damage;
 	}
@@ -1831,6 +1840,11 @@ public class Hero extends Char {
 						WndHero.lastIdx = 1;
 					}
 				}
+			}
+			if (Random.Int(100) == 0) {
+				Dungeon.hero.yellP(Messages.get(Hero.class, heroClass.title() + "_levelup_rare"));
+			} else {
+				Dungeon.hero.yellP(Messages.get(Hero.class, heroClass.title() + "_levelup_" + (1 + Random.Int(5))));
 			}
 			
 			Item.updateQuickslot();

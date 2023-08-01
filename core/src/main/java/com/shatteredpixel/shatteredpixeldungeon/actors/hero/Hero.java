@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Bones;
@@ -659,6 +661,10 @@ public class Hero extends Char {
 		}
 
 		speed = AscensionChallenge.modifyHeroSpeed(speed);
+
+		if (hero.hasTalent(Talent.ROBOT_CLEANER)) {
+			speed *= 1 + 0.1f*hero.pointsInTalent(Talent.ROBOT_CLEANER);
+		}
 		
 		return speed;
 		
@@ -1379,8 +1385,8 @@ public class Hero extends Char {
 			Dungeon.hero.buff(SuperNova.SuperNovaCooldown.class).hit();
 		}
 
-		if (enemy.HP <= damage && Random.Int(4) == 0) {
-			Dungeon.hero.yellP(Messages.get(Hero.class, heroClass.title() + "_enemy_defeated_" + (1 + Random.Int(5)))); //1~5 variable
+		if (enemy.HP <= damage && Random.Int(4) == 0) { //25% chance
+			Dungeon.hero.yellP(Messages.get(Hero.class, heroClass.name() + "_enemy_defeated_" + (1 + Random.Int(5)))); //1~5 variable
 		}
 		
 		return damage;
@@ -1842,9 +1848,9 @@ public class Hero extends Char {
 				}
 			}
 			if (Random.Int(100) == 0) {
-				Dungeon.hero.yellP(Messages.get(Hero.class, heroClass.title() + "_levelup_rare"));
+				Dungeon.hero.yellP(Messages.get(Hero.class, heroClass.name() + "_levelup_rare"));
 			} else {
-				Dungeon.hero.yellP(Messages.get(Hero.class, heroClass.title() + "_levelup_" + (1 + Random.Int(5))));
+				Dungeon.hero.yellP(Messages.get(Hero.class, heroClass.name() + "_levelup_" + (1 + Random.Int(5))));
 			}
 			
 			Item.updateQuickslot();

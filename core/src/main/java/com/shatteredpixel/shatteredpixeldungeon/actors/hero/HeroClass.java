@@ -109,10 +109,10 @@ public enum HeroClass {
 		Waterskin waterskin = new Waterskin();
 		waterskin.collect();
 
-		new PotionOfExperience().identify().quantity(30).collect();
-		new TengusMask().collect();
-		new ScrollOfUpgrade().identify().quantity(200).collect();
-		new ScrollOfTransmutation().identify().quantity(200).collect();
+//		new PotionOfExperience().identify().quantity(30).collect();
+//		new TengusMask().collect();
+//		new ScrollOfUpgrade().identify().quantity(200).collect();
+//		new ScrollOfTransmutation().identify().quantity(200).collect();
 
 		new ScrollOfIdentify().identify();
 

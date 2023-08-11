@@ -894,4 +894,62 @@ public class ItemSpriteSheet {
 
 	}
 
+	private static final int BULLET  =                                   xy(1, 34);  //16 slots
+	public static final int SINGLE_BULLET  = BULLET+0;
+	public static final int DOUBLE_BULLET  = BULLET+1;
+	public static final int TRIPLE_BULLET  = BULLET+2;
+	public static final int SNIPER_BULLET  = BULLET+3;
+	static{
+		assignItemRect(SINGLE_BULLET,  8, 8);
+		assignItemRect(DOUBLE_BULLET,  8, 8);
+		assignItemRect(TRIPLE_BULLET,  8, 8);
+		assignItemRect(SNIPER_BULLET,  8, 8);
+	}
+
+	private static final int HANDGUN  =                                   xy(1, 35);  //8 slots
+	public static final int CRUDE_PISTOL 	= HANDGUN+0;
+	public static final int PISTOL 			= HANDGUN+1;
+	public static final int GILDED_PISTOL 	= HANDGUN+2;
+	public static final int HAND_PISTOL 	= HANDGUN+3;
+	public static final int MAGNUM_PISTOL 	= HANDGUN+4;
+	static{
+		assignItemRect(CRUDE_PISTOL,  	10, 13);
+		assignItemRect(PISTOL,  		11, 15);
+		assignItemRect(GILDED_PISTOL, 	12, 15);
+		assignItemRect(HAND_PISTOL,  	16, 16);
+		assignItemRect(MAGNUM_PISTOL,  	12, 16);
+	}
+
+	private static final int SNIPERGUN  =                                   xy(9, 35);  //8 slots
+	public static final int SNIPER_REVOLVER 		= SNIPERGUN+0;
+	public static final int SNIPER_HUNTING_RIFLE 	= SNIPERGUN+1;
+	public static final int SNIPER_CARBINE 			= SNIPERGUN+2;
+	public static final int SNIPER_RIFLE 			= SNIPERGUN+3;
+	static{
+		assignItemRect(SNIPER_REVOLVER,  	11, 15);
+		assignItemRect(SNIPER_HUNTING_RIFLE,13, 16);
+		assignItemRect(SNIPER_CARBINE,  	13, 16);
+		assignItemRect(SNIPER_RIFLE,  		14, 16);
+	}
+
+	private static final int MACHINEGUN  =                                   xy(1, 36);  //8 slots
+	public static final int MACHINE_DUEL_PISTOL 		= MACHINEGUN+0;
+	public static final int MACHINE_SUB_MACHINEGUN 		= MACHINEGUN+1;
+	public static final int MACHINE_ASSULT_RIFLE 		= MACHINEGUN+2;
+	public static final int MACHINE_HEAVY_MACHINEGUN 	= MACHINEGUN+3;
+	static{
+		assignItemRect(MACHINE_DUEL_PISTOL, 		15, 16);
+		assignItemRect(MACHINE_SUB_MACHINEGUN, 		15, 15);
+		assignItemRect(MACHINE_ASSULT_RIFLE,  		15, 16);
+		assignItemRect(MACHINE_HEAVY_MACHINEGUN,  	13, 15);
+	}
+
+	private static final int SHOTGUN  =                                   xy(9, 36);  //8 slots
+	public static final int SHOTGUN_NORMAL_SHOTGUN 	 = SHOTGUN+0;
+	public static final int SHOTGUN_TACTICAL_SHOTGUN = SHOTGUN+1;
+	static{
+		assignItemRect(SHOTGUN_NORMAL_SHOTGUN,  14, 16);
+		assignItemRect(SHOTGUN_TACTICAL_SHOTGUN,15, 16);
+	}
+
 }

@@ -618,23 +618,23 @@ public abstract class Wand extends Item {
 							&& curWand.charger != null && curWand.charger.target == curUser){
 
 						//regular. If hero owns wand but it isn't in belongings it must be in the staff
-						if (curUser.heroClass == HeroClass.MAGE && !curUser.belongings.contains(curWand)){
-							//grants 3/5 shielding
-							Buff.affect(Dungeon.hero, Barrier.class).setShield(1 + 2 * Dungeon.hero.pointsInTalent(Talent.BACKUP_BARRIER));
-
-						//metamorphed. Triggers if wand is highest level hero has
-						} else if (curUser.heroClass != HeroClass.MAGE) {
-							boolean highest = true;
-							for (Item i : curUser.belongings.getAllItems(Wand.class)){
-								if (i.level() > curWand.level()){
-									highest = false;
-								}
-							}
-							if (highest){
-								//grants 3/5 shielding
-								Buff.affect(Dungeon.hero, Barrier.class).setShield(1 + 2 * Dungeon.hero.pointsInTalent(Talent.BACKUP_BARRIER));
-							}
-						}
+//						if (curUser.heroClass == HeroClass.MAGE && !curUser.belongings.contains(curWand)){
+//							//grants 3/5 shielding
+//							Buff.affect(Dungeon.hero, Barrier.class).setShield(1 + 2 * Dungeon.hero.pointsInTalent(Talent.BACKUP_BARRIER));
+//
+//						//metamorphed. Triggers if wand is highest level hero has
+//						} else if (curUser.heroClass != HeroClass.MAGE) {
+//							boolean highest = true;
+//							for (Item i : curUser.belongings.getAllItems(Wand.class)){
+//								if (i.level() > curWand.level()){
+//									highest = false;
+//								}
+//							}
+//							if (highest){
+//								//grants 3/5 shielding
+//								Buff.affect(Dungeon.hero, Barrier.class).setShield(1 + 2 * Dungeon.hero.pointsInTalent(Talent.BACKUP_BARRIER));
+//							}
+//						}
 					}
 					
 					if (curWand.cursed){

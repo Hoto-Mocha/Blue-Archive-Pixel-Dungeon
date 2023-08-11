@@ -81,7 +81,7 @@ import com.watabou.utils.DeviceCompat;
 public enum HeroClass {
 
 	ARIS( HeroSubClass.ARIS_EX_SUPERNOVA, HeroSubClass.ARIS_EX_CHARGE ),
-	MAGE( HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),
+	NONOMI( HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),
 	ROGUE( HeroSubClass.ASSASSIN, HeroSubClass.FREERUNNER ),
 	HUNTRESS( HeroSubClass.SNIPER, HeroSubClass.WARDEN ),
 	DUELIST( HeroSubClass.CHAMPION, HeroSubClass.MONK );
@@ -121,7 +121,7 @@ public enum HeroClass {
 				initAris( hero );
 				break;
 
-			case MAGE:
+			case NONOMI:
 				initMage( hero );
 				break;
 
@@ -153,7 +153,7 @@ public enum HeroClass {
 		switch (this) {
 			case ARIS:
 				return Badges.Badge.MASTERY_WARRIOR;
-			case MAGE:
+			case NONOMI:
 				return Badges.Badge.MASTERY_MAGE;
 			case ROGUE:
 				return Badges.Badge.MASTERY_ROGUE;
@@ -260,7 +260,7 @@ public enum HeroClass {
 		switch (this) {
 			case ARIS: default:
 				return new ArmorAbility[]{new HeroicLeap(), new Shockwave(), new Endure()};
-			case MAGE:
+			case NONOMI:
 				return new ArmorAbility[]{new ElementalBlast(), new WildMagic(), new WarpBeacon()};
 			case ROGUE:
 				return new ArmorAbility[]{new SmokeBomb(), new DeathMark(), new ShadowClone()};
@@ -275,7 +275,7 @@ public enum HeroClass {
 		switch (this) {
 			case ARIS: default:
 				return Assets.Sprites.ARIS;
-			case MAGE:
+			case NONOMI:
 				return Assets.Sprites.MAGE;
 			case ROGUE:
 				return Assets.Sprites.ROGUE;
@@ -290,7 +290,7 @@ public enum HeroClass {
 		switch (this) {
 			case ARIS: default:
 				return Assets.Splashes.ARIS;
-			case MAGE:
+			case NONOMI:
 				return Assets.Splashes.MAGE;
 			case ROGUE:
 				return Assets.Splashes.ROGUE;
@@ -308,7 +308,7 @@ public enum HeroClass {
 		switch (this){
 			case ARIS: default:
 				return true;
-			case MAGE:
+			case NONOMI:
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_MAGE);
 			case ROGUE:
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_ROGUE);

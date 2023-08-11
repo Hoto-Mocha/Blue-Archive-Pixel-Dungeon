@@ -62,7 +62,7 @@ public class WndHeroInfo extends WndTabbed {
 			case ARIS: default:
 				tabIcon = new ItemSprite(ItemSpriteSheet.SEAL, null);
 				break;
-			case MAGE:
+			case NONOMI:
 				tabIcon = new ItemSprite(ItemSpriteSheet.MAGES_STAFF, null);
 				break;
 			case ROGUE:
@@ -176,7 +176,7 @@ public class WndHeroInfo extends WndTabbed {
 							new ItemSprite(ItemSpriteSheet.WORN_SHORTSWORD),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
-				case MAGE:
+				case NONOMI:
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.MAGES_STAFF),
 							new ItemSprite(ItemSpriteSheet.WAND_MAGIC_MISSILE),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};

@@ -362,7 +362,7 @@ public enum Talent {
 			switch (cls){
 				case ARIS: default:
 					return 26;
-				case MAGE:
+				case NONOMI:
 					return 58;
 				case ROGUE:
 					return 90;
@@ -593,18 +593,18 @@ public enum Talent {
 	}
 
 	public static void onUpgradeScrollUsed( Hero hero ){
-		if (hero.hasTalent(ENERGIZING_UPGRADE)){
-			if (hero.heroClass == HeroClass.MAGE) {
-				MagesStaff staff = hero.belongings.getItem(MagesStaff.class);
-				if (staff != null) {
-					staff.gainCharge(2 + 2 * hero.pointsInTalent(ENERGIZING_UPGRADE), true);
-					ScrollOfRecharging.charge(Dungeon.hero);
-					SpellSprite.show(hero, SpellSprite.CHARGE);
-				}
-			} else {
-				Buff.affect(hero, Recharging.class, 4 + 8 * hero.pointsInTalent(ENERGIZING_UPGRADE));
-			}
-		}
+		//if (hero.hasTalent(ENERGIZING_UPGRADE)){
+		//	if (hero.heroClass == HeroClass.MAGE) {
+		//		MagesStaff staff = hero.belongings.getItem(MagesStaff.class);
+		//		if (staff != null) {
+		//			staff.gainCharge(2 + 2 * hero.pointsInTalent(ENERGIZING_UPGRADE), true);
+		//			ScrollOfRecharging.charge(Dungeon.hero);
+		//			SpellSprite.show(hero, SpellSprite.CHARGE);
+		//		}
+		//	} else {
+		//		Buff.affect(hero, Recharging.class, 4 + 8 * hero.pointsInTalent(ENERGIZING_UPGRADE));
+		//	}
+		//}
 		if (hero.hasTalent(MYSTICAL_UPGRADE)){
 			if (hero.heroClass == HeroClass.ROGUE) {
 				CloakOfShadows cloak = hero.belongings.getItem(CloakOfShadows.class);
@@ -764,7 +764,7 @@ public enum Talent {
 			case ARIS: default:
 				Collections.addAll(tierTalents, FOR_LIGHT, ROBOTS_INTUITION, TEST_SUBJECT, ACCEL_ENERGY);
 				break;
-			case MAGE:
+			case NONOMI:
 				Collections.addAll(tierTalents, EMPOWERING_MEAL, SCHOLARS_INTUITION, TESTED_HYPOTHESIS, BACKUP_BARRIER);
 				break;
 			case ROGUE:
@@ -790,7 +790,7 @@ public enum Talent {
 			case ARIS: default:
 				Collections.addAll(tierTalents, IRON_STOMACH, RESTORED_WILLPOWER, RUNIC_TRANSFERENCE, EMPOWERING_MAGIC, BALANCE_COLLAPSE);
 				break;
-			case MAGE:
+			case NONOMI:
 				Collections.addAll(tierTalents, ENERGIZING_MEAL, ENERGIZING_UPGRADE, WAND_PRESERVATION, ARCANE_VISION, SHIELD_BATTERY);
 				break;
 			case ROGUE:
@@ -816,7 +816,7 @@ public enum Talent {
 			case ARIS: default:
 				Collections.addAll(tierTalents, ROBOT_CLEANER, STRONGMAN);
 				break;
-			case MAGE:
+			case NONOMI:
 				Collections.addAll(tierTalents, EMPOWERING_SCROLLS, ALLY_WARP);
 				break;
 			case ROGUE:

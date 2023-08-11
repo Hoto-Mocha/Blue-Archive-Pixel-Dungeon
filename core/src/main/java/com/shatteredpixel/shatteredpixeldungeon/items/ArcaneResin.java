@@ -176,9 +176,9 @@ public class ArcaneResin extends Item {
 
 			Item output = new ArcaneResin().quantity(2*(level+1));
 
-			if (Dungeon.hero.heroClass != HeroClass.MAGE && Dungeon.hero.hasTalent(Talent.WAND_PRESERVATION)){
-				output.quantity(output.quantity() + Dungeon.hero.pointsInTalent(Talent.WAND_PRESERVATION));
-			}
+			//if (Dungeon.hero.heroClass != HeroClass.MAGE && Dungeon.hero.hasTalent(Talent.WAND_PRESERVATION)){
+			//	output.quantity(output.quantity() + Dungeon.hero.pointsInTalent(Talent.WAND_PRESERVATION));
+			//}
 
 			return output;
 		}

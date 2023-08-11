@@ -576,7 +576,7 @@ public class v2_X_Changes {
 				"_- Horn of Plenty_ now gains 2 levels from being fed a pasty, up from 1.5\n" +
 				"_- Horn of Plenty_ now gains 4 levels from being fed a meat pie, up from 3"));
 
-		changes.addButton( new ChangeButton(HeroSprite.avatar(HeroClass.MAGE, 6), "Hero Buffs",
+		changes.addButton( new ChangeButton(HeroSprite.avatar(HeroClass.NONOMI, 6), "Hero Buffs",
 				"A couple buffs to the two worst performing armor abilities/talents:\n" +
 				"\n" +
 				"_- Shrug it Off_ now just directly boosts the damage resistance from endure to 60/68/74/80%, instead of reducing max damage taken\n" +

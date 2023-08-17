@@ -1,7 +1,7 @@
-package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.handgun;
+package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
-public class CrudePistol extends HandGun {
+public class HG_tier1 extends HandGun {
     {
         tier = 1;
         image = ItemSpriteSheet.CRUDE_PISTOL;

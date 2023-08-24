@@ -154,6 +154,7 @@ public class SuperNova extends MeleeWeapon {
             if (target != null) {
                 if (target == curUser.pos) {
                     hero.yellP(Messages.get(Hero.class, "aris_cannot_self"));
+
                 } else {
 
                     boolean terrainAffected = false;
@@ -266,18 +267,19 @@ public class SuperNova extends MeleeWeapon {
                     int cell = beam.path.get(Math.min(beam.dist, maxDistance));
                     curUser.sprite.parent.add(new Beam.DeathRay(curUser.sprite.center(), DungeonTilemap.raisedTileCenterToWorld( cell )));
                     Dungeon.hero.yellP(Messages.get(Hero.class, "aris_supernova_" + (Random.Int(3)+1)));
-                }
 
-                if (hero.buff(SuperNovaCharge.class) != null) {
-                    hero.buff(SuperNovaCharge.class).detach();
-                }
-                Buff.affect(hero, SuperNovaCooldown.class).set(coolDown());
+                    Buff.affect(hero, SuperNovaCooldown.class).set(coolDown());
 
-                if(hero.hasTalent(Talent.EMPOWERING_MAGIC)) {
-                    Buff.affect(hero, Talent.EmpoweringMagic.class, 5);
-                }
+                    if (hero.buff(SuperNovaCharge.class) != null) {
+                        hero.buff(SuperNovaCharge.class).detach();
+                    }
 
-                hero.spendAndNext(Actor.TICK);
+                    if(hero.hasTalent(Talent.EMPOWERING_MAGIC)) {
+                        Buff.affect(hero, Talent.EmpoweringMagic.class, 5);
+                    }
+
+                    hero.spendAndNext(Actor.TICK);
+                }
             }
         }
         @Override

@@ -723,8 +723,10 @@ public class ItemSpriteSheet {
 
 	private static final int UNIQUE_WEAPON 	= 								xy(1, 33);
 	public static final int SUPER_NOVA 		= UNIQUE_WEAPON+0;
+	public static final int SMOKE_GRENADE 	= UNIQUE_WEAPON+1;
 	static {
-		assignItemRect(SUPER_NOVA, 	16, 16);
+		assignItemRect(SUPER_NOVA, 		16, 16);
+		assignItemRect(SMOKE_GRENADE, 	12, 12);
 	}
 
 	//for smaller 8x8 icons that often accompany an item sprite
@@ -896,60 +898,116 @@ public class ItemSpriteSheet {
 
 	private static final int BULLET  =                                   xy(1, 34);  //16 slots
 	public static final int SINGLE_BULLET  = BULLET+0;
-	public static final int DOUBLE_BULLET  = BULLET+1;
-	public static final int TRIPLE_BULLET  = BULLET+2;
-	public static final int SNIPER_BULLET  = BULLET+3;
+	public static final int TRIPLE_BULLET  = BULLET+1;
+	public static final int SNIPER_BULLET  = BULLET+2;
+	public static final int GRENADE_BULLET = BULLET+3;
+	public static final int ROCKET_BULLET  = BULLET+4;
+	public static final int NOTHING_BULLET = BULLET+5;
 	static{
 		assignItemRect(SINGLE_BULLET,  8, 8);
-		assignItemRect(DOUBLE_BULLET,  8, 8);
 		assignItemRect(TRIPLE_BULLET,  8, 8);
 		assignItemRect(SNIPER_BULLET,  8, 8);
+		assignItemRect(GRENADE_BULLET,  8, 8);
+		assignItemRect(ROCKET_BULLET,  8, 8);
+		assignItemRect(NOTHING_BULLET,  1, 1);
 	}
 
-	private static final int HANDGUN  =                                   xy(1, 35);  //8 slots
-	public static final int CRUDE_PISTOL 	= HANDGUN+0;
-	public static final int PISTOL 			= HANDGUN+1;
-	public static final int GILDED_PISTOL 	= HANDGUN+2;
-	public static final int HAND_PISTOL 	= HANDGUN+3;
-	public static final int MAGNUM_PISTOL 	= HANDGUN+4;
+	private static final int AR  =                                   xy(1, 35);  //8 slots
+	public static final int AR_TIER_1 = AR+0;
+	public static final int AR_TIER_2 = AR+1;
+	public static final int AR_TIER_3 = AR+2;
+	public static final int AR_TIER_4 = AR+3;
+	public static final int AR_TIER_5 = AR+4;
 	static{
-		assignItemRect(CRUDE_PISTOL,  	10, 13);
-		assignItemRect(PISTOL,  		11, 15);
-		assignItemRect(GILDED_PISTOL, 	12, 15);
-		assignItemRect(HAND_PISTOL,  	16, 16);
-		assignItemRect(MAGNUM_PISTOL,  	12, 16);
+		assignItemRect(AR_TIER_1,	16, 16);	//needs to be redesigned
+		assignItemRect(AR_TIER_2,	16, 16);	//needs to be redesigned
+		assignItemRect(AR_TIER_3,	16, 16);	//needs to be redesigned
+		assignItemRect(AR_TIER_4,	16, 16);	//needs to be redesigned
+		assignItemRect(AR_TIER_5, 	15, 16);
 	}
 
-	private static final int SNIPERGUN  =                                   xy(9, 35);  //8 slots
-	public static final int SNIPER_REVOLVER 		= SNIPERGUN+0;
-	public static final int SNIPER_HUNTING_RIFLE 	= SNIPERGUN+1;
-	public static final int SNIPER_CARBINE 			= SNIPERGUN+2;
-	public static final int SNIPER_RIFLE 			= SNIPERGUN+3;
+	private static final int GL  =                                   xy(9, 35);  //8 slots
+	public static final int GL_TIER_1 = GL+0;
+	public static final int GL_TIER_2 = GL+1;
+	public static final int GL_TIER_3 = GL+2;
+	public static final int GL_TIER_4 = GL+3;
+	public static final int GL_TIER_5 = GL+4;
 	static{
-		assignItemRect(SNIPER_REVOLVER,  	11, 15);
-		assignItemRect(SNIPER_HUNTING_RIFLE,13, 16);
-		assignItemRect(SNIPER_CARBINE,  	13, 16);
-		assignItemRect(SNIPER_RIFLE,  		14, 16);
+		assignItemRect(GL_TIER_1,	16, 16);	//needs to be redesigned
+		assignItemRect(GL_TIER_2,	16, 16);	//needs to be redesigned
+		assignItemRect(GL_TIER_3,	15, 15);
+		assignItemRect(GL_TIER_4,	15, 15);
+		assignItemRect(GL_TIER_5, 	16, 16);
 	}
 
-	private static final int MACHINEGUN  =                                   xy(1, 36);  //8 slots
-	public static final int MACHINE_DUEL_PISTOL 		= MACHINEGUN+0;
-	public static final int MACHINE_SUB_MACHINEGUN 		= MACHINEGUN+1;
-	public static final int MACHINE_ASSULT_RIFLE 		= MACHINEGUN+2;
-	public static final int MACHINE_HEAVY_MACHINEGUN 	= MACHINEGUN+3;
+	private static final int HG  =                                   xy(1, 36);  //8 slots
+	public static final int HG_TIER_1	= HG+0;
+	public static final int HG_TIER_2	= HG+1;
+	public static final int HG_TIER_3	= HG+2;
+	public static final int HG_TIER_4	= HG+3;
+	public static final int HG_TIER_5	= HG+4;
 	static{
-		assignItemRect(MACHINE_DUEL_PISTOL, 		15, 16);
-		assignItemRect(MACHINE_SUB_MACHINEGUN, 		15, 15);
-		assignItemRect(MACHINE_ASSULT_RIFLE,  		15, 16);
-		assignItemRect(MACHINE_HEAVY_MACHINEGUN,  	13, 15);
+		assignItemRect(HG_TIER_1,	9, 12);
+		assignItemRect(HG_TIER_2,	10, 13);
+		assignItemRect(HG_TIER_3,	11, 14);
+		assignItemRect(HG_TIER_4,	12, 16);
+		assignItemRect(HG_TIER_5, 	15, 16);
 	}
 
-	private static final int SHOTGUN  =                                   xy(9, 36);  //8 slots
-	public static final int SHOTGUN_NORMAL_SHOTGUN 	 = SHOTGUN+0;
-	public static final int SHOTGUN_TACTICAL_SHOTGUN = SHOTGUN+1;
+	private static final int MG  =                                   xy(9, 36);  //8 slots
+	public static final int MG_TIER_1	= MG+0;
+	public static final int MG_TIER_2	= MG+1;
+	public static final int MG_TIER_3	= MG+2;
+	public static final int MG_TIER_4 	= MG+3;
+	public static final int MG_TIER_5 	= MG+4;
 	static{
-		assignItemRect(SHOTGUN_NORMAL_SHOTGUN,  14, 16);
-		assignItemRect(SHOTGUN_TACTICAL_SHOTGUN,15, 16);
+		assignItemRect(MG_TIER_1,	16, 16);	//needs to be redesigned
+		assignItemRect(MG_TIER_2,	16, 16);	//needs to be redesigned
+		assignItemRect(MG_TIER_3,	16, 16);	//needs to be redesigned
+		assignItemRect(MG_TIER_4,	16, 16);	//needs to be redesigned
+		assignItemRect(MG_TIER_5, 	16, 15);
+	}
+
+	private static final int SG  =                                   xy(1, 37);  //8 slots
+	public static final int SG_TIER_1 = SG+0;
+	public static final int SG_TIER_2 = SG+1;
+	public static final int SG_TIER_3 = SG+2;
+	public static final int SG_TIER_4 = SG+3;
+	public static final int SG_TIER_5 = SG+4;
+	static{
+		assignItemRect(SG_TIER_1,	12, 13);
+		assignItemRect(SG_TIER_2,	14, 15);
+		assignItemRect(SG_TIER_3,	14, 16);
+		assignItemRect(SG_TIER_4,	14, 16);
+		assignItemRect(SG_TIER_5, 	15, 16);
+	}
+
+	private static final int SMG  =                                   xy(9, 37);  //8 slots
+	public static final int SMG_TIER_1 = SMG+0;
+	public static final int SMG_TIER_2 = SMG+1;
+	public static final int SMG_TIER_3 = SMG+2;
+	public static final int SMG_TIER_4 = SMG+3;
+	public static final int SMG_TIER_5 = SMG+4;
+	static{
+		assignItemRect(SMG_TIER_1,	16, 16);	//needs to be redesigned
+		assignItemRect(SMG_TIER_2,	16, 16);	//needs to be redesigned
+		assignItemRect(SMG_TIER_3,	16, 16);	//needs to be redesigned
+		assignItemRect(SMG_TIER_4,	16, 16);	//needs to be redesigned
+		assignItemRect(SMG_TIER_5, 	16, 16);	//needs to be redesigned
+	}
+
+	private static final int SR  =                                   xy(1, 38);  //8 slots
+	public static final int SR_TIER_1	= SR+0;
+	public static final int SR_TIER_2	= SR+1;
+	public static final int SR_TIER_3	= SR+2;
+	public static final int SR_TIER_4	= SR+3;
+	public static final int SR_TIER_5	= SR+4;
+	static{
+		assignItemRect(SR_TIER_1,	13, 16);
+		assignItemRect(SR_TIER_2,	13, 16);
+		assignItemRect(SR_TIER_3,	14, 16);
+		assignItemRect(SR_TIER_4,	15, 16);
+		assignItemRect(SR_TIER_5, 	15, 16);
 	}
 
 }

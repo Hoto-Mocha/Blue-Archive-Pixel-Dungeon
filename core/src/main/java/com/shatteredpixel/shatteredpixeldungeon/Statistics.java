@@ -51,9 +51,12 @@ public class Statistics {
 	public static int totalScore;
 
 	//used for hero unlock badges
+	public static boolean MGIdentified = false;
+
 	public static int upgradesUsed;
 	public static int sneakAttacks;
 	public static int thrownAttacks;
+
 
 	public static int spawnersAlive;
 	

@@ -226,7 +226,7 @@ public class Assets {
 
 	public static class Splashes {
 		public static final String ARIS  	= "splashes/aris.jpg";
-		public static final String MAGE     = "splashes/mage.jpg";
+		public static final String NONOMI   = "splashes/nonomi.jpg";
 		public static final String ROGUE    = "splashes/rogue.jpg";
 		public static final String HUNTRESS = "splashes/huntress.jpg";
 		public static final String DUELIST  = "splashes/duelist.jpg";
@@ -237,7 +237,7 @@ public class Assets {
 		public static final String ITEM_ICONS   = "sprites/item_icons.png";
 
 		public static final String ARIS 	= "sprites/aris.png";
-		public static final String MAGE     = "sprites/mage.png";
+		public static final String NONOMI   = "sprites/nonomi.png";
 		public static final String ROGUE    = "sprites/rogue.png";
 		public static final String HUNTRESS = "sprites/huntress.png";
 		public static final String DUELIST  = "sprites/duelist.png";

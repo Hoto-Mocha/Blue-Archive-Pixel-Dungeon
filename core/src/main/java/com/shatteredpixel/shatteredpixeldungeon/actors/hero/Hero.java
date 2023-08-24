@@ -67,7 +67,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbili
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.ElementalStrike;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.NaturesPower;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Endure;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Monk;
@@ -123,6 +122,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLivingEarth;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
@@ -134,6 +134,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RoundShield;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Sai;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Scimitar;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
@@ -143,6 +144,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.LevelTransition;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
+import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.ShadowCaster;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.AlchemyScene;
@@ -243,6 +245,9 @@ public class Hero extends Char {
 		int curHT = HT;
 		
 		HT = 20 + 5*(lvl-1) + HTBoost;
+		if (this.hasTalent(Talent.MAX_HEALTH)) {
+			HT += 5*this.pointsInTalent(Talent.MAX_HEALTH);
+		}
 		float multiplier = RingOfMight.HTMultiplier(this);
 		HT = Math.round(multiplier * HT);
 		
@@ -454,8 +459,12 @@ public class Hero extends Char {
 			return 0;
 		}
 	}
-	
+
 	public boolean shoot( Char enemy, MissileWeapon wep ) {
+		return shoot(enemy, wep, 1f, 0, 1f );
+	}
+	
+	public boolean shoot( Char enemy, MissileWeapon wep, float dmgMulti, float dmgBonus, float accMulti ) {
 
 		this.enemy = enemy;
 		boolean wasEnemy = enemy.alignment == Alignment.ENEMY
@@ -464,7 +473,7 @@ public class Hero extends Char {
 		//temporarily set the hero's weapon to the missile weapon being used
 		//TODO improve this!
 		belongings.thrownWeapon = wep;
-		boolean hit = attack( enemy );
+		boolean hit = attack( enemy, dmgMulti, dmgBonus, accMulti );
 		Invisibility.dispel();
 		belongings.thrownWeapon = null;
 
@@ -496,6 +505,10 @@ public class Hero extends Char {
 
 		if (buff(Scimitar.SwordDance.class) != null){
 			accuracy *= 1.25f;
+		}
+
+		if (wep instanceof SG.SGBullet && !Dungeon.level.adjacent(hero.pos, target.pos)) {
+			accuracy = 0;
 		}
 		
 		if (!RingOfForce.fightingUnarmed(this)) {
@@ -677,6 +690,7 @@ public class Hero extends Char {
 		if (RingOfForce.fightingUnarmed(this))  return true;
 		if (STR() < ((Weapon)w).STRReq())       return false;
 		if (w instanceof Flail)                 return false;
+		if (w instanceof SG.SGBullet)           return false;
 
 		return super.canSurpriseAttack();
 	}
@@ -755,10 +769,6 @@ public class Hero extends Char {
 		
 		//calls to dungeon.observe will also update hero's local FOV.
 		fieldOfView = Dungeon.level.heroFOV;
-
-		if (buff(Endure.EndureTracker.class) != null){
-			buff(Endure.EndureTracker.class).endEnduring();
-		}
 		
 		if (!ready) {
 			//do a full observe (including fog update) if not resting.
@@ -1388,6 +1398,18 @@ public class Hero extends Char {
 		if (enemy.HP <= damage && Random.Int(4) == 0) { //25% chance
 			Dungeon.hero.yellP(Messages.get(Hero.class, heroClass.name() + "_enemy_defeated_" + (1 + Random.Int(5)))); //1~5 variable
 		}
+
+		if (Dungeon.level.adjacent(hero.pos, enemy.pos) && hero.hasTalent(Talent.NO_WAY) && hero.buff(Talent.NoWayCooldown.class) == null) {
+			Ballistica trajectory = new Ballistica(hero.pos, enemy.pos, Ballistica.STOP_TARGET);
+			trajectory = new Ballistica(trajectory.collisionPos, trajectory.path.get(trajectory.path.size()-1), Ballistica.PROJECTILE);
+			WandOfBlastWave.throwChar(enemy,
+					trajectory,
+					1+hero.pointsInTalent(Talent.NO_WAY),
+					true,
+					false,
+					this);
+			Buff.affect(hero, Talent.NoWayCooldown.class, 30f);
+		}
 		
 		return damage;
 	}
@@ -1429,12 +1451,8 @@ public class Hero extends Char {
 			GLog.w( Messages.get(this, "pain_resist") );
 		}
 
-		Endure.EndureTracker endure = buff(Endure.EndureTracker.class);
+
 		if (!(src instanceof Char)){
-			//reduce damage here if it isn't coming from a character (if it is we already reduced it)
-			if (endure != null){
-				dmg = Math.round(endure.adjustDamageTaken(dmg));
-			}
 			//the same also applies to challenge scroll damage reduction
 			if (buff(ScrollOfChallenge.ChallengeArena.class) != null){
 				dmg *= 0.67f;

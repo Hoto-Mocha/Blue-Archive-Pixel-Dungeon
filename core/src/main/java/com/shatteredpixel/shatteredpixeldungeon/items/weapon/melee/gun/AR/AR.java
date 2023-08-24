@@ -1,22 +1,15 @@
-package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG;
+package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR;
 
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSharpshooting;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
-public class HandGun extends Gun {
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+public class AR extends Gun {
 
     {
         max_round = 4;
-        reload_time = 2;
-        shotPerShoot = 1;
-    }
-
-    @Override
-    public int bulletMin(int lvl) {
-        return 2 * tier +
-                lvl +
-                RingOfSharpshooting.levelDamageBonus(hero);
+        round = max_round;
     }
 
     @Override
@@ -24,5 +17,16 @@ public class HandGun extends Gun {
         return 4 * (tier+1) +
                 lvl * (tier+1) +
                 RingOfSharpshooting.levelDamageBonus(hero);
+    }
+
+    @Override
+    public Bullet knockBullet(){
+        return new ARBullet();
+    }
+
+    public class ARBullet extends Bullet {
+        {
+            image = ItemSpriteSheet.SINGLE_BULLET;
+        }
     }
 }

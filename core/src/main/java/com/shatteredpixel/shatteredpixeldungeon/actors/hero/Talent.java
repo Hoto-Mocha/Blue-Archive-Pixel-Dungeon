@@ -61,6 +61,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gloves;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
@@ -81,42 +83,39 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 
 public enum Talent {
-
-
-
-	//Warrior T1
+	//Aris T1
 	FOR_LIGHT(0), ROBOTS_INTUITION(1), TEST_SUBJECT(2), ACCEL_ENERGY(3),
-	//Warrior T2
+	//Aris T2
 	IRON_STOMACH(4), RESTORED_WILLPOWER(5), RUNIC_TRANSFERENCE(6), EMPOWERING_MAGIC(7), BALANCE_COLLAPSE(8),
-	//Warrior T3
+	//Aris T3
 	ROBOT_CLEANER(9, 3), STRONGMAN(10, 3),
-	//Berserker T3
+	//SuperNova T3
 	ENERGY_DRAIN(11, 3), PIEZOELECTRICITY(12, 3), HOLYSWORD(13, 3),
-	//Gladiator T3
+	//OverCharge T3
 	INCREASING_OUTPUT(14, 3), OVERCHARGE(15, 3), CHARGE_ACCEL(16, 3),
-	//Heroic Leap T4
-	BODY_SLAM(17, 4), IMPACT_WAVE(18, 4), DOUBLE_JUMP(19, 4),
-	//Shockwave T4
-	EXPANDING_WAVE(20, 4), STRIKING_WAVE(21, 4), SHOCK_FORCE(22, 4),
-	//Endure T4
-	SUSTAINED_RETRIBUTION(23, 4), SHRUG_IT_OFF(24, 4), EVEN_THE_ODDS(25, 4),
+	//Aris Ability 1
+	ARIS_ABIL_11(17, 4), ARIS_ABIL_12(18, 4), ARIS_ABIL_13(19, 4),
+	//Aris Ability 2
+	ARIS_ABIL_21(20, 4), ARIS_ABIL_22(21, 4), ARIS_ABIL_23(22, 4),
+	//Aris Ability 3
+	ARIS_ABIL_31(23, 4), ARIS_ABIL_32(24, 4), ARIS_ABIL_33(25, 4),
 
-	//Mage T1
-	EMPOWERING_MEAL(32), SCHOLARS_INTUITION(33), TESTED_HYPOTHESIS(34), BACKUP_BARRIER(35),
-	//Mage T2
-	ENERGIZING_MEAL(36), ENERGIZING_UPGRADE(37), WAND_PRESERVATION(38), ARCANE_VISION(39), SHIELD_BATTERY(40),
-	//Mage T3
-	EMPOWERING_SCROLLS(41, 3), ALLY_WARP(42, 3),
-	//Battlemage T3
-	EMPOWERED_STRIKE(43, 3), MYSTICAL_CHARGE(44, 3), EXCESS_CHARGE(45, 3),
-	//Warlock T3
-	SOUL_EATER(46, 3), SOUL_SIPHON(47, 3), NECROMANCERS_MINIONS(48, 3),
-	//Elemental Blast T4
-	BLAST_RADIUS(49, 4), ELEMENTAL_POWER(50, 4), REACTIVE_BARRIER(51, 4),
-	//Wild Magic T4
-	WILD_POWER(52, 4), FIRE_EVERYTHING(53, 4), CONSERVED_MAGIC(54, 4),
-	//Warp Beacon T4
-	TELEFRAG(55, 4), REMOTE_BEACON(56, 4), LONGRANGE_WARP(57, 4),
+	//Nonomi T1
+	RESTING(32), MG_INTUITION(33), MAX_HEALTH(34), NO_WAY(35),
+	//Nonomi T2
+	RELOADING_MEAL(36), GOLD_CARD(37), LARGE_MAGAZINE(38), SURPRISE(39), MG_MASTER(40),
+	//Nonomi T3
+	MG_FAST_RELOAD(41, 3), ALLY_WARP(42, 3),
+	//Riot T3
+	RIOT_1(43, 3), RIOT_2(44, 3), RIOT_3(45, 3),
+	//ShootAll T3
+	SHOOTALL_1(46, 3), SHOOTALL_2(47, 3), SHOOTALL_3(48, 3),
+	//Nonomi Ability 1
+	NONOMI_ABIL_11(49, 4), NONOMI_ABIL_12(50, 4), NONOMI_ABIL_13(51, 4),
+	//Nonomi Ability 2
+	NONOMI_ABIL_21(52, 4), NONOMI_ABIL_22(53, 4), NONOMI_ABIL_23(54, 4),
+	//Nonomi Ability 3
+	NONOMI_ABIL_31(55, 4), NONOMI_ABIL_32(56, 4), NONOMI_ABIL_33(57, 4),
 
 	//Rogue T1
 	CACHED_RATIONS(64), THIEFS_INTUITION(65), SUCKER_PUNCH(66), PROTECTIVE_SHADOWS(67),
@@ -174,10 +173,10 @@ public enum Talent {
 	//Ratmogrify T4
 	RATSISTANCE(215, 4), RATLOMACY(216, 4), RATFORCEMENTS(217, 4);
 
-	public static class ImprovisedProjectileCooldown extends FlavourBuff{
+	public static class NoWayCooldown extends FlavourBuff{
 		public int icon() { return BuffIndicator.TIME; }
 		public void tintIcon(Image icon) { icon.hardlight(0.15f, 0.2f, 0.5f); }
-		public float iconFadePercent() { return Math.max(0, visualcooldown() / 50); }
+		public float iconFadePercent() { return Math.max(0, visualcooldown() / 30); }
 	};
 	public static class EmpoweringMagic extends FlavourBuff{
 		public int icon() { return BuffIndicator.UPGRADE; }
@@ -185,8 +184,6 @@ public enum Talent {
 		public float iconFadePercent() { return Math.max(0, 5 - visualcooldown() / 5); }
 	};
 	public static class StrikingWaveTracker extends FlavourBuff{};
-	public static class WandPreservationCounter extends CounterBuff{{revivePersists = true;}};
-	public static class EmpoweredStrikeTracker extends FlavourBuff{};
 	public static class ProtectiveShadowsTracker extends Buff {
 		float barrierInc = 0.5f;
 
@@ -406,6 +403,15 @@ public enum Talent {
 		if (talent == ROBOTS_INTUITION && hero.pointsInTalent(ROBOTS_INTUITION) == 2){
 			if (hero.belongings.armor() != null)  hero.belongings.armor.identify();
 		}
+		if (talent == MAX_HEALTH) {
+			hero.updateHT(true);
+		}
+		if (talent == LARGE_MAGAZINE) {
+			Item.updateQuickslot();
+		}
+
+
+
 		if (talent == THIEFS_INTUITION && hero.pointsInTalent(THIEFS_INTUITION) == 2){
 			if (hero.belongings.ring instanceof Ring) hero.belongings.ring.identify();
 			if (hero.belongings.misc instanceof Ring) hero.belongings.misc.identify();
@@ -466,22 +472,31 @@ public enum Talent {
 	public static class NatureBerriesDropped extends CounterBuff{{revivePersists = true;}};
 
 	public static void onFoodEaten( Hero hero, float foodVal, Item foodSource ){
+		if (hero.hasTalent(RESTING)) {
+			//3/5 HP healed, when hero is below 25% health
+			if (hero.HP <= hero.HT / 4) {
+				hero.HP = Math.min(hero.HP + 1 + 2 * hero.pointsInTalent(RESTING), hero.HT);
+				hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1 + hero.pointsInTalent(RESTING));
+				//2/3 HP healed, when hero is below 50% health
+			} else if (hero.HP <= hero.HT / 2) {
+				hero.HP = Math.min(hero.HP + 1 + hero.pointsInTalent(RESTING), hero.HT);
+				hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), hero.pointsInTalent(RESTING));
+			}
+		}
 		if (hero.hasTalent(IRON_STOMACH)){
 			if (hero.cooldown() > 0) {
 				Buff.affect(hero, WarriorFoodImmunity.class, hero.cooldown());
 			}
 		}
-		if (hero.hasTalent(EMPOWERING_MEAL)){
-			//2/3 bonus wand damage for next 3 zaps
-			Buff.affect( hero, WandEmpower.class).set(1 + hero.pointsInTalent(EMPOWERING_MEAL), 3);
-			ScrollOfRecharging.charge( hero );
+		if (hero.hasTalent(RELOADING_MEAL)) {
+			if (hero.belongings.weapon instanceof Gun) {
+				Gun wep = (Gun)hero.belongings.weapon;
+				wep.manualReload(hero.pointsInTalent(RELOADING_MEAL), true);
+			}
 		}
-		if (hero.hasTalent(ENERGIZING_MEAL)){
-			//5/8 turns of recharging
-			Buff.prolong( hero, Recharging.class, 2 + 3*(hero.pointsInTalent(ENERGIZING_MEAL)) );
-			ScrollOfRecharging.charge( hero );
-			SpellSprite.show(hero, SpellSprite.CHARGE);
-		}
+
+
+
 		if (hero.hasTalent(MYSTICAL_MEAL)){
 			//3/5 turns of recharging
 			ArtifactRecharge buff = Buff.affect( hero, ArtifactRecharge.class);
@@ -521,17 +536,17 @@ public enum Talent {
 		// Affected by both Warrior(1.75x/2.5x) and Duelist(2.5x/inst.) talents
 		if (item instanceof MeleeWeapon){
 			factor *= 1f + 1.5f*hero.pointsInTalent(ADVENTURERS_INTUITION); //instant at +2 (see onItemEquipped)
-			factor *= 1f + 0.75f*hero.pointsInTalent(ROBOTS_INTUITION);
+			factor *= 1f + 1.5f*hero.pointsInTalent(ROBOTS_INTUITION);
 		}
 		// Affected by both Warrior(2.5x/inst.) and Duelist(1.75x/2.5x) talents
 		if (item instanceof Armor){
 			factor *= 1f + 0.75f*hero.pointsInTalent(ADVENTURERS_INTUITION);
-			factor *= 1f + hero.pointsInTalent(ROBOTS_INTUITION); //instant at +2 (see onItemEquipped)
+			factor *= 1f + 1.5f*hero.pointsInTalent(ROBOTS_INTUITION); //instant at +2 (see onItemEquipped)
 		}
 		// 3x/instant for Mage (see Wand.wandUsed())
-		if (item instanceof Wand){
-			factor *= 1f + 2.0f*hero.pointsInTalent(SCHOLARS_INTUITION);
-		}
+//		if (item instanceof Wand){
+//			factor *= 1f + 2.0f*hero.pointsInTalent(SCHOLARS_INTUITION);
+//		}
 		// 2x/instant for Rogue (see onItemEqupped), also id's type on equip/on pickup
 		if (item instanceof Ring){
 			factor *= 1f + hero.pointsInTalent(THIEFS_INTUITION);
@@ -628,7 +643,10 @@ public enum Talent {
 	}
 
 	public static void onItemEquipped( Hero hero, Item item ){
-		if (hero.pointsInTalent(ROBOTS_INTUITION) == 2 && item instanceof Armor){
+		if (hero.pointsInTalent(ROBOTS_INTUITION) == 2 && (item instanceof Armor || item instanceof MeleeWeapon)){
+			item.identify();
+		}
+		if (hero.pointsInTalent(MG_INTUITION) == 2 && item instanceof MG){
 			item.identify();
 		}
 		if (hero.hasTalent(THIEFS_INTUITION) && item instanceof Ring){
@@ -644,6 +662,9 @@ public enum Talent {
 	}
 
 	public static void onItemCollected( Hero hero, Item item ){
+		if (hero.hasTalent(MG_INTUITION)){
+			if (item instanceof MG) item.cursedKnown = true;
+		}
 		if (hero.pointsInTalent(THIEFS_INTUITION) == 2){
 			if (item instanceof Ring) ((Ring) item).setKnown();
 		}
@@ -659,14 +680,20 @@ public enum Talent {
 				if (e != null) e.burst(Speck.factory(Speck.HEALING), hero.pointsInTalent(TEST_SUBJECT));
 			}
 		}
-		if (hero.hasTalent(TESTED_HYPOTHESIS)){
-			//2/3 turns of wand recharging
-			Buff.affect(hero, Recharging.class, 1f + hero.pointsInTalent(TESTED_HYPOTHESIS));
-			ScrollOfRecharging.charge(hero);
-		}
+//		if (hero.hasTalent(TESTED_HYPOTHESIS)){
+//			//2/3 turns of wand recharging
+//			Buff.affect(hero, Recharging.class, 1f + hero.pointsInTalent(TESTED_HYPOTHESIS));
+//			ScrollOfRecharging.charge(hero);
+//		}
 	}
 
 	public static int onAttackProc( Hero hero, Char enemy, int dmg ){
+		if (hero.hasTalent(Talent.SURPRISE)
+				&& enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)
+				&& enemy.buff(SuckerPunchTracker.class) == null){
+			dmg *= 1 + (0.05f*hero.pointsInTalent(Talent.SURPRISE));
+		}
+
 		if (hero.hasTalent(Talent.SUCKER_PUNCH)
 				&& enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)
 				&& enemy.buff(SuckerPunchTracker.class) == null){
@@ -765,7 +792,7 @@ public enum Talent {
 				Collections.addAll(tierTalents, FOR_LIGHT, ROBOTS_INTUITION, TEST_SUBJECT, ACCEL_ENERGY);
 				break;
 			case NONOMI:
-				Collections.addAll(tierTalents, EMPOWERING_MEAL, SCHOLARS_INTUITION, TESTED_HYPOTHESIS, BACKUP_BARRIER);
+				Collections.addAll(tierTalents, RESTING, MG_INTUITION, MAX_HEALTH, NO_WAY);
 				break;
 			case ROGUE:
 				Collections.addAll(tierTalents, CACHED_RATIONS, THIEFS_INTUITION, SUCKER_PUNCH, PROTECTIVE_SHADOWS);
@@ -791,7 +818,7 @@ public enum Talent {
 				Collections.addAll(tierTalents, IRON_STOMACH, RESTORED_WILLPOWER, RUNIC_TRANSFERENCE, EMPOWERING_MAGIC, BALANCE_COLLAPSE);
 				break;
 			case NONOMI:
-				Collections.addAll(tierTalents, ENERGIZING_MEAL, ENERGIZING_UPGRADE, WAND_PRESERVATION, ARCANE_VISION, SHIELD_BATTERY);
+				Collections.addAll(tierTalents, RELOADING_MEAL, GOLD_CARD, LARGE_MAGAZINE, SURPRISE, MG_MASTER);
 				break;
 			case ROGUE:
 				Collections.addAll(tierTalents, MYSTICAL_MEAL, MYSTICAL_UPGRADE, WIDE_SEARCH, SILENT_STEPS, ROGUES_FORESIGHT);
@@ -817,7 +844,7 @@ public enum Talent {
 				Collections.addAll(tierTalents, ROBOT_CLEANER, STRONGMAN);
 				break;
 			case NONOMI:
-				Collections.addAll(tierTalents, EMPOWERING_SCROLLS, ALLY_WARP);
+				Collections.addAll(tierTalents, MG_FAST_RELOAD, ALLY_WARP);
 				break;
 			case ROGUE:
 				Collections.addAll(tierTalents, ENHANCED_RINGS, LIGHT_CLOAK);
@@ -862,11 +889,11 @@ public enum Talent {
 			case ARIS_EX_CHARGE:
 				Collections.addAll(tierTalents, INCREASING_OUTPUT, OVERCHARGE, CHARGE_ACCEL);
 				break;
-			case BATTLEMAGE:
-				Collections.addAll(tierTalents, EMPOWERED_STRIKE, MYSTICAL_CHARGE, EXCESS_CHARGE);
+			case NONOMI_EX_RIOT:
+				Collections.addAll(tierTalents, RIOT_1, RIOT_2, RIOT_3);
 				break;
-			case WARLOCK:
-				Collections.addAll(tierTalents, SOUL_EATER, SOUL_SIPHON, NECROMANCERS_MINIONS);
+			case NONOMI_EX_SHOOTALL:
+				Collections.addAll(tierTalents, SHOOTALL_1, SHOOTALL_2, SHOOTALL_3);
 				break;
 			case ASSASSIN:
 				Collections.addAll(tierTalents, ENHANCED_LETHALITY, ASSASSINS_REACH, BOUNTY_HUNTER);

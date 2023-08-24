@@ -58,7 +58,7 @@ public class Badges {
 		FOUND_RATMOGRIFY,
 
 		//bronze
-		UNLOCK_MAGE                 ( 1 ),
+		UNLOCK_NONOMI               ( 1 ),
 		UNLOCK_ROGUE                ( 2 ),
 		UNLOCK_HUNTRESS             ( 3 ),
 		UNLOCK_DUELIST              ( 4 ),
@@ -853,9 +853,9 @@ public class Badges {
 		unlock(Badge.FOUND_RATMOGRIFY);
 	}
 	
-	public static void validateMageUnlock(){
-		if (Statistics.upgradesUsed >= 1 && !isUnlocked(Badge.UNLOCK_MAGE)){
-			displayBadge( Badge.UNLOCK_MAGE );
+	public static void validateNonomiUnlock(){
+		if (Statistics.MGIdentified && !isUnlocked(Badge.UNLOCK_NONOMI)){
+			displayBadge( Badge.UNLOCK_NONOMI );
 		}
 	}
 	

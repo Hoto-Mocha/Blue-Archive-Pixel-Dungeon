@@ -170,7 +170,7 @@ public class HeroSelectScene extends PixelScene {
 
 		for (HeroClass cl : HeroClass.values()){
 			//TODO IMPORTANT NEED TO BE EDITED WHEN CLASS IS ADDED
-			if (cl == HeroClass.NONOMI) break;
+			if (cl == HeroClass.ROGUE) break;
 
 			HeroBtn button = new HeroBtn(cl);
 			add(button);

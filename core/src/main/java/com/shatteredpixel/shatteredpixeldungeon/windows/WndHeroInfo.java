@@ -174,11 +174,13 @@ public class WndHeroInfo extends WndTabbed {
 				case ARIS: default:
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.SEAL),
 							new ItemSprite(ItemSpriteSheet.WORN_SHORTSWORD),
+							new ItemSprite(ItemSpriteSheet.SUPER_NOVA),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
 				case NONOMI:
-					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.MAGES_STAFF),
-							new ItemSprite(ItemSpriteSheet.WAND_MAGIC_MISSILE),
+					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.SMOKE_GRENADE),
+							new ItemSprite(ItemSpriteSheet.MG_TIER_5),
+							new ItemSprite(ItemSpriteSheet.MG_TIER_1),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
 				case ROGUE:

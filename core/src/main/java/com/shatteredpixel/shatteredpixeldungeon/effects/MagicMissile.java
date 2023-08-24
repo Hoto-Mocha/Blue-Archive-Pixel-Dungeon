@@ -86,7 +86,8 @@ public class MagicMissile extends Emitter {
 	public static final int PURPLE_CONE     = 111;
 	public static final int SPARK_CONE      = 112;
 	public static final int BLOOD_CONE      = 113;
-	
+	public static final int NOTHING_CONE    = 114;
+
 	public void reset( int type, int from, int to, Callback callback ) {
 		reset( type,
 				DungeonTilemap.raisedTileCenterToWorld( from ),
@@ -239,6 +240,9 @@ public class MagicMissile extends Emitter {
 			case BLOOD_CONE:
 				size( 10 );
 				pour( BloodParticle.FACTORY, 0.03f );
+				break;
+			case NOTHING_CONE:
+				size( 10 );
 				break;
 		}
 

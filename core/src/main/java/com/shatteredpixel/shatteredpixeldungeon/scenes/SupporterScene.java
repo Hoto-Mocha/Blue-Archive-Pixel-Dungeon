@@ -86,8 +86,21 @@ public class SupporterScene extends PixelScene {
 		};
 		link.icon(Icons.get(Icons.WARNING));
 		link.textColor(Window.TITLE_COLOR);
-		link.setSize(elementWidth, BTN_HEIGHT);
+		link.setSize(elementWidth/2-GAP/2, BTN_HEIGHT);
 		add(link);
+
+		StyledButton discord = new StyledButton(Chrome.Type.GREY_BUTTON_TR, Messages.get(this, "discord_link")){
+			@Override
+			protected void onClick() {
+				super.onClick();
+				String link = "https://discord.gg/4bd9PN4WkX";
+				ShatteredPixelDungeon.platform.openURI(link);
+			}
+		};
+		discord.icon(Icons.get(Icons.DISCORD));
+		discord.textColor(Window.TITLE_COLOR);
+		discord.setSize(elementWidth/2-GAP/2, BTN_HEIGHT);
+		add(discord);
 
 		float elementHeight = msg.height() + BTN_HEIGHT + GAP;
 
@@ -98,6 +111,7 @@ public class SupporterScene extends PixelScene {
 		align(msg);
 
 		link.setPos(left, msg.bottom()+GAP);
+		discord.setPos(link.right()+GAP, msg.bottom()+GAP);
 		align(link);
 
 	}

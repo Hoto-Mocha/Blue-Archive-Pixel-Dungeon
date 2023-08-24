@@ -28,24 +28,24 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.QuickSlot;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Aris_1;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Aris_2;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Aris_3;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.ElementalStrike;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Feint;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.NaturesPower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.SpectralBlades;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.SpiritHawk;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage.ElementalBlast;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage.WarpBeacon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage.WildMagic;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Nonomi_1;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Nonomi_2;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Nonomi_3;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.DeathMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.ShadowClone;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.SmokeBomb;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Endure;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.HeroicLeap;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Shockwave;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
+import com.shatteredpixel.shatteredpixeldungeon.items.SmokeGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.TengusMask;
 import com.shatteredpixel.shatteredpixeldungeon.items.Waterskin;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
@@ -71,7 +71,10 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dagger;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gloves;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Rapier;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_tier1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_tier5;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingSpike;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingStone;
@@ -81,7 +84,7 @@ import com.watabou.utils.DeviceCompat;
 public enum HeroClass {
 
 	ARIS( HeroSubClass.ARIS_EX_SUPERNOVA, HeroSubClass.ARIS_EX_CHARGE ),
-	NONOMI( HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),
+	NONOMI( HeroSubClass.NONOMI_EX_RIOT, HeroSubClass.NONOMI_EX_SHOOTALL ),
 	ROGUE( HeroSubClass.ASSASSIN, HeroSubClass.FREERUNNER ),
 	HUNTRESS( HeroSubClass.SNIPER, HeroSubClass.WARDEN ),
 	DUELIST( HeroSubClass.CHAMPION, HeroSubClass.MONK );
@@ -112,6 +115,8 @@ public enum HeroClass {
 //		new PotionOfExperience().identify().quantity(30).collect();
 //		new TengusMask().collect();
 //		new ScrollOfUpgrade().identify().quantity(200).collect();
+//		new MG_tier5().collect();
+//		new ScrollOfIdentify().collect();
 //		new ScrollOfTransmutation().identify().quantity(200).collect();
 
 		new ScrollOfIdentify().identify();
@@ -122,7 +127,7 @@ public enum HeroClass {
 				break;
 
 			case NONOMI:
-				initMage( hero );
+				initNonomi( hero );
 				break;
 
 			case ROGUE:
@@ -182,15 +187,17 @@ public enum HeroClass {
 		new ScrollOfRage().identify();
 	}
 
-	private static void initMage( Hero hero ) {
-		MagesStaff staff;
+	private static void initNonomi( Hero hero ) {
+		MG_tier1 machineGun = new MG_tier1();
 
-		staff = new MagesStaff(new WandOfMagicMissile());
-
-		(hero.belongings.weapon = staff).identify();
+		(hero.belongings.weapon = machineGun).identify();
 		hero.belongings.weapon.activate(hero);
 
-		Dungeon.quickslot.setSlot(0, staff);
+		SmokeGrenade grenade = new SmokeGrenade();
+		grenade.collect();
+
+		Dungeon.quickslot.setSlot(0, machineGun);
+		Dungeon.quickslot.setSlot(1, grenade);
 
 		new ScrollOfUpgrade().identify();
 		new PotionOfLiquidFlame().identify();
@@ -259,9 +266,9 @@ public enum HeroClass {
 	public ArmorAbility[] armorAbilities(){
 		switch (this) {
 			case ARIS: default:
-				return new ArmorAbility[]{new HeroicLeap(), new Shockwave(), new Endure()};
+				return new ArmorAbility[]{new Aris_1(), new Aris_2(), new Aris_3()};
 			case NONOMI:
-				return new ArmorAbility[]{new ElementalBlast(), new WildMagic(), new WarpBeacon()};
+				return new ArmorAbility[]{new Nonomi_1(), new Nonomi_2(), new Nonomi_3()};
 			case ROGUE:
 				return new ArmorAbility[]{new SmokeBomb(), new DeathMark(), new ShadowClone()};
 			case HUNTRESS:
@@ -276,7 +283,7 @@ public enum HeroClass {
 			case ARIS: default:
 				return Assets.Sprites.ARIS;
 			case NONOMI:
-				return Assets.Sprites.MAGE;
+				return Assets.Sprites.NONOMI;
 			case ROGUE:
 				return Assets.Sprites.ROGUE;
 			case HUNTRESS:
@@ -291,7 +298,7 @@ public enum HeroClass {
 			case ARIS: default:
 				return Assets.Splashes.ARIS;
 			case NONOMI:
-				return Assets.Splashes.MAGE;
+				return Assets.Splashes.NONOMI;
 			case ROGUE:
 				return Assets.Splashes.ROGUE;
 			case HUNTRESS:
@@ -309,7 +316,7 @@ public enum HeroClass {
 			case ARIS: default:
 				return true;
 			case NONOMI:
-				return Badges.isUnlocked(Badges.Badge.UNLOCK_MAGE);
+				return Badges.isUnlocked(Badges.Badge.UNLOCK_NONOMI);
 			case ROGUE:
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_ROGUE);
 			case HUNTRESS:

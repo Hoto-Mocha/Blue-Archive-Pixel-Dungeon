@@ -854,7 +854,7 @@ public class Badges {
 	}
 	
 	public static void validateNonomiUnlock(){
-		if (Statistics.MGIdentified && !isUnlocked(Badge.UNLOCK_NONOMI)){
+		if (Statistics.nonomiUnlocked && !isUnlocked(Badge.UNLOCK_NONOMI)){
 			displayBadge( Badge.UNLOCK_NONOMI );
 		}
 	}

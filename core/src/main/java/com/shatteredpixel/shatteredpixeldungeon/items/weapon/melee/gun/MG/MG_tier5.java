@@ -10,11 +10,4 @@ public class MG_tier5 extends MG {
         tier = 5;
         image = ItemSpriteSheet.MG_TIER_5;
     }
-
-    @Override
-    public Item identify(boolean byHero ) {
-        Statistics.MGIdentified = true;
-        Badges.validateNonomiUnlock();
-        return super.identify(byHero);
-    }
 }

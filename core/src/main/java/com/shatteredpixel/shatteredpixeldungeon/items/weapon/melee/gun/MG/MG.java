@@ -23,6 +23,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSharpshooting;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
@@ -148,8 +149,8 @@ public class MG extends Gun {
 
     @Override
     public int STRReq(int lvl) {
-        int req = super.STRReq(tier, lvl);
-        if (this.tier < 1 + 2*hero.pointsInTalent(Talent.MG_MASTER)) {
+        int req = super.STRReq(lvl);
+        if (this.tier <= 1 + 2*hero.pointsInTalent(Talent.MG_MASTER)) {
             req--;
         }
         return req;

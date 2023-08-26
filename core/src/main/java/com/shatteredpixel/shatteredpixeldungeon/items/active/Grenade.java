@@ -1,45 +1,25 @@
-package com.shatteredpixel.shatteredpixeldungeon.items;
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
+package com.shatteredpixel.shatteredpixeldungeon.items.active;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.SmokeScreen;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
-import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Shortsword;
-import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
+import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.PathFinder;
 
 import java.util.ArrayList;
 
-public class SmokeGrenade extends Item {
+public class Grenade extends Item {
 
-    private static final String AC_LIGHTTHROW = "LIGHTTHROW";
+    protected static final String AC_LIGHTTHROW = "LIGHTTHROW";
 
-    private int amount;
-    private int max_amount = 3;
+    protected int amount;
+    protected int max_amount;
     public static final String TXT_STATUS = "%d/%d";
 
     {
-        image = ItemSpriteSheet.SMOKE_GRENADE;
-
         defaultAction = AC_LIGHTTHROW;
-
-        amount = maxAmount();
         levelKnown = true;
     }
 
@@ -123,37 +103,19 @@ public class SmokeGrenade extends Item {
         return true;
     }
 
-    public Smoker knockItem(){
-        return new Smoker();
+    public Boomer knockItem(){
+        return new Boomer();
     }
 
-    public class Smoker extends Item {
-        {
-            image = ItemSpriteSheet.SMOKE_GRENADE;
-        }
+    public class Boomer extends Item {
 
         @Override
         protected void onThrow(int cell) {
             activate(cell);
         }
 
+        //needs to be overridden
         protected void activate(int cell) {
-            Sample.INSTANCE.play( Assets.Sounds.BLAST );
-            if (Dungeon.level.heroFOV[cell]) {
-                CellEmitter.center(cell).burst(BlastParticle.FACTORY, 30);
-            }
-            for (int n : PathFinder.NEIGHBOURS9) {
-                int c = cell + n;
-                if (c >= 0 && c < Dungeon.level.length()) {
-                    if (Dungeon.level.map[c] != Terrain.WALL) {
-                        int amount = 10 + Dungeon.depth * 3;
-                        GameScene.add(Blob.seed(c, amount, SmokeScreen.class));
-                    }
-                    if (Dungeon.level.heroFOV[c]) {
-                        CellEmitter.get(c).burst(SmokeParticle.FACTORY, 4);
-                    }
-                }
-            }
         }
 
         @Override
@@ -167,7 +129,7 @@ public class SmokeGrenade extends Item {
         public void onSelect( Integer target ) {
             if (target != null) {
                 knockItem().cast(curUser, target);
-                SmokeGrenade.this.amount--;
+                Grenade.this.amount--;
             }
         }
         @Override

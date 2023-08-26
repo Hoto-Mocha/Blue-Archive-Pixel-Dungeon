@@ -623,18 +623,6 @@ public class v2_X_Changes {
 				"\n" +
 				"_- Wand of Fireblast_ base damage reduced to 1-2 from 1-6 when spending 1 charge, and 2-8 from 2-12 when spending 2 charges. This is to offset the relatively high amount of DOT the wand deals at low levels."));
 
-		changes.addButton( new ChangeButton(HeroSprite.avatar(HeroClass.ROGUE, 6), "Hero Nerfs",
-				"T1 Talents:\n" +
-				"_-_ Warrior's T1 ID talent renamed from _Armsmaster's Intuition_ to _Veteran's Intuition_. The talent now focuses more on armor, to contrast with the Duelist.\n" +
-				"\n" +
-				"Armor Abilities:\n" +
-				"_- Heroic Energy_ lightly nerfed to 12/23/32/40% charge speed boost, from 13/24/34/43%\n" +
-				"\n" +
-				"_- Double Jump_ charge cost reduction down to 16/30/41/50%, from 20/36/50/60%\n" +
-				"\n" +
-				"_- Smoke Bomb_ range down to 6 from 10\n" +
-				"_- Shadow Step_ charge cost reduction down to 16/30/41/50%, from 20/36/50/60%"));
-
 	}
 
 }

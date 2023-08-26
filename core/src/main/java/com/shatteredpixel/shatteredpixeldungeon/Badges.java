@@ -59,7 +59,7 @@ public class Badges {
 
 		//bronze
 		UNLOCK_NONOMI               ( 1 ),
-		UNLOCK_ROGUE                ( 2 ),
+		UNLOCK_MIYAKO               ( 2 ),
 		UNLOCK_HUNTRESS             ( 3 ),
 		UNLOCK_DUELIST              ( 4 ),
 		//UNLOCK_CLERIC             ( 5 ),
@@ -104,9 +104,9 @@ public class Badges {
 		DEATH_FROM_ENEMY_MAGIC      ( 51 ),
 		DEATH_FROM_FRIENDLY_MAGIC   ( 52 ),
 		DEATH_FROM_SACRIFICE        ( 53 ),
-		BOSS_SLAIN_1_WARRIOR,
-		BOSS_SLAIN_1_MAGE,
-		BOSS_SLAIN_1_ROGUE,
+		BOSS_SLAIN_1_ARIS,
+		BOSS_SLAIN_1_NONOMI,
+		BOSS_SLAIN_1_MIYAKO,
 		BOSS_SLAIN_1_HUNTRESS,
 		BOSS_SLAIN_1_DUELIST,
 		BOSS_SLAIN_1_ALL_CLASSES    ( 54, true ),
@@ -151,8 +151,8 @@ public class Badges {
 		ALL_WANDS_IDENTIFIED        ( 101 ),
 		ALL_ITEMS_IDENTIFIED        ( 102, true ),
 		VICTORY_ARIS,
-		VICTORY_MAGE,
-		VICTORY_ROGUE,
+		VICTORY_NONOMI,
+		VICTORY_MIYAKO,
 		VICTORY_HUNTRESS,
 		VICTORY_DUELIST,
 		VICTORY_ALL_CLASSES         ( 103, true ),
@@ -704,9 +704,9 @@ public class Badges {
 
 	private static LinkedHashMap<HeroClass, Badge> firstBossClassBadges = new LinkedHashMap<>();
 	static {
-		firstBossClassBadges.put(HeroClass.ARIS, Badge.BOSS_SLAIN_1_WARRIOR);
-		firstBossClassBadges.put(HeroClass.NONOMI, Badge.BOSS_SLAIN_1_MAGE);
-		firstBossClassBadges.put(HeroClass.ROGUE, Badge.BOSS_SLAIN_1_ROGUE);
+		firstBossClassBadges.put(HeroClass.ARIS, Badge.BOSS_SLAIN_1_ARIS);
+		firstBossClassBadges.put(HeroClass.NONOMI, Badge.BOSS_SLAIN_1_NONOMI);
+		firstBossClassBadges.put(HeroClass.MIYAKO, Badge.BOSS_SLAIN_1_MIYAKO);
 		firstBossClassBadges.put(HeroClass.HUNTRESS, Badge.BOSS_SLAIN_1_HUNTRESS);
 		firstBossClassBadges.put(HeroClass.DUELIST, Badge.BOSS_SLAIN_1_DUELIST);
 	}
@@ -714,8 +714,8 @@ public class Badges {
 	private static LinkedHashMap<HeroClass, Badge> victoryClassBadges = new LinkedHashMap<>();
 	static {
 		victoryClassBadges.put(HeroClass.ARIS, Badge.VICTORY_ARIS);
-		victoryClassBadges.put(HeroClass.NONOMI, Badge.VICTORY_MAGE);
-		victoryClassBadges.put(HeroClass.ROGUE, Badge.VICTORY_ROGUE);
+		victoryClassBadges.put(HeroClass.NONOMI, Badge.VICTORY_NONOMI);
+		victoryClassBadges.put(HeroClass.MIYAKO, Badge.VICTORY_MIYAKO);
 		victoryClassBadges.put(HeroClass.HUNTRESS, Badge.VICTORY_HUNTRESS);
 		victoryClassBadges.put(HeroClass.DUELIST, Badge.VICTORY_DUELIST);
 	}
@@ -835,7 +835,7 @@ public class Badges {
 			case NONOMI:
 				badge = Badge.MASTERY_MAGE;
 				break;
-			case ROGUE:
+			case MIYAKO:
 				badge = Badge.MASTERY_ROGUE;
 				break;
 			case HUNTRESS:
@@ -858,10 +858,10 @@ public class Badges {
 			displayBadge( Badge.UNLOCK_NONOMI );
 		}
 	}
-	
-	public static void validateRogueUnlock(){
-		if (Statistics.sneakAttacks >= 10 && !isUnlocked(Badge.UNLOCK_ROGUE)){
-			displayBadge( Badge.UNLOCK_ROGUE );
+
+	public static void validateMiyakoUnlock(){
+		if (Statistics.miyakoUnlocked && !isUnlocked(Badge.UNLOCK_NONOMI)){
+			displayBadge( Badge.UNLOCK_NONOMI );
 		}
 	}
 	

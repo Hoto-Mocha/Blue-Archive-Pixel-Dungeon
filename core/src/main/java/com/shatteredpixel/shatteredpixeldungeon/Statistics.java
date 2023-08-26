@@ -52,6 +52,7 @@ public class Statistics {
 
 	//used for hero unlock badges
 	public static boolean nonomiUnlocked = false;
+	public static boolean miyakoUnlocked = false;
 
 	public static int upgradesUsed;
 	public static int sneakAttacks;

@@ -152,11 +152,11 @@ public class Wandmaker extends NPC {
 				case ARIS:
 					msg1 += Messages.get(this, "intro_warrior");
 					break;
-				case ROGUE:
-					msg1 += Messages.get(this, "intro_rogue");
-					break;
 				case NONOMI:
 					msg1 += Messages.get(this, "intro_mage", Messages.titleCase(Dungeon.hero.name()));
+					break;
+				case MIYAKO:
+					msg1 += Messages.get(this, "intro_rogue");
 					break;
 				case HUNTRESS:
 					msg1 += Messages.get(this, "intro_huntress");

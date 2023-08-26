@@ -75,10 +75,12 @@ public class HeroIcon extends Image {
 	public static final int WEAPON_SWAP     = 37;
 	public static final int MONK_ABILITIES  = 38;
 
-	public static final int ARIS_EX_SUPERNOVA  	= 40;
-	public static final int ARIS_EX_CHARGE		= 41;
-	public static final int NONOMI_EX_RIOT		= 42;
-	public static final int NONOMI_EX_SHOOTALL	= 43;
+	public static final int ARIS_EX_SUPERNOVA  		= 40;
+	public static final int ARIS_EX_CHARGE			= 41;
+	public static final int NONOMI_EX_RIOT			= 42;
+	public static final int NONOMI_EX_SHOOTALL		= 43;
+	public static final int MIYAKO_EX_STUNDRONE		= 44;
+	public static final int MIYAKO_EX_DRONESTRIKE	= 45;
 
 
 	public static final int ARIS_1			= 64;
@@ -87,6 +89,9 @@ public class HeroIcon extends Image {
 	public static final int NONOMI_1		= 67;
 	public static final int NONOMI_2		= 68;
 	public static final int NONOMI_3		= 69;
+	public static final int MIYAKO_1		= 70;
+	public static final int MIYAKO_2		= 71;
+	public static final int MIYAKO_3		= 72;
 
 
 

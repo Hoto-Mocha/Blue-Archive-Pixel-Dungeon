@@ -117,56 +117,87 @@ public enum Talent {
 	//Nonomi Ability 3
 	NONOMI_ABIL_31(55, 4), NONOMI_ABIL_32(56, 4), NONOMI_ABIL_33(57, 4),
 
+	//Miyako T1
+	RESTING(64), SMG_INTUITION(65), MAX_HEALTH(66), NO_WAY(67),
+	//Miyako T2
+	RELOADING_MEAL(68), GOLD_CARD(69), LARGE_MAGAZINE(70), SURPRISE(71), MG_MASTER(72),
+	//Miyako T3
+	MG_FAST_RELOAD(73, 3), ALLY_WARP(74, 3),
+	//StunDrone T3
+	STUNDRONE_1(75, 3), STUNDRONE_2(76, 3), STUNDRONE_3(77, 3),
+	//DroneStrike T3
+	DRONESTRIKE_1(78, 3), DRONESTRIKE_2(79, 3), DRONESTRIKE_3(80, 3),
+	//Miyako Ability 1
+	MIYAKO_ABIL_11(81, 4), MIYAKO_ABIL_12(82, 4), MIYAKO_ABIL_13(83, 4),
+	//Miyako Ability 2
+	MIYAKO_ABIL_21(84, 4), MIYAKO_ABIL_22(85, 4), MIYAKO_ABIL_23(86, 4),
+	//Miyako Ability 3
+	MIYAKO_ABIL_31(87, 4), MIYAKO_ABIL_32(88, 4), MIYAKO_ABIL_33(89, 4),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	//Rogue T1
-	CACHED_RATIONS(64), THIEFS_INTUITION(65), SUCKER_PUNCH(66), PROTECTIVE_SHADOWS(67),
+	CACHED_RATIONS(-1), THIEFS_INTUITION(-1), SUCKER_PUNCH(-1), PROTECTIVE_SHADOWS(-1),
 	//Rogue T2
-	MYSTICAL_MEAL(68), MYSTICAL_UPGRADE(69), WIDE_SEARCH(70), SILENT_STEPS(71), ROGUES_FORESIGHT(72),
+	MYSTICAL_MEAL(-1), MYSTICAL_UPGRADE(-1), WIDE_SEARCH(-1), SILENT_STEPS(-1), ROGUES_FORESIGHT(-1),
 	//Rogue T3
-	ENHANCED_RINGS(73, 3), LIGHT_CLOAK(74, 3),
+	ENHANCED_RINGS(-1, 3), LIGHT_CLOAK(-1, 3),
 	//Assassin T3
-	ENHANCED_LETHALITY(75, 3), ASSASSINS_REACH(76, 3), BOUNTY_HUNTER(77, 3),
+	ENHANCED_LETHALITY(-1, 3), ASSASSINS_REACH(-1, 3), BOUNTY_HUNTER(-1, 3),
 	//Freerunner T3
-	EVASIVE_ARMOR(78, 3), PROJECTILE_MOMENTUM(79, 3), SPEEDY_STEALTH(80, 3),
+	EVASIVE_ARMOR(-1, 3), PROJECTILE_MOMENTUM(-1, 3), SPEEDY_STEALTH(-1, 3),
 	//Smoke Bomb T4
-	HASTY_RETREAT(81, 4), BODY_REPLACEMENT(82, 4), SHADOW_STEP(83, 4),
+	HASTY_RETREAT(-1, 4), BODY_REPLACEMENT(-1, 4), SHADOW_STEP(-1, 4),
 	//Death Mark T4
-	FEAR_THE_REAPER(84, 4), DEATHLY_DURABILITY(85, 4), DOUBLE_MARK(86, 4),
+	FEAR_THE_REAPER(-1, 4), DEATHLY_DURABILITY(-1, 4), DOUBLE_MARK(-1, 4),
 	//Shadow Clone T4
-	SHADOW_BLADE(87, 4), CLONED_ARMOR(88, 4), PERFECT_COPY(89, 4),
+	SHADOW_BLADE(-1, 4), CLONED_ARMOR(-1, 4), PERFECT_COPY(-1, 4),
 
 	//Huntress T1
-	NATURES_BOUNTY(96), SURVIVALISTS_INTUITION(97), FOLLOWUP_STRIKE(98), NATURES_AID(99),
+	NATURES_BOUNTY(-1), SURVIVALISTS_INTUITION(-1), FOLLOWUP_STRIKE(-1), NATURES_AID(-1),
 	//Huntress T2
-	INVIGORATING_MEAL(100), RESTORED_NATURE(101), REJUVENATING_STEPS(102), HEIGHTENED_SENSES(103), DURABLE_PROJECTILES(104),
+	INVIGORATING_MEAL(-1), RESTORED_NATURE(-1), REJUVENATING_STEPS(-1), HEIGHTENED_SENSES(-1), DURABLE_PROJECTILES(-1),
 	//Huntress T3
-	POINT_BLANK(105, 3), SEER_SHOT(106, 3),
+	POINT_BLANK(-1, 3), SEER_SHOT(-1, 3),
 	//Sniper T3
-	FARSIGHT(107, 3), SHARED_ENCHANTMENT(108, 3), SHARED_UPGRADES(109, 3),
+	FARSIGHT(-1, 3), SHARED_ENCHANTMENT(-1, 3), SHARED_UPGRADES(-1, 3),
 	//Warden T3
-	DURABLE_TIPS(110, 3), BARKSKIN(111, 3), SHIELDING_DEW(112, 3),
+	DURABLE_TIPS(-1, 3), BARKSKIN(-1, 3), SHIELDING_DEW(-1, 3),
 	//Spectral Blades T4
-	FAN_OF_BLADES(113, 4), PROJECTING_BLADES(114, 4), SPIRIT_BLADES(115, 4),
+	FAN_OF_BLADES(-1, 4), PROJECTING_BLADES(-1, 4), SPIRIT_BLADES(-1, 4),
 	//Natures Power T4
-	GROWING_POWER(116, 4), NATURES_WRATH(117, 4), WILD_MOMENTUM(118, 4),
+	GROWING_POWER(-1, 4), NATURES_WRATH(-1, 4), WILD_MOMENTUM(-1, 4),
 	//Spirit Hawk T4
-	EAGLE_EYE(119, 4), GO_FOR_THE_EYES(120, 4), SWIFT_SPIRIT(121, 4),
+	EAGLE_EYE(-1, 4), GO_FOR_THE_EYES(-1, 4), SWIFT_SPIRIT(-1, 4),
 
 	//Duelist T1
-	STRENGTHENING_MEAL(128), ADVENTURERS_INTUITION(129), PATIENT_STRIKE(130), AGGRESSIVE_BARRIER(131),
+	STRENGTHENING_MEAL(-1), ADVENTURERS_INTUITION(-1), PATIENT_STRIKE(-1), AGGRESSIVE_BARRIER(-1),
 	//Duelist T2
-	FOCUSED_MEAL(132), RESTORED_AGILITY(133), WEAPON_RECHARGING(134), LETHAL_HASTE(135), SWIFT_EQUIP(136),
+	FOCUSED_MEAL(-1), RESTORED_AGILITY(-1), WEAPON_RECHARGING(-1), LETHAL_HASTE(-1), SWIFT_EQUIP(-1),
 	//Duelist T3
-	PRECISE_ASSAULT(137, 3), DEADLY_FOLLOWUP(138, 3),
+	PRECISE_ASSAULT(-1, 3), DEADLY_FOLLOWUP(-1, 3),
 	//Champion T3
-	SECONDARY_CHARGE(139, 3), TWIN_UPGRADES(140, 3), COMBINED_LETHALITY(141, 3),
+	SECONDARY_CHARGE(-1, 3), TWIN_UPGRADES(-1, 3), COMBINED_LETHALITY(-1, 3),
 	//Monk T3
-	UNENCUMBERED_SPIRIT(142, 3), MONASTIC_VIGOR(143, 3), COMBINED_ENERGY(144, 3),
+	UNENCUMBERED_SPIRIT(-1, 3), MONASTIC_VIGOR(-1, 3), COMBINED_ENERGY(-1, 3),
 	//Challenge T4
-	CLOSE_THE_GAP(145, 4), INVIGORATING_VICTORY(146, 4), ELIMINATION_MATCH(147, 4),
+	CLOSE_THE_GAP(-1, 4), INVIGORATING_VICTORY(-1, 4), ELIMINATION_MATCH(-1, 4),
 	//Elemental Strike T4
-	ELEMENTAL_REACH(148, 4), STRIKING_FORCE(149, 4), DIRECTED_POWER(150, 4),
+	ELEMENTAL_REACH(-1, 4), STRIKING_FORCE(-1, 4), DIRECTED_POWER(-1, 4),
 	//Duelist A3 T4
-	FEIGNED_RETREAT(151, 4), EXPOSE_WEAKNESS(152, 4), COUNTER_ABILITY(153, 4),
+	FEIGNED_RETREAT(-1, 4), EXPOSE_WEAKNESS(-1, 4), COUNTER_ABILITY(-1, 4),
 
 	//universal T4
 	HEROIC_ENERGY(26, 4), //See icon() and title() for special logic for this one
@@ -361,7 +392,7 @@ public enum Talent {
 					return 26;
 				case NONOMI:
 					return 58;
-				case ROGUE:
+				case MIYAKO:
 					return 90;
 				case HUNTRESS:
 					return 122;
@@ -431,16 +462,6 @@ public enum Talent {
 
 		if (talent == PROTECTIVE_SHADOWS && hero.invisible > 0){
 			Buff.affect(hero, Talent.ProtectiveShadowsTracker.class);
-		}
-
-		if (talent == LIGHT_CLOAK && hero.heroClass == HeroClass.ROGUE){
-			for (Item item : Dungeon.hero.belongings.backpack){
-				if (item instanceof CloakOfShadows){
-					if (hero.buff(LostInventory.class) == null || item.keptThoughLostInvent) {
-						((CloakOfShadows) item).activate(Dungeon.hero);
-					}
-				}
-			}
 		}
 
 		if (talent == HEIGHTENED_SENSES || talent == FARSIGHT){
@@ -608,32 +629,7 @@ public enum Talent {
 	}
 
 	public static void onUpgradeScrollUsed( Hero hero ){
-		//if (hero.hasTalent(ENERGIZING_UPGRADE)){
-		//	if (hero.heroClass == HeroClass.MAGE) {
-		//		MagesStaff staff = hero.belongings.getItem(MagesStaff.class);
-		//		if (staff != null) {
-		//			staff.gainCharge(2 + 2 * hero.pointsInTalent(ENERGIZING_UPGRADE), true);
-		//			ScrollOfRecharging.charge(Dungeon.hero);
-		//			SpellSprite.show(hero, SpellSprite.CHARGE);
-		//		}
-		//	} else {
-		//		Buff.affect(hero, Recharging.class, 4 + 8 * hero.pointsInTalent(ENERGIZING_UPGRADE));
-		//	}
-		//}
-		if (hero.hasTalent(MYSTICAL_UPGRADE)){
-			if (hero.heroClass == HeroClass.ROGUE) {
-				CloakOfShadows cloak = hero.belongings.getItem(CloakOfShadows.class);
-				if (cloak != null) {
-					cloak.overCharge(1 + hero.pointsInTalent(MYSTICAL_UPGRADE));
-					ScrollOfRecharging.charge(Dungeon.hero);
-					SpellSprite.show(hero, SpellSprite.CHARGE, 0, 1, 1);
-				}
-			} else {
-				Buff.affect(hero, ArtifactRecharge.class).set( 2 + 4*hero.pointsInTalent(MYSTICAL_UPGRADE) ).ignoreHornOfPlenty = false;
-				ScrollOfRecharging.charge(Dungeon.hero);
-				SpellSprite.show(hero, SpellSprite.CHARGE, 0, 1, 1);
-			}
-		}
+
 	}
 
 	public static void onArtifactUsed( Hero hero ){
@@ -794,7 +790,7 @@ public enum Talent {
 			case NONOMI:
 				Collections.addAll(tierTalents, RESTING, MG_INTUITION, MAX_HEALTH, NO_WAY);
 				break;
-			case ROGUE:
+			case MIYAKO:
 				Collections.addAll(tierTalents, CACHED_RATIONS, THIEFS_INTUITION, SUCKER_PUNCH, PROTECTIVE_SHADOWS);
 				break;
 			case HUNTRESS:
@@ -820,7 +816,7 @@ public enum Talent {
 			case NONOMI:
 				Collections.addAll(tierTalents, RELOADING_MEAL, GOLD_CARD, LARGE_MAGAZINE, SURPRISE, MG_MASTER);
 				break;
-			case ROGUE:
+			case MIYAKO:
 				Collections.addAll(tierTalents, MYSTICAL_MEAL, MYSTICAL_UPGRADE, WIDE_SEARCH, SILENT_STEPS, ROGUES_FORESIGHT);
 				break;
 			case HUNTRESS:
@@ -846,7 +842,7 @@ public enum Talent {
 			case NONOMI:
 				Collections.addAll(tierTalents, MG_FAST_RELOAD, ALLY_WARP);
 				break;
-			case ROGUE:
+			case MIYAKO:
 				Collections.addAll(tierTalents, ENHANCED_RINGS, LIGHT_CLOAK);
 				break;
 			case HUNTRESS:

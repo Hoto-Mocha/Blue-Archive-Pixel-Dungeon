@@ -85,7 +85,8 @@ public enum HeroClass {
 
 	ARIS( HeroSubClass.ARIS_EX_SUPERNOVA, HeroSubClass.ARIS_EX_CHARGE ),
 	NONOMI( HeroSubClass.NONOMI_EX_RIOT, HeroSubClass.NONOMI_EX_SHOOTALL ),
-	ROGUE( HeroSubClass.ASSASSIN, HeroSubClass.FREERUNNER ),
+	MIYAKO( HeroSubClass.MIYAKO_EX_STUNDRONE, HeroSubClass.MIYAKO_EX_DRONESTRIKE ),
+
 	HUNTRESS( HeroSubClass.SNIPER, HeroSubClass.WARDEN ),
 	DUELIST( HeroSubClass.CHAMPION, HeroSubClass.MONK );
 
@@ -112,12 +113,12 @@ public enum HeroClass {
 		Waterskin waterskin = new Waterskin();
 		waterskin.collect();
 
-//		new PotionOfExperience().identify().quantity(30).collect();
-//		new TengusMask().collect();
-//		new ScrollOfUpgrade().identify().quantity(200).collect();
-//		new MG_tier5().collect();
-//		new ScrollOfIdentify().collect();
-//		new ScrollOfTransmutation().identify().quantity(200).collect();
+		new PotionOfExperience().identify().quantity(30).collect();
+		new TengusMask().collect();
+		new ScrollOfUpgrade().identify().quantity(200).collect();
+		new MG_tier5().collect();
+		new ScrollOfIdentify().collect();
+		new ScrollOfTransmutation().identify().quantity(200).collect();
 
 		new ScrollOfIdentify().identify();
 
@@ -130,8 +131,8 @@ public enum HeroClass {
 				initNonomi( hero );
 				break;
 
-			case ROGUE:
-				initRogue( hero );
+			case MIYAKO:
+				initMiyako( hero );
 				break;
 
 			case HUNTRESS:
@@ -160,7 +161,7 @@ public enum HeroClass {
 				return Badges.Badge.MASTERY_WARRIOR;
 			case NONOMI:
 				return Badges.Badge.MASTERY_MAGE;
-			case ROGUE:
+			case MIYAKO:
 				return Badges.Badge.MASTERY_ROGUE;
 			case HUNTRESS:
 				return Badges.Badge.MASTERY_HUNTRESS;
@@ -203,7 +204,7 @@ public enum HeroClass {
 		new PotionOfLiquidFlame().identify();
 	}
 
-	private static void initRogue( Hero hero ) {
+	private static void initMiyako( Hero hero ) {
 		(hero.belongings.weapon = new Dagger()).identify();
 
 		CloakOfShadows cloak = new CloakOfShadows();
@@ -269,7 +270,7 @@ public enum HeroClass {
 				return new ArmorAbility[]{new Aris_1(), new Aris_2(), new Aris_3()};
 			case NONOMI:
 				return new ArmorAbility[]{new Nonomi_1(), new Nonomi_2(), new Nonomi_3()};
-			case ROGUE:
+			case MIYAKO:
 				return new ArmorAbility[]{new SmokeBomb(), new DeathMark(), new ShadowClone()};
 			case HUNTRESS:
 				return new ArmorAbility[]{new SpectralBlades(), new NaturesPower(), new SpiritHawk()};
@@ -284,8 +285,8 @@ public enum HeroClass {
 				return Assets.Sprites.ARIS;
 			case NONOMI:
 				return Assets.Sprites.NONOMI;
-			case ROGUE:
-				return Assets.Sprites.ROGUE;
+			case MIYAKO:
+				return Assets.Sprites.MIYAKO;
 			case HUNTRESS:
 				return Assets.Sprites.HUNTRESS;
 			case DUELIST:
@@ -299,7 +300,7 @@ public enum HeroClass {
 				return Assets.Splashes.ARIS;
 			case NONOMI:
 				return Assets.Splashes.NONOMI;
-			case ROGUE:
+			case MIYAKO:
 				return Assets.Splashes.ROGUE;
 			case HUNTRESS:
 				return Assets.Splashes.HUNTRESS;
@@ -317,8 +318,8 @@ public enum HeroClass {
 				return true;
 			case NONOMI:
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_NONOMI);
-			case ROGUE:
-				return Badges.isUnlocked(Badges.Badge.UNLOCK_ROGUE);
+			case MIYAKO:
+				return Badges.isUnlocked(Badges.Badge.UNLOCK_MIYAKO);
 			case HUNTRESS:
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_HUNTRESS);
 			case DUELIST:

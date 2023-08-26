@@ -106,11 +106,11 @@ abstract public class ClassArmor extends Armor {
 					classArmor.affixSeal(seal);
 				}
 				break;
-			case ROGUE:
-				classArmor = new RogueArmor();
-				break;
 			case NONOMI:
 				classArmor = new MageArmor();
+				break;
+			case MIYAKO:
+				classArmor = new RogueArmor();
 				break;
 			case HUNTRESS:
 				classArmor = new HuntressArmor();

@@ -46,6 +46,7 @@ public enum Icons {
 	STAIRS,
 	HERO_ARIS,
 	HERO_NONOMI,
+	HERO_MIYAKO,
 	ROGUE,
 	HUNTRESS,
 	DUELIST,
@@ -170,8 +171,8 @@ public enum Icons {
 			case HERO_NONOMI:
 				icon.frame( icon.texture.uvRectBySize( 32, 16, 12, 12 ) );
 				break;
-			case ROGUE:
-				icon.frame( icon.texture.uvRectBySize( 48, 16, 9, 15 ) );
+			case HERO_MIYAKO:
+				icon.frame( icon.texture.uvRectBySize( 48, 16, 12, 12 ) );
 				break;
 			case HUNTRESS:
 				icon.frame( icon.texture.uvRectBySize( 64, 16, 16, 16 ) );
@@ -410,8 +411,8 @@ public enum Icons {
 				return get( Icons.HERO_ARIS );
 			case NONOMI:
 				return get( Icons.HERO_NONOMI );
-			case ROGUE:
-				return get( Icons.ROGUE );
+			case MIYAKO:
+				return get( Icons.HERO_MIYAKO );
 			case HUNTRESS:
 				return get( Icons.HUNTRESS );
 			case DUELIST:

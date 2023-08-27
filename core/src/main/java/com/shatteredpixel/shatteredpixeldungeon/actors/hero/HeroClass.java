@@ -193,26 +193,33 @@ public enum HeroClass {
 	}
 
 	private static void initNonomi( Hero hero ) {
-		MG_tier1 machineGun = new MG_tier1();
+		MG_tier1 mg = new MG_tier1();
 
-		(hero.belongings.weapon = machineGun).identify();
+		(hero.belongings.weapon = mg).identify();
 		hero.belongings.weapon.activate(hero);
 
-		SmokeGrenade grenade = new SmokeGrenade();
-		grenade.collect();
+		SmokeGrenade smokeGrenade = new SmokeGrenade();
+		smokeGrenade.collect();
 
-		Dungeon.quickslot.setSlot(0, machineGun);
-		Dungeon.quickslot.setSlot(1, grenade);
+		ThrowingKnife knives = new ThrowingKnife();
+		knives.quantity(3).collect();
+
+		Dungeon.quickslot.setSlot(0, mg);
+		Dungeon.quickslot.setSlot(1, smokeGrenade);
+		Dungeon.quickslot.setSlot(2, knives);
 
 		new ScrollOfUpgrade().identify();
 		new PotionOfLiquidFlame().identify();
 	}
 
 	private static void initMiyako( Hero hero ) {
-		(hero.belongings.weapon = new SMG_tier1()).identify();
+		SMG_tier1 smg = new SMG_tier1();
 
-		HandGrenade grenade = new HandGrenade();
-		grenade.collect();
+		(hero.belongings.weapon = smg).identify();
+		hero.belongings.weapon.activate(hero);
+
+		HandGrenade handGrenade = new HandGrenade();
+		handGrenade.collect();
 
 		Claymore claymore = new Claymore();
 		claymore.collect();
@@ -220,9 +227,10 @@ public enum HeroClass {
 		ThrowingKnife knives = new ThrowingKnife();
 		knives.quantity(3).collect();
 
-		Dungeon.quickslot.setSlot(0, grenade);
-		Dungeon.quickslot.setSlot(1, claymore);
-		Dungeon.quickslot.setSlot(2, knives);
+		Dungeon.quickslot.setSlot(0, smg);
+		Dungeon.quickslot.setSlot(1, handGrenade);
+		Dungeon.quickslot.setSlot(2, claymore);
+		Dungeon.quickslot.setSlot(3, knives);
 
 		new ScrollOfMagicMapping().identify();
 		new PotionOfInvisibility().identify();

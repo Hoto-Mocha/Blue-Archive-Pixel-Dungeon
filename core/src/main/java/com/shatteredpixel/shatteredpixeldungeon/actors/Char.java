@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
@@ -51,6 +53,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Fury;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hex;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LifeLink;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicalSleep;
@@ -381,7 +384,7 @@ public abstract class Char extends Actor {
 			if (this instanceof Hero) {
 				Hero h = (Hero) this;
 				if (h.belongings.attackingWeapon() instanceof Gun.Bullet &&
-						h.heroClass == HeroClass.NONOMI &&
+						(h.heroClass == HeroClass.NONOMI || h.heroClass == HeroClass.MIYAKO) &&
 						enemy.properties.contains(Property.INORGANIC)) {
 					dmg *= 1.5f;
 				}
@@ -495,6 +498,15 @@ public abstract class Char extends Actor {
 			return true;
 			
 		} else {
+
+			if (hero.hasTalent(Talent.TACTICAL_MOVE)) {
+				if (enemy instanceof Hero && Random.Float() < 0.25f*hero.pointsInTalent(Talent.TACTICAL_MOVE)) {
+					Item weapon = hero.belongings.weapon;
+					if (weapon instanceof Gun) {
+						((Gun) weapon).manualReload();
+					}
+				}
+			}
 
 			enemy.sprite.showStatus( CharSprite.NEUTRAL, enemy.defenseVerb() );
 			if (visibleFight) {

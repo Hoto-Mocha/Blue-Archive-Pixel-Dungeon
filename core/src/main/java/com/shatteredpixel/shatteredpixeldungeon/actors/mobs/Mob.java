@@ -37,14 +37,14 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corruption;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DroneStrikeCooldown;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MindVision;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MonkEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Preparation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Sleep;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SoulMark;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.StunDroneCooldown;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
@@ -52,14 +52,13 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Feint;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.DirectableAlly;
-import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Surprise;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Wound;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.SmokeGrenade;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Claymore;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.HandGrenade;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.SmokeGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.MasterThievesArmband;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
@@ -669,7 +668,6 @@ public abstract class Mob extends Char {
 		
 		if (surprisedBy(enemy)) {
 			Statistics.sneakAttacks++;
-			Badges.validateRogueUnlock();
 			//TODO this is somewhat messy, it would be nicer to not have to manually handle delays here
 			// playing the strong hit sound might work best as another property of weapon?
 			if (Dungeon.hero.belongings.attackingWeapon() instanceof SpiritBow.SpiritArrow
@@ -825,9 +823,41 @@ public abstract class Mob extends Char {
 			GLog.i( Messages.get(this, "died") );
 		}
 
-		SmokeGrenade item = Dungeon.hero.belongings.getItem(SmokeGrenade.class);
-		if (cause == Dungeon.hero && item != null && Random.Float() < 0.25f) {
-			item.reload();
+		SmokeGrenade smoke = Dungeon.hero.belongings.getItem(SmokeGrenade.class);
+		if (cause == Dungeon.hero && smoke != null && Random.Float() < 0.25f) {
+			smoke.reload();
+		}
+
+		HandGrenade grenade = Dungeon.hero.belongings.getItem(HandGrenade.class);
+		if (cause == Dungeon.hero && grenade != null && Random.Float() < 0.20f+0.05f*Dungeon.hero.pointsInTalent(Talent.SUPPLY)) {
+			grenade.reload();
+		}
+
+		Claymore claymore = Dungeon.hero.belongings.getItem(Claymore.class);
+		if (cause == Dungeon.hero && claymore != null && Random.Float() < 0.125f+0.025f*Dungeon.hero.pointsInTalent(Talent.SUPPLY)) {
+			claymore.reload();
+		}
+
+		StunDroneCooldown stunDroneCooldown = Dungeon.hero.buff(StunDroneCooldown.class);
+		if (stunDroneCooldown != null) {
+			stunDroneCooldown.kill();
+		}
+
+		DroneStrikeCooldown droneStrikeCooldown = Dungeon.hero.buff(DroneStrikeCooldown.class);
+		if (droneStrikeCooldown != null) {
+			droneStrikeCooldown.kill();
+		}
+
+
+		if (cause == Dungeon.hero) {
+			if (!Statistics.nonomiUnlocked) {
+				Statistics.nonomiUnlocked = true;
+				Badges.validateNonomiUnlock();
+			}
+			if (!Statistics.miyakoUnlocked) {
+				Statistics.miyakoUnlocked = true;
+				Badges.validateMiyakoUnlock();
+			}
 		}
 
 		super.die( cause );

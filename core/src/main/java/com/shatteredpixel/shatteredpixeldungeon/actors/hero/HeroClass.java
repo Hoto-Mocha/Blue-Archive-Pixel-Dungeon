@@ -37,6 +37,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Fe
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.NaturesPower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.SpectralBlades;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.SpiritHawk;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.Miyako_1;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.Miyako_2;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.Miyako_3;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Nonomi_1;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Nonomi_2;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Nonomi_3;
@@ -45,7 +48,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.Shad
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.SmokeBomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.SmokeGrenade;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Claymore;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.HandGrenade;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.SmokeGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.TengusMask;
 import com.shatteredpixel.shatteredpixeldungeon.items.Waterskin;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
@@ -65,16 +70,15 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMirrorImag
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRage;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dagger;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gloves;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Rapier;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_tier1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_tier5;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_tier1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingSpike;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingStone;
@@ -113,12 +117,12 @@ public enum HeroClass {
 		Waterskin waterskin = new Waterskin();
 		waterskin.collect();
 
-		new PotionOfExperience().identify().quantity(30).collect();
-		new TengusMask().collect();
-		new ScrollOfUpgrade().identify().quantity(200).collect();
-		new MG_tier5().collect();
-		new ScrollOfIdentify().collect();
-		new ScrollOfTransmutation().identify().quantity(200).collect();
+//		new PotionOfExperience().identify().quantity(30).collect();
+//		new TengusMask().collect();
+//		new ScrollOfUpgrade().identify().quantity(200).collect();
+//		new MG_tier5().collect();
+//		new ScrollOfIdentify().collect();
+//		new ScrollOfTransmutation().identify().quantity(200).collect();
 
 		new ScrollOfIdentify().identify();
 
@@ -158,11 +162,11 @@ public enum HeroClass {
 	public Badges.Badge masteryBadge() {
 		switch (this) {
 			case ARIS:
-				return Badges.Badge.MASTERY_WARRIOR;
+				return Badges.Badge.MASTERY_ARIS;
 			case NONOMI:
-				return Badges.Badge.MASTERY_MAGE;
+				return Badges.Badge.MASTERY_NONOMI;
 			case MIYAKO:
-				return Badges.Badge.MASTERY_ROGUE;
+				return Badges.Badge.MASTERY_MIYAKO;
 			case HUNTRESS:
 				return Badges.Badge.MASTERY_HUNTRESS;
 			case DUELIST:
@@ -205,17 +209,20 @@ public enum HeroClass {
 	}
 
 	private static void initMiyako( Hero hero ) {
-		(hero.belongings.weapon = new Dagger()).identify();
+		(hero.belongings.weapon = new SMG_tier1()).identify();
 
-		CloakOfShadows cloak = new CloakOfShadows();
-		(hero.belongings.artifact = cloak).identify();
-		hero.belongings.artifact.activate( hero );
+		HandGrenade grenade = new HandGrenade();
+		grenade.collect();
+
+		Claymore claymore = new Claymore();
+		claymore.collect();
 
 		ThrowingKnife knives = new ThrowingKnife();
 		knives.quantity(3).collect();
 
-		Dungeon.quickslot.setSlot(0, cloak);
-		Dungeon.quickslot.setSlot(1, knives);
+		Dungeon.quickslot.setSlot(0, grenade);
+		Dungeon.quickslot.setSlot(1, claymore);
+		Dungeon.quickslot.setSlot(2, knives);
 
 		new ScrollOfMagicMapping().identify();
 		new PotionOfInvisibility().identify();
@@ -271,7 +278,7 @@ public enum HeroClass {
 			case NONOMI:
 				return new ArmorAbility[]{new Nonomi_1(), new Nonomi_2(), new Nonomi_3()};
 			case MIYAKO:
-				return new ArmorAbility[]{new SmokeBomb(), new DeathMark(), new ShadowClone()};
+				return new ArmorAbility[]{new Miyako_1(), new Miyako_2(), new Miyako_3()};
 			case HUNTRESS:
 				return new ArmorAbility[]{new SpectralBlades(), new NaturesPower(), new SpiritHawk()};
 			case DUELIST:
@@ -301,7 +308,7 @@ public enum HeroClass {
 			case NONOMI:
 				return Assets.Splashes.NONOMI;
 			case MIYAKO:
-				return Assets.Splashes.ROGUE;
+				return Assets.Splashes.MIYAKO;
 			case HUNTRESS:
 				return Assets.Splashes.HUNTRESS;
 			case DUELIST:

@@ -53,8 +53,10 @@ public class Grenade extends Item {
 
         if (action.equals(AC_LIGHTTHROW)) {
             if (amount > 0) {
+                usesTargeting = true;
                 GameScene.selectCell( thrower );
             } else {
+                usesTargeting = false;
                 GLog.w(Messages.get(this, "no_left"));
             }
         }

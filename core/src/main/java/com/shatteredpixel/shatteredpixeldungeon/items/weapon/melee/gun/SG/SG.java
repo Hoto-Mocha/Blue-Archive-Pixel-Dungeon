@@ -33,5 +33,7 @@ public class SG extends Gun {
         {
             image = ItemSpriteSheet.TRIPLE_BULLET;
         }
+
+
     }
 }

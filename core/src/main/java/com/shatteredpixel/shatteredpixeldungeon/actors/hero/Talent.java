@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ConfusionGas;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
@@ -39,6 +40,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PhysicalEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RevealedArea;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WandEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.Ratmogrify;
@@ -63,6 +65,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
@@ -118,11 +121,11 @@ public enum Talent {
 	NONOMI_ABIL_31(55, 4), NONOMI_ABIL_32(56, 4), NONOMI_ABIL_33(57, 4),
 
 	//Miyako T1
-	RESTING(64), SMG_INTUITION(65), MAX_HEALTH(66), NO_WAY(67),
+	PLATE_ADD(64), SMG_INTUITION(65), SUPPLY(66), DISTURB(67),
 	//Miyako T2
-	RELOADING_MEAL(68), GOLD_CARD(69), LARGE_MAGAZINE(70), SURPRISE(71), MG_MASTER(72),
+	TACTICAL_MEAL(68), INTELLIGENCE(69), CQC(70), TACTICAL_MOVE(71), SMG_MASTER(72),
 	//Miyako T3
-	MG_FAST_RELOAD(73, 3), ALLY_WARP(74, 3),
+	SMG_FAST_RELOAD(73, 3), RABBIT_OPEN_UP(74, 3),
 	//StunDrone T3
 	STUNDRONE_1(75, 3), STUNDRONE_2(76, 3), STUNDRONE_3(77, 3),
 	//DroneStrike T3
@@ -252,6 +255,7 @@ public enum Talent {
 			barrierInc = bundle.getFloat( BARRIER_INC );
 		}
 	}
+
 	public static class BountyHunterTracker extends FlavourBuff{};
 	public static class RejuvenatingStepsCooldown extends FlavourBuff{
 		public int icon() { return BuffIndicator.TIME; }
@@ -366,6 +370,12 @@ public enum Talent {
 	}
 	public static class CounterAbilityTacker extends FlavourBuff{};
 
+	public static class ScanCooldown extends FlavourBuff{
+		public int icon() { return BuffIndicator.TIME; }
+		public void tintIcon(Image icon) { icon.hardlight( 0xFFC4E5 ); }
+		public float iconFadePercent() { return Math.max(0, 1f - (visualcooldown() / 60-10*Dungeon.hero.pointsInTalent(Talent.DRONESTRIKE_2))); }
+	};
+
 	int icon;
 	int maxPoints;
 
@@ -464,7 +474,7 @@ public enum Talent {
 			Buff.affect(hero, Talent.ProtectiveShadowsTracker.class);
 		}
 
-		if (talent == HEIGHTENED_SENSES || talent == FARSIGHT){
+		if (talent == INTELLIGENCE || talent == FARSIGHT){
 			Dungeon.observe();
 		}
 
@@ -515,8 +525,9 @@ public enum Talent {
 				wep.manualReload(hero.pointsInTalent(RELOADING_MEAL), true);
 			}
 		}
-
-
+		if (hero.hasTalent(TACTICAL_MEAL)) {
+			Buff.affect(hero, Barrier.class).incShield(Math.round(hero.HT/10f*hero.pointsInTalent(Talent.TACTICAL_MEAL)));
+		}
 
 		if (hero.hasTalent(MYSTICAL_MEAL)){
 			//3/5 turns of recharging
@@ -645,6 +656,9 @@ public enum Talent {
 		if (hero.pointsInTalent(MG_INTUITION) == 2 && item instanceof MG){
 			item.identify();
 		}
+		if (hero.pointsInTalent(SMG_INTUITION) == 2 && item instanceof SMG){
+			item.identify();
+		}
 		if (hero.hasTalent(THIEFS_INTUITION) && item instanceof Ring){
 			if (hero.pointsInTalent(THIEFS_INTUITION) == 2){
 				item.identify();
@@ -660,6 +674,9 @@ public enum Talent {
 	public static void onItemCollected( Hero hero, Item item ){
 		if (hero.hasTalent(MG_INTUITION)){
 			if (item instanceof MG) item.cursedKnown = true;
+		}
+		if (hero.hasTalent(SMG_INTUITION)){
+			if (item instanceof SMG) item.cursedKnown = true;
 		}
 		if (hero.pointsInTalent(THIEFS_INTUITION) == 2){
 			if (item instanceof Ring) ((Ring) item).setKnown();
@@ -688,6 +705,11 @@ public enum Talent {
 				&& enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)
 				&& enemy.buff(SuckerPunchTracker.class) == null){
 			dmg *= 1 + (0.05f*hero.pointsInTalent(Talent.SURPRISE));
+		}
+
+		if (hero.hasTalent(Talent.DISTURB)
+				&& enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)){
+			Buff.prolong(enemy, Vertigo.class, 1+hero.pointsInTalent(Talent.DISTURB));
 		}
 
 		if (hero.hasTalent(Talent.SUCKER_PUNCH)
@@ -791,7 +813,7 @@ public enum Talent {
 				Collections.addAll(tierTalents, RESTING, MG_INTUITION, MAX_HEALTH, NO_WAY);
 				break;
 			case MIYAKO:
-				Collections.addAll(tierTalents, CACHED_RATIONS, THIEFS_INTUITION, SUCKER_PUNCH, PROTECTIVE_SHADOWS);
+				Collections.addAll(tierTalents, PLATE_ADD, SMG_INTUITION, SUPPLY, DISTURB);
 				break;
 			case HUNTRESS:
 				Collections.addAll(tierTalents, NATURES_BOUNTY, SURVIVALISTS_INTUITION, FOLLOWUP_STRIKE, NATURES_AID);
@@ -817,7 +839,7 @@ public enum Talent {
 				Collections.addAll(tierTalents, RELOADING_MEAL, GOLD_CARD, LARGE_MAGAZINE, SURPRISE, MG_MASTER);
 				break;
 			case MIYAKO:
-				Collections.addAll(tierTalents, MYSTICAL_MEAL, MYSTICAL_UPGRADE, WIDE_SEARCH, SILENT_STEPS, ROGUES_FORESIGHT);
+				Collections.addAll(tierTalents, TACTICAL_MEAL, INTELLIGENCE, CQC, TACTICAL_MOVE, SMG_MASTER);
 				break;
 			case HUNTRESS:
 				Collections.addAll(tierTalents, INVIGORATING_MEAL, RESTORED_NATURE, REJUVENATING_STEPS, HEIGHTENED_SENSES, DURABLE_PROJECTILES);
@@ -843,7 +865,7 @@ public enum Talent {
 				Collections.addAll(tierTalents, MG_FAST_RELOAD, ALLY_WARP);
 				break;
 			case MIYAKO:
-				Collections.addAll(tierTalents, ENHANCED_RINGS, LIGHT_CLOAK);
+				Collections.addAll(tierTalents, SMG_FAST_RELOAD, RABBIT_OPEN_UP);
 				break;
 			case HUNTRESS:
 				Collections.addAll(tierTalents, POINT_BLANK, SEER_SHOT);
@@ -890,6 +912,12 @@ public enum Talent {
 				break;
 			case NONOMI_EX_SHOOTALL:
 				Collections.addAll(tierTalents, SHOOTALL_1, SHOOTALL_2, SHOOTALL_3);
+				break;
+			case MIYAKO_EX_STUNDRONE:
+				Collections.addAll(tierTalents, STUNDRONE_1, STUNDRONE_2, STUNDRONE_3);
+				break;
+			case MIYAKO_EX_DRONESTRIKE:
+				Collections.addAll(tierTalents, DRONESTRIKE_1, DRONESTRIKE_2, DRONESTRIKE_3);
 				break;
 			case ASSASSIN:
 				Collections.addAll(tierTalents, ENHANCED_LETHALITY, ASSASSINS_REACH, BOUNTY_HUNTER);

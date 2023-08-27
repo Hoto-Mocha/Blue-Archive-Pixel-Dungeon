@@ -75,13 +75,31 @@ public class HeroIcon extends Image {
 	public static final int WEAPON_SWAP     = 37;
 	public static final int MONK_ABILITIES  = 38;
 
+	//new subclasses
 	public static final int ARIS_EX_SUPERNOVA  		= 40;
 	public static final int ARIS_EX_CHARGE			= 41;
 	public static final int NONOMI_EX_RIOT			= 42;
 	public static final int NONOMI_EX_SHOOTALL		= 43;
 	public static final int MIYAKO_EX_STUNDRONE		= 44;
 	public static final int MIYAKO_EX_DRONESTRIKE	= 45;
-
+//	public static final int 						= 46;
+//	public static final int 						= 47;
+//	public static final int 						= 48;
+//	public static final int 						= 49;
+//	public static final int 						= 50;
+//	public static final int 						= 51;
+//	public static final int 						= 52;
+//	public static final int 						= 53;
+//	public static final int 						= 54;
+//	public static final int 						= 55;
+//	public static final int 						= 56;
+//	public static final int 						= 57;
+//	public static final int 						= 58;
+//	public static final int 						= 59;
+//	public static final int 						= 60;
+//	public static final int 						= 61;
+//	public static final int 						= 62;
+//	public static final int 						= 63;
 
 	public static final int ARIS_1			= 64;
 	public static final int ARIS_2			= 65;
@@ -92,6 +110,36 @@ public class HeroIcon extends Image {
 	public static final int MIYAKO_1		= 70;
 	public static final int MIYAKO_2		= 71;
 	public static final int MIYAKO_3		= 72;
+//	public static final int 				= 73;
+//	public static final int 				= 74;
+//	public static final int 				= 75;
+//	public static final int 				= 76;
+//	public static final int 				= 77;
+//	public static final int 				= 78;
+//	public static final int 				= 79;
+//	public static final int 				= 80;
+//	public static final int 				= 81;
+//	public static final int 				= 82;
+//	public static final int 				= 83;
+//	public static final int 				= 84;
+//	public static final int 				= 85;
+//	public static final int 				= 86;
+//	public static final int 				= 87;
+//	public static final int 				= 88;
+//	public static final int 				= 89;
+//	public static final int 				= 90;
+//	public static final int 				= 91;
+//	public static final int 				= 92;
+//	public static final int 				= 93;
+//	public static final int 				= 94;
+//	public static final int 				= 95;
+//	public static final int 				= 96;
+
+	//new abilities
+	public static final int STUNDRONE		= 97;
+	public static final int DRONESTRIKE		= 98;
+
+
 
 
 

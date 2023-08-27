@@ -153,7 +153,7 @@ public class SuperNova extends MeleeWeapon {
         public void onSelect( Integer target ) {
             if (target != null) {
                 if (target == curUser.pos) {
-                    hero.yellP(Messages.get(Hero.class, "aris_cannot_self"));
+                    hero.yellW(Messages.get(Hero.class, "aris_cannot_self"));
 
                 } else {
 
@@ -266,7 +266,7 @@ public class SuperNova extends MeleeWeapon {
                     curUser.sprite.zap(target);
                     int cell = beam.path.get(Math.min(beam.dist, maxDistance));
                     curUser.sprite.parent.add(new Beam.DeathRay(curUser.sprite.center(), DungeonTilemap.raisedTileCenterToWorld( cell )));
-                    Dungeon.hero.yellP(Messages.get(Hero.class, "aris_supernova_" + (Random.Int(3)+1)));
+                    Dungeon.hero.yellI(Messages.get(Hero.class, "aris_supernova_" + (Random.Int(3)+1)));
 
                     Buff.affect(hero, SuperNovaCooldown.class).set(coolDown());
 
@@ -387,7 +387,7 @@ public class SuperNova extends MeleeWeapon {
             if (chargeLevel < 3) {
                 if (time >= turnsToCharge) {
                     chargeLevel++;
-                    Dungeon.hero.yellP(Messages.get(Hero.class, "aris_supernova_charge_" + chargeLevel));
+                    Dungeon.hero.yellP(Messages.get(Hero.class, hero.heroClass.name() + "_supernova_charge_" + chargeLevel));
                     time = 0;
                 }
             } else {
@@ -537,7 +537,7 @@ public class SuperNova extends MeleeWeapon {
 
         @Override
         public void detach() {
-            Dungeon.hero.yellP(Messages.get(Hero.class, "aris_supernova_ready_" + (Random.Int(3)+1)));
+            Dungeon.hero.yellP(Messages.get(Hero.class, hero.heroClass.name() + "_supernova_ready_" + (Random.Int(3)+1)));
             if (hero.subClass == HeroSubClass.ARIS_EX_CHARGE) {
                 Buff.affect(hero, SuperNovaCharge.class);
             }

@@ -227,7 +227,7 @@ public class Assets {
 	public static class Splashes {
 		public static final String ARIS  	= "splashes/aris.jpg";
 		public static final String NONOMI   = "splashes/nonomi.jpg";
-		public static final String ROGUE    = "splashes/rogue.jpg";
+		public static final String MIYAKO   = "splashes/miyako.jpg";
 		public static final String HUNTRESS = "splashes/huntress.jpg";
 		public static final String DUELIST  = "splashes/duelist.jpg";
 	}

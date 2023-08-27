@@ -1,27 +1,22 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.active;
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.SmokeScreen;
-import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlashGrenade;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
-import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.PathFinder;
 
 import java.util.ArrayList;
 
 public class HandGrenade extends Grenade {
+
+    private static ItemSprite.Glowing WHITE = new ItemSprite.Glowing( 0xFFFFFF, 0.5f );
 
     {
         image = ItemSpriteSheet.HAND_GRENADE;
@@ -40,6 +35,15 @@ public class HandGrenade extends Grenade {
     }
 
     @Override
+    public ItemSprite.Glowing glowing() {
+        if (hero.buff(FlashGrenade.class) != null) {
+            return WHITE;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
     public Boomer knockItem(){
         return new Blaster();
     }
@@ -52,6 +56,20 @@ public class HandGrenade extends Grenade {
         @Override
         protected void activate(int cell) {
             new Bomb.MagicalBomb().explode(cell);
+            ArrayList<Char> targets = new ArrayList<>();
+            if (hero.buff(FlashGrenade.class) != null) {
+                for (int i : PathFinder.NEIGHBOURS9) {
+                    int c = cell + i;
+                    Char ch = Actor.findChar(c);
+                    if (ch != null) {
+                        targets.add(ch);
+                    }
+                }
+                for (Char ch : targets) {
+                    Buff.affect(ch, Blindness.class, 1+hero.pointsInTalent(Talent.STUNDRONE_1));
+                }
+            }
+
         }
     }
 }

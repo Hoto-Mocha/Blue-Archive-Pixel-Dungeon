@@ -184,9 +184,9 @@ public class WndHeroInfo extends WndTabbed {
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
 				case MIYAKO:
-					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.ARTIFACT_CLOAK),
-							Icons.get(Icons.STAIRS),
-							new ItemSprite(ItemSpriteSheet.DAGGER),
+					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.HAND_GRENADE),
+							new ItemSprite(ItemSpriteSheet.SMG_TIER_5),
+							new ItemSprite(ItemSpriteSheet.CLAYMORE),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
 				case HUNTRESS:

@@ -47,6 +47,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bless;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Combo;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DroneStrike;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Foresight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HoldFast;
@@ -62,6 +63,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PhysicalEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SnipersMark;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.StunDrone;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
@@ -510,6 +512,10 @@ public class Hero extends Char {
 		if (wep instanceof SG.SGBullet && !Dungeon.level.adjacent(hero.pos, target.pos)) {
 			accuracy = 0;
 		}
+
+		if (wep instanceof SG.SGBullet && Dungeon.level.adjacent(hero.pos, target.pos)) {
+			accuracy = 4f;
+		}
 		
 		if (!RingOfForce.fightingUnarmed(this)) {
 			return (int)(attackSkill * accuracy * wep.accuracyFactor( this, target ));
@@ -847,6 +853,14 @@ public class Hero extends Char {
 		
 		if(hasTalent(Talent.BARKSKIN) && Dungeon.level.map[pos] == Terrain.FURROWED_GRASS){
 			Barkskin.conditionallyAppend(this, (lvl*pointsInTalent(Talent.BARKSKIN))/2, 1 );
+		}
+
+		if (hero.subClass == HeroSubClass.MIYAKO_EX_STUNDRONE && hero.buff(StunDrone.class) == null) {
+			Buff.affect(hero, StunDrone.class);
+		}
+
+		if (hero.subClass == HeroSubClass.MIYAKO_EX_DRONESTRIKE && hero.buff(DroneStrike.class) == null) {
+			Buff.affect(hero, DroneStrike.class);
 		}
 		
 		return actResult;
@@ -1396,7 +1410,7 @@ public class Hero extends Char {
 		}
 
 		if (enemy.HP <= damage && Random.Int(4) == 0) { //25% chance
-			Dungeon.hero.yellP(Messages.get(Hero.class, heroClass.name() + "_enemy_defeated_" + (1 + Random.Int(5)))); //1~5 variable
+			Dungeon.hero.yellI(Messages.get(Hero.class, heroClass.name() + "_enemy_defeated_" + (1 + Random.Int(5)))); //1~5 variable
 		}
 
 		if (Dungeon.level.adjacent(hero.pos, enemy.pos) && hero.hasTalent(Talent.NO_WAY) && hero.buff(Talent.NoWayCooldown.class) == null) {
@@ -1429,6 +1443,15 @@ public class Hero extends Char {
 		WandOfLivingEarth.RockArmor rockArmor = buff(WandOfLivingEarth.RockArmor.class);
 		if (rockArmor != null) {
 			damage = rockArmor.absorb(damage);
+		}
+
+		if (hero.hasTalent(Talent.PLATE_ADD)) {
+			int reduction = hero.pointsInTalent(Talent.PLATE_ADD);
+			damage -= Random.IntRange(reduction, reduction+1);
+
+			if (Random.Float() < 0.25f) {
+				enemy.damage(1, this);
+			}
 		}
 		
 		return super.defenseProc( enemy, damage );
@@ -2433,27 +2456,27 @@ public class Hero extends Char {
 		public void onDeath();
 	}
 
-	public void yellI( String str ) {
+	public void yellI( String str ) { //흰색
 		GLog.newLine();
 		GLog.i( "%s: \"%s\" ", Messages.titleCase(name()), str );
 	}
 
-	public void yellP( String str ) {
+	public void yellP( String str ) { //초록색
 		GLog.newLine();
 		GLog.p( "%s: \"%s\" ", Messages.titleCase(name()), str );
 	}
 
-	public void yellN( String str ) {
+	public void yellN( String str ) { //빨간색
 		GLog.newLine();
 		GLog.n( "%s: \"%s\" ", Messages.titleCase(name()), str );
 	}
 
-	public void yellW( String str ) {
+	public void yellW( String str ) { //주황색
 		GLog.newLine();
 		GLog.w( "%s: \"%s\" ", Messages.titleCase(name()), str );
 	}
 
-	public void yellH( String str ) {
+	public void yellH( String str ) { //노란색
 		GLog.newLine();
 		GLog.h( "%s: \"%s\" ", Messages.titleCase(name()), str );
 	}

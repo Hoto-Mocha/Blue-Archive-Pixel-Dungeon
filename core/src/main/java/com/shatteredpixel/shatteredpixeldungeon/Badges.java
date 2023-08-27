@@ -50,9 +50,9 @@ import java.util.List;
 public class Badges {
 	
 	public enum Badge {
-		MASTERY_WARRIOR,
-		MASTERY_MAGE,
-		MASTERY_ROGUE,
+		MASTERY_ARIS,
+		MASTERY_NONOMI,
+		MASTERY_MIYAKO,
 		MASTERY_HUNTRESS,
 		MASTERY_DUELIST,
 		FOUND_RATMOGRIFY,
@@ -830,13 +830,13 @@ public class Badges {
 		Badge badge = null;
 		switch (Dungeon.hero.heroClass) {
 			case ARIS:
-				badge = Badge.MASTERY_WARRIOR;
+				badge = Badge.MASTERY_ARIS;
 				break;
 			case NONOMI:
-				badge = Badge.MASTERY_MAGE;
+				badge = Badge.MASTERY_NONOMI;
 				break;
 			case MIYAKO:
-				badge = Badge.MASTERY_ROGUE;
+				badge = Badge.MASTERY_MIYAKO;
 				break;
 			case HUNTRESS:
 				badge = Badge.MASTERY_HUNTRESS;
@@ -860,8 +860,8 @@ public class Badges {
 	}
 
 	public static void validateMiyakoUnlock(){
-		if (Statistics.miyakoUnlocked && !isUnlocked(Badge.UNLOCK_NONOMI)){
-			displayBadge( Badge.UNLOCK_NONOMI );
+		if (Statistics.miyakoUnlocked && !isUnlocked(Badge.UNLOCK_MIYAKO)){
+			displayBadge( Badge.UNLOCK_MIYAKO );
 		}
 	}
 	

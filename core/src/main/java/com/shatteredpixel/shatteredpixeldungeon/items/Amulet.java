@@ -86,10 +86,6 @@ public class Amulet extends Item {
 					}
 				}, -5);
 			}
-			if (!Statistics.nonomiUnlocked) {
-				Statistics.nonomiUnlocked = true;
-				Badges.validateNonomiUnlock();
-			}
 			
 			return true;
 		} else {

@@ -164,6 +164,10 @@ public class Gun extends MeleeWeapon {
         updateQuickslot();
     }
 
+    public int shotPerShoot() { //발사 당 탄환의 수
+        return shotPerShoot;
+    }
+
     public int maxRound() { //최대 장탄수
         int amount = max_round;
 
@@ -203,10 +207,10 @@ public class Gun extends MeleeWeapon {
         //근접 무기의 설명을 모두 가져옴, 여기에서 할 것은 근접 무기의 설명에 추가로 생기는 문장을 더하는 것
         if (levelKnown) { //감정되어 있을 때
             info += "\n\n" + Messages.get(Gun.class, "gun_desc",
-                    bulletMin(buffedLvl()), bulletMax(buffedLvl()), shotPerShoot, round, maxRound(), new DecimalFormat("#.##").format(reloadTime()));
+                    bulletMin(buffedLvl()), bulletMax(buffedLvl()), shotPerShoot(), round, maxRound(), new DecimalFormat("#.##").format(reloadTime()));
         } else { //감정되어 있지 않을 때
             info += "\n\n" + Messages.get(Gun.class, "gun_typical_desc",
-                    bulletMin(0), bulletMax(0), shotPerShoot, round, maxRound(), new DecimalFormat("#.##").format(reloadTime()));
+                    bulletMin(0), bulletMax(0), shotPerShoot(), round, maxRound(), new DecimalFormat("#.##").format(reloadTime()));
         }
         //DecimalFormat("#.##")은 .format()에 들어가는 매개변수(실수)를 "#.##"형식으로 표시하는데 사용된다.
         // 가령 5.55555가 .format()안에 들어가서 .format(5.55555)라면, new DecimalFormat("#.##").format(5.55555)는 5.55라는 String 타입의 값을 반환한다.
@@ -311,7 +315,7 @@ public class Gun extends MeleeWeapon {
                 Sample.INSTANCE.play( Assets.Sounds.BLAST );
             } else {
                 Char enemy = Actor.findChar( cell );
-                for (int i = 0; i < shotPerShoot; i++) { //데미지 입히는 것과 발사 시 주변에서 나는 연기를 shotPerShoot만큼 반복
+                for (int i = 0; i < shotPerShoot(); i++) { //데미지 입히는 것과 발사 시 주변에서 나는 연기를 shotPerShoot만큼 반복
                     if (enemy == null || enemy == curUser) {
                         parent = null;
                         CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);

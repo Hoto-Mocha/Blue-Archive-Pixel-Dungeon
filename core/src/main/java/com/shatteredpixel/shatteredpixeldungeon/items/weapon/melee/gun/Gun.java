@@ -25,6 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
@@ -140,7 +141,7 @@ public class Gun extends MeleeWeapon {
         hero.busy();
         hero.sprite.operate(hero.pos);
         if (hero.hasTalent(Talent.RELOADING_SHIELD)) {
-            Buff.affect(hero, Barrier.class).incShield(1+2*hero.pointsInTalent(Talent.RELOADING_SHIELD));
+            Buff.affect(hero, Barrier.class).setShield(1+2*hero.pointsInTalent(Talent.RELOADING_SHIELD));
         }
         Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
         hero.spendAndNext(reloadTime());
@@ -254,10 +255,8 @@ public class Gun extends MeleeWeapon {
         @Override
         public int proc(Char attacker, Char defender, int damage) {
             if (hero.subClass == HeroSubClass.HOSHINO_EX_TACTICAL_SHIELD && hero.buff(IronHorus.TacticalShieldBuff.class) != null) {
-                Buff.affect(hero, Barrier.class).incShield(2);
-                if (hero.buff(Barrier.class).shielding() > 10+5*hero.pointsInTalent(Talent.TACTICAL_SHIELD_2)) {
-                    Buff.affect(hero, Barrier.class).setShield(10+5*hero.pointsInTalent(Talent.TACTICAL_SHIELD_2));
-                }
+                Buff.affect(hero, Barrier.class).set(1, 10+5*hero.pointsInTalent(Talent.TACTICAL_SHIELD_2));
+                BuffIndicator.refreshHero();
             }
             return super.proc(attacker, defender, damage);
         }

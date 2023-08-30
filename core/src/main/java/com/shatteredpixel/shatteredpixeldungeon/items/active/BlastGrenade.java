@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.active;
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -15,6 +16,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.PathFinder;
 
 import java.util.ArrayList;
@@ -60,13 +62,16 @@ public class BlastGrenade extends Grenade {
                 Buff.affect(ch, Paralysis.class, 2f);
             }
 
+            WandOfBlastWave.BlastWave.blast(cell);
+            Sample.INSTANCE.play( Assets.Sounds.BLAST );
+
             for (int i : PathFinder.NEIGHBOURS8) {
                 int c = cell + i;
                 Char target = Actor.findChar(c);
                 if (target != null) {
-                    Ballistica trajectory = new Ballistica(hero.pos, ch.pos, Ballistica.STOP_TARGET);
+                    Ballistica trajectory = new Ballistica(cell, target.pos, Ballistica.STOP_TARGET);
                     trajectory = new Ballistica(trajectory.collisionPos, trajectory.path.get(trajectory.path.size()-1), Ballistica.PROJECTILE);
-                    WandOfBlastWave.throwChar(ch,
+                    WandOfBlastWave.throwChar(target,
                             trajectory,
                             2+curItem.buffedLvl(),
                             false,

@@ -510,12 +510,12 @@ public class Hero extends Char {
 			accuracy *= 1.25f;
 		}
 
-		if (wep instanceof SG.SGBullet && !Dungeon.level.adjacent(hero.pos, target.pos)) {
+		if (wep instanceof SG.SGBullet && !Dungeon.level.adjacent(hero.pos, target.pos) && hero.subClass != HeroSubClass.HOSHINO_EX_TACTICAL_PRESS) {
 			accuracy = 0;
 		}
 
-		if (wep instanceof SG.SGBullet && Dungeon.level.adjacent(hero.pos, target.pos)) {
-			accuracy = 2f;
+		if (wep instanceof SG.SGBullet) {
+			accuracy *= 2f;
 		}
 		
 		if (!RingOfForce.fightingUnarmed(this)) {
@@ -1414,10 +1414,6 @@ public class Hero extends Char {
 
 		if (Dungeon.hero.hasTalent(Talent.PIEZOELECTRICITY) && Dungeon.hero.buff(SuperNova.SuperNovaCooldown.class) != null) {
 			Dungeon.hero.buff(SuperNova.SuperNovaCooldown.class).hit();
-		}
-
-		if (enemy.HP <= damage && Random.Int(5) == 0) { //20% chance
-			Dungeon.hero.yellI(Messages.get(Hero.class, heroClass.name() + "_enemy_defeated_" + (1 + Random.Int(5)))); //1~5 variable
 		}
 
 		if (Dungeon.level.adjacent(hero.pos, enemy.pos) && hero.hasTalent(Talent.NO_WAY) && hero.buff(Talent.NoWayCooldown.class) == null) {

@@ -24,6 +24,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
+import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.ConeAOE;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -173,39 +174,28 @@ public class SG extends Gun {
         }
 
         private void tacticalPress(int cell) {
-            Ballistica aim = new Ballistica(hero.pos, cell, Ballistica.WONT_STOP);
+            Ballistica aim = new Ballistica(hero.pos, cell, Ballistica.STOP_SOLID);
 
             int maxDist = 2;
             if (Random.Int(3) < hero.pointsInTalent(Talent.TACTICAL_PRESS_1)) maxDist++;
             int dist = Math.min(aim.dist, maxDist);
 
-            ConeAOE cone = new ConeAOE(aim,
-                    dist,
-                    0,
-                    Ballistica.STOP_SOLID | Ballistica.STOP_TARGET);
-
-            //cast to cells at the tip, rather than all cells, better performance.
-            for (Ballistica ray : cone.outerRays){
-                ((MagicMissile)hero.sprite.parent.recycle( MagicMissile.class )).reset(
-                        MagicMissile.NOTHING_CONE,
-                        hero.sprite,
-                        ray.path.get(ray.dist),
-                        null
-                );
+            ArrayList<Char> affected = new ArrayList<>();
+            if (cell != hero.pos) {
+                for (int c : aim.subPath(1, dist)) {
+                    CellEmitter.get(c).burst(SmokeParticle.FACTORY, 10);
+                    CellEmitter.center(c).burst(BlastParticle.FACTORY, 3);
+                    Char ch = Actor.findChar(c);
+                    if (ch != null && ch.alignment != hero.alignment){
+                        affected.add(ch);
+                    }
+                }
+            } else {
+                hero.yellW(Messages.get(Hero.class, hero.heroClass.name() + "_cannot_self"));
+                return;
             }
-
             Invisibility.dispel();
             hero.sprite.zap(cell);
-
-            ArrayList<Char> affected = new ArrayList<>();
-            for (int c : cone.cells){
-                CellEmitter.get(c).burst(SmokeParticle.FACTORY, 2);
-                CellEmitter.center(c).burst(BlastParticle.FACTORY, 2);
-                Char ch = Actor.findChar(c);
-                if (ch != null && ch.alignment != hero.alignment){
-                    affected.add(ch);
-                }
-            }
             float multi = 1f;
 
             for (Char ch : affected) {

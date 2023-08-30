@@ -7,6 +7,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
@@ -83,11 +84,15 @@ public class Grenade extends Item {
     }
 
     public void reload() {
+        int oldAmt = amount;
         amount++;
         if (amount > maxAmount()) {
             amount = maxAmount();
         }
         Item.updateQuickslot();
+        if (oldAmt != amount) {
+            Dungeon.hero.yellP(Messages.get(Hero.class, Dungeon.hero.heroClass.name() + "_grenade_collect_" + (Random.Int(3)+1)));
+        }
     }
 
     @Override

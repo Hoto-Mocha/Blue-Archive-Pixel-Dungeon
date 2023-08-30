@@ -865,8 +865,8 @@ public class Badges {
 		}
 	}
 	
-	public static void validateHuntressUnlock(){
-		if (Statistics.miyakoUnlocked && !isUnlocked(Badge.UNLOCK_HOSHINO)){
+	public static void validateHoshinoUnlock(){
+		if (Statistics.hoshinoUnlocked && !isUnlocked(Badge.UNLOCK_HOSHINO)){
 			displayBadge( Badge.UNLOCK_HOSHINO );
 		}
 	}

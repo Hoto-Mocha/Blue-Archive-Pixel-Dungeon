@@ -48,6 +48,15 @@ public class Barrier extends ShieldBuff {
 		if (shielding() == shield) partialLostShield = 0;
 	}
 
+	public void set(int shield, int max) {
+		int amt = shielding()+shield;
+		if (amt > max) {
+			amt = max;
+		}
+		setShield(amt);
+	}
+
+
 	@Override
 	public boolean act() {
 

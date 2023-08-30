@@ -660,13 +660,6 @@ public abstract class Mob extends Char {
 	
 	@Override
 	public int defenseProc( Char enemy, int damage ) {
-		
-		if (enemy instanceof Hero
-				&& ((Hero) enemy).belongings.attackingWeapon() instanceof MissileWeapon){
-			Statistics.thrownAttacks++;
-			Badges.validateHuntressUnlock();
-		}
-		
 		if (surprisedBy(enemy)) {
 			Statistics.sneakAttacks++;
 			//TODO this is somewhat messy, it would be nicer to not have to manually handle delays here
@@ -690,20 +683,6 @@ public abstract class Mob extends Char {
 			aggro(enemy);
 			target = enemy.pos;
 		}
-
-//		if (buff(SoulMark.class) != null) {
-//			int restoration = Math.min(damage, HP+shielding());
-//
-			//physical damage that doesn't come from the hero is less effective
-//			if (enemy != Dungeon.hero){
-//				restoration = Math.round(restoration * 0.4f*Dungeon.hero.pointsInTalent(Talent.SOUL_SIPHON)/3f);
-//			}
-//			if (restoration > 0) {
-//				Buff.affect(Dungeon.hero, Hunger.class).affectHunger(restoration*Dungeon.hero.pointsInTalent(Talent.SOUL_EATER)/3f);
-//				Dungeon.hero.HP = (int) Math.ceil(Math.min(Dungeon.hero.HT, Dungeon.hero.HP + (restoration * 0.4f)));
-//				Dungeon.hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
-//			}
-//		}
 
 		return super.defenseProc(enemy, damage);
 	}
@@ -818,6 +797,13 @@ public abstract class Mob extends Char {
 				}
 			}
 
+			if (cause == Dungeon.hero && Dungeon.level.heroFOV[pos]) {
+				if (Random.Int(4) == 0) { //25% chance
+					Dungeon.hero.yellI(Messages.get(Hero.class, Dungeon.hero.heroClass.name() + "_enemy_defeated_" + (1 + Random.Int(5)))); //1~5 variable
+					GLog.newLine();
+				}
+			}
+
 		}
 
 		if (Dungeon.hero.isAlive() && !Dungeon.level.heroFOV[pos]) {
@@ -863,6 +849,10 @@ public abstract class Mob extends Char {
 			if (!Statistics.miyakoUnlocked) {
 				Statistics.miyakoUnlocked = true;
 				Badges.validateMiyakoUnlock();
+			}
+			if (!Statistics.hoshinoUnlocked) {
+				Statistics.hoshinoUnlocked = true;
+				Badges.validateHoshinoUnlock();
 			}
 		}
 

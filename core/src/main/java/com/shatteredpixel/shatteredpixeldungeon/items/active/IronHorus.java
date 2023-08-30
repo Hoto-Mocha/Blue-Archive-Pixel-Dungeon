@@ -1,5 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.active;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -12,7 +13,9 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
@@ -22,6 +25,7 @@ public class IronHorus extends Item {
 
 	{
 		image = ItemSpriteSheet.IRON_HORUS;
+		levelKnown = true;
 
 		defaultAction = AC_USE;
 		usesTargeting = false;
@@ -41,28 +45,17 @@ public class IronHorus extends Item {
 
 	@Override
 	public void execute( Hero hero, String action ) {
-
 		super.execute( hero, action );
-
 		if (action.equals(AC_USE)) {
 			if (Dungeon.hero.buff(TacticalShieldCooldown.class) == null) {
 				Buff.affect(curUser, TacticalShieldBuff.class);
 				curUser.sprite.operate(curUser.pos);
+				Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
 				curUser.spendAndNext(Actor.TICK);
 			} else {
-				Dungeon.hero.yellN(Messages.get(Hero.class, "shield_cooldown"));
+				Dungeon.hero.yellN(Messages.get(Hero.class, hero.heroClass.name() + "_shield_cooldown"));
 			}
 		}
-	}
-
-	@Override
-	public boolean isUpgradable() {
-		return false;
-	}
-
-	@Override
-	public boolean isIdentified() {
-		return true;
 	}
 
 	@Override
@@ -75,6 +68,16 @@ public class IronHorus extends Item {
 	public int buffedLvl() {
 		//level isn't affected by buffs/debuffs
 		return level();
+	}
+
+	@Override
+	public boolean isUpgradable() {
+		return false;
+	}
+
+	@Override
+	public boolean isIdentified() {
+		return true;
 	}
 
 	@Override
@@ -170,7 +173,7 @@ public class IronHorus extends Item {
 
 		{
 			type = buffType.NEUTRAL;
-			announced = true;
+			announced = false;
 		}
 
 		@Override

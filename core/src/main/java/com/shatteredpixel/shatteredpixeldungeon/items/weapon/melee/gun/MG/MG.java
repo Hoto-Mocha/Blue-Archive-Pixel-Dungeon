@@ -203,16 +203,6 @@ public class MG extends Gun {
                     90-15*hero.pointsInTalent(Talent.RIOT_2),
                     Ballistica.STOP_SOLID | Ballistica.STOP_TARGET);
 
-            //cast to cells at the tip, rather than all cells, better performance.
-            for (Ballistica ray : cone.outerRays){
-                ((MagicMissile)hero.sprite.parent.recycle( MagicMissile.class )).reset(
-                        MagicMissile.NOTHING_CONE,
-                        hero.sprite,
-                        ray.path.get(ray.dist),
-                        null
-                );
-            }
-
             Invisibility.dispel();
             hero.sprite.zap(cell);
 

@@ -68,7 +68,7 @@ public class WndHeroInfo extends WndTabbed {
 			case MIYAKO:
 				tabIcon = new ItemSprite(ItemSpriteSheet.SMG_TIER_1, null);
 				break;
-			case HUNTRESS:
+			case HOSHINO:
 				tabIcon = new ItemSprite(ItemSpriteSheet.SPIRIT_BOW, null);
 				break;
 			case DUELIST:
@@ -189,10 +189,10 @@ public class WndHeroInfo extends WndTabbed {
 							new ItemSprite(ItemSpriteSheet.HAND_GRENADE),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
-				case HUNTRESS:
-					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.SPIRIT_BOW),
-							new Image(Assets.Environment.TILES_SEWERS, 112, 80, 16, 16),
-							new ItemSprite(ItemSpriteSheet.GLOVES),
+				case HOSHINO:
+					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.IRON_HORUS),
+							new ItemSprite(ItemSpriteSheet.SG_TIER_5),
+							new ItemSprite(ItemSpriteSheet.BLAST_GRENADE),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
 				case DUELIST:

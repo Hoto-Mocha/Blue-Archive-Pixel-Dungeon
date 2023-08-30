@@ -32,6 +32,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.EnhancedRings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
@@ -65,6 +66,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
@@ -137,7 +139,22 @@ public enum Talent {
 	//Miyako Ability 3
 	MIYAKO_ABIL_31(87, 4), MIYAKO_ABIL_32(88, 4), MIYAKO_ABIL_33(89, 4),
 
-
+	//Hoshino T1
+	EMERGENCY_HEALING(96), SG_INTUITION(97), ADDITIONAL_SHOT(98), RELOADING_SHIELD(99),
+	//Hoshino T2
+	SLEEPING_MEAL(100), QUICK_RETREAT(101), FORESIGHT_EYES(102), MAGIC_SHIELD(103), SG_MASTER(104),
+	//Hoshino T3
+	SG_FAST_RELOAD(105, 3), HARD_SHIELD(106, 3),
+	//TacticalPress T3
+	TACTICAL_PRESS_1(107, 3), TACTICAL_PRESS_2(108, 3), TACTICAL_PRESS_3(109, 3),
+	//TacticalShield T3
+	TACTICAL_SHIELD_1(110, 3), TACTICAL_SHIELD_2(111, 3), TACTICAL_SHIELD_3(112, 3),
+	//Hoshino Ability 1
+	HOSHINO_ABIL_11(113, 4), HOSHINO_ABIL_12(114, 4), HOSHINO_ABIL_13(115, 4),
+	//Hoshino Ability 2
+	HOSHINO_ABIL_21(116, 4), HOSHINO_ABIL_22(117, 4), HOSHINO_ABIL_23(118, 4),
+	//Hoshino Ability 3
+	HOSHINO_ABIL_31(119, 4), HOSHINO_ABIL_32(120, 4), HOSHINO_ABIL_33(121, 4),
 
 
 
@@ -212,6 +229,12 @@ public enum Talent {
 		public void tintIcon(Image icon) { icon.hardlight(0.15f, 0.2f, 0.5f); }
 		public float iconFadePercent() { return Math.max(0, visualcooldown() / 30); }
 	};
+	public static class EmergencyHealingCooldown extends FlavourBuff{
+		public int icon() { return BuffIndicator.TIME; }
+		public void tintIcon(Image icon) { icon.hardlight(0xFF9AB0); }
+		public float iconFadePercent() { return Math.max(0, visualcooldown() / 50); }
+	};
+	public static class TacticalInvisibilityTracker extends Buff{};
 	public static class EmpoweringMagic extends FlavourBuff{
 		public int icon() { return BuffIndicator.UPGRADE; }
 		public void tintIcon(Image icon) { icon.hardlight(0.15f, 0.2f, 0.5f); }
@@ -404,7 +427,7 @@ public enum Talent {
 					return 58;
 				case MIYAKO:
 					return 90;
-				case HUNTRESS:
+				case HOSHINO:
 					return 122;
 				case DUELIST:
 					return 154;
@@ -527,6 +550,9 @@ public enum Talent {
 		}
 		if (hero.hasTalent(TACTICAL_MEAL)) {
 			Buff.affect(hero, Barrier.class).incShield(Math.round(hero.HT/10f*hero.pointsInTalent(Talent.TACTICAL_MEAL)));
+		}
+		if (hero.hasTalent(SLEEPING_MEAL)) {
+			Buff.affect(hero, Drowsy.class).set(90-20*hero.pointsInTalent(Talent.SLEEPING_MEAL));
 		}
 
 		if (hero.hasTalent(MYSTICAL_MEAL)){
@@ -659,6 +685,9 @@ public enum Talent {
 		if (hero.pointsInTalent(SMG_INTUITION) == 2 && item instanceof SMG){
 			item.identify();
 		}
+		if (hero.pointsInTalent(SG_INTUITION) == 2 && item instanceof SG){
+			item.identify();
+		}
 		if (hero.hasTalent(THIEFS_INTUITION) && item instanceof Ring){
 			if (hero.pointsInTalent(THIEFS_INTUITION) == 2){
 				item.identify();
@@ -677,6 +706,9 @@ public enum Talent {
 		}
 		if (hero.hasTalent(SMG_INTUITION)){
 			if (item instanceof SMG) item.cursedKnown = true;
+		}
+		if (hero.hasTalent(SG_INTUITION)){
+			if (item instanceof SG) item.cursedKnown = true;
 		}
 		if (hero.pointsInTalent(THIEFS_INTUITION) == 2){
 			if (item instanceof Ring) ((Ring) item).setKnown();
@@ -815,8 +847,8 @@ public enum Talent {
 			case MIYAKO:
 				Collections.addAll(tierTalents, PLATE_ADD, SMG_INTUITION, SUPPLY, DISTURB);
 				break;
-			case HUNTRESS:
-				Collections.addAll(tierTalents, NATURES_BOUNTY, SURVIVALISTS_INTUITION, FOLLOWUP_STRIKE, NATURES_AID);
+			case HOSHINO:
+				Collections.addAll(tierTalents, EMERGENCY_HEALING, SG_INTUITION, ADDITIONAL_SHOT, RELOADING_SHIELD);
 				break;
 			case DUELIST:
 				Collections.addAll(tierTalents, STRENGTHENING_MEAL, ADVENTURERS_INTUITION, PATIENT_STRIKE, AGGRESSIVE_BARRIER);
@@ -841,8 +873,8 @@ public enum Talent {
 			case MIYAKO:
 				Collections.addAll(tierTalents, TACTICAL_MEAL, INTELLIGENCE, CQC, TACTICAL_MOVE, SMG_MASTER);
 				break;
-			case HUNTRESS:
-				Collections.addAll(tierTalents, INVIGORATING_MEAL, RESTORED_NATURE, REJUVENATING_STEPS, HEIGHTENED_SENSES, DURABLE_PROJECTILES);
+			case HOSHINO:
+				Collections.addAll(tierTalents, SLEEPING_MEAL, QUICK_RETREAT, FORESIGHT_EYES, MAGIC_SHIELD, SG_MASTER);
 				break;
 			case DUELIST:
 				Collections.addAll(tierTalents, FOCUSED_MEAL, RESTORED_AGILITY, WEAPON_RECHARGING, LETHAL_HASTE, SWIFT_EQUIP);
@@ -867,8 +899,8 @@ public enum Talent {
 			case MIYAKO:
 				Collections.addAll(tierTalents, SMG_FAST_RELOAD, RABBIT_OPEN_UP);
 				break;
-			case HUNTRESS:
-				Collections.addAll(tierTalents, POINT_BLANK, SEER_SHOT);
+			case HOSHINO:
+				Collections.addAll(tierTalents, SG_FAST_RELOAD, HARD_SHIELD);
 				break;
 			case DUELIST:
 				Collections.addAll(tierTalents, PRECISE_ASSAULT, DEADLY_FOLLOWUP);
@@ -918,6 +950,12 @@ public enum Talent {
 				break;
 			case MIYAKO_EX_DRONESTRIKE:
 				Collections.addAll(tierTalents, DRONESTRIKE_1, DRONESTRIKE_2, DRONESTRIKE_3);
+				break;
+			case HOSHINO_EX_TACTICAL_PRESS:
+				Collections.addAll(tierTalents, TACTICAL_PRESS_1, TACTICAL_PRESS_2, TACTICAL_PRESS_3);
+				break;
+			case HOSHINO_EX_TACTICAL_SHIELD:
+				Collections.addAll(tierTalents, TACTICAL_SHIELD_1, TACTICAL_SHIELD_2, TACTICAL_SHIELD_3);
 				break;
 			case ASSASSIN:
 				Collections.addAll(tierTalents, ENHANCED_LETHALITY, ASSASSINS_REACH, BOUNTY_HUNTER);

@@ -6,12 +6,16 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSharpshooting;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dagger;
@@ -135,6 +139,9 @@ public class Gun extends MeleeWeapon {
         quickReload();
         hero.busy();
         hero.sprite.operate(hero.pos);
+        if (hero.hasTalent(Talent.RELOADING_SHIELD)) {
+            Buff.affect(hero, Barrier.class).incShield(1+2*hero.pointsInTalent(Talent.RELOADING_SHIELD));
+        }
         Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
         hero.spendAndNext(reloadTime());
         GLog.i(Messages.get(this, "reload"));
@@ -177,6 +184,10 @@ public class Gun extends MeleeWeapon {
     }
 
     public float reloadTime() { //재장전에 소모하는 턴
+        if (hero.buff(IronHorus.TacticalShieldBuff.class) != null && hero.subClass == HeroSubClass.HOSHINO_EX_TACTICAL_SHIELD) {
+            return 0;
+        }
+
         float amount = reload_time;
 
         amount += hero.pointsInTalent(Talent.LARGE_MAGAZINE);
@@ -238,6 +249,17 @@ public class Gun extends MeleeWeapon {
         {
             hitSound = Assets.Sounds.PUFF;
             tier = Gun.this.tier;
+        }
+
+        @Override
+        public int proc(Char attacker, Char defender, int damage) {
+            if (hero.subClass == HeroSubClass.HOSHINO_EX_TACTICAL_SHIELD && hero.buff(IronHorus.TacticalShieldBuff.class) != null) {
+                Buff.affect(hero, Barrier.class).incShield(2);
+                if (hero.buff(Barrier.class).shielding() > 10+5*hero.pointsInTalent(Talent.TACTICAL_SHIELD_2)) {
+                    Buff.affect(hero, Barrier.class).setShield(10+5*hero.pointsInTalent(Talent.TACTICAL_SHIELD_2));
+                }
+            }
+            return super.proc(attacker, defender, damage);
         }
 
         @Override
@@ -356,7 +378,7 @@ public class Gun extends MeleeWeapon {
         public void onSelect( Integer target ) {
             if (target != null) {
                 if (target == curUser.pos) {
-                    reload();
+                    execute(hero, AC_RELOAD);
                 } else {
                     knockBullet().cast(curUser, target);
                 }

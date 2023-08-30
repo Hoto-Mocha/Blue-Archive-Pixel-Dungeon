@@ -49,6 +49,10 @@ public class Drowsy extends Buff {
 		return Integer.toString((int)visualcooldown());
 	}
 
+	public void set(float time) {
+		spend(time-DURATION);
+	}
+
 	public boolean attachTo(Char target ) {
 		if (!target.isImmune(Sleep.class) && super.attachTo(target)) {
 			if (cooldown() == 0) {

@@ -85,6 +85,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap.Type;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.AntiMagic;
@@ -514,7 +515,7 @@ public class Hero extends Char {
 		}
 
 		if (wep instanceof SG.SGBullet && Dungeon.level.adjacent(hero.pos, target.pos)) {
-			accuracy = 4f;
+			accuracy = 2f;
 		}
 		
 		if (!RingOfForce.fightingUnarmed(this)) {
@@ -615,7 +616,11 @@ public class Hero extends Char {
 		if (buff(HoldFast.class) != null){
 			dr += buff(HoldFast.class).armorBonus();
 		}
-		
+
+
+		if (buff(IronHorus.TacticalShieldBuff.class) != null) {
+			dr += buff(IronHorus.TacticalShieldBuff.class).armorBonus();
+		}
 		return dr;
 	}
 	
@@ -905,8 +910,6 @@ public class Hero extends Char {
 		return canSelfTrample && !rooted && !flying &&
 				//standing in high grass
 				(Dungeon.level.map[pos] == Terrain.HIGH_GRASS ||
-				//standing in furrowed grass and not huntress
-				(heroClass != HeroClass.HUNTRESS && Dungeon.level.map[pos] == Terrain.FURROWED_GRASS) ||
 				//standing on a plant
 				Dungeon.level.plants.get(pos) != null);
 	}
@@ -1355,6 +1358,10 @@ public class Hero extends Char {
 			Buff.affect(Dungeon.hero, Talent.PatientStrikeTracker.class).pos = Dungeon.hero.pos;
 		}
 		if (!fullRest) {
+			if (hero.hasTalent(Talent.TACTICAL_SHIELD_3) && hero.buff(IronHorus.TacticalShieldBuff.class) != null && hero.buff(Talent.TacticalInvisibilityTracker.class) == null) {
+				Buff.affect(hero, Invisibility.class, 3f*hero.pointsInTalent(Talent.TACTICAL_SHIELD_3));
+				Buff.affect(hero, Talent.TacticalInvisibilityTracker.class);
+			}
 			if (sprite != null) {
 				sprite.showStatus(CharSprite.DEFAULT, Messages.get(this, "wait"));
 			}
@@ -1409,7 +1416,7 @@ public class Hero extends Char {
 			Dungeon.hero.buff(SuperNova.SuperNovaCooldown.class).hit();
 		}
 
-		if (enemy.HP <= damage && Random.Int(4) == 0) { //25% chance
+		if (enemy.HP <= damage && Random.Int(5) == 0) { //20% chance
 			Dungeon.hero.yellI(Messages.get(Hero.class, heroClass.name() + "_enemy_defeated_" + (1 + Random.Int(5)))); //1~5 variable
 		}
 
@@ -1452,6 +1459,11 @@ public class Hero extends Char {
 			if (Random.Float() < 0.25f) {
 				enemy.damage(1, this);
 			}
+		}
+
+		if (hero.HP - damage < hero.HT/4 && hero.hasTalent(Talent.EMERGENCY_HEALING) && hero.buff(Talent.EmergencyHealingCooldown.class) == null) {
+			hero.heal(2+3*hero.pointsInTalent(Talent.EMERGENCY_HEALING));
+			Buff.affect(hero, Talent.EmergencyHealingCooldown.class, 50f);
 		}
 		
 		return super.defenseProc( enemy, damage );
@@ -1497,6 +1509,11 @@ public class Hero extends Char {
 		if (belongings.armor() != null && belongings.armor().hasGlyph(AntiMagic.class, this)
 				&& AntiMagic.RESISTS.contains(src.getClass())){
 			dmg -= AntiMagic.drRoll(this, belongings.armor().buffedLvl());
+		}
+
+		if (buff(IronHorus.TacticalShieldBuff.class) != null && hasTalent(Talent.MAGIC_SHIELD)
+				&& AntiMagic.RESISTS.contains(src.getClass())){
+			dmg -= Math.round((0.25f + 0.25f*pointsInTalent(Talent.MAGIC_SHIELD)) * buff(IronHorus.TacticalShieldBuff.class).armorBonus());
 		}
 
 		if (buff(Talent.WarriorFoodImmunity.class) != null){

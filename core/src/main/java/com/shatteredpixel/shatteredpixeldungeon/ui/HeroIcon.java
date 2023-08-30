@@ -82,8 +82,8 @@ public class HeroIcon extends Image {
 	public static final int NONOMI_EX_SHOOTALL		= 43;
 	public static final int MIYAKO_EX_STUNDRONE		= 44;
 	public static final int MIYAKO_EX_DRONESTRIKE	= 45;
-//	public static final int 						= 46;
-//	public static final int 						= 47;
+	public static final int HOSHINO_EX_TACTICAL_PRESS	= 46;
+	public static final int HOSHINO_EX_TACTICAL_SHIELD	= 47;
 //	public static final int 						= 48;
 //	public static final int 						= 49;
 //	public static final int 						= 50;

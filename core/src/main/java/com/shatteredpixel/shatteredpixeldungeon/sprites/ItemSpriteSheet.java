@@ -726,11 +726,15 @@ public class ItemSpriteSheet {
 	public static final int SMOKE_GRENADE 	= UNIQUE_WEAPON+1;
 	public static final int HAND_GRENADE 	= UNIQUE_WEAPON+2;
 	public static final int CLAYMORE	 	= UNIQUE_WEAPON+3;
+	public static final int BLAST_GRENADE	= UNIQUE_WEAPON+4;
+	public static final int IRON_HORUS	 	= UNIQUE_WEAPON+5;
 	static {
 		assignItemRect(SUPER_NOVA, 		16, 16);
 		assignItemRect(SMOKE_GRENADE, 	12, 12);
 		assignItemRect(HAND_GRENADE, 	11, 11);
 		assignItemRect(CLAYMORE, 		13, 13);
+		assignItemRect(BLAST_GRENADE, 	11, 11);
+		assignItemRect(IRON_HORUS, 		14, 14);
 	}
 
 	//for smaller 8x8 icons that often accompany an item sprite

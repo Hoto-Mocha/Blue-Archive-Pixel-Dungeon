@@ -158,7 +158,7 @@ public class Wandmaker extends NPC {
 				case MIYAKO:
 					msg1 += Messages.get(this, "intro_rogue");
 					break;
-				case HUNTRESS:
+				case HOSHINO:
 					msg1 += Messages.get(this, "intro_huntress");
 					break;
 				case DUELIST:

@@ -47,8 +47,7 @@ public enum Icons {
 	HERO_ARIS,
 	HERO_NONOMI,
 	HERO_MIYAKO,
-	ROGUE,
-	HUNTRESS,
+	HERO_HOSHINO,
 	DUELIST,
 
 	//grey icons, mainly used for buttons, spacing for 16x16
@@ -172,10 +171,10 @@ public enum Icons {
 				icon.frame( icon.texture.uvRectBySize( 32, 16, 12, 12 ) );
 				break;
 			case HERO_MIYAKO:
-				icon.frame( icon.texture.uvRectBySize( 48, 16, 12, 12 ) );
+				icon.frame( icon.texture.uvRectBySize( 48, 16, 11, 11 ) );
 				break;
-			case HUNTRESS:
-				icon.frame( icon.texture.uvRectBySize( 64, 16, 16, 16 ) );
+			case HERO_HOSHINO:
+				icon.frame( icon.texture.uvRectBySize( 64, 16, 14, 14 ) );
 				break;
 			case DUELIST:
 				icon.frame( icon.texture.uvRectBySize( 80, 16, 13, 14 ) );
@@ -413,8 +412,8 @@ public enum Icons {
 				return get( Icons.HERO_NONOMI );
 			case MIYAKO:
 				return get( Icons.HERO_MIYAKO );
-			case HUNTRESS:
-				return get( Icons.HUNTRESS );
+			case HOSHINO:
+				return get( Icons.HERO_HOSHINO );
 			case DUELIST:
 				return get( Icons.DUELIST );
 			default:

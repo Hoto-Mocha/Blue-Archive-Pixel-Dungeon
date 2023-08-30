@@ -34,27 +34,25 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Aris_
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.ElementalStrike;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Feint;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.NaturesPower;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.SpectralBlades;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.SpiritHawk;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.Hoshino_1;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.Hoshino_2;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.Hoshino_3;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.Miyako_1;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.Miyako_2;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.Miyako_3;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Nonomi_1;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Nonomi_2;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Nonomi_3;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.DeathMark;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.ShadowClone;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.SmokeBomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.active.Claymore;
-import com.shatteredpixel.shatteredpixeldungeon.items.active.HandGrenade;
-import com.shatteredpixel.shatteredpixeldungeon.items.active.SmokeGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.TengusMask;
 import com.shatteredpixel.shatteredpixeldungeon.items.Waterskin;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.BlastGrenade;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Claymore;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.HandGrenade;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.SmokeGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.VelvetPouch;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Food;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfExperience;
@@ -70,14 +68,12 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMirrorImag
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRage;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dagger;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gloves;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Rapier;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_tier1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_tier5;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_tier1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_tier1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingSpike;
@@ -90,8 +86,8 @@ public enum HeroClass {
 	ARIS( HeroSubClass.ARIS_EX_SUPERNOVA, HeroSubClass.ARIS_EX_CHARGE ),
 	NONOMI( HeroSubClass.NONOMI_EX_RIOT, HeroSubClass.NONOMI_EX_SHOOTALL ),
 	MIYAKO( HeroSubClass.MIYAKO_EX_STUNDRONE, HeroSubClass.MIYAKO_EX_DRONESTRIKE ),
+	HOSHINO( HeroSubClass.HOSHINO_EX_TACTICAL_PRESS, HeroSubClass.HOSHINO_EX_TACTICAL_SHIELD ),
 
-	HUNTRESS( HeroSubClass.SNIPER, HeroSubClass.WARDEN ),
 	DUELIST( HeroSubClass.CHAMPION, HeroSubClass.MONK );
 
 	private HeroSubClass[] subClasses;
@@ -117,12 +113,13 @@ public enum HeroClass {
 		Waterskin waterskin = new Waterskin();
 		waterskin.collect();
 
-//		new PotionOfExperience().identify().quantity(30).collect();
-//		new TengusMask().collect();
-//		new ScrollOfUpgrade().identify().quantity(200).collect();
-//		new MG_tier5().collect();
-//		new ScrollOfIdentify().collect();
-//		new ScrollOfTransmutation().identify().quantity(200).collect();
+		new PotionOfExperience().identify().quantity(30).collect();
+		new TengusMask().collect();
+		new ScrollOfUpgrade().identify().quantity(200).collect();
+		new MG_tier5().collect();
+		new ScrollOfIdentify().collect();
+		new ScrollOfTransmutation().identify().quantity(200).collect();
+		new ScrollOfLullaby().identify().quantity(200).collect();
 
 		new ScrollOfIdentify().identify();
 
@@ -139,8 +136,8 @@ public enum HeroClass {
 				initMiyako( hero );
 				break;
 
-			case HUNTRESS:
-				initHuntress( hero );
+			case HOSHINO:
+				initHoshino( hero );
 				break;
 
 			case DUELIST:
@@ -167,8 +164,8 @@ public enum HeroClass {
 				return Badges.Badge.MASTERY_NONOMI;
 			case MIYAKO:
 				return Badges.Badge.MASTERY_MIYAKO;
-			case HUNTRESS:
-				return Badges.Badge.MASTERY_HUNTRESS;
+			case HOSHINO:
+				return Badges.Badge.MASTERY_HOSHINO;
 			case DUELIST:
 				return Badges.Badge.MASTERY_DUELIST;
 		}
@@ -236,13 +233,26 @@ public enum HeroClass {
 		new PotionOfInvisibility().identify();
 	}
 
-	private static void initHuntress( Hero hero ) {
+	private static void initHoshino( Hero hero ) {
 
-		(hero.belongings.weapon = new Gloves()).identify();
-		SpiritBow bow = new SpiritBow();
-		bow.identify().collect();
+		SG_tier1 sg = new SG_tier1();
 
-		Dungeon.quickslot.setSlot(0, bow);
+		(hero.belongings.weapon = sg).identify();
+		hero.belongings.weapon.activate(hero);
+
+		IronHorus shield = new IronHorus();
+		shield.collect();
+
+		BlastGrenade blastGrenade = new BlastGrenade();
+		blastGrenade.collect();
+
+		ThrowingKnife knives = new ThrowingKnife();
+		knives.quantity(3).collect();
+
+		Dungeon.quickslot.setSlot(0, sg);
+		Dungeon.quickslot.setSlot(1, shield);
+		Dungeon.quickslot.setSlot(2, blastGrenade);
+		Dungeon.quickslot.setSlot(3, knives);
 
 		new PotionOfMindVision().identify();
 		new ScrollOfLullaby().identify();
@@ -287,8 +297,8 @@ public enum HeroClass {
 				return new ArmorAbility[]{new Nonomi_1(), new Nonomi_2(), new Nonomi_3()};
 			case MIYAKO:
 				return new ArmorAbility[]{new Miyako_1(), new Miyako_2(), new Miyako_3()};
-			case HUNTRESS:
-				return new ArmorAbility[]{new SpectralBlades(), new NaturesPower(), new SpiritHawk()};
+			case HOSHINO:
+				return new ArmorAbility[]{new Hoshino_1(), new Hoshino_2(), new Hoshino_3()};
 			case DUELIST:
 				return new ArmorAbility[]{new Challenge(), new ElementalStrike(), new Feint()};
 		}
@@ -302,8 +312,8 @@ public enum HeroClass {
 				return Assets.Sprites.NONOMI;
 			case MIYAKO:
 				return Assets.Sprites.MIYAKO;
-			case HUNTRESS:
-				return Assets.Sprites.HUNTRESS;
+			case HOSHINO:
+				return Assets.Sprites.HOSHINO;
 			case DUELIST:
 				return Assets.Sprites.DUELIST;
 		}
@@ -317,8 +327,8 @@ public enum HeroClass {
 				return Assets.Splashes.NONOMI;
 			case MIYAKO:
 				return Assets.Splashes.MIYAKO;
-			case HUNTRESS:
-				return Assets.Splashes.HUNTRESS;
+			case HOSHINO:
+				return Assets.Splashes.HOSHINO;
 			case DUELIST:
 				return Assets.Splashes.DUELIST;
 		}
@@ -335,8 +345,8 @@ public enum HeroClass {
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_NONOMI);
 			case MIYAKO:
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_MIYAKO);
-			case HUNTRESS:
-				return Badges.isUnlocked(Badges.Badge.UNLOCK_HUNTRESS);
+			case HOSHINO:
+				return Badges.isUnlocked(Badges.Badge.UNLOCK_HOSHINO);
 			case DUELIST:
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_DUELIST);
 		}

@@ -56,6 +56,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Surprise;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Wound;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.BlastGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Claymore;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.HandGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.SmokeGrenade;
@@ -836,6 +837,11 @@ public abstract class Mob extends Char {
 		Claymore claymore = Dungeon.hero.belongings.getItem(Claymore.class);
 		if (cause == Dungeon.hero && claymore != null && Random.Float() < 0.125f+0.025f*Dungeon.hero.pointsInTalent(Talent.SUPPLY)) {
 			claymore.reload();
+		}
+
+		BlastGrenade blast = Dungeon.hero.belongings.getItem(BlastGrenade.class);
+		if (cause == Dungeon.hero && blast != null && Random.Float() < 0.15f) {
+			blast.reload();
 		}
 
 		StunDroneCooldown stunDroneCooldown = Dungeon.hero.buff(StunDroneCooldown.class);

@@ -53,14 +53,14 @@ public class Badges {
 		MASTERY_ARIS,
 		MASTERY_NONOMI,
 		MASTERY_MIYAKO,
-		MASTERY_HUNTRESS,
+		MASTERY_HOSHINO,
 		MASTERY_DUELIST,
 		FOUND_RATMOGRIFY,
 
 		//bronze
 		UNLOCK_NONOMI               ( 1 ),
 		UNLOCK_MIYAKO               ( 2 ),
-		UNLOCK_HUNTRESS             ( 3 ),
+		UNLOCK_HOSHINO              ( 3 ),
 		UNLOCK_DUELIST              ( 4 ),
 		//UNLOCK_CLERIC             ( 5 ),
 		MONSTERS_SLAIN_1            ( 6 ),
@@ -107,7 +107,7 @@ public class Badges {
 		BOSS_SLAIN_1_ARIS,
 		BOSS_SLAIN_1_NONOMI,
 		BOSS_SLAIN_1_MIYAKO,
-		BOSS_SLAIN_1_HUNTRESS,
+		BOSS_SLAIN_1_HOSHINO,
 		BOSS_SLAIN_1_DUELIST,
 		BOSS_SLAIN_1_ALL_CLASSES    ( 54, true ),
 		GAMES_PLAYED_2              ( 55, true ),
@@ -153,7 +153,7 @@ public class Badges {
 		VICTORY_ARIS,
 		VICTORY_NONOMI,
 		VICTORY_MIYAKO,
-		VICTORY_HUNTRESS,
+		VICTORY_HOSHINO,
 		VICTORY_DUELIST,
 		VICTORY_ALL_CLASSES         ( 103, true ),
 		DEATH_FROM_ALL              ( 104, true ),
@@ -707,7 +707,7 @@ public class Badges {
 		firstBossClassBadges.put(HeroClass.ARIS, Badge.BOSS_SLAIN_1_ARIS);
 		firstBossClassBadges.put(HeroClass.NONOMI, Badge.BOSS_SLAIN_1_NONOMI);
 		firstBossClassBadges.put(HeroClass.MIYAKO, Badge.BOSS_SLAIN_1_MIYAKO);
-		firstBossClassBadges.put(HeroClass.HUNTRESS, Badge.BOSS_SLAIN_1_HUNTRESS);
+		firstBossClassBadges.put(HeroClass.HOSHINO, Badge.BOSS_SLAIN_1_HOSHINO);
 		firstBossClassBadges.put(HeroClass.DUELIST, Badge.BOSS_SLAIN_1_DUELIST);
 	}
 
@@ -716,7 +716,7 @@ public class Badges {
 		victoryClassBadges.put(HeroClass.ARIS, Badge.VICTORY_ARIS);
 		victoryClassBadges.put(HeroClass.NONOMI, Badge.VICTORY_NONOMI);
 		victoryClassBadges.put(HeroClass.MIYAKO, Badge.VICTORY_MIYAKO);
-		victoryClassBadges.put(HeroClass.HUNTRESS, Badge.VICTORY_HUNTRESS);
+		victoryClassBadges.put(HeroClass.HOSHINO, Badge.VICTORY_HOSHINO);
 		victoryClassBadges.put(HeroClass.DUELIST, Badge.VICTORY_DUELIST);
 	}
 
@@ -838,8 +838,8 @@ public class Badges {
 			case MIYAKO:
 				badge = Badge.MASTERY_MIYAKO;
 				break;
-			case HUNTRESS:
-				badge = Badge.MASTERY_HUNTRESS;
+			case HOSHINO:
+				badge = Badge.MASTERY_HOSHINO;
 				break;
 			case DUELIST:
 				badge = Badge.MASTERY_DUELIST;
@@ -866,8 +866,8 @@ public class Badges {
 	}
 	
 	public static void validateHuntressUnlock(){
-		if (Statistics.thrownAttacks >= 10 && !isUnlocked(Badge.UNLOCK_HUNTRESS)){
-			displayBadge( Badge.UNLOCK_HUNTRESS );
+		if (Statistics.miyakoUnlocked && !isUnlocked(Badge.UNLOCK_HOSHINO)){
+			displayBadge( Badge.UNLOCK_HOSHINO );
 		}
 	}
 

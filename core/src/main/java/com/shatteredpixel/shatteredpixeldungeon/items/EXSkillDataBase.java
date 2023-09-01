@@ -44,15 +44,15 @@ import com.watabou.noosa.particles.Emitter;
 
 import java.util.ArrayList;
 
-public class TengusMask extends Item {
+public class EXSkillDataBase extends TengusMask {
 	
-	private static final String AC_WEAR	= "WEAR";
+	private static final String AC_USE	= "USE";
 	
 	{
 		stackable = false;
-		image = ItemSpriteSheet.MASK;
+		image = ItemSpriteSheet.EX_DB;
 
-		defaultAction = AC_WEAR;
+		defaultAction = AC_USE;
 
 		unique = true;
 	}
@@ -60,7 +60,7 @@ public class TengusMask extends Item {
 	@Override
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = super.actions( hero );
-//		actions.add( AC_WEAR );
+		actions.add( AC_USE );
 		return actions;
 	}
 	
@@ -69,7 +69,7 @@ public class TengusMask extends Item {
 
 		super.execute( hero, action );
 
-		if (action.equals( AC_WEAR )) {
+		if (action.equals( AC_USE )) {
 			
 			curUser = hero;
 
@@ -93,28 +93,19 @@ public class TengusMask extends Item {
 	public boolean isIdentified() {
 		return true;
 	}
-	
+
+	@Override
 	public void choose( HeroSubClass way ) {
 		
-		detach( curUser.belongings.backpack );
-		
-		curUser.spend( Actor.TICK );
-		curUser.busy();
-		
-		curUser.subClass = way;
-		Talent.initSubclassTalents(curUser);
+		super.choose(way);
 
-		if (way == HeroSubClass.ASSASSIN && curUser.invisible > 0){
-			Buff.affect(curUser, Preparation.class);
+		if (curUser.subClass == HeroSubClass.MIYAKO_EX_STUNDRONE && curUser.buff(StunDrone.class) == null) {
+			Buff.affect(hero, StunDrone.class);
+		}
+
+		if (curUser.subClass == HeroSubClass.MIYAKO_EX_DRONESTRIKE && curUser.buff(DroneStrike.class) == null) {
+			Buff.affect(hero, DroneStrike.class);
 		}
 		
-		curUser.sprite.operate( curUser.pos );
-		Sample.INSTANCE.play( Assets.Sounds.MASTERY );
-		
-		Emitter e = curUser.sprite.centerEmitter();
-		e.pos(e.x-2, e.y-6, 4, 4);
-		e.start(Speck.factory(Speck.MASK), 0.05f, 20);
-		GLog.p( Messages.get(this, "used"));
-
 	}
 }

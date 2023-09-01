@@ -28,6 +28,9 @@ public class SmokeGrenade extends Grenade {
 
         max_amount = 3;
         amount = max_amount;
+
+        unique = true;
+        bones = false;
     }
 
     @Override

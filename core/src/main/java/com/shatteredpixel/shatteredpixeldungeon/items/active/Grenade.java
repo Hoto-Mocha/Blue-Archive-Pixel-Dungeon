@@ -22,6 +22,9 @@ public class Grenade extends Item {
     {
         defaultAction = AC_LIGHTTHROW;
         levelKnown = true;
+
+        unique = true;
+        bones = false;
     }
 
     private static final String AMOUNT = "amount";

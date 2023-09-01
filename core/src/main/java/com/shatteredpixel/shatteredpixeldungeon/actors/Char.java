@@ -391,7 +391,7 @@ public abstract class Char extends Actor {
 			if (this instanceof Hero) {
 				Hero h = (Hero) this;
 				if (h.belongings.attackingWeapon() instanceof Gun.Bullet &&
-						(h.heroClass == HeroClass.NONOMI || h.heroClass == HeroClass.MIYAKO) &&
+						(h.heroClass == HeroClass.NONOMI) &&
 						enemy.properties.contains(Property.INORGANIC)) {
 					dmg *= 1.5f;
 				}

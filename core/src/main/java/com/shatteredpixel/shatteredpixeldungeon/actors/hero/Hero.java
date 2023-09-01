@@ -1358,10 +1358,6 @@ public class Hero extends Char {
 			Buff.affect(Dungeon.hero, Talent.PatientStrikeTracker.class).pos = Dungeon.hero.pos;
 		}
 		if (!fullRest) {
-			if (hero.hasTalent(Talent.TACTICAL_SHIELD_3) && hero.buff(IronHorus.TacticalShieldBuff.class) != null && hero.buff(Talent.TacticalInvisibilityTracker.class) == null) {
-				Buff.affect(hero, Invisibility.class, 3f*hero.pointsInTalent(Talent.TACTICAL_SHIELD_3));
-				Buff.affect(hero, Talent.TacticalInvisibilityTracker.class);
-			}
 			if (sprite != null) {
 				sprite.showStatus(CharSprite.DEFAULT, Messages.get(this, "wait"));
 			}

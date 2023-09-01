@@ -61,7 +61,7 @@ public class Badges {
 		UNLOCK_NONOMI               ( 1 ),
 		UNLOCK_MIYAKO               ( 2 ),
 		UNLOCK_HOSHINO              ( 3 ),
-		UNLOCK_DUELIST              ( 4 ),
+		//UNLOCK_DUELIST              ( 4 ),
 		//UNLOCK_CLERIC             ( 5 ),
 		MONSTERS_SLAIN_1            ( 6 ),
 		MONSTERS_SLAIN_2            ( 7 ),
@@ -522,10 +522,6 @@ public class Badges {
 		if (!item.levelKnown || item instanceof Artifact) {
 			return;
 		}
-
-		if (item instanceof MeleeWeapon){
-			validateDuelistUnlock();
-		}
 		
 		Badge badge = null;
 		if (!local.contains( Badge.ITEM_LEVEL_1 ) && item.level() >= 3) {
@@ -868,23 +864,6 @@ public class Badges {
 	public static void validateHoshinoUnlock(){
 		if (Statistics.hoshinoUnlocked && !isUnlocked(Badge.UNLOCK_HOSHINO)){
 			displayBadge( Badge.UNLOCK_HOSHINO );
-		}
-	}
-
-	public static void validateDuelistUnlock(){
-		if (!isUnlocked(Badge.UNLOCK_DUELIST) && Dungeon.hero != null
-				&& Dungeon.hero.belongings.weapon instanceof MeleeWeapon
-				&& ((MeleeWeapon) Dungeon.hero.belongings.weapon).tier >= 2
-				&& ((MeleeWeapon) Dungeon.hero.belongings.weapon).STRReq() <= Dungeon.hero.STR()){
-
-			if (Dungeon.hero.belongings.weapon.isIdentified() &&
-					((MeleeWeapon) Dungeon.hero.belongings.weapon).STRReq() <= Dungeon.hero.STR()) {
-				displayBadge(Badge.UNLOCK_DUELIST);
-
-			} else if (!Dungeon.hero.belongings.weapon.isIdentified() &&
-					((MeleeWeapon) Dungeon.hero.belongings.weapon).STRReq(0) <= Dungeon.hero.STR()){
-				displayBadge(Badge.UNLOCK_DUELIST);
-			}
 		}
 	}
 	

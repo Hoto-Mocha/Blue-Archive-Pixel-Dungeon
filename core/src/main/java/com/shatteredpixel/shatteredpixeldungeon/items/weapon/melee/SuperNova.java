@@ -170,7 +170,7 @@ public class SuperNova extends MeleeWeapon {
                     for (int c : beam.subPath(1, maxDistance)) {
                         Char ch;
 
-                        //각성 능력: 과충전 2단계
+                        //EX 능력: 과충전 2단계
                         if (hero.buff(SuperNovaCharge.class) != null && hero.buff(SuperNovaCharge.class).chargeLevel() > 1) {
                             for (int i : PathFinder.NEIGHBOURS9) {
                                 int cell = c + i;
@@ -215,7 +215,7 @@ public class SuperNova extends MeleeWeapon {
                     }
                     for (Char ch : chars) {
 
-                        //각성 능력: 과충전 1단계
+                        //EX 능력: 과충전 1단계
                         if (hero.buff(SuperNovaCharge.class) != null) {
                             if (hero.buff(SuperNovaCharge.class).chargeLevel() > 0) {
                                 Buff.affect(ch, Burning.class).reignite(ch);
@@ -231,12 +231,15 @@ public class SuperNova extends MeleeWeapon {
                         hero.heal(chars.size() * hero.pointsInTalent(Talent.ENERGY_DRAIN));
                     }
 
-                    //각성 능력: 슈퍼노바
+                    //EX 능력: 슈퍼노바
                     if (hero.subClass == HeroSubClass.ARIS_EX_SUPERNOVA) {
                         boolean terrainAffected2 = false;
                         ArrayList<Char> charsBlastAffected = new ArrayList<>();
                         for (int i : PathFinder.NEIGHBOURS25) {
                             int cell = target+i;
+                            if (cell < 0 || cell > Dungeon.level.map.length) {
+                                continue;
+                            }
                             Char enemy;
                             if ((enemy = Actor.findChar(cell)) != null && enemy.alignment == Char.Alignment.ENEMY) {
                                 charsBlastAffected.add(enemy);

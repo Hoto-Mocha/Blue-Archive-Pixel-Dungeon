@@ -8,7 +8,10 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vulnerable;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
@@ -143,6 +146,10 @@ public class Gun extends MeleeWeapon {
         if (hero.hasTalent(Talent.RELOADING_SHIELD)) {
             Buff.affect(hero, Barrier.class).setShield(1+2*hero.pointsInTalent(Talent.RELOADING_SHIELD));
         }
+        if (hero.hasTalent(Talent.TACTICAL_SHIELD_3) && hero.buff(IronHorus.TacticalShieldBuff.class) != null && hero.buff(Talent.TacticalInvisibilityTracker.class) == null) {
+            Buff.affect(hero, Invisibility.class, 3f*hero.pointsInTalent(Talent.TACTICAL_SHIELD_3));
+            Buff.affect(hero, Talent.TacticalInvisibilityTracker.class);
+        }
         Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
         hero.spendAndNext(reloadTime());
         GLog.i(Messages.get(this, "reload"));
@@ -257,6 +264,9 @@ public class Gun extends MeleeWeapon {
             if (hero.subClass == HeroSubClass.HOSHINO_EX_TACTICAL_SHIELD && hero.buff(IronHorus.TacticalShieldBuff.class) != null) {
                 Buff.affect(hero, Barrier.class).set(1, 10+5*hero.pointsInTalent(Talent.TACTICAL_SHIELD_2));
                 BuffIndicator.refreshHero();
+            }
+            if (hero.heroClass == HeroClass.MIYAKO && Random.Float() < 0.1f) {
+                Buff.affect(defender, Vulnerable.class, 3f);
             }
             return super.proc(attacker, defender, damage);
         }

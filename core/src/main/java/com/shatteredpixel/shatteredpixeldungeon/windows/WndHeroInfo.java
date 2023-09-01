@@ -110,7 +110,7 @@ public class WndHeroInfo extends WndTabbed {
 			subclassInfo.setSize(WIDTH, MIN_HEIGHT);
 			finalHeight = (int)Math.max(finalHeight, subclassInfo.height());
 
-			add(new IconTab(new ItemSprite(ItemSpriteSheet.MASK, null)) {
+			add(new IconTab(new ItemSprite(ItemSpriteSheet.EX_DB, null)) {
 				@Override
 				protected void select(boolean value) {
 					super.select(value);

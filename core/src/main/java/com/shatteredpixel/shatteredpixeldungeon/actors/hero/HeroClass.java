@@ -44,15 +44,17 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Non
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Nonomi_2;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Nonomi_3;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
+import com.shatteredpixel.shatteredpixeldungeon.items.EXSkillDataBase;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.TengusMask;
 import com.shatteredpixel.shatteredpixeldungeon.items.Waterskin;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.BlastGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Claymore;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.HandGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.SmokeGrenade;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Teleporter;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.PlateArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.VelvetPouch;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Food;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfExperience;
@@ -61,6 +63,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfInvisibili
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLiquidFlame;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfMindVision;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfStrength;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
@@ -114,12 +117,15 @@ public enum HeroClass {
 		waterskin.collect();
 
 //		new PotionOfExperience().identify().quantity(30).collect();
-//		new TengusMask().collect();
+//		new EXSkillDataBase().collect();
 //		new ScrollOfUpgrade().identify().quantity(200).collect();
 //		new MG_tier5().collect();
 //		new ScrollOfIdentify().collect();
 //		new ScrollOfTransmutation().identify().quantity(200).collect();
 //		new ScrollOfLullaby().identify().quantity(200).collect();
+//		new RingOfWealth().identify().upgrade(100).collect();
+//		new PlateArmor().identify().upgrade(100).collect();
+//		new Teleporter().collect();
 
 		new ScrollOfIdentify().identify();
 
@@ -348,7 +354,7 @@ public enum HeroClass {
 			case HOSHINO:
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_HOSHINO);
 			case DUELIST:
-				return Badges.isUnlocked(Badges.Badge.UNLOCK_DUELIST);
+				return false;
 		}
 	}
 	

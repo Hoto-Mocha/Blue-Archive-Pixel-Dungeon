@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.wands;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -384,11 +385,11 @@ public abstract class Wand extends Item {
 			float uses = Math.min( availableUsesToID, Talent.itemIDSpeedFactor(Dungeon.hero, this) );
 			availableUsesToID -= uses;
 			usesLeftToID -= uses;
-//			if (usesLeftToID <= 0 || Dungeon.hero.pointsInTalent(Talent.SCHOLARS_INTUITION) == 2) {
-//				identify();
-//				GLog.p( Messages.get(Wand.class, "identify") );
-//				Badges.validateItemLevelAquired( this );
-//			}
+			if (usesLeftToID <= 0) {
+				identify();
+				GLog.p( Messages.get(Wand.class, "identify") );
+				Badges.validateItemLevelAquired( this );
+			}
 		}
 
 		//inside staff

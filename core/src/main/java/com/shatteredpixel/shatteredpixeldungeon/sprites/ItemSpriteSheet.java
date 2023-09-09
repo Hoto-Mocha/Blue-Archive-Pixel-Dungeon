@@ -721,13 +721,15 @@ public class ItemSpriteSheet {
 		assignItemRect(HALLS_PAGE,  10, 11);
 	}
 
-	private static final int UNIQUE_WEAPON 	= 								xy(1, 33);
-	public static final int SUPER_NOVA 		= UNIQUE_WEAPON+0;
-	public static final int SMOKE_GRENADE 	= UNIQUE_WEAPON+1;
-	public static final int HAND_GRENADE 	= UNIQUE_WEAPON+2;
-	public static final int CLAYMORE	 	= UNIQUE_WEAPON+3;
-	public static final int BLAST_GRENADE	= UNIQUE_WEAPON+4;
-	public static final int IRON_HORUS	 	= UNIQUE_WEAPON+5;
+	private static final int UNIQUE_ITEM 	= 								xy(1, 33);
+	public static final int SUPER_NOVA 		= UNIQUE_ITEM+0;
+	public static final int SMOKE_GRENADE 	= UNIQUE_ITEM+1;
+	public static final int HAND_GRENADE 	= UNIQUE_ITEM+2;
+	public static final int CLAYMORE	 	= UNIQUE_ITEM+3;
+	public static final int BLAST_GRENADE	= UNIQUE_ITEM+4;
+	public static final int IRON_HORUS	 	= UNIQUE_ITEM+5;
+	public static final int HP_GRENADE	 	= UNIQUE_ITEM+6;
+	public static final int BICYCLE	 		= UNIQUE_ITEM+7;
 	static {
 		assignItemRect(SUPER_NOVA, 		16, 16);
 		assignItemRect(SMOKE_GRENADE, 	12, 12);
@@ -735,6 +737,8 @@ public class ItemSpriteSheet {
 		assignItemRect(CLAYMORE, 		13, 13);
 		assignItemRect(BLAST_GRENADE, 	11, 11);
 		assignItemRect(IRON_HORUS, 		14, 14);
+		assignItemRect(HP_GRENADE, 		11, 11);
+		assignItemRect(BICYCLE, 		16, 16);
 	}
 
 	//for smaller 8x8 icons that often accompany an item sprite
@@ -1019,9 +1023,9 @@ public class ItemSpriteSheet {
 	}
 
 	private static final int NEW_ITEMS  =                                   xy(1, 39);  //16 slots
-	public static final int EX_DB	= NEW_ITEMS+0;
+	public static final int EX_BD	= NEW_ITEMS+0;
 	static{
-		assignItemRect(EX_DB,	16, 14);
+		assignItemRect(EX_BD,	16, 14);
 	}
 
 }

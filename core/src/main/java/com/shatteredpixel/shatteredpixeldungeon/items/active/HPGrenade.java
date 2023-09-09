@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.active;
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
@@ -14,12 +15,10 @@ import com.watabou.utils.PathFinder;
 
 import java.util.ArrayList;
 
-public class HandGrenade extends Grenade {
-
-    private static ItemSprite.Glowing WHITE = new ItemSprite.Glowing( 0xFFFFFF, 0.5f );
+public class HPGrenade extends Grenade {
 
     {
-        image = ItemSpriteSheet.HAND_GRENADE;
+        image = ItemSpriteSheet.HP_GRENADE;
 
         max_amount = 1;
         amount = max_amount;
@@ -38,12 +37,13 @@ public class HandGrenade extends Grenade {
     }
 
     @Override
-    public ItemSprite.Glowing glowing() {
-        if (hero.buff(FlashGrenade.class) != null) {
-            return WHITE;
-        } else {
-            return null;
-        }
+    public int explodeMinDmg(){
+        return 2*super.explodeMinDmg();
+    }
+
+    @Override
+    public int explodeMaxDmg(){
+        return 2*super.explodeMaxDmg();
     }
 
     @Override

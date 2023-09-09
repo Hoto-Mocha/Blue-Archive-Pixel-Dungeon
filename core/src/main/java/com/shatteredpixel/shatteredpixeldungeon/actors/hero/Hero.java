@@ -65,6 +65,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SnipersMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.StunDrone;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vulnerable;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.ElementalStrike;
@@ -77,6 +78,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CheckedCell;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
 import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
 import com.shatteredpixel.shatteredpixeldungeon.items.Dewdrop;
@@ -85,6 +87,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap.Type;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
@@ -137,6 +140,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RoundShield;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Sai;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Scimitar;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
@@ -159,6 +163,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.AttackIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
@@ -484,9 +489,9 @@ public class Hero extends Char {
 			Buff.affect( this, Combo.class ).hit( enemy );
 		}
 
-		if (hit && heroClass == HeroClass.DUELIST && wasEnemy){
-			Buff.affect( this, Sai.ComboStrikeTracker.class).addHit();
-		}
+//		if (hit && heroClass == HeroClass.DUELIST && wasEnemy){
+//			Buff.affect( this, Sai.ComboStrikeTracker.class).addHit();
+//		}
 
 		return hit;
 	}
@@ -516,6 +521,11 @@ public class Hero extends Char {
 
 		if (wep instanceof SG.SGBullet) {
 			accuracy *= 2f;
+		}
+
+		Bicycle.BicycleBuff bicycleBuff = buff(Bicycle.BicycleBuff.class);
+		if (bicycleBuff != null && hero.subClass != HeroSubClass.SHIROKO_EX_PROFESSIONAL_RIDE) {
+			accuracy *= 0.25f;
 		}
 		
 		if (!RingOfForce.fightingUnarmed(this)) {
@@ -561,6 +571,10 @@ public class Hero extends Char {
 
 		if (belongings.armor() != null) {
 			evasion = belongings.armor().evasionFactor(this, evasion);
+		}
+
+		if (hero.hasTalent(Talent.PROFESSIONAL_RIDE_2) && hero.buff(Bicycle.BicycleBuff.class) != null) {
+			evasion *= 1 + hero.speed()*hero.pointsInTalent(Talent.PROFESSIONAL_RIDE_2)/6f;
 		}
 
 		return Math.round(evasion);
@@ -650,11 +664,11 @@ public class Hero extends Char {
 			Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG, 0.75f, 1.2f);
 		}
 
-		if (heroClass != HeroClass.DUELIST
-				&& hasTalent(Talent.WEAPON_RECHARGING)
-				&& (buff(Recharging.class) != null || buff(ArtifactRecharge.class) != null)){
-			dmg = Math.round(dmg * 1.025f + (.025f*pointsInTalent(Talent.WEAPON_RECHARGING)));
-		}
+//		if (heroClass != HeroClass.DUELIST
+//				&& hasTalent(Talent.WEAPON_RECHARGING)
+//				&& (buff(Recharging.class) != null || buff(ArtifactRecharge.class) != null)){
+//			dmg = Math.round(dmg * 1.025f + (.025f*pointsInTalent(Talent.WEAPON_RECHARGING)));
+//		}
 
 		if (dmg < 0) dmg = 0;
 		return dmg;
@@ -682,6 +696,11 @@ public class Hero extends Char {
 		NaturesPower.naturesPowerTracker natStrength = buff(NaturesPower.naturesPowerTracker.class);
 		if (natStrength != null){
 			speed *= (2f + 0.25f*pointsInTalent(Talent.GROWING_POWER));
+		}
+
+		Bicycle.BicycleBuff bicycleBuff = buff(Bicycle.BicycleBuff.class);
+		if (bicycleBuff != null) {
+			speed *= 2f;
 		}
 
 		speed = AscensionChallenge.modifyHeroSpeed(speed);
@@ -1320,13 +1339,13 @@ public class Hero extends Char {
 
 		if (enemy.isAlive() && canAttack( enemy ) && !isCharmedBy( enemy ) && enemy.invisible == 0) {
 
-			if (heroClass != HeroClass.DUELIST
-					&& hasTalent(Talent.AGGRESSIVE_BARRIER)
-					&& buff(Talent.AggressiveBarrierCooldown.class) == null
-					&& (HP / (float)HT) < 0.20f*(1+pointsInTalent(Talent.AGGRESSIVE_BARRIER))){
-				Buff.affect(this, Barrier.class).setShield(3);
-				Buff.affect(this, Talent.AggressiveBarrierCooldown.class, 50f);
-			}
+//			if (heroClass != HeroClass.DUELIST
+//					&& hasTalent(Talent.AGGRESSIVE_BARRIER)
+//					&& buff(Talent.AggressiveBarrierCooldown.class) == null
+//					&& (HP / (float)HT) < 0.20f*(1+pointsInTalent(Talent.AGGRESSIVE_BARRIER))){
+//				Buff.affect(this, Barrier.class).setShield(3);
+//				Buff.affect(this, Talent.AggressiveBarrierCooldown.class, 50f);
+//			}
 			sprite.attack( enemy.pos );
 
 			return false;
@@ -1423,7 +1442,12 @@ public class Hero extends Char {
 					this);
 			Buff.affect(hero, Talent.NoWayCooldown.class, 30f);
 		}
-		
+
+		if (wep instanceof Gun.Bullet && hero.hasTalent(Talent.SHOOTING_WEAKNESS) && hero.buff(Talent.ShootingWeaknessCooldown.class) == null) {
+			Buff.affect(enemy, Vulnerable.class, 3f);
+			Buff.affect(hero, Talent.ShootingWeaknessCooldown.class, 40-10*hero.pointsInTalent(Talent.SHOOTING_WEAKNESS));
+		}
+
 		return damage;
 	}
 	
@@ -1707,11 +1731,36 @@ public class Hero extends Char {
 			if (subClass == HeroSubClass.FREERUNNER){
 				Buff.affect(this, Momentum.class).gainStack();
 			}
+
+			Bicycle bicycle = belongings.getItem(Bicycle.class);
+			if (bicycle != null) {
+				Bicycle.BicycleBuff bicycleBuff = buff(Bicycle.BicycleBuff.class);
+				if (bicycleBuff != null) {
+					bicycle.use();
+					ActionIndicator.refresh();
+					if (hero.hasTalent(Talent.ELECTRIC_BICYCLE)) {
+						if (Random.Float() < 0.05f) {
+							Buff.prolong(hero, Recharging.class, 3);
+						}
+						if (hero.pointsInTalent(Talent.ELECTRIC_BICYCLE) > 1 && Random.Float() < 0.03f) {
+							Buff.affect(hero, ArtifactRecharge.class).set(2);
+						}
+					}
+				} else {
+					bicycle.chargeUp();
+				}
+			}
+
 			
 			sprite.move(pos, step);
 			move(step);
 
 			spend( delay );
+			if (buff(Bicycle.AccelerationBuff.class) != null) {
+				spend( -delay );
+				buff(Bicycle.AccelerationBuff.class).detach();
+			}
+
 			justMoved = true;
 			
 			search(false);
@@ -2174,9 +2223,9 @@ public class Hero extends Char {
 			Buff.affect( this, Combo.class ).hit( enemy );
 		}
 
-		if (hit && heroClass == HeroClass.DUELIST && wasEnemy){
-			Buff.affect( this, Sai.ComboStrikeTracker.class).addHit();
-		}
+//		if (hit && heroClass == HeroClass.DUELIST && wasEnemy){
+//			Buff.affect( this, Sai.ComboStrikeTracker.class).addHit();
+//		}
 
 		RingOfForce.BrawlersStance brawlStance = buff(RingOfForce.BrawlersStance.class);
 		if (brawlStance != null && brawlStance.hitsLeft() > 0){

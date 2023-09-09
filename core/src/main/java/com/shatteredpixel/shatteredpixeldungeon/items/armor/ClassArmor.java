@@ -115,7 +115,7 @@ abstract public class ClassArmor extends Armor {
 			case HOSHINO:
 				classArmor = new HuntressArmor();
 				break;
-			case DUELIST:
+			case SHIROKO:
 				classArmor = new DuelistArmor();
 				break;
 		}

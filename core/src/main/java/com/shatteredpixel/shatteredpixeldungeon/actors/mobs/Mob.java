@@ -32,6 +32,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Adrenaline;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
@@ -56,8 +57,10 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Surprise;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Wound;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.BlastGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Claymore;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.HPGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.HandGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.SmokeGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.MasterThievesArmband;
@@ -788,15 +791,6 @@ public abstract class Mob extends Char {
 		if (alignment == Alignment.ENEMY){
 			rollToDropLoot();
 
-			if (cause == Dungeon.hero || cause instanceof Weapon || cause instanceof Weapon.Enchantment){
-				if (Dungeon.hero.heroClass != HeroClass.DUELIST
-						&& Dungeon.hero.hasTalent(Talent.LETHAL_HASTE)
-						&& Dungeon.hero.buff(Talent.LethalHasteCooldown.class) == null){
-					Buff.affect(Dungeon.hero, Talent.LethalHasteCooldown.class, 100f);
-					Buff.affect(Dungeon.hero, Haste.class, 1.67f + Dungeon.hero.pointsInTalent(Talent.LETHAL_HASTE));
-				}
-			}
-
 			if (cause == Dungeon.hero && Dungeon.level.heroFOV[pos]) {
 				if (Random.Int(4) == 0) { //25% chance
 					Dungeon.hero.yellI(Messages.get(Hero.class, Dungeon.hero.heroClass.name() + "_enemy_defeated_" + (1 + Random.Int(5)))); //1~5 variable
@@ -810,24 +804,39 @@ public abstract class Mob extends Char {
 			GLog.i( Messages.get(this, "died") );
 		}
 
-		SmokeGrenade smoke = Dungeon.hero.belongings.getItem(SmokeGrenade.class);
-		if (cause == Dungeon.hero && smoke != null && Random.Float() < 0.25f) {
-			smoke.reload();
-		}
+		if (cause == Dungeon.hero) {
+			if (Dungeon.hero.hasTalent(Talent.DEFENSIVE_FEEDBACK)) {
+				Buff.affect(Dungeon.hero, Barrier.class).setShield(2+3*Dungeon.hero.pointsInTalent(Talent.DEFENSIVE_FEEDBACK));
+			}
 
-		HandGrenade grenade = Dungeon.hero.belongings.getItem(HandGrenade.class);
-		if (cause == Dungeon.hero && grenade != null && Random.Float() < 0.20f+0.05f*Dungeon.hero.pointsInTalent(Talent.SUPPLY)) {
-			grenade.reload();
-		}
+			if (Dungeon.hero.buff(Bicycle.DriftCooldown.class) != null) {
+				Dungeon.hero.buff(Bicycle.DriftCooldown.class).kill();
+			}
 
-		Claymore claymore = Dungeon.hero.belongings.getItem(Claymore.class);
-		if (cause == Dungeon.hero && claymore != null && Random.Float() < 0.125f+0.025f*Dungeon.hero.pointsInTalent(Talent.SUPPLY)) {
-			claymore.reload();
-		}
+			SmokeGrenade smoke = Dungeon.hero.belongings.getItem(SmokeGrenade.class);
+			if (smoke != null && Random.Float() < 0.25f) {
+				smoke.reload();
+			}
 
-		BlastGrenade blast = Dungeon.hero.belongings.getItem(BlastGrenade.class);
-		if (cause == Dungeon.hero && blast != null && Random.Float() < 0.15f) {
-			blast.reload();
+			HandGrenade grenade = Dungeon.hero.belongings.getItem(HandGrenade.class);
+			if (grenade != null && Random.Float() < 0.20f+0.05f*Dungeon.hero.pointsInTalent(Talent.SUPPLY)) {
+				grenade.reload();
+			}
+
+			Claymore claymore = Dungeon.hero.belongings.getItem(Claymore.class);
+			if (claymore != null && Random.Float() < 0.125f+0.025f*Dungeon.hero.pointsInTalent(Talent.SUPPLY)) {
+				claymore.reload();
+			}
+
+			BlastGrenade blast = Dungeon.hero.belongings.getItem(BlastGrenade.class);
+			if (blast != null && Random.Float() < 0.15f) {
+				blast.reload();
+			}
+
+			HPGrenade hpGrenade = Dungeon.hero.belongings.getItem(HPGrenade.class);
+			if (blast != null && Random.Float() < 0.15f) {
+				hpGrenade.reload();
+			}
 		}
 
 		StunDroneCooldown stunDroneCooldown = Dungeon.hero.buff(StunDroneCooldown.class);
@@ -853,6 +862,10 @@ public abstract class Mob extends Char {
 			if (!Statistics.hoshinoUnlocked) {
 				Statistics.hoshinoUnlocked = true;
 				Badges.validateHoshinoUnlock();
+			}
+			if (!Statistics.shirokoUnlocked) {
+				Statistics.shirokoUnlocked = true;
+				Badges.validateShirokoUnlock();
 			}
 		}
 

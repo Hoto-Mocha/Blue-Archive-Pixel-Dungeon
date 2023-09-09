@@ -54,14 +54,14 @@ public class Badges {
 		MASTERY_NONOMI,
 		MASTERY_MIYAKO,
 		MASTERY_HOSHINO,
-		MASTERY_DUELIST,
+		MASTERY_SHIROKO,
 		FOUND_RATMOGRIFY,
 
 		//bronze
 		UNLOCK_NONOMI               ( 1 ),
 		UNLOCK_MIYAKO               ( 2 ),
 		UNLOCK_HOSHINO              ( 3 ),
-		//UNLOCK_DUELIST              ( 4 ),
+		UNLOCK_SHIROKO              ( 4 ),
 		//UNLOCK_CLERIC             ( 5 ),
 		MONSTERS_SLAIN_1            ( 6 ),
 		MONSTERS_SLAIN_2            ( 7 ),
@@ -108,7 +108,7 @@ public class Badges {
 		BOSS_SLAIN_1_NONOMI,
 		BOSS_SLAIN_1_MIYAKO,
 		BOSS_SLAIN_1_HOSHINO,
-		BOSS_SLAIN_1_DUELIST,
+		BOSS_SLAIN_1_SHIROKO,
 		BOSS_SLAIN_1_ALL_CLASSES    ( 54, true ),
 		GAMES_PLAYED_2              ( 55, true ),
 		HIGH_SCORE_2                ( 56 ),
@@ -154,7 +154,7 @@ public class Badges {
 		VICTORY_NONOMI,
 		VICTORY_MIYAKO,
 		VICTORY_HOSHINO,
-		VICTORY_DUELIST,
+		VICTORY_SHIROKO,
 		VICTORY_ALL_CLASSES         ( 103, true ),
 		DEATH_FROM_ALL              ( 104, true ),
 		BOSS_SLAIN_3_GLADIATOR,
@@ -704,7 +704,7 @@ public class Badges {
 		firstBossClassBadges.put(HeroClass.NONOMI, Badge.BOSS_SLAIN_1_NONOMI);
 		firstBossClassBadges.put(HeroClass.MIYAKO, Badge.BOSS_SLAIN_1_MIYAKO);
 		firstBossClassBadges.put(HeroClass.HOSHINO, Badge.BOSS_SLAIN_1_HOSHINO);
-		firstBossClassBadges.put(HeroClass.DUELIST, Badge.BOSS_SLAIN_1_DUELIST);
+		firstBossClassBadges.put(HeroClass.SHIROKO, Badge.BOSS_SLAIN_1_SHIROKO);
 	}
 
 	private static LinkedHashMap<HeroClass, Badge> victoryClassBadges = new LinkedHashMap<>();
@@ -713,7 +713,7 @@ public class Badges {
 		victoryClassBadges.put(HeroClass.NONOMI, Badge.VICTORY_NONOMI);
 		victoryClassBadges.put(HeroClass.MIYAKO, Badge.VICTORY_MIYAKO);
 		victoryClassBadges.put(HeroClass.HOSHINO, Badge.VICTORY_HOSHINO);
-		victoryClassBadges.put(HeroClass.DUELIST, Badge.VICTORY_DUELIST);
+		victoryClassBadges.put(HeroClass.SHIROKO, Badge.VICTORY_SHIROKO);
 	}
 
 	private static LinkedHashMap<HeroSubClass, Badge> thirdBossSubclassBadges = new LinkedHashMap<>();
@@ -837,8 +837,8 @@ public class Badges {
 			case HOSHINO:
 				badge = Badge.MASTERY_HOSHINO;
 				break;
-			case DUELIST:
-				badge = Badge.MASTERY_DUELIST;
+			case SHIROKO:
+				badge = Badge.MASTERY_SHIROKO;
 				break;
 		}
 		
@@ -864,6 +864,12 @@ public class Badges {
 	public static void validateHoshinoUnlock(){
 		if (Statistics.hoshinoUnlocked && !isUnlocked(Badge.UNLOCK_HOSHINO)){
 			displayBadge( Badge.UNLOCK_HOSHINO );
+		}
+	}
+
+	public static void validateShirokoUnlock(){
+		if (Statistics.shirokoUnlocked && !isUnlocked(Badge.UNLOCK_SHIROKO)){
+			displayBadge( Badge.UNLOCK_SHIROKO );
 		}
 	}
 	

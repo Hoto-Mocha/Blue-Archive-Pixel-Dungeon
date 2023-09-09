@@ -43,12 +43,17 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.Miy
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Nonomi_1;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Nonomi_2;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Nonomi_3;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.Shiroko_1;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.Shiroko_2;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.Shiroko_3;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
-import com.shatteredpixel.shatteredpixeldungeon.items.EXSkillDataBase;
+import com.shatteredpixel.shatteredpixeldungeon.items.EXSkillDisc;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.Waterskin;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.BlastGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Claymore;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.HPGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.HandGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.SmokeGrenade;
@@ -74,6 +79,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Rapier;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_tier1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_tier1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_tier5;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_tier1;
@@ -90,8 +96,7 @@ public enum HeroClass {
 	NONOMI( HeroSubClass.NONOMI_EX_RIOT, HeroSubClass.NONOMI_EX_SHOOTALL ),
 	MIYAKO( HeroSubClass.MIYAKO_EX_STUNDRONE, HeroSubClass.MIYAKO_EX_DRONESTRIKE ),
 	HOSHINO( HeroSubClass.HOSHINO_EX_TACTICAL_PRESS, HeroSubClass.HOSHINO_EX_TACTICAL_SHIELD ),
-
-	DUELIST( HeroSubClass.CHAMPION, HeroSubClass.MONK );
+	SHIROKO( HeroSubClass.SHIROKO_EX_ELEMENTAL_BULLET, HeroSubClass.SHIROKO_EX_PROFESSIONAL_RIDE );
 
 	private HeroSubClass[] subClasses;
 
@@ -117,7 +122,7 @@ public enum HeroClass {
 		waterskin.collect();
 
 //		new PotionOfExperience().identify().quantity(30).collect();
-//		new EXSkillDataBase().collect();
+//		new EXSkillDisc().collect();
 //		new ScrollOfUpgrade().identify().quantity(200).collect();
 //		new MG_tier5().collect();
 //		new ScrollOfIdentify().collect();
@@ -146,8 +151,8 @@ public enum HeroClass {
 				initHoshino( hero );
 				break;
 
-			case DUELIST:
-				initDuelist( hero );
+			case SHIROKO:
+				initShiroko( hero );
 				break;
 		}
 
@@ -172,8 +177,8 @@ public enum HeroClass {
 				return Badges.Badge.MASTERY_MIYAKO;
 			case HOSHINO:
 				return Badges.Badge.MASTERY_HOSHINO;
-			case DUELIST:
-				return Badges.Badge.MASTERY_DUELIST;
+			case SHIROKO:
+				return Badges.Badge.MASTERY_SHIROKO;
 		}
 		return null;
 	}
@@ -240,7 +245,6 @@ public enum HeroClass {
 	}
 
 	private static void initHoshino( Hero hero ) {
-
 		SG_tier1 sg = new SG_tier1();
 
 		(hero.belongings.weapon = sg).identify();
@@ -264,16 +268,21 @@ public enum HeroClass {
 		new ScrollOfLullaby().identify();
 	}
 
-	private static void initDuelist( Hero hero ) {
+	private static void initShiroko( Hero hero ) {
+		AR_tier1 ar = new AR_tier1();
 
-		(hero.belongings.weapon = new Rapier()).identify();
+		(hero.belongings.weapon = ar).identify();
 		hero.belongings.weapon.activate(hero);
 
-		ThrowingSpike spikes = new ThrowingSpike();
-		spikes.quantity(2).collect();
+		HPGrenade hpGrenade = new HPGrenade();
+		hpGrenade.collect();
 
-		Dungeon.quickslot.setSlot(0, hero.belongings.weapon);
-		Dungeon.quickslot.setSlot(1, spikes);
+		Bicycle bicycle = new Bicycle();
+		bicycle.collect();
+
+		Dungeon.quickslot.setSlot(0, ar);
+		Dungeon.quickslot.setSlot(1, hpGrenade);
+		Dungeon.quickslot.setSlot(2, bicycle);
 
 		new PotionOfStrength().identify();
 		new ScrollOfMirrorImage().identify();
@@ -305,8 +314,8 @@ public enum HeroClass {
 				return new ArmorAbility[]{new Miyako_1(), new Miyako_2(), new Miyako_3()};
 			case HOSHINO:
 				return new ArmorAbility[]{new Hoshino_1(), new Hoshino_2(), new Hoshino_3()};
-			case DUELIST:
-				return new ArmorAbility[]{new Challenge(), new ElementalStrike(), new Feint()};
+			case SHIROKO:
+				return new ArmorAbility[]{new Shiroko_1(), new Shiroko_2(), new Shiroko_3()};
 		}
 	}
 
@@ -320,8 +329,8 @@ public enum HeroClass {
 				return Assets.Sprites.MIYAKO;
 			case HOSHINO:
 				return Assets.Sprites.HOSHINO;
-			case DUELIST:
-				return Assets.Sprites.DUELIST;
+			case SHIROKO:
+				return Assets.Sprites.SHIROKO;
 		}
 	}
 
@@ -335,8 +344,8 @@ public enum HeroClass {
 				return Assets.Splashes.MIYAKO;
 			case HOSHINO:
 				return Assets.Splashes.HOSHINO;
-			case DUELIST:
-				return Assets.Splashes.DUELIST;
+			case SHIROKO:
+				return Assets.Splashes.SHIROKO;
 		}
 	}
 	
@@ -353,8 +362,8 @@ public enum HeroClass {
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_MIYAKO);
 			case HOSHINO:
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_HOSHINO);
-			case DUELIST:
-				return false;
+			case SHIROKO:
+				return Badges.isUnlocked(Badges.Badge.UNLOCK_SHIROKO);
 		}
 	}
 	

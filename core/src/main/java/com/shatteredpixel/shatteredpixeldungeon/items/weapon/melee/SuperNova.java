@@ -109,7 +109,7 @@ public class SuperNova extends MeleeWeapon {
     }
 
     public int beamDamageMin(int lvl) {
-        float damage = hero.lvl + Dungeon.depth + lvl;
+        float damage = hero.lvl + Dungeon.scalingDepth() + lvl;
         if (hero.hasTalent(Talent.BALANCE_COLLAPSE)) {
             damage *= 1 + 0.05f * hero.pointsInTalent(Talent.BALANCE_COLLAPSE);
         }
@@ -120,7 +120,7 @@ public class SuperNova extends MeleeWeapon {
     }
 
     public int beamDamageMax(int lvl) {
-        float damage = hero.lvl*3 + Dungeon.depth*2 + lvl*3;
+        float damage = hero.lvl*3 + Dungeon.scalingDepth()*2 + lvl*3;
         if (hero.hasTalent(Talent.BALANCE_COLLAPSE)) {
             damage *= 1+0.05f*hero.pointsInTalent(Talent.BALANCE_COLLAPSE);
         }

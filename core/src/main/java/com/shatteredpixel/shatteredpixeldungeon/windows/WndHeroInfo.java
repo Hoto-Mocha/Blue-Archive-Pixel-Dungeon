@@ -69,9 +69,9 @@ public class WndHeroInfo extends WndTabbed {
 				tabIcon = new ItemSprite(ItemSpriteSheet.SMG_TIER_1, null);
 				break;
 			case HOSHINO:
-				tabIcon = new ItemSprite(ItemSpriteSheet.SPIRIT_BOW, null);
+				tabIcon = new ItemSprite(ItemSpriteSheet.SG_TIER_1, null);
 				break;
-			case DUELIST:
+			case SHIROKO:
 				tabIcon = new ItemSprite(ItemSpriteSheet.RAPIER, null);
 				break;
 		}
@@ -110,7 +110,7 @@ public class WndHeroInfo extends WndTabbed {
 			subclassInfo.setSize(WIDTH, MIN_HEIGHT);
 			finalHeight = (int)Math.max(finalHeight, subclassInfo.height());
 
-			add(new IconTab(new ItemSprite(ItemSpriteSheet.EX_DB, null)) {
+			add(new IconTab(new ItemSprite(ItemSpriteSheet.EX_BD, null)) {
 				@Override
 				protected void select(boolean value) {
 					super.select(value);
@@ -195,10 +195,10 @@ public class WndHeroInfo extends WndTabbed {
 							new ItemSprite(ItemSpriteSheet.BLAST_GRENADE),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
-				case DUELIST:
-					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.RAPIER),
-							new ItemSprite(ItemSpriteSheet.WAR_HAMMER),
-							new ItemSprite(ItemSpriteSheet.THROWING_SPIKE),
+				case SHIROKO:
+					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.BICYCLE),
+							new ItemSprite(ItemSpriteSheet.AR_TIER_5),
+							new ItemSprite(ItemSpriteSheet.HP_GRENADE),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
 			}

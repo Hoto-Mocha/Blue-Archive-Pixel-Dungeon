@@ -62,26 +62,27 @@ public class MeleeWeapon extends Weapon {
 	@Override
 	public void activate(Char ch) {
 		super.activate(ch);
-		if (ch instanceof Hero && ((Hero) ch).heroClass == HeroClass.DUELIST){
-			Buff.affect(ch, Charger.class);
-		}
+//		if (ch instanceof Hero && ((Hero) ch).heroClass == HeroClass.DUELIST){
+//			Buff.affect(ch, Charger.class);
+//		}
 	}
 
 	@Override
 	public String defaultAction() {
-		if (Dungeon.hero != null && Dungeon.hero.heroClass == HeroClass.DUELIST){
-			return AC_ABILITY;
-		} else {
-			return super.defaultAction();
-		}
+//		if (Dungeon.hero != null && Dungeon.hero.heroClass == HeroClass.DUELIST){
+//			return AC_ABILITY;
+//		} else {
+//			return super.defaultAction();
+//		}
+		return super.defaultAction();
 	}
 
 	@Override
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
-		if (isEquipped(hero) && hero.heroClass == HeroClass.DUELIST){
-			actions.add(AC_ABILITY);
-		}
+//		if (isEquipped(hero) && hero.heroClass == HeroClass.DUELIST){
+//			actions.add(AC_ABILITY);
+//		}
 		return actions;
 	}
 
@@ -212,11 +213,11 @@ public class MeleeWeapon extends Weapon {
 			}
 		}
 
-		if (hero.heroClass == HeroClass.DUELIST
-				&& hero.hasTalent(Talent.AGGRESSIVE_BARRIER)
-				&& (hero.HP / (float)hero.HT) < 0.20f*(1+hero.pointsInTalent(Talent.AGGRESSIVE_BARRIER))){
-			Buff.affect(hero, Barrier.class).setShield(3);
-		}
+//		if (hero.heroClass == HeroClass.DUELIST
+//				&& hero.hasTalent(Talent.AGGRESSIVE_BARRIER)
+//				&& (hero.HP / (float)hero.HT) < 0.20f*(1+hero.pointsInTalent(Talent.AGGRESSIVE_BARRIER))){
+//			Buff.affect(hero, Barrier.class).setShield(3);
+//		}
 
 		if (hero.buff(Talent.CombinedLethalityAbilityTracker.class) != null
 				&& hero.buff(Talent.CombinedLethalityAbilityTracker.class).weapon != null
@@ -324,10 +325,7 @@ public class MeleeWeapon extends Weapon {
 				&& ((Hero) owner).hasTalent(Talent.PRECISE_ASSAULT)
 				//does not trigger on ability attacks
 				&& ((Hero) owner).belongings.abilityWeapon != this) {
-			if (((Hero) owner).heroClass != HeroClass.DUELIST) {
-				//persistent +10%/20%/30% ACC for other heroes
-				ACC *= 1f + 0.1f * ((Hero) owner).pointsInTalent(Talent.PRECISE_ASSAULT);
-			} else if (this instanceof Flail && owner.buff(Flail.SpinAbilityTracker.class) != null){
+			if (this instanceof Flail && owner.buff(Flail.SpinAbilityTracker.class) != null){
 				//do nothing, this is not a regular attack so don't consume preciase assault
 			} else if (owner.buff(Talent.PreciseAssaultTracker.class) != null) {
 				// 2x/4x/8x ACC for duelist if she just used a weapon ability
@@ -403,9 +401,9 @@ public class MeleeWeapon extends Weapon {
 		}
 
 		//the mage's staff has no ability as it can only be gained by the mage
-		if (Dungeon.hero.heroClass == HeroClass.DUELIST && !(this instanceof MagesStaff)){
-			info += "\n\n" + Messages.get(this, "ability_desc");
-		}
+//		if (Dungeon.hero.heroClass == HeroClass.DUELIST && !(this instanceof MagesStaff)){
+//			info += "\n\n" + Messages.get(this, "ability_desc");
+//		}
 		
 		return info;
 	}

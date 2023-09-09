@@ -229,7 +229,7 @@ public class Assets {
 		public static final String NONOMI   = "splashes/nonomi.jpg";
 		public static final String MIYAKO   = "splashes/miyako.jpg";
 		public static final String HOSHINO  = "splashes/hoshino.jpg";
-		public static final String DUELIST  = "splashes/duelist.jpg";
+		public static final String SHIROKO  = "splashes/shiroko.jpg";
 	}
 
 	public static class Sprites {
@@ -240,7 +240,7 @@ public class Assets {
 		public static final String NONOMI   = "sprites/nonomi.png";
 		public static final String MIYAKO   = "sprites/miyako.png";
 		public static final String HOSHINO  = "sprites/hoshino.png";
-		public static final String DUELIST  = "sprites/duelist.png";
+		public static final String SHIROKO  = "sprites/shiroko.png";
 		public static final String AVATARS  = "sprites/avatars.png";
 		public static final String PET      = "sprites/pet.png";
 		public static final String AMULET   = "sprites/amulet.png";

@@ -76,30 +76,30 @@ public class HeroIcon extends Image {
 	public static final int MONK_ABILITIES  = 38;
 
 	//new subclasses
-	public static final int ARIS_EX_SUPERNOVA  		= 40;
-	public static final int ARIS_EX_CHARGE			= 41;
-	public static final int NONOMI_EX_RIOT			= 42;
-	public static final int NONOMI_EX_SHOOTALL		= 43;
-	public static final int MIYAKO_EX_STUNDRONE		= 44;
-	public static final int MIYAKO_EX_DRONESTRIKE	= 45;
-	public static final int HOSHINO_EX_TACTICAL_PRESS	= 46;
-	public static final int HOSHINO_EX_TACTICAL_SHIELD	= 47;
-//	public static final int 						= 48;
-//	public static final int 						= 49;
-//	public static final int 						= 50;
-//	public static final int 						= 51;
-//	public static final int 						= 52;
-//	public static final int 						= 53;
-//	public static final int 						= 54;
-//	public static final int 						= 55;
-//	public static final int 						= 56;
-//	public static final int 						= 57;
-//	public static final int 						= 58;
-//	public static final int 						= 59;
-//	public static final int 						= 60;
-//	public static final int 						= 61;
-//	public static final int 						= 62;
-//	public static final int 						= 63;
+	public static final int ARIS_EX_SUPERNOVA  				= 40;
+	public static final int ARIS_EX_CHARGE					= 41;
+	public static final int NONOMI_EX_RIOT					= 42;
+	public static final int NONOMI_EX_SHOOTALL				= 43;
+	public static final int MIYAKO_EX_STUNDRONE				= 44;
+	public static final int MIYAKO_EX_DRONESTRIKE			= 45;
+	public static final int HOSHINO_EX_TACTICAL_PRESS		= 46;
+	public static final int HOSHINO_EX_TACTICAL_SHIELD		= 47;
+	public static final int SHIROKO_EX_ELEMENTAL_BULLET		= 48;
+	public static final int SHIROKO_EX_PROFESSIONAL_RIDE	= 49;
+//	public static final int 								= 50;
+//	public static final int 								= 51;
+//	public static final int 								= 52;
+//	public static final int 								= 53;
+//	public static final int 								= 54;
+//	public static final int 								= 55;
+//	public static final int 								= 56;
+//	public static final int 								= 57;
+//	public static final int 								= 58;
+//	public static final int 								= 59;
+//	public static final int 								= 60;
+//	public static final int 								= 61;
+//	public static final int 								= 62;
+//	public static final int 								= 63;
 
 	public static final int ARIS_1			= 64;
 	public static final int ARIS_2			= 65;
@@ -136,8 +136,10 @@ public class HeroIcon extends Image {
 //	public static final int 				= 96;
 
 	//new abilities
-	public static final int STUNDRONE		= 97;
-	public static final int DRONESTRIKE		= 98;
+	public static final int STUNDRONE			= 97;
+	public static final int DRONESTRIKE			= 98;
+	public static final int ELEMENTAL_BULLET	= 99;
+	public static final int PROFESSIONAL_RIDE	= 100;
 
 
 

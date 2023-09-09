@@ -8,22 +8,36 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ElementalBullet;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vulnerable;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.elementals.APBullet;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.elementals.ElectricBullet;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.elementals.ElementalBulletBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.elementals.ExplosiveBullet;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.elementals.IceBullet;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.elementals.IncendiaryBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Lightning;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSharpshooting;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Shocking;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dagger;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -150,6 +164,14 @@ public class Gun extends MeleeWeapon {
             Buff.affect(hero, Invisibility.class, 3f*hero.pointsInTalent(Talent.TACTICAL_SHIELD_3));
             Buff.affect(hero, Talent.TacticalInvisibilityTracker.class);
         }
+        for (Buff buff : hero.buffs()) {
+            if (buff instanceof ElementalBulletBuff) {
+                buff.detach();
+            }
+        }
+        if (hero.subClass == HeroSubClass.SHIROKO_EX_ELEMENTAL_BULLET) {
+            Buff.affect(hero, ElementalBullet.class).set();
+        }
         Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
         hero.spendAndNext(reloadTime());
         GLog.i(Messages.get(this, "reload"));
@@ -261,6 +283,16 @@ public class Gun extends MeleeWeapon {
 
         @Override
         public int proc(Char attacker, Char defender, int damage) {
+            boolean isDebuffed = false;
+            for (Buff buff : defender.buffs()) {
+                if (buff.type == Buff.buffType.NEGATIVE) {
+                    isDebuffed = true;
+                    break;
+                }
+            }
+            if (isDebuffed && hero.hasTalent(Talent.ELEMENTAL_BULLET_3)) {
+                damage = Math.round(damage*(1 + 0.2f * hero.pointsInTalent(Talent.ELEMENTAL_BULLET_3)/3f)); //+6.67%/+13.33%/+20%
+            }
             if (hero.subClass == HeroSubClass.HOSHINO_EX_TACTICAL_SHIELD && hero.buff(IronHorus.TacticalShieldBuff.class) != null) {
                 Buff.affect(hero, Barrier.class).set(1, 10+5*hero.pointsInTalent(Talent.TACTICAL_SHIELD_2));
                 BuffIndicator.refreshHero();
@@ -268,7 +300,61 @@ public class Gun extends MeleeWeapon {
             if (hero.heroClass == HeroClass.MIYAKO && Random.Float() < 0.1f) {
                 Buff.affect(defender, Vulnerable.class, 3f);
             }
-            return super.proc(attacker, defender, damage);
+            if (hero.buff(APBullet.class) != null) {
+                damage *= 1-0.2f+0.05f*hero.pointsInTalent(Talent.ELEMENTAL_BULLET_1);
+            }
+            if (hero.buff(IncendiaryBullet.class) != null ) {
+                if (Random.Float() < 0.2f+0.1f*hero.pointsInTalent(Talent.ELEMENTAL_BULLET_1)) {
+                    Buff.affect(defender, Burning.class).reignite(defender);
+                }
+            }
+            if (hero.buff(IceBullet.class) != null ) {
+                Buff.affect(defender, Chill.class, 2+hero.pointsInTalent(Talent.ELEMENTAL_BULLET_1));
+                if (Dungeon.level.map[defender.pos] == Terrain.WATER && defender.buff(Chill.class).cooldown() > 20-3*hero.pointsInTalent(Talent.ELEMENTAL_BULLET_1)) {
+                    new FlavourBuff() {
+                        {
+                            actPriority = VFX_PRIO;
+                        }
+
+                        public boolean act() {
+                            Buff.affect(target, Frost.class, Frost.DURATION);
+                            return super.act();
+                        }
+                    }.attachTo(defender);
+                }
+            }
+            if (hero.buff(ElectricBullet.class) != null) {
+                ArrayList<Char> affected = new ArrayList<>();
+                ArrayList<Lightning.Arc> arcs = new ArrayList<>();
+                Shocking.arc( attacker, defender, 2, affected, arcs );
+                affected.remove(defender);  //직접 명중한 대상은 제외
+                for (Char ch : affected) {
+                    ch.damage( Math.round( damage * (0.2f+0.1f*hero.pointsInTalent(Talent.ELEMENTAL_BULLET_1)) ), Shocking.class );
+                }
+            }
+            if (hero.heroClass == HeroClass.SHIROKO) {
+                int amount = 0;
+                float chance = 1/(float)((Gun) hero.belongings.weapon).shotPerShoot();
+                if (Random.Float() < chance) {
+                    amount ++;
+                }
+                if (hero.buff(ExplosiveBullet.class) != null) {
+                    amount += 2+hero.pointsInTalent(Talent.ELEMENTAL_BULLET_1);
+                }
+                if (hero.hasTalent(Talent.RAPID_SHOOTING)) {
+                    if (Random.Float() < chance*0.5f*hero.pointsInTalent(Talent.RAPID_SHOOTING)) {
+                        amount ++;
+                    }
+                }
+                for (int i=0; i<amount; i++) {
+                    int explodeDamage = Random.NormalIntRange(Dungeon.scalingDepth()/5, Dungeon.scalingDepth()/2+3);
+                    explodeDamage += hero.pointsInTalent(Talent.ENHANCED_EXPLODE);
+                    explodeDamage -= defender.drRoll();
+                    CellEmitter.center(defender.pos).burst(BlastParticle.FACTORY, 1);
+                    defender.damage(explodeDamage, this);
+                }
+            }
+            return Gun.this.proc(attacker, defender, damage);
         }
 
         @Override

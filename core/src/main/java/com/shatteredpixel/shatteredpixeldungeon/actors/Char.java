@@ -73,6 +73,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vulnerable;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Weakness;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.elementals.APBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
@@ -355,6 +356,11 @@ public abstract class Char extends Actor {
 
 				if (h.belongings.attackingWeapon() instanceof Gun.Bullet
 						&& h.heroClass == HeroClass.HOSHINO){
+					dr = 0;
+				}
+
+				if (h.belongings.attackingWeapon() instanceof Gun.Bullet
+						&& h.buff(APBullet.class) != null){
 					dr = 0;
 				}
 

@@ -41,6 +41,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PhysicalEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RevealedArea;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Stamina;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WandEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
@@ -52,6 +53,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LeafParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
@@ -64,6 +66,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gloves;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG;
@@ -156,6 +159,23 @@ public enum Talent {
 	//Hoshino Ability 3
 	HOSHINO_ABIL_31(119, 4), HOSHINO_ABIL_32(120, 4), HOSHINO_ABIL_33(121, 4),
 
+	//Shiroko T1
+	BICYCLE_CHARGE(128), AR_INTUITION(129), ENHANCED_EXPLODE(130), DEFENSIVE_FEEDBACK(131),
+	//Shiroko T2
+	SPEEDY_MEAL(132), INHERENT_WILDNESS(133), ELECTRIC_BICYCLE(134), RAPID_SHOOTING(135), AR_MASTER(136),
+	//Shiroko T3
+	AR_FAST_RELOAD(137, 3), SHOOTING_WEAKNESS(138, 3),
+	// ElementalBullet T3
+	ELEMENTAL_BULLET_1(139, 3), ELEMENTAL_BULLET_2(140, 3), ELEMENTAL_BULLET_3(141, 3),
+	// ProfessionalRide T3
+	PROFESSIONAL_RIDE_1(142, 3), PROFESSIONAL_RIDE_2(143, 3), PROFESSIONAL_RIDE_3(144, 3),
+	//Shiroko Ability 1
+	SHIROKO_ABIL_11(145, 4), SHIROKO_ABIL_12(146, 4), SHIROKO_ABIL_13(147, 4),
+	//Shiroko Ability 2
+	SHIROKO_ABIL_21(148, 4), SHIROKO_ABIL_22(149, 4), SHIROKO_ABIL_23(150, 4),
+	//Shiroko Ability 3
+	SHIROKO_ABIL_31(151, 4), SHIROKO_ABIL_32(152, 4), SHIROKO_ABIL_33(153, 4),
+
 
 
 
@@ -238,7 +258,7 @@ public enum Talent {
 	public static class EmpoweringMagic extends FlavourBuff{
 		public int icon() { return BuffIndicator.UPGRADE; }
 		public void tintIcon(Image icon) { icon.hardlight(0.15f, 0.2f, 0.5f); }
-		public float iconFadePercent() { return Math.max(0, 5 - visualcooldown() / 5); }
+		public float iconFadePercent() { return Math.max(0, (5 - visualcooldown()) / 5); }
 	};
 	public static class StrikingWaveTracker extends FlavourBuff{};
 	public static class ProtectiveShadowsTracker extends Buff {
@@ -399,6 +419,12 @@ public enum Talent {
 		public float iconFadePercent() { return Math.max(0, 1f - (visualcooldown() / 60-10*Dungeon.hero.pointsInTalent(Talent.DRONESTRIKE_2))); }
 	};
 
+	public static class ShootingWeaknessCooldown extends FlavourBuff{
+		public int icon() { return BuffIndicator.TIME; }
+		public void tintIcon(Image icon) { icon.hardlight( 0xC7C4C9 ); }
+		public float iconFadePercent() { return Math.max(0, 1f - (visualcooldown() / 40-10*Dungeon.hero.pointsInTalent(Talent.SHOOTING_WEAKNESS))); }
+	};
+
 	int icon;
 	int maxPoints;
 
@@ -429,7 +455,7 @@ public enum Talent {
 					return 90;
 				case HOSHINO:
 					return 122;
-				case DUELIST:
+				case SHIROKO:
 					return 154;
 			}
 		} else {
@@ -554,6 +580,9 @@ public enum Talent {
 		if (hero.hasTalent(SLEEPING_MEAL)) {
 			Buff.affect(hero, Drowsy.class).set(90-20*hero.pointsInTalent(Talent.SLEEPING_MEAL));
 		}
+		if (hero.hasTalent(SPEEDY_MEAL)) {
+			Buff.affect(hero, Stamina.class, 1+7*hero.pointsInTalent(Talent.SPEEDY_MEAL));
+		}
 
 		if (hero.hasTalent(MYSTICAL_MEAL)){
 			//3/5 turns of recharging
@@ -572,15 +601,22 @@ public enum Talent {
 			//3 bonus physical damage for next 2/3 attacks
 			Buff.affect( hero, PhysicalEmpower.class).set(3, 1 + hero.pointsInTalent(STRENGTHENING_MEAL));
 		}
-		if (hero.hasTalent(FOCUSED_MEAL)){
-			if (hero.heroClass == HeroClass.DUELIST){
-				//1/1.5 charge for the duelist
-				Buff.affect( hero, MeleeWeapon.Charger.class ).gainCharge(0.5f*(hero.pointsInTalent(FOCUSED_MEAL)+1));
-			} else {
-				// lvl/3 / lvl/2 bonus dmg on next hit for other classes
-				Buff.affect( hero, PhysicalEmpower.class).set(Math.round(hero.lvl / (4f - hero.pointsInTalent(FOCUSED_MEAL))), 1);
+		if (hero.hasTalent(BICYCLE_CHARGE)) {
+			Bicycle bicycle = hero.belongings.getItem(Bicycle.class);
+			if (bicycle != null) {
+				bicycle.chargeUp(hero.pointsInTalent(BICYCLE_CHARGE)/8f);
+				ScrollOfRecharging.charge(hero);
 			}
 		}
+//		if (hero.hasTalent(FOCUSED_MEAL)){
+//			if (hero.heroClass == HeroClass.DUELIST){
+//				//1/1.5 charge for the duelist
+//				Buff.affect( hero, MeleeWeapon.Charger.class ).gainCharge(0.5f*(hero.pointsInTalent(FOCUSED_MEAL)+1));
+//			} else {
+//				// lvl/3 / lvl/2 bonus dmg on next hit for other classes
+//				Buff.affect( hero, PhysicalEmpower.class).set(Math.round(hero.lvl / (4f - hero.pointsInTalent(FOCUSED_MEAL))), 1);
+//			}
+//		}
 	}
 
 	public static class WarriorFoodImmunity extends FlavourBuff{
@@ -688,6 +724,9 @@ public enum Talent {
 		if (hero.pointsInTalent(SG_INTUITION) == 2 && item instanceof SG){
 			item.identify();
 		}
+		if (hero.pointsInTalent(AR_INTUITION) == 2 && item instanceof AR){
+			item.identify();
+		}
 		if (hero.hasTalent(THIEFS_INTUITION) && item instanceof Ring){
 			if (hero.pointsInTalent(THIEFS_INTUITION) == 2){
 				item.identify();
@@ -709,6 +748,9 @@ public enum Talent {
 		}
 		if (hero.hasTalent(SG_INTUITION)){
 			if (item instanceof SG) item.cursedKnown = true;
+		}
+		if (hero.hasTalent(AR_INTUITION)){
+			if (item instanceof AR) item.cursedKnown = true;
 		}
 		if (hero.pointsInTalent(THIEFS_INTUITION) == 2){
 			if (item instanceof Ring) ((Ring) item).setKnown();
@@ -850,8 +892,8 @@ public enum Talent {
 			case HOSHINO:
 				Collections.addAll(tierTalents, EMERGENCY_HEALING, SG_INTUITION, ADDITIONAL_SHOT, RELOADING_SHIELD);
 				break;
-			case DUELIST:
-				Collections.addAll(tierTalents, STRENGTHENING_MEAL, ADVENTURERS_INTUITION, PATIENT_STRIKE, AGGRESSIVE_BARRIER);
+			case SHIROKO:
+				Collections.addAll(tierTalents, BICYCLE_CHARGE, AR_INTUITION, ENHANCED_EXPLODE, DEFENSIVE_FEEDBACK);
 				break;
 		}
 		for (Talent talent : tierTalents){
@@ -876,8 +918,8 @@ public enum Talent {
 			case HOSHINO:
 				Collections.addAll(tierTalents, SLEEPING_MEAL, QUICK_RETREAT, FORESIGHT_EYES, MAGIC_SHIELD, SG_MASTER);
 				break;
-			case DUELIST:
-				Collections.addAll(tierTalents, FOCUSED_MEAL, RESTORED_AGILITY, WEAPON_RECHARGING, LETHAL_HASTE, SWIFT_EQUIP);
+			case SHIROKO:
+				Collections.addAll(tierTalents, SPEEDY_MEAL, INHERENT_WILDNESS, ELECTRIC_BICYCLE, RAPID_SHOOTING, AR_MASTER);
 				break;
 		}
 		for (Talent talent : tierTalents){
@@ -902,8 +944,8 @@ public enum Talent {
 			case HOSHINO:
 				Collections.addAll(tierTalents, SG_FAST_RELOAD, HARD_SHIELD);
 				break;
-			case DUELIST:
-				Collections.addAll(tierTalents, PRECISE_ASSAULT, DEADLY_FOLLOWUP);
+			case SHIROKO:
+				Collections.addAll(tierTalents, AR_FAST_RELOAD, SHOOTING_WEAKNESS);
 				break;
 		}
 		for (Talent talent : tierTalents){
@@ -957,23 +999,11 @@ public enum Talent {
 			case HOSHINO_EX_TACTICAL_SHIELD:
 				Collections.addAll(tierTalents, TACTICAL_SHIELD_1, TACTICAL_SHIELD_2, TACTICAL_SHIELD_3);
 				break;
-			case ASSASSIN:
-				Collections.addAll(tierTalents, ENHANCED_LETHALITY, ASSASSINS_REACH, BOUNTY_HUNTER);
+			case SHIROKO_EX_ELEMENTAL_BULLET:
+				Collections.addAll(tierTalents, ELEMENTAL_BULLET_1, ELEMENTAL_BULLET_2, ELEMENTAL_BULLET_3);
 				break;
-			case FREERUNNER:
-				Collections.addAll(tierTalents, EVASIVE_ARMOR, PROJECTILE_MOMENTUM, SPEEDY_STEALTH);
-				break;
-			case SNIPER:
-				Collections.addAll(tierTalents, FARSIGHT, SHARED_ENCHANTMENT, SHARED_UPGRADES);
-				break;
-			case WARDEN:
-				Collections.addAll(tierTalents, DURABLE_TIPS, BARKSKIN, SHIELDING_DEW);
-				break;
-			case CHAMPION:
-				Collections.addAll(tierTalents, SECONDARY_CHARGE, TWIN_UPGRADES, COMBINED_LETHALITY);
-				break;
-			case MONK:
-				Collections.addAll(tierTalents, UNENCUMBERED_SPIRIT, MONASTIC_VIGOR, COMBINED_ENERGY);
+			case SHIROKO_EX_PROFESSIONAL_RIDE:
+				Collections.addAll(tierTalents, PROFESSIONAL_RIDE_1, PROFESSIONAL_RIDE_2, PROFESSIONAL_RIDE_3);
 				break;
 		}
 		for (Talent talent : tierTalents){

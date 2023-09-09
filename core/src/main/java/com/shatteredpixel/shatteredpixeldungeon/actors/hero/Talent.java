@@ -604,7 +604,7 @@ public enum Talent {
 		if (hero.hasTalent(BICYCLE_CHARGE)) {
 			Bicycle bicycle = hero.belongings.getItem(Bicycle.class);
 			if (bicycle != null) {
-				bicycle.chargeUp(hero.pointsInTalent(BICYCLE_CHARGE)/8f);
+				bicycle.chargeUp(100*hero.pointsInTalent(BICYCLE_CHARGE)/8f);
 				ScrollOfRecharging.charge(hero);
 			}
 		}

@@ -23,10 +23,10 @@ package com.shatteredpixel.shatteredpixeldungeon.items.armor;
 
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
-public class DuelistArmor extends ClassArmor {
+public class NonomiArmor extends ClassArmor {
 
 	{
-		image = ItemSpriteSheet.ARMOR_DUELIST;
+		image = ItemSpriteSheet.ARMOR_NONOMI;
 	}
 
 }

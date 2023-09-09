@@ -23,10 +23,10 @@ package com.shatteredpixel.shatteredpixeldungeon.items.armor;
 
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
-public class HuntressArmor extends ClassArmor {
+public class ShirokoArmor extends ClassArmor {
 
 	{
-		image = ItemSpriteSheet.ARMOR_HUNTRESS;
+		image = ItemSpriteSheet.ARMOR_SHIROKO;
 	}
 
 }

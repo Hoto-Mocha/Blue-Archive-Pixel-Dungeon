@@ -27,10 +27,17 @@ public class SMG extends Gun {
     }
 
     @Override
+    public int bulletMin(int lvl) {
+        return tier +
+                lvl/2 +
+                RingOfSharpshooting.levelDamageBonus(hero);
+    }
+
+    @Override
     public int bulletMax(int lvl) {
-        return Math.round((4 * (tier) +
-                lvl * (tier) +
-                RingOfSharpshooting.levelDamageBonus(hero))/3f);
+        return 2 * (tier) +
+                (lvl * (tier))/2 +
+                RingOfSharpshooting.levelDamageBonus(hero);
     }
 
     @Override

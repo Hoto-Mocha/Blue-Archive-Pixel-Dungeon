@@ -23,10 +23,10 @@ package com.shatteredpixel.shatteredpixeldungeon.items.armor;
 
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
-public class RogueArmor extends ClassArmor {
+public class ArisArmor extends ClassArmor {
 
 	{
-		image = ItemSpriteSheet.ARMOR_ROGUE;
+		image = ItemSpriteSheet.ARMOR_ARIS;
 	}
 
 }

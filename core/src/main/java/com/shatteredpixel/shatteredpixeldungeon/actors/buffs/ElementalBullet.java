@@ -20,7 +20,7 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndProfessionalRide;
 import com.watabou.utils.Bundle;
 public class ElementalBullet extends Buff implements ActionIndicator.Action {
 
-    int duration = 0;
+    float duration = 0;
 
     {
         type = buffType.NEUTRAL;
@@ -38,8 +38,8 @@ public class ElementalBullet extends Buff implements ActionIndicator.Action {
         return true;
     }
 
-    public void set() {
-        duration = 2;
+    public void set(float amount) {
+        duration = amount;
     }
 
     @Override
@@ -135,9 +135,6 @@ public class ElementalBullet extends Buff implements ActionIndicator.Action {
 
     @Override
     public void doAction() {
-        Bicycle bicycle = Dungeon.hero.belongings.getItem(Bicycle.class);
-        if (bicycle != null) {
-            GameScene.show(new WndElementalBullet(this));
-        }
+        GameScene.show(new WndElementalBullet(this));
     }
 }

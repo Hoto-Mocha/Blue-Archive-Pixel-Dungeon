@@ -100,23 +100,23 @@ abstract public class ClassArmor extends Armor {
 		
 		switch (owner.heroClass) {
 			case ARIS:
-				classArmor = new WarriorArmor();
+				classArmor = new ArisArmor();
 				BrokenSeal seal = armor.checkSeal();
 				if (seal != null) {
 					classArmor.affixSeal(seal);
 				}
 				break;
 			case NONOMI:
-				classArmor = new MageArmor();
+				classArmor = new NonomiArmor();
 				break;
 			case MIYAKO:
-				classArmor = new RogueArmor();
+				classArmor = new MiyakoArmor();
 				break;
 			case HOSHINO:
-				classArmor = new HuntressArmor();
+				classArmor = new HoshinoArmor();
 				break;
 			case SHIROKO:
-				classArmor = new DuelistArmor();
+				classArmor = new ShirokoArmor();
 				break;
 		}
 		

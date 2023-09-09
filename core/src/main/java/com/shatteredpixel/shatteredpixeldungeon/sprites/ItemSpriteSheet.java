@@ -350,22 +350,22 @@ public class ItemSpriteSheet {
 	public static final int ARMOR_MAIL      = ARMOR+2;
 	public static final int ARMOR_SCALE     = ARMOR+3;
 	public static final int ARMOR_PLATE     = ARMOR+4;
-	public static final int ARMOR_WARRIOR   = ARMOR+5;
-	public static final int ARMOR_MAGE      = ARMOR+6;
-	public static final int ARMOR_ROGUE     = ARMOR+7;
-	public static final int ARMOR_HUNTRESS  = ARMOR+8;
-	public static final int ARMOR_DUELIST   = ARMOR+9;
+	public static final int ARMOR_ARIS  	= ARMOR+5;
+	public static final int ARMOR_NONOMI    = ARMOR+6;
+	public static final int ARMOR_MIYAKO    = ARMOR+7;
+	public static final int ARMOR_HOSHINO  	= ARMOR+8;
+	public static final int ARMOR_SHIROKO   = ARMOR+9;
 	static{
 		assignItemRect(ARMOR_CLOTH,     15, 12);
 		assignItemRect(ARMOR_LEATHER,   14, 13);
 		assignItemRect(ARMOR_MAIL,      14, 12);
 		assignItemRect(ARMOR_SCALE,     14, 11);
 		assignItemRect(ARMOR_PLATE,     12, 12);
-		assignItemRect(ARMOR_WARRIOR,   12, 12);
-		assignItemRect(ARMOR_MAGE,      15, 15);
-		assignItemRect(ARMOR_ROGUE,     14, 12);
-		assignItemRect(ARMOR_HUNTRESS,  13, 15);
-		assignItemRect(ARMOR_DUELIST,   12, 13);
+		assignItemRect(ARMOR_ARIS,   	13, 10);
+		assignItemRect(ARMOR_NONOMI,    15, 15);
+		assignItemRect(ARMOR_MIYAKO,    14, 12);
+		assignItemRect(ARMOR_HOSHINO,  	13, 15);
+		assignItemRect(ARMOR_SHIROKO,   12, 13);
 	}
 
 	                                                                                    //16 free slots
@@ -1023,9 +1023,11 @@ public class ItemSpriteSheet {
 	}
 
 	private static final int NEW_ITEMS  =                                   xy(1, 39);  //16 slots
-	public static final int EX_BD	= NEW_ITEMS+0;
+	public static final int EX_BD		= NEW_ITEMS+0;
+	public static final int TELEPORTER	= NEW_ITEMS+1;
 	static{
-		assignItemRect(EX_BD,	16, 14);
+		assignItemRect(EX_BD,		16, 14);
+		assignItemRect(TELEPORTER,	14, 14);
 	}
 
 }

@@ -170,7 +170,7 @@ public class Gun extends MeleeWeapon {
             }
         }
         if (hero.subClass == HeroSubClass.SHIROKO_EX_ELEMENTAL_BULLET) {
-            Buff.affect(hero, ElementalBullet.class).set();
+            Buff.affect(hero, ElementalBullet.class).set(reloadTime()+1);
         }
         Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
         hero.spendAndNext(reloadTime());
@@ -310,17 +310,19 @@ public class Gun extends MeleeWeapon {
             }
             if (hero.buff(IceBullet.class) != null ) {
                 Buff.affect(defender, Chill.class, 2+hero.pointsInTalent(Talent.ELEMENTAL_BULLET_1));
-                if (Dungeon.level.map[defender.pos] == Terrain.WATER && defender.buff(Chill.class).cooldown() > 20-3*hero.pointsInTalent(Talent.ELEMENTAL_BULLET_1)) {
-                    new FlavourBuff() {
-                        {
-                            actPriority = VFX_PRIO;
-                        }
+                if (defender.buff(Chill.class) != null) {
+                    if (Dungeon.level.map[defender.pos] == Terrain.WATER && defender.buff(Chill.class).cooldown() > 20-3*hero.pointsInTalent(Talent.ELEMENTAL_BULLET_1)) {
+                        new FlavourBuff() {
+                            {
+                                actPriority = VFX_PRIO;
+                            }
 
-                        public boolean act() {
-                            Buff.affect(target, Frost.class, Frost.DURATION);
-                            return super.act();
-                        }
-                    }.attachTo(defender);
+                            public boolean act() {
+                                Buff.affect(target, Frost.class, Frost.DURATION);
+                                return super.act();
+                            }
+                        }.attachTo(defender);
+                    }
                 }
             }
             if (hero.buff(ElectricBullet.class) != null) {
@@ -351,7 +353,7 @@ public class Gun extends MeleeWeapon {
                     explodeDamage += hero.pointsInTalent(Talent.ENHANCED_EXPLODE);
                     explodeDamage -= defender.drRoll();
                     CellEmitter.center(defender.pos).burst(BlastParticle.FACTORY, 1);
-                    defender.damage(explodeDamage, this);
+                    defender.damage(explodeDamage, hero);
                 }
             }
             return Gun.this.proc(attacker, defender, damage);

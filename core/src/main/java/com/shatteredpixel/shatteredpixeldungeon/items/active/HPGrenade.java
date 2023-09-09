@@ -53,7 +53,7 @@ public class HPGrenade extends Grenade {
 
     public class Blaster extends Boomer {
         {
-            image = ItemSpriteSheet.HAND_GRENADE;
+            image = ItemSpriteSheet.HP_GRENADE;
         }
 
         @Override

@@ -46,9 +46,11 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Non
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.Shiroko_1;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.Shiroko_2;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.Shiroko_3;
+import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.EXSkillDisc;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.KingsCrown;
 import com.shatteredpixel.shatteredpixeldungeon.items.Waterskin;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.BlastGrenade;
@@ -68,6 +70,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfInvisibili
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLiquidFlame;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfMindVision;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfStrength;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfFuror;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMight;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;
@@ -80,14 +84,18 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Rapier;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_tier1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_tier2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_tier1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_tier2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_tier5;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_tier1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_tier2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_tier1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingSpike;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingStone;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.utils.DungeonSeed;
 import com.watabou.utils.DeviceCompat;
 
 public enum HeroClass {
@@ -121,16 +129,20 @@ public enum HeroClass {
 		Waterskin waterskin = new Waterskin();
 		waterskin.collect();
 
-//		new PotionOfExperience().identify().quantity(30).collect();
-//		new EXSkillDisc().collect();
-//		new ScrollOfUpgrade().identify().quantity(200).collect();
-//		new MG_tier5().collect();
-//		new ScrollOfIdentify().collect();
-//		new ScrollOfTransmutation().identify().quantity(200).collect();
-//		new ScrollOfLullaby().identify().quantity(200).collect();
-//		new RingOfWealth().identify().upgrade(100).collect();
-//		new PlateArmor().identify().upgrade(100).collect();
-//		new Teleporter().collect();
+		if (SPDSettings.customSeed().equals("test")) {
+			new PotionOfExperience().identify().quantity(30).collect();
+			new RingOfMight().identify().upgrade(10).collect();
+			new EXSkillDisc().collect();
+			new ScrollOfUpgrade().identify().quantity(200).collect();
+			new SG_tier2().identify().upgrade(6).collect();
+			new ScrollOfMagicMapping().identify().quantity(200).collect();
+			new PotionOfMindVision().identify().quantity(200).collect();
+			new RingOfWealth().identify().upgrade(100).collect();
+			new PlateArmor().identify().upgrade(100).collect();
+			new RingOfFuror().identify().upgrade(100).collect();
+			new Teleporter().collect();
+			new KingsCrown().collect();
+		}
 
 		new ScrollOfIdentify().identify();
 

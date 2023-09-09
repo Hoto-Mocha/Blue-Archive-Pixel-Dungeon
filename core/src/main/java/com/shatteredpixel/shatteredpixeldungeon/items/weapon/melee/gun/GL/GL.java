@@ -11,12 +11,13 @@ public class GL extends Gun {
         max_round = 2;
         round = max_round;
         reload_time = 4f;
+        explode = true;
     }
 
     @Override
     public int bulletMax(int lvl) {
-        return 4 * (tier+1) +
-                lvl * (tier+1) +
+        return 6 * (tier+2) +
+                lvl * (tier+2) +
                 RingOfSharpshooting.levelDamageBonus(hero);
     }
 

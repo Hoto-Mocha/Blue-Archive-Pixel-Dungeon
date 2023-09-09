@@ -834,7 +834,7 @@ public abstract class Mob extends Char {
 			}
 
 			HPGrenade hpGrenade = Dungeon.hero.belongings.getItem(HPGrenade.class);
-			if (blast != null && Random.Float() < 0.15f) {
+			if (hpGrenade != null && Random.Float() < 0.15f) {
 				hpGrenade.reload();
 			}
 		}

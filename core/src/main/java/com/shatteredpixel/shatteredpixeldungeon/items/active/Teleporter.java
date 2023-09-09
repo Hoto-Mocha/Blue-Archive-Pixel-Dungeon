@@ -9,6 +9,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.FeatherFall;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
+import com.shatteredpixel.shatteredpixeldungeon.levels.traps.DistortionTrap;
+import com.shatteredpixel.shatteredpixeldungeon.levels.traps.SummoningTrap;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -21,10 +23,12 @@ public class Teleporter extends Item {
 
     String AC_TELEPORT = "teleport";
     String AC_RETURN = "return";
+    String AC_SPAWN = "spawn";
+    String AC_RANDOMSPAWN = "randomSpawn";
 
     {
         defaultAction = AC_TELEPORT;
-        image = ItemSpriteSheet.IRON_HORUS;
+        image = ItemSpriteSheet.TELEPORTER;
     }
 
     @Override
@@ -32,6 +36,8 @@ public class Teleporter extends Item {
         ArrayList<String> actions = super.actions(hero);
         actions.add(AC_TELEPORT);
         actions.add(AC_RETURN);
+        actions.add(AC_SPAWN);
+        actions.add(AC_RANDOMSPAWN);
         return actions;
     }
 
@@ -73,6 +79,18 @@ public class Teleporter extends Item {
             InterlevelScene.returnBranch = 0;
             InterlevelScene.returnPos = -2;
             Game.switchScene( InterlevelScene.class );
+        }
+        if (action.equals(AC_SPAWN)) {
+            SummoningTrap trap1 = new SummoningTrap();
+            trap1.pos = hero.pos;
+            trap1.activate();
+            hero.next();
+        }
+        if (action.equals(AC_RANDOMSPAWN)) {
+            DistortionTrap trap2 = new DistortionTrap();
+            trap2.pos = hero.pos;
+            trap2.activate();
+            hero.next();
         }
         int length = Dungeon.level.length();
         int[] map = Dungeon.level.map;

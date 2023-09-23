@@ -30,6 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
@@ -50,7 +51,7 @@ abstract public class KindOfWeapon extends EquipableItem {
 	
 	@Override
 	public void execute(Hero hero, String action) {
-		if (hero.subClass == HeroSubClass.CHAMPION && action.equals(AC_EQUIP)){
+		if (this instanceof HG && hero.subClass == HeroSubClass.NOA_EX_DOUBLE_BARREL && action.equals(AC_EQUIP)){
 			usesTargeting = false;
 			String primaryName = Messages.titleCase(hero.belongings.weapon != null ? hero.belongings.weapon.trueName() : Messages.get(KindOfWeapon.class, "empty"));
 			String secondaryName = Messages.titleCase(hero.belongings.secondWep != null ? hero.belongings.secondWep.trueName() : Messages.get(KindOfWeapon.class, "empty"));
@@ -143,7 +144,6 @@ abstract public class KindOfWeapon extends EquipableItem {
 	}
 
 	public boolean equipSecondary( Hero hero ){
-		boolean wasInInv = hero.belongings.contains(this);
 		detachAll( hero.belongings.backpack );
 
 		if (hero.belongings.secondWep == null || hero.belongings.secondWep.doUnequip( hero, true )) {
@@ -160,22 +160,7 @@ abstract public class KindOfWeapon extends EquipableItem {
 				GLog.n( Messages.get(KindOfWeapon.class, "equip_cursed") );
 			}
 
-			if (wasInInv && hero.hasTalent(Talent.SWIFT_EQUIP)) {
-				if (hero.buff(Talent.SwiftEquipCooldown.class) == null){
-					hero.spendAndNext(-hero.cooldown());
-					Buff.affect(hero, Talent.SwiftEquipCooldown.class, 19f)
-							.secondUse = hero.pointsInTalent(Talent.SWIFT_EQUIP) == 2;
-					GLog.i(Messages.get(this, "swift_equip"));
-				} else if (hero.buff(Talent.SwiftEquipCooldown.class).hasSecondUse()) {
-					hero.spendAndNext(-hero.cooldown());
-					hero.buff(Talent.SwiftEquipCooldown.class).secondUse = false;
-					GLog.i(Messages.get(this, "swift_equip"));
-				} else {
-					hero.spendAndNext(TIME_TO_EQUIP);
-				}
-			} else {
-				hero.spendAndNext(TIME_TO_EQUIP);
-			}
+			hero.spendAndNext(TIME_TO_EQUIP);
 			return true;
 
 		} else {

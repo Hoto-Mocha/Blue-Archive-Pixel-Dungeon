@@ -86,8 +86,8 @@ public class HeroIcon extends Image {
 	public static final int HOSHINO_EX_TACTICAL_SHIELD		= 47;
 	public static final int SHIROKO_EX_ELEMENTAL_BULLET		= 48;
 	public static final int SHIROKO_EX_PROFESSIONAL_RIDE	= 49;
-//	public static final int 								= 50;
-//	public static final int 								= 51;
+	public static final int NOA_EX_LARGE_MAGAZINE			= 50;
+	public static final int NOA_EX_DOUBLE_BARREL			= 51;
 //	public static final int 								= 52;
 //	public static final int 								= 53;
 //	public static final int 								= 54;
@@ -110,15 +110,15 @@ public class HeroIcon extends Image {
 	public static final int MIYAKO_1		= 70;
 	public static final int MIYAKO_2		= 71;
 	public static final int MIYAKO_3		= 72;
-//	public static final int 				= 73;
-//	public static final int 				= 74;
-//	public static final int 				= 75;
-//	public static final int 				= 76;
-//	public static final int 				= 77;
-//	public static final int 				= 78;
-//	public static final int 				= 79;
-//	public static final int 				= 80;
-//	public static final int 				= 81;
+	public static final int HOSHINO_1		= 73;
+	public static final int HOSHINO_2		= 74;
+	public static final int HOSHINO_3	 	= 75;
+	public static final int SHIROKO_1		= 76;
+	public static final int SHIROKO_2		= 77;
+	public static final int SHIROKO_3		= 78;
+	public static final int NOA_1			= 79;
+	public static final int NOA_2			= 80;
+	public static final int NOA_3			= 81;
 //	public static final int 				= 82;
 //	public static final int 				= 83;
 //	public static final int 				= 84;
@@ -140,6 +140,7 @@ public class HeroIcon extends Image {
 	public static final int DRONESTRIKE			= 98;
 	public static final int ELEMENTAL_BULLET	= 99;
 	public static final int PROFESSIONAL_RIDE	= 100;
+	public static final int DOUBLE_BARREL		= 101;
 
 
 

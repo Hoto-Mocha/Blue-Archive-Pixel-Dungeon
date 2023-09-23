@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -38,6 +40,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -296,7 +299,8 @@ public class MeleeWeapon extends Weapon {
 	private static boolean evaluatingTwinUpgrades = false;
 	@Override
 	public int buffedLvl() {
-		if (!evaluatingTwinUpgrades && isEquipped(Dungeon.hero) && Dungeon.hero.hasTalent(Talent.TWIN_UPGRADES)){
+		int lvl = super.buffedLvl();
+		if (!evaluatingTwinUpgrades && isEquipped(Dungeon.hero) && Dungeon.hero.hasTalent(Talent.DOUBLE_BARREL_1)){
 			KindOfWeapon other = null;
 			if (Dungeon.hero.belongings.weapon() != this) other = Dungeon.hero.belongings.weapon();
 			if (Dungeon.hero.belongings.secondWep() != this) other = Dungeon.hero.belongings.secondWep();
@@ -307,14 +311,18 @@ public class MeleeWeapon extends Weapon {
 				evaluatingTwinUpgrades = false;
 
 				//weaker weapon needs to be 2/1/0 tiers lower, based on talent level
-				if ((tier + (3 - Dungeon.hero.pointsInTalent(Talent.TWIN_UPGRADES))) <= ((MeleeWeapon) other).tier
+				if ((tier + (3 - Dungeon.hero.pointsInTalent(Talent.DOUBLE_BARREL_1))) <= ((MeleeWeapon) other).tier
 						&& otherLevel > super.buffedLvl()) {
 					return otherLevel;
 				}
 
 			}
 		}
-		return super.buffedLvl();
+
+		if (hero.heroClass == HeroClass.NOA && this instanceof HG) {
+			lvl++;
+		}
+		return lvl;
 	}
 
 	@Override

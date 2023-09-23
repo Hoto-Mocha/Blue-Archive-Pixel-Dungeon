@@ -36,6 +36,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.EnhancedRings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Healing;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PhysicalEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
@@ -68,6 +69,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG;
@@ -165,9 +167,9 @@ public enum Talent {
 	SPEEDY_MEAL(132), INHERENT_WILDNESS(133), ELECTRIC_BICYCLE(134), RAPID_SHOOTING(135), AR_MASTER(136),
 	//Shiroko T3
 	AR_FAST_RELOAD(137, 3), SHOOTING_WEAKNESS(138, 3),
-	// ElementalBullet T3
+	//ElementalBullet T3
 	ELEMENTAL_BULLET_1(139, 3), ELEMENTAL_BULLET_2(140, 3), ELEMENTAL_BULLET_3(141, 3),
-	// ProfessionalRide T3
+	//ProfessionalRide T3
 	PROFESSIONAL_RIDE_1(142, 3), PROFESSIONAL_RIDE_2(143, 3), PROFESSIONAL_RIDE_3(144, 3),
 	//Shiroko Ability 1
 	SHIROKO_ABIL_11(145, 4), SHIROKO_ABIL_12(146, 4), SHIROKO_ABIL_13(147, 4),
@@ -176,15 +178,22 @@ public enum Talent {
 	//Shiroko Ability 3
 	SHIROKO_ABIL_31(151, 4), SHIROKO_ABIL_32(152, 4), SHIROKO_ABIL_33(153, 4),
 
-
-
-
-
-
-
-
-
-
+	//Noa T1
+	SPEEDY_MOVE(160), HG_INTUITION(161), HEALING_FACTOR(162), LAST_BULLET(163),
+	//Noa T2
+	HEALING_MEAL(164), PATH_PREDICTION(165), SKILLED_SEARCH(166), DOUBLE_TAP(167), HG_MASTER(168),
+	//Noa T3
+	HG_FAST_RELOAD(169, 3), HG_SWEEP(170, 3),
+	//LargeMagazine T3
+	LARGE_MAGAZINE_1(171, 3), LARGE_MAGAZINE_2(172, 3), LARGE_MAGAZINE_3(173, 3),
+	//DoubleBarrel T3
+	DOUBLE_BARREL_1(174, 3), DOUBLE_BARREL_2(175, 3), DOUBLE_BARREL_3(176, 3),
+	//Noa Ability 1
+	NOA_ABIL_11(177, 4), NOA_ABIL_12(178, 4), NOA_ABIL_13(179, 4),
+	//Noa Ability 2
+	NOA_ABIL_21(180, 4), NOA_ABIL_22(181, 4), NOA_ABIL_23(182, 4),
+	//Noa Ability 3
+	NOA_ABIL_31(183, 4), NOA_ABIL_32(184, 4), NOA_ABIL_33(185, 4),
 
 
 
@@ -416,14 +425,22 @@ public enum Talent {
 	public static class ScanCooldown extends FlavourBuff{
 		public int icon() { return BuffIndicator.TIME; }
 		public void tintIcon(Image icon) { icon.hardlight( 0xFFC4E5 ); }
-		public float iconFadePercent() { return Math.max(0, 1f - (visualcooldown() / 60-10*Dungeon.hero.pointsInTalent(Talent.DRONESTRIKE_2))); }
+		public float iconFadePercent() { return Math.max(0, 1f - (visualcooldown() / (60-10*Dungeon.hero.pointsInTalent(Talent.DRONESTRIKE_2)))); }
 	};
 
 	public static class ShootingWeaknessCooldown extends FlavourBuff{
 		public int icon() { return BuffIndicator.TIME; }
 		public void tintIcon(Image icon) { icon.hardlight( 0xC7C4C9 ); }
-		public float iconFadePercent() { return Math.max(0, 1f - (visualcooldown() / 40-10*Dungeon.hero.pointsInTalent(Talent.SHOOTING_WEAKNESS))); }
+		public float iconFadePercent() { return Math.max(0, 1f - (visualcooldown() / (40-10*Dungeon.hero.pointsInTalent(Talent.SHOOTING_WEAKNESS)))); }
 	};
+
+	public static class BulletTimeCooldown extends FlavourBuff{
+		public int icon() { return BuffIndicator.TIME; }
+		public void tintIcon(Image icon) { icon.hardlight(0xD71394); }
+		public float iconFadePercent() { return Math.max(0, visualcooldown() / 30); }
+	};
+
+	public static class DoubleTapTracker extends Buff{};
 
 	int icon;
 	int maxPoints;
@@ -457,6 +474,8 @@ public enum Talent {
 					return 122;
 				case SHIROKO:
 					return 154;
+				case NOA:
+					return 186;
 			}
 		} else {
 			return icon;
@@ -493,10 +512,29 @@ public enum Talent {
 		if (talent == ROBOTS_INTUITION && hero.pointsInTalent(ROBOTS_INTUITION) == 2){
 			if (hero.belongings.armor() != null)  hero.belongings.armor.identify();
 		}
+		if (talent == MG_INTUITION && hero.pointsInTalent(MG_INTUITION) == 2) {
+			if (hero.belongings.weapon() != null && hero.belongings.weapon() instanceof MG) hero.belongings.weapon.identify();
+		}
+		if (talent == SMG_INTUITION && hero.pointsInTalent(SMG_INTUITION) == 2) {
+			if (hero.belongings.weapon() != null && hero.belongings.weapon() instanceof SMG) hero.belongings.weapon.identify();
+		}
+		if (talent == SG_INTUITION && hero.pointsInTalent(SG_INTUITION) == 2) {
+			if (hero.belongings.weapon() != null && hero.belongings.weapon() instanceof SG) hero.belongings.weapon.identify();
+		}
+		if (talent == AR_INTUITION && hero.pointsInTalent(AR_INTUITION) == 2) {
+			if (hero.belongings.weapon() != null && hero.belongings.weapon() instanceof AR) hero.belongings.weapon.identify();
+		}
+		if (talent == HG_INTUITION && hero.pointsInTalent(HG_INTUITION) == 2) {
+			if (hero.belongings.weapon() != null && hero.belongings.weapon() instanceof HG) hero.belongings.weapon.identify();
+		}
+
 		if (talent == MAX_HEALTH) {
 			hero.updateHT(true);
 		}
 		if (talent == LARGE_MAGAZINE) {
+			Item.updateQuickslot();
+		}
+		if (talent == HG_SWEEP) {
 			Item.updateQuickslot();
 		}
 
@@ -528,6 +566,10 @@ public enum Talent {
 		}
 
 		if (talent == SECONDARY_CHARGE || talent == TWIN_UPGRADES){
+			Item.updateQuickslot();
+		}
+
+		if (talent == DOUBLE_BARREL_1){
 			Item.updateQuickslot();
 		}
 
@@ -607,6 +649,9 @@ public enum Talent {
 				bicycle.chargeUp(100*hero.pointsInTalent(BICYCLE_CHARGE)/8f);
 				ScrollOfRecharging.charge(hero);
 			}
+		}
+		if (hero.hasTalent(HEALING_MEAL)) {
+			Buff.affect(hero, Healing.class).setHeal(1+7*hero.pointsInTalent(HEALING_MEAL), 0, 1);
 		}
 //		if (hero.hasTalent(FOCUSED_MEAL)){
 //			if (hero.heroClass == HeroClass.DUELIST){
@@ -727,6 +772,9 @@ public enum Talent {
 		if (hero.pointsInTalent(AR_INTUITION) == 2 && item instanceof AR){
 			item.identify();
 		}
+		if (hero.pointsInTalent(HG_INTUITION) == 2 && item instanceof HG){
+			item.identify();
+		}
 		if (hero.hasTalent(THIEFS_INTUITION) && item instanceof Ring){
 			if (hero.pointsInTalent(THIEFS_INTUITION) == 2){
 				item.identify();
@@ -751,6 +799,9 @@ public enum Talent {
 		}
 		if (hero.hasTalent(AR_INTUITION)){
 			if (item instanceof AR) item.cursedKnown = true;
+		}
+		if (hero.hasTalent(HG_INTUITION)){
+			if (item instanceof HG) item.cursedKnown = true;
 		}
 		if (hero.pointsInTalent(THIEFS_INTUITION) == 2){
 			if (item instanceof Ring) ((Ring) item).setKnown();
@@ -895,6 +946,9 @@ public enum Talent {
 			case SHIROKO:
 				Collections.addAll(tierTalents, BICYCLE_CHARGE, AR_INTUITION, ENHANCED_EXPLODE, DEFENSIVE_FEEDBACK);
 				break;
+			case NOA:
+				Collections.addAll(tierTalents, SPEEDY_MOVE, HG_INTUITION, HEALING_FACTOR, LAST_BULLET);
+				break;
 		}
 		for (Talent talent : tierTalents){
 			if (replacements.containsKey(talent)){
@@ -921,6 +975,9 @@ public enum Talent {
 			case SHIROKO:
 				Collections.addAll(tierTalents, SPEEDY_MEAL, INHERENT_WILDNESS, ELECTRIC_BICYCLE, RAPID_SHOOTING, AR_MASTER);
 				break;
+			case NOA:
+				Collections.addAll(tierTalents, HEALING_MEAL, PATH_PREDICTION, SKILLED_SEARCH, DOUBLE_TAP, HG_MASTER);
+				break;
 		}
 		for (Talent talent : tierTalents){
 			if (replacements.containsKey(talent)){
@@ -946,6 +1003,9 @@ public enum Talent {
 				break;
 			case SHIROKO:
 				Collections.addAll(tierTalents, AR_FAST_RELOAD, SHOOTING_WEAKNESS);
+				break;
+			case NOA:
+				Collections.addAll(tierTalents, HG_FAST_RELOAD, HG_SWEEP);
 				break;
 		}
 		for (Talent talent : tierTalents){
@@ -1004,6 +1064,12 @@ public enum Talent {
 				break;
 			case SHIROKO_EX_PROFESSIONAL_RIDE:
 				Collections.addAll(tierTalents, PROFESSIONAL_RIDE_1, PROFESSIONAL_RIDE_2, PROFESSIONAL_RIDE_3);
+				break;
+			case NOA_EX_LARGE_MAGAZINE:
+				Collections.addAll(tierTalents, LARGE_MAGAZINE_1, LARGE_MAGAZINE_2, LARGE_MAGAZINE_3);
+				break;
+			case NOA_EX_DOUBLE_BARREL:
+				Collections.addAll(tierTalents, DOUBLE_BARREL_1, DOUBLE_BARREL_2, DOUBLE_BARREL_3);
 				break;
 		}
 		for (Talent talent : tierTalents){

@@ -46,7 +46,7 @@ public class Hoshino_2 extends ArmorAbility {
 
 	@Override
 	public int icon() {
-		return HeroIcon.MIYAKO_2;
+		return HeroIcon.HOSHINO_2;
 	}
 
 	@Override

@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino;
+package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.noa;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
@@ -29,7 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbili
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 
-public class Hoshino_1 extends ArmorAbility {
+public class Noa_1 extends ArmorAbility {
 
 	{
 		baseChargeUse = 35f;
@@ -46,11 +46,11 @@ public class Hoshino_1 extends ArmorAbility {
 
 	@Override
 	public int icon() {
-		return HeroIcon.HOSHINO_1;
+		return HeroIcon.NOA_1;
 	}
 
 	@Override
 	public Talent[] talents() {
-		return new Talent[]{Talent.HOSHINO_ABIL_11, Talent.HOSHINO_ABIL_12, Talent.HOSHINO_ABIL_13, Talent.HEROIC_ENERGY};
+		return new Talent[]{Talent.NOA_ABIL_11, Talent.NOA_ABIL_12, Talent.NOA_ABIL_13, Talent.HEROIC_ENERGY};
 	}
 }

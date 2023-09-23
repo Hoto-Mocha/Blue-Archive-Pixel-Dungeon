@@ -46,7 +46,7 @@ public class Shiroko_1 extends ArmorAbility {
 
 	@Override
 	public int icon() {
-		return HeroIcon.MIYAKO_1;
+		return HeroIcon.SHIROKO_1;
 	}
 
 	@Override

@@ -13,7 +13,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ElementalBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.InfiniteBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Slow;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vulnerable;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.elementals.APBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.elementals.ElectricBullet;
@@ -64,6 +66,8 @@ public class Gun extends MeleeWeapon {
     protected float shootingAccuracy = 1f; //발사 시 탄환 정확성의 배율. 높을 수록 정확하다
     protected boolean explode = false; //탄환 폭발 여부
     public static final String TXT_STATUS = "%d/%d";
+
+    public boolean doubleBarrelSpecial = false;
 
     {
         defaultAction = AC_SHOOT;
@@ -172,6 +176,28 @@ public class Gun extends MeleeWeapon {
         if (hero.subClass == HeroSubClass.SHIROKO_EX_ELEMENTAL_BULLET) {
             Buff.affect(hero, ElementalBullet.class).set(reloadTime()+1);
         }
+        if (hero.subClass == HeroSubClass.NOA_EX_LARGE_MAGAZINE && hero.buff(InfiniteBullet.infiniteBulletCooldown.class) == null) {
+            Buff.affect(hero, InfiniteBullet.class).set(reloadTime());
+            Buff.affect(hero, InfiniteBullet.infiniteBulletCooldown.class).set();
+        }
+        if (hero.hasTalent(Talent.LARGE_MAGAZINE_3) && hero.buff(Talent.BulletTimeCooldown.class) == null) {
+            for (Char ch : Actor.chars()) {
+                if (Dungeon.level.heroFOV[ch.pos] && ch.alignment == Char.Alignment.ENEMY) {
+                    Buff.affect(ch, Slow.class, (reloadTime()+3*hero.pointsInTalent(Talent.LARGE_MAGAZINE_3)-1));
+                }
+            }
+            Buff.affect(hero, Talent.BulletTimeCooldown.class, 30f);
+        }
+        if (hero.belongings.secondWep != null) {
+            if (hero.belongings.secondWep instanceof Gun) {
+                Gun secondGun = ((Gun) hero.belongings.secondWep);
+                if (hero.hasTalent(Talent.DOUBLE_BARREL_2) && secondGun.round < secondGun.maxRound()) {
+                    secondGun.quickReload();
+                    hero.spendAndNext(Math.max(3-hero.pointsInTalent(Talent.DOUBLE_BARREL_2), 0));
+                }
+            }
+        }
+
         Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
         hero.spendAndNext(reloadTime());
         GLog.i(Messages.get(this, "reload"));
@@ -213,6 +239,10 @@ public class Gun extends MeleeWeapon {
         return amount;
     }
 
+    public int round() {
+        return round;
+    }
+
     public float reloadTime() { //재장전에 소모하는 턴
         if (hero.buff(IronHorus.TacticalShieldBuff.class) != null && hero.subClass == HeroSubClass.HOSHINO_EX_TACTICAL_SHIELD) {
             return 0;
@@ -221,6 +251,18 @@ public class Gun extends MeleeWeapon {
         float amount = reload_time;
 
         amount += hero.pointsInTalent(Talent.LARGE_MAGAZINE);
+
+        if (hero.hasTalent(Talent.LARGE_MAGAZINE_1)) {
+            ArrayList<Char> chars = new ArrayList<>();
+            for (Char ch : Actor.chars()) {
+                if (Dungeon.level.heroFOV[ch.pos] && ch.alignment == Char.Alignment.ENEMY) {
+                    chars.add(ch);
+                }
+            }
+            if (chars.size() > 0) {
+                amount *= Math.pow(1/(1+0.05*hero.pointsInTalent(Talent.LARGE_MAGAZINE_1)), chars.size());  //1.05/1.1/1.15로 시야 내의 적의 수만큼 나눔
+            }
+        }
 
         return amount;
     }
@@ -236,11 +278,37 @@ public class Gun extends MeleeWeapon {
                 lvl +
                 RingOfSharpshooting.levelDamageBonus(hero);
     }
+    public int bulletMin() {
+        return bulletMin(this.buffedLvl());
+    }
 
     //need to be overridden
     public int bulletMax(int lvl) {
         return 0; //총알의 최대 데미지
     }
+    public int bulletMax() {
+        return bulletMax(this.buffedLvl());
+    }
+
+    public int bulletDamage() {
+        int damage = Random.NormalIntRange(bulletMin(), bulletMax());
+        if (doubleBarrelSpecial) {
+            damage = Math.round(damage * 0.667f);
+            //TODO: 증강에 따라 변화하는 효과?
+        }
+        return damage;
+    }
+
+    @Override
+    protected float baseDelay(Char owner) {
+        if (doubleBarrelSpecial){
+            return 0f;
+            //TODO: 증강에 따라 변화하는 효과?
+        } else{
+            return super.baseDelay(owner);
+        }
+    }
+
 
     @Override
     public String info() {
@@ -275,6 +343,8 @@ public class Gun extends MeleeWeapon {
     }
 
     public class Bullet extends MissileWeapon {
+
+        public boolean isDoubleBarrel = false;
 
         {
             hitSound = Assets.Sounds.PUFF;
@@ -337,24 +407,36 @@ public class Gun extends MeleeWeapon {
             if (hero.heroClass == HeroClass.SHIROKO) {
                 int amount = 0;
                 float chance = 1/(float)((Gun) hero.belongings.weapon).shotPerShoot();
-                if (Random.Float() < chance) {
-                    amount ++;
-                }
+                amount ++;
                 if (hero.buff(ExplosiveBullet.class) != null) {
                     amount += 2+hero.pointsInTalent(Talent.ELEMENTAL_BULLET_1);
                 }
                 if (hero.hasTalent(Talent.RAPID_SHOOTING)) {
-                    if (Random.Float() < chance*0.5f*hero.pointsInTalent(Talent.RAPID_SHOOTING)) {
+                    if (Random.Float() < 0.5f*hero.pointsInTalent(Talent.RAPID_SHOOTING)) {
                         amount ++;
                     }
                 }
                 for (int i=0; i<amount; i++) {
-                    int explodeDamage = Random.NormalIntRange(Dungeon.scalingDepth()/5, Dungeon.scalingDepth()/2+3);
-                    explodeDamage += hero.pointsInTalent(Talent.ENHANCED_EXPLODE);
-                    explodeDamage -= defender.drRoll();
-                    CellEmitter.center(defender.pos).burst(BlastParticle.FACTORY, 1);
-                    defender.damage(explodeDamage, hero);
+                    if (Random.Float() < chance) {
+                        int explodeDamage = Random.NormalIntRange(Dungeon.scalingDepth()/5, Dungeon.scalingDepth()/2+3);
+                        explodeDamage += hero.pointsInTalent(Talent.ENHANCED_EXPLODE);
+                        explodeDamage -= defender.drRoll();
+                        CellEmitter.center(defender.pos).burst(BlastParticle.FACTORY, 1);
+                        defender.damage(explodeDamage, hero);
+                    }
                 }
+            }
+            if (Gun.this.round == maxRound() && hero.hasTalent(Talent.DOUBLE_TAP)) {
+                new FlavourBuff() {
+                    {
+                        actPriority = VFX_PRIO;
+                    }
+
+                    public boolean act() {
+                        Buff.affect(target, Talent.DoubleTapTracker.class);
+                        return super.act();
+                    }
+                }.attachTo(hero);
             }
             return Gun.this.proc(attacker, defender, damage);
         }
@@ -366,10 +448,7 @@ public class Gun extends MeleeWeapon {
 
         @Override
         public int damageRoll(Char owner) {
-            Hero hero = (Hero)owner;
-            int bulletDamage = Random.NormalIntRange(bulletMin(Gun.this.buffedLvl()),
-                    bulletMax(Gun.this.buffedLvl()));
-            return bulletDamage;
+            return bulletDamage();
         }
 
         @Override
@@ -449,6 +528,12 @@ public class Gun extends MeleeWeapon {
             }
 
             round --;
+            if (hero.buff(InfiniteBullet.class) != null) {
+                round ++;
+            }
+            if (round == 0 && hero.hasTalent(Talent.LAST_BULLET)) {
+                Buff.affect(hero, Barrier.class).setShield(2+3*hero.pointsInTalent(Talent.LAST_BULLET));
+            }
             for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) { //주변의 적들을 영웅의 위치로 모이게 하는 구문
                 if (mob.paralysed <= 0
                         && Dungeon.level.distance(curUser.pos, mob.pos) <= 4
@@ -466,6 +551,11 @@ public class Gun extends MeleeWeapon {
 
         @Override
         public void cast(final Hero user, final int dst) {
+            cast(user, dst, false);
+        }
+
+        public void cast(final Hero user, final int dst, boolean doubleBarrel) {
+            isDoubleBarrel = doubleBarrel;
             super.cast(user, dst);
         }
     }

@@ -47,8 +47,11 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bless;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Combo;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DoubleBarrelMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DroneStrike;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Foresight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HoldFast;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
@@ -89,6 +92,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Laser;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.AntiMagic;
@@ -141,6 +145,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Sai;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Scimitar;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
@@ -527,6 +532,19 @@ public class Hero extends Char {
 		if (bicycleBuff != null && hero.subClass != HeroSubClass.SHIROKO_EX_PROFESSIONAL_RIDE) {
 			accuracy *= 0.25f;
 		}
+
+		Laser laser = hero.belongings.getItem(Laser.class);
+		if (wep instanceof MissileWeapon && target.buff(Laser.LaserTargeted.class) != null && laser != null) {
+			accuracy *= 1 + 0.2f * (laser.buffedLvl()+1);
+		}
+
+		if (wep instanceof Gun.Bullet && hero.buff(Talent.DoubleTapTracker.class) != null) {
+			accuracy = INFINITE_ACCURACY;
+			if (hero.pointsInTalent(Talent.DOUBLE_TAP) == 2) {
+				Buff.affect(target, Cripple.class, 3f);
+			}
+			hero.buff(Talent.DoubleTapTracker.class).detach();
+		}
 		
 		if (!RingOfForce.fightingUnarmed(this)) {
 			return (int)(attackSkill * accuracy * wep.accuracyFactor( this, target ));
@@ -708,6 +726,10 @@ public class Hero extends Char {
 		if (hero.hasTalent(Talent.ROBOT_CLEANER)) {
 			speed *= 1 + 0.1f*hero.pointsInTalent(Talent.ROBOT_CLEANER);
 		}
+
+		if (hero.hasTalent(Talent.SPEEDY_MOVE) && hero.belongings.weapon instanceof HG) {
+			speed *= 1 + 0.1f * hero.pointsInTalent(Talent.SPEEDY_MOVE);
+		}
 		
 		return speed;
 		
@@ -885,6 +907,14 @@ public class Hero extends Char {
 
 		if (hero.subClass == HeroSubClass.MIYAKO_EX_DRONESTRIKE && hero.buff(DroneStrike.class) == null) {
 			Buff.affect(hero, DroneStrike.class);
+		}
+
+		if (hero.hasTalent(Talent.PATH_PREDICTION)) {
+			for (Char ch : Actor.chars()) {
+				if (ch.alignment == Alignment.ENEMY && ch.HP <= ch.HT*(hero.pointsInTalent(Talent.PATH_PREDICTION))/4) {
+					Buff.append(Dungeon.hero, TalismanOfForesight.CharAwareness.class, 2).charID = ch.id();
+				}
+			}
 		}
 		
 		return actResult;
@@ -1413,6 +1443,25 @@ public class Hero extends Char {
 						if (enemy.isAlive()) {
 							int bonusTurns = hasTalent(Talent.SHARED_UPGRADES) ? wep.buffedLvl() : 0;
 							Buff.prolong(Hero.this, SnipersMark.class, SnipersMark.DURATION + bonusTurns).set(enemy.id(), bonusTurns);
+						}
+						Actor.remove(this);
+						return true;
+					}
+				});
+			}
+			break;
+		case NOA_EX_DOUBLE_BARREL:
+			if (wep instanceof Gun.Bullet && enemy != this && hero.buff(DoubleBarrelMark.class) == null && !((Gun.Bullet) wep).isDoubleBarrel) {
+				Actor.add(new Actor() {
+
+					{
+						actPriority = VFX_PRIO;
+					}
+
+					@Override
+					protected boolean act() {
+						if (enemy.isAlive()) {
+							Buff.prolong(Hero.this, DoubleBarrelMark.class, DoubleBarrelMark.DURATION).set(enemy.id(), 0);
 						}
 						Actor.remove(this);
 						return true;
@@ -2333,6 +2382,9 @@ public class Hero extends Char {
 
 		boolean circular = pointsInTalent(Talent.WIDE_SEARCH) == 1;
 		int distance = 1;
+		if (hasTalent(Talent.SKILLED_SEARCH)) {
+			distance += pointsInTalent(Talent.SKILLED_SEARCH);
+		}
 		if (hasTalent(Talent.WIDE_SEARCH)) distance++;
 		
 		boolean foresight = buff(Foresight.class) != null;

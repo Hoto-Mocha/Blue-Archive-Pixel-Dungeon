@@ -118,6 +118,9 @@ abstract public class ClassArmor extends Armor {
 			case SHIROKO:
 				classArmor = new ShirokoArmor();
 				break;
+			case NOA:
+				classArmor = new NoaArmor();
+				break;
 		}
 		
 		classArmor.level(armor.trueLevel());

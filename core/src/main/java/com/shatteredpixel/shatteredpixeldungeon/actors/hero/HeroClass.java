@@ -40,6 +40,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.Ho
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.Miyako_1;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.Miyako_2;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.Miyako_3;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.noa.Noa_1;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.noa.Noa_2;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.noa.Noa_3;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Nonomi_1;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Nonomi_2;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Nonomi_3;
@@ -55,15 +58,18 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Waterskin;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.BlastGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Claymore;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.FlashGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.HPGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.HandGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Laser;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.SmokeGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Teleporter;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.PlateArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.VelvetPouch;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Food;
+import com.shatteredpixel.shatteredpixeldungeon.items.food.Pasty;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfExperience;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfInvisibility;
@@ -71,6 +77,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLiquidFlam
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfMindVision;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfStrength;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfFuror;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfHaste;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMight;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
@@ -80,11 +87,17 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMirrorImag
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRage;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfEnchantment;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Rapier;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_tier1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_tier2;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_tier1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_tier2;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_tier3;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_tier4;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_tier5;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_tier1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_tier2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_tier5;
@@ -104,7 +117,8 @@ public enum HeroClass {
 	NONOMI( HeroSubClass.NONOMI_EX_RIOT, HeroSubClass.NONOMI_EX_SHOOTALL ),
 	MIYAKO( HeroSubClass.MIYAKO_EX_STUNDRONE, HeroSubClass.MIYAKO_EX_DRONESTRIKE ),
 	HOSHINO( HeroSubClass.HOSHINO_EX_TACTICAL_PRESS, HeroSubClass.HOSHINO_EX_TACTICAL_SHIELD ),
-	SHIROKO( HeroSubClass.SHIROKO_EX_ELEMENTAL_BULLET, HeroSubClass.SHIROKO_EX_PROFESSIONAL_RIDE );
+	SHIROKO( HeroSubClass.SHIROKO_EX_ELEMENTAL_BULLET, HeroSubClass.SHIROKO_EX_PROFESSIONAL_RIDE ),
+	NOA(HeroSubClass.NOA_EX_LARGE_MAGAZINE, HeroSubClass.NOA_EX_DOUBLE_BARREL);
 
 	private HeroSubClass[] subClasses;
 
@@ -134,14 +148,16 @@ public enum HeroClass {
 			new RingOfMight().identify().upgrade(10).collect();
 			new EXSkillDisc().collect();
 			new ScrollOfUpgrade().identify().quantity(200).collect();
-			new SG_tier2().identify().upgrade(6).collect();
-			new ScrollOfMagicMapping().identify().quantity(200).collect();
+			new HG_tier2().identify().collect();
 			new PotionOfMindVision().identify().quantity(200).collect();
 			new RingOfWealth().identify().upgrade(100).collect();
 			new PlateArmor().identify().upgrade(100).collect();
 			new RingOfFuror().identify().upgrade(100).collect();
+			new RingOfHaste().identify().upgrade(100).collect();
 			new Teleporter().collect();
 			new KingsCrown().collect();
+			new Pasty().quantity(200).collect();
+			new ScrollOfEnchantment().identify().quantity(200).collect();
 		}
 
 		new ScrollOfIdentify().identify();
@@ -165,6 +181,10 @@ public enum HeroClass {
 
 			case SHIROKO:
 				initShiroko( hero );
+				break;
+
+			case NOA:
+				initNoa( hero );
 				break;
 		}
 
@@ -191,6 +211,8 @@ public enum HeroClass {
 				return Badges.Badge.MASTERY_HOSHINO;
 			case SHIROKO:
 				return Badges.Badge.MASTERY_SHIROKO;
+			case NOA:
+				return Badges.Badge.MASTERY_NOA;
 		}
 		return null;
 	}
@@ -300,6 +322,26 @@ public enum HeroClass {
 		new ScrollOfMirrorImage().identify();
 	}
 
+	private static void initNoa( Hero hero ) {
+		HG_tier1 hg = new HG_tier1();
+
+		(hero.belongings.weapon = hg).identify();
+		hero.belongings.weapon.activate(hero);
+
+		FlashGrenade flashGrenade = new FlashGrenade();
+		flashGrenade.collect();
+
+		Laser laser = new Laser();
+		laser.collect();
+
+		Dungeon.quickslot.setSlot(0, hg);
+		Dungeon.quickslot.setSlot(1, laser);
+		Dungeon.quickslot.setSlot(2, flashGrenade);
+
+		new PotionOfMindVision().identify();
+		new ScrollOfMagicMapping().identify();
+	}
+
 	public String title() {
 		return Messages.get(HeroClass.class, name());
 	}
@@ -328,6 +370,8 @@ public enum HeroClass {
 				return new ArmorAbility[]{new Hoshino_1(), new Hoshino_2(), new Hoshino_3()};
 			case SHIROKO:
 				return new ArmorAbility[]{new Shiroko_1(), new Shiroko_2(), new Shiroko_3()};
+			case NOA:
+				return new ArmorAbility[]{new Noa_1(), new Noa_2(), new Noa_3()};
 		}
 	}
 
@@ -343,6 +387,8 @@ public enum HeroClass {
 				return Assets.Sprites.HOSHINO;
 			case SHIROKO:
 				return Assets.Sprites.SHIROKO;
+			case NOA:
+				return Assets.Sprites.NOA;
 		}
 	}
 
@@ -358,6 +404,8 @@ public enum HeroClass {
 				return Assets.Splashes.HOSHINO;
 			case SHIROKO:
 				return Assets.Splashes.SHIROKO;
+			case NOA:
+				return Assets.Splashes.NOA;
 		}
 	}
 	
@@ -376,6 +424,8 @@ public enum HeroClass {
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_HOSHINO);
 			case SHIROKO:
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_SHIROKO);
+			case NOA:
+				return Badges.isUnlocked(Badges.Badge.UNLOCK_NOA);
 		}
 	}
 	

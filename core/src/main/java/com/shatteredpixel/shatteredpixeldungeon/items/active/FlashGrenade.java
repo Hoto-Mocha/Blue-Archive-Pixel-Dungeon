@@ -1,32 +1,30 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.active;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.PathFinder;
 
-public class BlastGrenade extends Grenade {
+public class FlashGrenade extends Grenade {
 
     {
-        image = ItemSpriteSheet.BLAST_GRENADE;
+        image = ItemSpriteSheet.FLASH_GRENADE;
 
         max_amount = 1;
         amount = max_amount;
 
         unique = true;
         bones = false;
-    }
-
-    @Override
-    public int level() {
-        int level = Dungeon.hero == null ? 0 : Dungeon.hero.lvl/10;
-        return level;
     }
 
     @Override
@@ -45,31 +43,19 @@ public class BlastGrenade extends Grenade {
 
     public class Thrower extends Boomer {
         {
-            image = ItemSpriteSheet.HAND_GRENADE;
+            image = ItemSpriteSheet.FLASH_GRENADE;
         }
 
         @Override
         protected void activate(int cell) {
-            Char ch = Actor.findChar(cell);
-            if (ch != null) {
-                Buff.affect(ch, Paralysis.class, 2f);
-            }
-
-            WandOfBlastWave.BlastWave.blast(cell);
-            Sample.INSTANCE.play( Assets.Sounds.BLAST );
-
-            for (int i : PathFinder.NEIGHBOURS8) {
+            Sample.INSTANCE.play( Assets.Sounds.BLAST ); //'꿍' 하는 소리 출력
+            GameScene.flash(0x80FFFFFF);           //게임 화면이 번쩍! 함
+            Splash.at( cell, 0xCCFFFFFF, 1 );   //해당 색깔의 파티클 하나를 발생시킴
+            for (int i : PathFinder.NEIGHBOURS25) {     //5x5지역을 대상으로 함
                 int c = cell + i;
                 Char target = Actor.findChar(c);
                 if (target != null) {
-                    Ballistica trajectory = new Ballistica(cell, target.pos, Ballistica.STOP_TARGET);
-                    trajectory = new Ballistica(trajectory.collisionPos, trajectory.path.get(trajectory.path.size()-1), Ballistica.PROJECTILE);
-                    WandOfBlastWave.throwChar(target,
-                            trajectory,
-                            2+curItem.buffedLvl(),
-                            false,
-                            true,
-                            this);
+                    Buff.affect(target, Blindness.class, 5+2*FlashGrenade.this.buffedLvl());
                 }
             }
 

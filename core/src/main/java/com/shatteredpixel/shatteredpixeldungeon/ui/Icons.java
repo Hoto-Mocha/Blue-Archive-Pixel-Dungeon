@@ -49,6 +49,7 @@ public enum Icons {
 	HERO_MIYAKO,
 	HERO_HOSHINO,
 	HERO_SHIROKO,
+	HERO_NOA,
 
 	//grey icons, mainly used for buttons, spacing for 16x16
 	EXIT,
@@ -178,6 +179,9 @@ public enum Icons {
 				break;
 			case HERO_SHIROKO:
 				icon.frame( icon.texture.uvRectBySize( 80, 16, 16, 16 ) );
+				break;
+			case HERO_NOA:
+				icon.frame( icon.texture.uvRectBySize( 96, 16, 13, 13 ) );
 				break;
 
 			case EXIT:
@@ -416,6 +420,8 @@ public enum Icons {
 				return get( Icons.HERO_HOSHINO );
 			case SHIROKO:
 				return get( Icons.HERO_SHIROKO );
+			case NOA:
+				return get( Icons.HERO_NOA );
 			default:
 				return null;
 		}

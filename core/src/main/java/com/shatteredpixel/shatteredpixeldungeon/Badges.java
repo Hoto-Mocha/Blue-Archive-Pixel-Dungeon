@@ -55,6 +55,7 @@ public class Badges {
 		MASTERY_MIYAKO,
 		MASTERY_HOSHINO,
 		MASTERY_SHIROKO,
+		MASTERY_NOA,
 		FOUND_RATMOGRIFY,
 
 		//bronze
@@ -62,7 +63,7 @@ public class Badges {
 		UNLOCK_MIYAKO               ( 2 ),
 		UNLOCK_HOSHINO              ( 3 ),
 		UNLOCK_SHIROKO              ( 4 ),
-		//UNLOCK_CLERIC             ( 5 ),
+		UNLOCK_NOA             		( 5 ),
 		MONSTERS_SLAIN_1            ( 6 ),
 		MONSTERS_SLAIN_2            ( 7 ),
 		GOLD_COLLECTED_1            ( 8 ),
@@ -109,6 +110,7 @@ public class Badges {
 		BOSS_SLAIN_1_MIYAKO,
 		BOSS_SLAIN_1_HOSHINO,
 		BOSS_SLAIN_1_SHIROKO,
+		BOSS_SLAIN_1_NOA,
 		BOSS_SLAIN_1_ALL_CLASSES    ( 54, true ),
 		GAMES_PLAYED_2              ( 55, true ),
 		HIGH_SCORE_2                ( 56 ),
@@ -155,6 +157,7 @@ public class Badges {
 		VICTORY_MIYAKO,
 		VICTORY_HOSHINO,
 		VICTORY_SHIROKO,
+		VICTORY_NOA,
 		VICTORY_ALL_CLASSES         ( 103, true ),
 		DEATH_FROM_ALL              ( 104, true ),
 		BOSS_SLAIN_3_GLADIATOR,
@@ -705,6 +708,7 @@ public class Badges {
 		firstBossClassBadges.put(HeroClass.MIYAKO, Badge.BOSS_SLAIN_1_MIYAKO);
 		firstBossClassBadges.put(HeroClass.HOSHINO, Badge.BOSS_SLAIN_1_HOSHINO);
 		firstBossClassBadges.put(HeroClass.SHIROKO, Badge.BOSS_SLAIN_1_SHIROKO);
+		firstBossClassBadges.put(HeroClass.NOA, Badge.BOSS_SLAIN_1_NOA);
 	}
 
 	private static LinkedHashMap<HeroClass, Badge> victoryClassBadges = new LinkedHashMap<>();
@@ -714,6 +718,7 @@ public class Badges {
 		victoryClassBadges.put(HeroClass.MIYAKO, Badge.VICTORY_MIYAKO);
 		victoryClassBadges.put(HeroClass.HOSHINO, Badge.VICTORY_HOSHINO);
 		victoryClassBadges.put(HeroClass.SHIROKO, Badge.VICTORY_SHIROKO);
+		victoryClassBadges.put(HeroClass.NOA, Badge.VICTORY_NOA);
 	}
 
 	private static LinkedHashMap<HeroSubClass, Badge> thirdBossSubclassBadges = new LinkedHashMap<>();
@@ -840,6 +845,9 @@ public class Badges {
 			case SHIROKO:
 				badge = Badge.MASTERY_SHIROKO;
 				break;
+			case NOA:
+				badge = Badge.MASTERY_NOA;
+				break;
 		}
 		
 		unlock(badge);
@@ -870,6 +878,12 @@ public class Badges {
 	public static void validateShirokoUnlock(){
 		if (Statistics.shirokoUnlocked && !isUnlocked(Badge.UNLOCK_SHIROKO)){
 			displayBadge( Badge.UNLOCK_SHIROKO );
+		}
+	}
+
+	public static void validateNoaUnlock(){
+		if (Statistics.noaUnlocked && !isUnlocked(Badge.UNLOCK_NOA)){
+			displayBadge( Badge.UNLOCK_NOA );
 		}
 	}
 	

@@ -40,6 +40,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corruption;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DroneStrikeCooldown;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.InfiniteBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MindVision;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MonkEnergy;
@@ -60,8 +61,10 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.BlastGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Claymore;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.FlashGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.HPGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.HandGrenade;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Laser;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.SmokeGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.MasterThievesArmband;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
@@ -71,6 +74,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfAggression;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Lucky;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
@@ -837,6 +841,16 @@ public abstract class Mob extends Char {
 			if (hpGrenade != null && Random.Float() < 0.15f) {
 				hpGrenade.reload();
 			}
+
+			FlashGrenade flashGrenade = Dungeon.hero.belongings.getItem(FlashGrenade.class);
+			if (flashGrenade != null && Random.Float() < 0.10f) {
+				flashGrenade.reload();
+			}
+		}
+
+		InfiniteBullet infiniteBullet = Dungeon.hero.buff(InfiniteBullet.class);
+		if (cause == Dungeon.hero && infiniteBullet != null && Dungeon.hero.hasTalent(Talent.LARGE_MAGAZINE_2)) {
+			infiniteBullet.add();
 		}
 
 		StunDroneCooldown stunDroneCooldown = Dungeon.hero.buff(StunDroneCooldown.class);
@@ -847,6 +861,16 @@ public abstract class Mob extends Char {
 		DroneStrikeCooldown droneStrikeCooldown = Dungeon.hero.buff(DroneStrikeCooldown.class);
 		if (droneStrikeCooldown != null) {
 			droneStrikeCooldown.kill();
+		}
+
+		Laser.LaserCooldown laserCooldown = Dungeon.hero.buff(Laser.LaserCooldown.class);
+		if (laserCooldown != null) {
+			laserCooldown.kill();
+		}
+
+		InfiniteBullet.infiniteBulletCooldown infiniteCooldown = Dungeon.hero.buff(InfiniteBullet.infiniteBulletCooldown.class);
+		if (infiniteCooldown != null) {
+			infiniteCooldown.kill();
 		}
 
 
@@ -866,6 +890,10 @@ public abstract class Mob extends Char {
 			if (!Statistics.shirokoUnlocked) {
 				Statistics.shirokoUnlocked = true;
 				Badges.validateShirokoUnlock();
+			}
+			if (!Statistics.noaUnlocked) {
+				Statistics.noaUnlocked = true;
+				Badges.validateNoaUnlock();
 			}
 		}
 

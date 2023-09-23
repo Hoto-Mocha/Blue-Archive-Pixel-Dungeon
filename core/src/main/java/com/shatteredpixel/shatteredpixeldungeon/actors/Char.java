@@ -46,6 +46,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corrosion;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Daze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Doom;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DoubleBarrelMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FireImbue;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
@@ -357,6 +358,11 @@ public abstract class Char extends Actor {
 				if (h.belongings.attackingWeapon() instanceof Gun.Bullet
 						&& h.heroClass == HeroClass.HOSHINO){
 					dr = 0;
+				}
+
+				if (h.belongings.attackingWeapon() instanceof Gun.Bullet
+						&& h.hasTalent(Talent.DOUBLE_BARREL_3)){
+					dr *= (3-h.pointsInTalent(Talent.DOUBLE_BARREL_3))/3f;
 				}
 
 				if (h.belongings.attackingWeapon() instanceof Gun.Bullet
@@ -831,6 +837,9 @@ public abstract class Char extends Actor {
 			}
 			if (ch.buff(SnipersMark.class) != null && ch.buff(SnipersMark.class).object == id()){
 				ch.buff(SnipersMark.class).detach();
+			}
+			if (ch.buff(DoubleBarrelMark.class) != null && ch.buff(DoubleBarrelMark.class).object == id()){
+				ch.buff(DoubleBarrelMark.class).detach();
 			}
 			if (ch.buff(Talent.FollowupStrikeTracker.class) != null
 					&& ch.buff(Talent.FollowupStrikeTracker.class).object == id()){

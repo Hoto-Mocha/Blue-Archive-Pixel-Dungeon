@@ -355,6 +355,7 @@ public class ItemSpriteSheet {
 	public static final int ARMOR_MIYAKO    = ARMOR+7;
 	public static final int ARMOR_HOSHINO  	= ARMOR+8;
 	public static final int ARMOR_SHIROKO   = ARMOR+9;
+	public static final int ARMOR_NOA	    = ARMOR+10;
 	static{
 		assignItemRect(ARMOR_CLOTH,     15, 12);
 		assignItemRect(ARMOR_LEATHER,   14, 13);
@@ -366,6 +367,7 @@ public class ItemSpriteSheet {
 		assignItemRect(ARMOR_MIYAKO,    14, 12);
 		assignItemRect(ARMOR_HOSHINO,  	13, 15);
 		assignItemRect(ARMOR_SHIROKO,   12, 13);
+		assignItemRect(ARMOR_NOA,	    14, 12);
 	}
 
 	                                                                                    //16 free slots
@@ -730,6 +732,8 @@ public class ItemSpriteSheet {
 	public static final int IRON_HORUS	 	= UNIQUE_ITEM+5;
 	public static final int HP_GRENADE	 	= UNIQUE_ITEM+6;
 	public static final int BICYCLE	 		= UNIQUE_ITEM+7;
+	public static final int LASER	 		= UNIQUE_ITEM+8;
+	public static final int FLASH_GRENADE	= UNIQUE_ITEM+9;
 	static {
 		assignItemRect(SUPER_NOVA, 		16, 16);
 		assignItemRect(SMOKE_GRENADE, 	12, 12);
@@ -739,6 +743,8 @@ public class ItemSpriteSheet {
 		assignItemRect(IRON_HORUS, 		14, 14);
 		assignItemRect(HP_GRENADE, 		11, 11);
 		assignItemRect(BICYCLE, 		16, 16);
+		assignItemRect(LASER, 			11, 11);
+		assignItemRect(FLASH_GRENADE, 	13, 13);
 	}
 
 	//for smaller 8x8 icons that often accompany an item sprite

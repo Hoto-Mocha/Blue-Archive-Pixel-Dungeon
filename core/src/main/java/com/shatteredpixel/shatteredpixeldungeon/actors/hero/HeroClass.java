@@ -314,9 +314,13 @@ public enum HeroClass {
 		Bicycle bicycle = new Bicycle();
 		bicycle.collect();
 
+		ThrowingKnife knives = new ThrowingKnife();
+		knives.quantity(3).collect();
+
 		Dungeon.quickslot.setSlot(0, ar);
 		Dungeon.quickslot.setSlot(1, hpGrenade);
 		Dungeon.quickslot.setSlot(2, bicycle);
+		Dungeon.quickslot.setSlot(3, knives);
 
 		new PotionOfStrength().identify();
 		new ScrollOfMirrorImage().identify();
@@ -334,9 +338,13 @@ public enum HeroClass {
 		Laser laser = new Laser();
 		laser.collect();
 
+		ThrowingKnife knives = new ThrowingKnife();
+		knives.quantity(3).collect();
+
 		Dungeon.quickslot.setSlot(0, hg);
 		Dungeon.quickslot.setSlot(1, laser);
 		Dungeon.quickslot.setSlot(2, flashGrenade);
+		Dungeon.quickslot.setSlot(3, knives);
 
 		new PotionOfMindVision().identify();
 		new ScrollOfMagicMapping().identify();

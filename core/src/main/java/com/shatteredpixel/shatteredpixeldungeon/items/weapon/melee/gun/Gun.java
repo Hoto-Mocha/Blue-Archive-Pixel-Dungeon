@@ -6,6 +6,8 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
+import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
@@ -15,7 +17,11 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.InfiniteBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShockBulletCooldown;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Slow;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SnipingBullet;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vulnerable;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.elementals.APBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.elementals.ElectricBullet;
@@ -28,23 +34,31 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Beam;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Lightning;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.PurpleParticle;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.YellowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSharpshooting;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Shocking;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dagger;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
+import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
+import com.shatteredpixel.shatteredpixeldungeon.utils.BArray;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
@@ -161,6 +175,24 @@ public class Gun extends MeleeWeapon {
         quickReload();
         hero.busy();
         hero.sprite.operate(hero.pos);
+
+        if (hero.belongings.secondWep != null) {
+            if (hero.belongings.secondWep instanceof Gun) {
+                Gun secondGun = ((Gun) hero.belongings.secondWep);
+                if (hero.hasTalent(Talent.DOUBLE_BARREL_2) && secondGun.round < secondGun.maxRound()) {
+                    secondGun.quickReload();
+                    hero.spendAndNext(Math.max(3-hero.pointsInTalent(Talent.DOUBLE_BARREL_2), 0));
+                }
+            }
+        }
+
+        onReload();
+        Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
+        hero.spendAndNext(reloadTime());
+        GLog.i(Messages.get(this, "reload"));
+    }
+
+    public void onReload() {
         if (hero.hasTalent(Talent.RELOADING_SHIELD)) {
             Buff.affect(hero, Barrier.class).setShield(1+2*hero.pointsInTalent(Talent.RELOADING_SHIELD));
         }
@@ -188,19 +220,11 @@ public class Gun extends MeleeWeapon {
             }
             Buff.affect(hero, Talent.BulletTimeCooldown.class, 30f);
         }
-        if (hero.belongings.secondWep != null) {
-            if (hero.belongings.secondWep instanceof Gun) {
-                Gun secondGun = ((Gun) hero.belongings.secondWep);
-                if (hero.hasTalent(Talent.DOUBLE_BARREL_2) && secondGun.round < secondGun.maxRound()) {
-                    secondGun.quickReload();
-                    hero.spendAndNext(Math.max(3-hero.pointsInTalent(Talent.DOUBLE_BARREL_2), 0));
-                }
-            }
+        if (hero.subClass == HeroSubClass.MIYU_EX_SNIPING_BULLET) {
+            Buff.affect(hero, SnipingBullet.class);
         }
-
-        Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
-        hero.spendAndNext(reloadTime());
-        GLog.i(Messages.get(this, "reload"));
+        if (hero.buff(Talent.FastHandTracker.class) != null) hero.buff(Talent.FastHandTracker.class).detach();
+        if (hero.buff(Talent.PerfectHandTracker.class) != null) hero.buff(Talent.PerfectHandTracker.class).detach();
     }
 
     public void quickReload() {
@@ -252,6 +276,10 @@ public class Gun extends MeleeWeapon {
 
         amount += hero.pointsInTalent(Talent.LARGE_MAGAZINE);
 
+        if (hero.buff(Talent.FastHandTracker.class) != null) {
+            amount -= hero.pointsInTalent(Talent.FAST_HAND);
+        }
+
         if (hero.hasTalent(Talent.LARGE_MAGAZINE_1)) {
             ArrayList<Char> chars = new ArrayList<>();
             for (Char ch : Actor.chars()) {
@@ -262,6 +290,10 @@ public class Gun extends MeleeWeapon {
             if (chars.size() > 0) {
                 amount *= Math.pow(1/(1+0.05*hero.pointsInTalent(Talent.LARGE_MAGAZINE_1)), chars.size());  //1.05/1.1/1.15로 시야 내의 적의 수만큼 나눔
             }
+        }
+
+        if (hero.buff(Talent.PerfectHandTracker.class) != null) {
+            amount *= Math.pow(1-0.2f*hero.pointsInTalent(Talent.PENETRATION_SHOT_3), hero.buff(Talent.PerfectHandTracker.class).getKilled());
         }
 
         return amount;
@@ -438,6 +470,22 @@ public class Gun extends MeleeWeapon {
                     }
                 }.attachTo(hero);
             }
+            if (hero.hasTalent(Talent.BEST_SNIPER)) {
+                if (damage >= defender.HT*(1-(1/(6f-hero.pointsInTalent(Talent.BEST_SNIPER)))) && damage <= defender.HT) {
+                    damage = defender.HT;
+                    defender.sprite.emitter().start( ShadowParticle.UP, 0.05f, 10 );
+                }
+            }
+            if (hero.buff(SnipingBullet.class) != null) {
+                int distance = Dungeon.level.distance(attacker.pos, defender.pos) - 1;
+                float multi = ((Math.min(distance, 12)+4)/(8f-hero.pointsInTalent(Talent.SNIPING_BULLET_1)));
+                damage *= multi;
+                if (hero.hasTalent(Talent.SNIPING_BULLET_3) && (distance >= (12-2*hero.pointsInTalent(Talent.SNIPING_BULLET_3)))) {
+                    Buff.affect(defender, Paralysis.class, 3f);
+                    Buff.affect(attacker, ShockBulletCooldown.class).set();
+                }
+                hero.buff(SnipingBullet.class).detach();
+            }
             return Gun.this.proc(attacker, defender, damage);
         }
 
@@ -567,7 +615,76 @@ public class Gun extends MeleeWeapon {
                 if (target == curUser.pos) {
                     execute(hero, AC_RELOAD);
                 } else {
-                    knockBullet().cast(curUser, target);
+                    //미유 EX 관통 사격 능력
+                    if (hero.subClass == HeroSubClass.MIYU_EX_PENETRATION_SHOT) {
+
+                        Ballistica beam = new Ballistica(curUser.pos, target, Ballistica.STOP_TARGET | Ballistica.STOP_SOLID);
+                        ArrayList<Char> chars = new ArrayList<>();
+
+                        for (int c : beam.subPath(1, beam.dist)) {
+                            Char ch;
+
+                            if ((ch = Actor.findChar( c )) != null) {
+                                chars.add(ch);
+                            }
+
+                            CellEmitter.center( c ).burst( YellowParticle.BURST, Random.IntRange( 1, 2 ) );
+                        }
+                        int prevRound = round;
+                        int damageBonus = Math.min(chars.size() * hero.pointsInTalent(Talent.PENETRATION_SHOT_1), 15);
+                        int killed = 0;
+                        for (Char ch : chars) {
+                            Bullet bullet = knockBullet();
+                            bullet.proc(curUser, ch, bullet.damageRoll(curUser) + damageBonus);
+                            bullet.onThrow(ch.pos);
+                            if (!ch.isAlive()) killed++;
+                        }
+                        if (hero.hasTalent(Talent.PENETRATION_SHOT_3) && killed > 0 && hero.buff(Talent.PerfectHandTracker.class) == null) {
+                            Buff.affect(curUser, Talent.PerfectHandTracker.class).set(killed);
+                        }
+                        round = prevRound - 1;
+                        if (hero.buff(InfiniteBullet.class) != null) {
+                            round = prevRound;
+                        }
+                        updateQuickslot();
+
+                        Sample.INSTANCE.play( Assets.Sounds.HIT_CRUSH, 1, Random.Float(0.33f, 0.66f) );
+                        CellEmitter.get(curUser.pos).burst(SmokeParticle.FACTORY, 2);
+                        CellEmitter.center(curUser.pos).burst(BlastParticle.FACTORY, 2);
+
+                        curUser.sprite.zap(target);
+                        hero.spendAndNext(hero.attackDelay());
+
+                        int cell = beam.path.get(Math.min(beam.dist, target));
+                        curUser.sprite.parent.add(new Beam.ShotRay(curUser.sprite.center(), DungeonTilemap.raisedTileCenterToWorld( cell )));
+
+                        if (hero.hasTalent(Talent.PENETRATION_SHOT_2) && hero.buff(Talent.SuppressingFireCooldown.class) == null) {
+                            boolean affected = false;
+                            PathFinder.buildDistanceMap( curUser.pos, BArray.not( Dungeon.level.solid, null ), hero.pointsInTalent(Talent.PENETRATION_SHOT_2) );
+                            ArrayList<Char> chToTerror = new ArrayList<>();
+                            for (int i = 0; i < PathFinder.distance.length; i++) {
+                                if (PathFinder.distance[i] < Integer.MAX_VALUE) {
+                                    Char ch = Actor.findChar(i);
+                                    if (ch != null) {
+                                        if (ch instanceof Mob) {
+                                            chToTerror.add(ch);
+                                        }
+                                    }
+                                }
+                            }
+                            for (Char ch : chToTerror) {
+                                Buff.affect(ch, Terror.class, 3);
+                                if (!affected) {
+                                    affected = true;
+                                }
+                            }
+                            if (affected) {
+                                Buff.affect(curUser, Talent.SuppressingFireCooldown.class, 20f);
+                            }
+                        }
+                    } else {
+                        knockBullet().cast(curUser, target);
+                    }
                 }
             }
         }

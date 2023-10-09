@@ -88,8 +88,8 @@ public class HeroIcon extends Image {
 	public static final int SHIROKO_EX_PROFESSIONAL_RIDE	= 49;
 	public static final int NOA_EX_LARGE_MAGAZINE			= 50;
 	public static final int NOA_EX_DOUBLE_BARREL			= 51;
-//	public static final int 								= 52;
-//	public static final int 								= 53;
+	public static final int MIYU_EX_PENETRATION_SHOT		= 52;
+	public static final int MIYU_EX_SNIPING_BULLET			= 53;
 //	public static final int 								= 54;
 //	public static final int 								= 55;
 //	public static final int 								= 56;
@@ -119,9 +119,9 @@ public class HeroIcon extends Image {
 	public static final int NOA_1			= 79;
 	public static final int NOA_2			= 80;
 	public static final int NOA_3			= 81;
-//	public static final int 				= 82;
-//	public static final int 				= 83;
-//	public static final int 				= 84;
+	public static final int MIYU_1			= 82;
+	public static final int MIYU_2			= 83;
+	public static final int MIYU_3			= 84;
 //	public static final int 				= 85;
 //	public static final int 				= 86;
 //	public static final int 				= 87;

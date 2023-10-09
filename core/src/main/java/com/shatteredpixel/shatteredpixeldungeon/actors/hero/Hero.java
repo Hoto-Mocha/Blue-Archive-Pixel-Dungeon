@@ -45,6 +45,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Berserk;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bless;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BulletMomentumTracker;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Combo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
@@ -767,6 +768,10 @@ public class Hero extends Char {
 	}
 	
 	public float attackDelay() {
+		if (buff(BulletMomentumTracker.class) != null){
+			buff(BulletMomentumTracker.class).detach();
+			return 0;
+		}
 		float delay = 1f;
 
 		if (!RingOfForce.fightingUnarmed(this)) {
@@ -2060,6 +2065,10 @@ public class Hero extends Char {
 		
 		if (belongings.armor() != null){
 			stealth = belongings.armor().stealthFactor(this, stealth);
+		}
+
+		if (heroClass == HeroClass.MIYU) {
+			stealth += (1 + lvl/9f + pointsInTalent(Talent.BLURRY_FIGURE));
 		}
 		
 		return stealth;

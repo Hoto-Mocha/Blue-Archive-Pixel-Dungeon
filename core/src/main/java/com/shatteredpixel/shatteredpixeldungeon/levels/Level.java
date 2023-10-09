@@ -1202,7 +1202,7 @@ public abstract class Level implements Bundlable {
 				modifiableBlocking = new boolean[Dungeon.level.losBlocking.length];
 			}
 			
-			if ((c instanceof Hero && ((Hero) c).subClass == HeroSubClass.WARDEN)
+			if ((c instanceof Hero && ((Hero) c).pointsInTalent(Talent.SNIPERS_INTUITION) > 2)
 				|| c instanceof YogFist.SoiledFist) {
 				if (blocking == null) {
 					System.arraycopy(Dungeon.level.losBlocking, 0, modifiableBlocking, 0, modifiableBlocking.length);
@@ -1236,7 +1236,7 @@ public abstract class Level implements Bundlable {
 			
 			int viewDist = c.viewDistance;
 			if (c instanceof Hero){
-				viewDist *= 1f + 0.25f*((Hero) c).pointsInTalent(Talent.FARSIGHT);
+				viewDist *= 1f + 0.25f*((Hero) c).pointsInTalent(Talent.SNIPING_BULLET_2);
 			}
 			
 			ShadowCaster.castShadow( cx, cy, fieldOfView, blocking, viewDist );
@@ -1310,6 +1310,16 @@ public abstract class Level implements Bundlable {
 			} else if (((Hero) c).hasTalent(Talent.INTELLIGENCE)) {
 				Hero h = (Hero) c;
 				int range = 1+h.pointsInTalent(Talent.INTELLIGENCE);
+				for (Mob mob : mobs) {
+					int p = mob.pos;
+					if (!fieldOfView[p] && distance(c.pos, p) <= range) {
+						for (int i : PathFinder.NEIGHBOURS9) {
+							heroMindFov[mob.pos + i] = true;
+						}
+					}
+				}
+			} else if (((Hero) c).hasTalent(Talent.SNIPERS_INTUITION)) {
+				int range = 2;
 				for (Mob mob : mobs) {
 					int p = mob.pos;
 					if (!fieldOfView[p] && distance(c.pos, p) <= range) {

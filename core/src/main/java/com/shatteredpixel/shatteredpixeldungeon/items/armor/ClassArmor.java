@@ -121,6 +121,9 @@ abstract public class ClassArmor extends Armor {
 			case NOA:
 				classArmor = new NoaArmor();
 				break;
+			case MIYU:
+				classArmor = new MiyuArmor();
+				break;
 		}
 		
 		classArmor.level(armor.trueLevel());

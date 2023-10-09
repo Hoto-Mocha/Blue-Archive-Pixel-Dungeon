@@ -231,6 +231,7 @@ public class Assets {
 		public static final String HOSHINO  = "splashes/hoshino.jpg";
 		public static final String SHIROKO  = "splashes/shiroko.jpg";
 		public static final String NOA  	= "splashes/noa.jpg";
+		public static final String MIYU  	= "splashes/miyu.jpg";
 	}
 
 	public static class Sprites {
@@ -243,6 +244,7 @@ public class Assets {
 		public static final String HOSHINO  = "sprites/hoshino.png";
 		public static final String SHIROKO  = "sprites/shiroko.png";
 		public static final String NOA		= "sprites/noa.png";
+		public static final String MIYU		= "sprites/miyu.png";
 		public static final String AVATARS  = "sprites/avatars.png";
 		public static final String PET      = "sprites/pet.png";
 		public static final String AMULET   = "sprites/amulet.png";

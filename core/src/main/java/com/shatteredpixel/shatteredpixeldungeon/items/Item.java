@@ -28,6 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BulletMomentumTracker;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Degrade;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -615,7 +616,12 @@ public class Item implements Bundlable {
 							curUser = user;
 							Item i = Item.this.detach(user.belongings.backpack);
 							if (i != null) i.onThrow(cell);
-							user.spendAndNext(delay);
+							if (user.buff(BulletMomentumTracker.class) != null){
+								user.buff(BulletMomentumTracker.class).detach();
+								user.next();
+							} else {
+								user.spendAndNext(delay);
+							}
 						}
 					});
 		} else {

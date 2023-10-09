@@ -36,21 +36,41 @@ public class Beam extends Image {
 	
 	private float timeLeft;
 
-	private Beam(PointF s, PointF e, Effects.Type asset, float duration) {
+	private Beam(PointF s, PointF e, Effects.Type asset, float duration, boolean sound) {
 		super( Effects.get( asset ) );
-		
+
 		origin.set( 0, height / 2 );
-		
+
 		x = s.x - origin.x;
 		y = s.y - origin.y;
-		
+
 		float dx = e.x - s.x;
 		float dy = e.y - s.y;
 		angle = (float)(Math.atan2( dy, dx ) * A);
 		scale.x = (float)Math.sqrt( dx * dx + dy * dy ) / width;
-		
+
+		if (sound) {
+			Sample.INSTANCE.play( Assets.Sounds.RAY );
+		}
+
+		timeLeft = this.duration = duration;
+	}
+
+	private Beam(PointF s, PointF e, Effects.Type asset, float duration) {
+		super( Effects.get( asset ) );
+
+		origin.set( 0, height / 2 );
+
+		x = s.x - origin.x;
+		y = s.y - origin.y;
+
+		float dx = e.x - s.x;
+		float dy = e.y - s.y;
+		angle = (float)(Math.atan2( dy, dx ) * A);
+		scale.x = (float)Math.sqrt( dx * dx + dy * dy ) / width;
+
 		Sample.INSTANCE.play( Assets.Sounds.RAY );
-		
+
 		timeLeft = this.duration = duration;
 	}
 
@@ -69,6 +89,12 @@ public class Beam extends Image {
 	public static class HealthRay extends Beam{
 		public HealthRay(PointF s, PointF e){
 			super(s, e, Effects.Type.HEALTH_RAY, 0.75f);
+		}
+	}
+
+	public static class ShotRay extends Beam{
+		public ShotRay(PointF s, PointF e){
+			super(s, e, Effects.Type.SHOT_RAY, 0.5f, false);
 		}
 	}
 	

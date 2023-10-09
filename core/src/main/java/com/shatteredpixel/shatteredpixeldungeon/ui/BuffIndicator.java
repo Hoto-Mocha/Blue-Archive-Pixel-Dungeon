@@ -123,6 +123,7 @@ public class BuffIndicator extends Component {
 
 	public static final int ARMOR_LIGHT = 136;
 	public static final int BULLET 		= 137;
+	public static final int SNIPING		= 138;
 
 	public static final int SIZE_SMALL  = 7;
 	public static final int SIZE_LARGE  = 16;

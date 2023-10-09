@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.sprites;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SnipingBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
@@ -170,6 +171,9 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 			speed *= 3f;
 			if (Dungeon.hero.hasTalent(Talent.DOUBLE_BARREL_3)) {
 				speed *= 1+0.5f*Dungeon.hero.pointsInTalent(Talent.DOUBLE_BARREL_3);
+			}
+			if (Dungeon.hero.hasTalent(Talent.SNIPING_BULLET_1) && Dungeon.hero.buff(SnipingBullet.class) != null) {
+				speed *= 1+0.5f*Dungeon.hero.pointsInTalent(Talent.SNIPING_BULLET_1);
 			}
 		}
 		

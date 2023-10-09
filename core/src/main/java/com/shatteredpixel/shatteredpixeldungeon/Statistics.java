@@ -56,6 +56,7 @@ public class Statistics {
 	public static boolean hoshinoUnlocked = false;
 	public static boolean shirokoUnlocked = false;
 	public static boolean noaUnlocked = false;
+	public static boolean miyuUnlocked = false;
 
 	public static int upgradesUsed;
 	public static int sneakAttacks;

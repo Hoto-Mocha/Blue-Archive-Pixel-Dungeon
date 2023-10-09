@@ -26,8 +26,11 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barkskin;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MindVision;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -59,20 +62,20 @@ public class HighGrass {
 		Char ch = Actor.findChar(pos);
 		
 		if (level.map[pos] == Terrain.FURROWED_GRASS){
-//			if (ch instanceof Hero && ((Hero) ch).heroClass == HeroClass.HUNTRESS){
-//				//Do nothing
-//				freezeTrample = true;
-//			} else {
+			if (ch instanceof Hero && ((Hero) ch).heroClass == HeroClass.MIYU){
+				//Do nothing
+				freezeTrample = true;
+			} else {
 				Level.set(pos, Terrain.GRASS);
-//			}
+			}
 			
 		} else {
-//			if (ch instanceof Hero && ((Hero) ch).heroClass == HeroClass.HUNTRESS){
-//				Level.set(pos, Terrain.FURROWED_GRASS);
-//				freezeTrample = true;
-//			} else {
+			if (ch instanceof Hero && ((Hero) ch).heroClass == HeroClass.MIYU){
+				Level.set(pos, Terrain.FURROWED_GRASS);
+				freezeTrample = true;
+			} else {
 				Level.set(pos, Terrain.GRASS);
-//			}
+			}
 			
 			int naturalismLevel = 0;
 			
@@ -154,6 +157,18 @@ public class HighGrass {
 			if (ch instanceof Hero && Dungeon.hero.hasTalent(Talent.INHERENT_WILDNESS)) {
 				Buff.prolong(Dungeon.hero, Invisibility.class, 1+Dungeon.hero.pointsInTalent(Talent.INHERENT_WILDNESS));
 				Sample.INSTANCE.play( Assets.Sounds.MELD );
+			}
+
+			if (ch instanceof Hero && Dungeon.hero.hasTalent(Talent.NATURE_FRIENDLY)) {
+				Buff.affect(Dungeon.hero, Barkskin.class).set(1+Dungeon.hero.pointsInTalent(Talent.NATURE_FRIENDLY), 3);
+			}
+
+			if (ch instanceof Hero && Dungeon.hero.hasTalent(Talent.HIDE_ON_BUSH)) {
+				Buff.affect(Dungeon.hero, Haste.class, 1+Dungeon.hero.pointsInTalent(Talent.HIDE_ON_BUSH));
+			}
+
+			if (ch instanceof Hero && Dungeon.hero.pointsInTalent(Talent.SNIPERS_INTUITION) > 1 && Random.Float() < 0.20f) {
+				Buff.affect(Dungeon.hero, MindVision.class, 1f);
 			}
 			
 		}

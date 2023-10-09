@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ConfusionGas;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
@@ -37,14 +36,12 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.EnhancedRings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Healing;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PhysicalEmpower;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RevealedArea;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Stamina;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WandEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.Ratmogrify;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
@@ -57,15 +54,12 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gloves;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
@@ -73,6 +67,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
@@ -94,164 +89,370 @@ import java.util.LinkedHashMap;
 
 public enum Talent {
 	//Aris T1
-	FOR_LIGHT(0), ROBOTS_INTUITION(1), TEST_SUBJECT(2), ACCEL_ENERGY(3),
+	FOR_LIGHT						(0,  0),
+	ROBOTS_INTUITION				(1,  0),
+	TEST_SUBJECT					(2,  0),
+	ACCEL_ENERGY					(3,  0),
 	//Aris T2
-	IRON_STOMACH(4), RESTORED_WILLPOWER(5), RUNIC_TRANSFERENCE(6), EMPOWERING_MAGIC(7), BALANCE_COLLAPSE(8),
+	IRON_STOMACH					(4,  0),
+	RESTORED_WILLPOWER				(5,  0),
+	RUNIC_TRANSFERENCE				(6,  0),
+	EMPOWERING_MAGIC				(7,  0),
+	BALANCE_COLLAPSE				(8,  0),
 	//Aris T3
-	ROBOT_CLEANER(9, 3), STRONGMAN(10, 3),
+	ROBOT_CLEANER					(9,  0, 3),
+	STRONGMAN						(10, 0, 3),
 	//SuperNova T3
-	ENERGY_DRAIN(11, 3), PIEZOELECTRICITY(12, 3), HOLYSWORD(13, 3),
+	ENERGY_DRAIN					(11, 0, 3),
+	PIEZOELECTRICITY				(12, 0, 3),
+	HOLYSWORD						(13, 0, 3),
 	//OverCharge T3
-	INCREASING_OUTPUT(14, 3), OVERCHARGE(15, 3), CHARGE_ACCEL(16, 3),
+	INCREASING_OUTPUT				(14, 0, 3),
+	OVERCHARGE						(15, 0, 3),
+	CHARGE_ACCEL					(16, 0, 3),
 	//Aris Ability 1
-	ARIS_ABIL_11(17, 4), ARIS_ABIL_12(18, 4), ARIS_ABIL_13(19, 4),
+	ARIS_ABIL_11					(17, 0, 4),
+	ARIS_ABIL_12					(18, 0, 4),
+	ARIS_ABIL_13					(19, 0, 4),
 	//Aris Ability 2
-	ARIS_ABIL_21(20, 4), ARIS_ABIL_22(21, 4), ARIS_ABIL_23(22, 4),
+	ARIS_ABIL_21					(20, 0, 4),
+	ARIS_ABIL_22					(21, 0, 4),
+	ARIS_ABIL_23					(22, 0, 4),
 	//Aris Ability 3
-	ARIS_ABIL_31(23, 4), ARIS_ABIL_32(24, 4), ARIS_ABIL_33(25, 4),
+	ARIS_ABIL_31					(23, 0, 4),
+	ARIS_ABIL_32					(24, 0, 4),
+	ARIS_ABIL_33					(25, 0, 4),
 
 	//Nonomi T1
-	RESTING(32), MG_INTUITION(33), MAX_HEALTH(34), NO_WAY(35),
+	RESTING							(0,  1),
+	MG_INTUITION					(1,  1),
+	MAX_HEALTH						(2,  1),
+	NO_WAY							(3,  1),
 	//Nonomi T2
-	RELOADING_MEAL(36), GOLD_CARD(37), LARGE_MAGAZINE(38), SURPRISE(39), MG_MASTER(40),
+	RELOADING_MEAL					(4,  1),
+	GOLD_CARD						(5,  1),
+	LARGE_MAGAZINE					(6,  1),
+	SURPRISE						(7,  1),
+	MG_MASTER						(8,  1),
 	//Nonomi T3
-	MG_FAST_RELOAD(41, 3), ALLY_WARP(42, 3),
+	MG_FAST_RELOAD					(9,  1, 3),
+	ALLY_WARP						(10, 1, 3),
 	//Riot T3
-	RIOT_1(43, 3), RIOT_2(44, 3), RIOT_3(45, 3),
+	RIOT_1							(11, 1, 3),
+	RIOT_2							(12, 1, 3),
+	RIOT_3							(13, 1, 3),
 	//ShootAll T3
-	SHOOTALL_1(46, 3), SHOOTALL_2(47, 3), SHOOTALL_3(48, 3),
+	SHOOTALL_1						(14, 1, 3),
+	SHOOTALL_2						(15, 1, 3),
+	SHOOTALL_3						(16, 1, 3),
 	//Nonomi Ability 1
-	NONOMI_ABIL_11(49, 4), NONOMI_ABIL_12(50, 4), NONOMI_ABIL_13(51, 4),
+	NONOMI_ABIL_11					(17, 1, 4),
+	NONOMI_ABIL_12					(18, 1, 4),
+	NONOMI_ABIL_13					(19, 1, 4),
 	//Nonomi Ability 2
-	NONOMI_ABIL_21(52, 4), NONOMI_ABIL_22(53, 4), NONOMI_ABIL_23(54, 4),
+	NONOMI_ABIL_21					(20, 1, 4),
+	NONOMI_ABIL_22					(21, 1, 4),
+	NONOMI_ABIL_23					(22, 1, 4),
 	//Nonomi Ability 3
-	NONOMI_ABIL_31(55, 4), NONOMI_ABIL_32(56, 4), NONOMI_ABIL_33(57, 4),
+	NONOMI_ABIL_31					(23, 1, 4),
+	NONOMI_ABIL_32					(24, 1, 4),
+	NONOMI_ABIL_33					(25, 1, 4),
 
 	//Miyako T1
-	PLATE_ADD(64), SMG_INTUITION(65), SUPPLY(66), DISTURB(67),
+	PLATE_ADD						(0,  2),
+	SMG_INTUITION					(1,  2),
+	SUPPLY							(2,  2),
+	DISTURB							(3,  2),
 	//Miyako T2
-	TACTICAL_MEAL(68), INTELLIGENCE(69), CQC(70), TACTICAL_MOVE(71), SMG_MASTER(72),
+	TACTICAL_MEAL					(4,  2),
+	INTELLIGENCE					(5,  2),
+	CQC								(6,  2),
+	TACTICAL_MOVE					(7,  2),
+	SMG_MASTER						(8,  2),
 	//Miyako T3
-	SMG_FAST_RELOAD(73, 3), RABBIT_OPEN_UP(74, 3),
+	SMG_FAST_RELOAD					(9,  2, 3),
+	RABBIT_OPEN_UP					(10, 2, 3),
 	//StunDrone T3
-	STUNDRONE_1(75, 3), STUNDRONE_2(76, 3), STUNDRONE_3(77, 3),
+	STUNDRONE_1						(11, 2, 3),
+	STUNDRONE_2						(12, 2, 3),
+	STUNDRONE_3						(13, 2, 3),
 	//DroneStrike T3
-	DRONESTRIKE_1(78, 3), DRONESTRIKE_2(79, 3), DRONESTRIKE_3(80, 3),
+	DRONESTRIKE_1					(14, 2, 3),
+	DRONESTRIKE_2					(15, 2, 3),
+	DRONESTRIKE_3					(16, 2, 3),
 	//Miyako Ability 1
-	MIYAKO_ABIL_11(81, 4), MIYAKO_ABIL_12(82, 4), MIYAKO_ABIL_13(83, 4),
+	MIYAKO_ABIL_11					(17, 2, 4),
+	MIYAKO_ABIL_12					(18, 2, 4),
+	MIYAKO_ABIL_13					(19, 2, 4),
 	//Miyako Ability 2
-	MIYAKO_ABIL_21(84, 4), MIYAKO_ABIL_22(85, 4), MIYAKO_ABIL_23(86, 4),
+	MIYAKO_ABIL_21					(20, 2, 4),
+	MIYAKO_ABIL_22					(21, 2, 4),
+	MIYAKO_ABIL_23					(22, 2, 4),
 	//Miyako Ability 3
-	MIYAKO_ABIL_31(87, 4), MIYAKO_ABIL_32(88, 4), MIYAKO_ABIL_33(89, 4),
+	MIYAKO_ABIL_31					(23, 2, 4),
+	MIYAKO_ABIL_32					(24, 2, 4),
+	MIYAKO_ABIL_33					(25, 2, 4),
 
 	//Hoshino T1
-	EMERGENCY_HEALING(96), SG_INTUITION(97), ADDITIONAL_SHOT(98), RELOADING_SHIELD(99),
+	EMERGENCY_HEALING				(0,  3),
+	SG_INTUITION					(1,  3),
+	ADDITIONAL_SHOT					(2,  3),
+	RELOADING_SHIELD				(3,  3),
 	//Hoshino T2
-	SLEEPING_MEAL(100), QUICK_RETREAT(101), FORESIGHT_EYES(102), MAGIC_SHIELD(103), SG_MASTER(104),
+	SLEEPING_MEAL					(4,  3),
+	QUICK_RETREAT					(5,  3),
+	FORESIGHT_EYES					(6,  3),
+	MAGIC_SHIELD					(7,  3),
+	SG_MASTER						(8,  3),
 	//Hoshino T3
-	SG_FAST_RELOAD(105, 3), HARD_SHIELD(106, 3),
+	SG_FAST_RELOAD					(9,  3, 3),
+	HARD_SHIELD						(10, 3, 3),
 	//TacticalPress T3
-	TACTICAL_PRESS_1(107, 3), TACTICAL_PRESS_2(108, 3), TACTICAL_PRESS_3(109, 3),
+	TACTICAL_PRESS_1				(11, 3, 3),
+	TACTICAL_PRESS_2				(12, 3, 3),
+	TACTICAL_PRESS_3				(13, 3, 3),
 	//TacticalShield T3
-	TACTICAL_SHIELD_1(110, 3), TACTICAL_SHIELD_2(111, 3), TACTICAL_SHIELD_3(112, 3),
+	TACTICAL_SHIELD_1				(14, 3, 3),
+	TACTICAL_SHIELD_2				(15, 3, 3),
+	TACTICAL_SHIELD_3				(16, 3, 3),
 	//Hoshino Ability 1
-	HOSHINO_ABIL_11(113, 4), HOSHINO_ABIL_12(114, 4), HOSHINO_ABIL_13(115, 4),
+	HOSHINO_ABIL_11					(17, 3, 4),
+	HOSHINO_ABIL_12					(18, 3, 4),
+	HOSHINO_ABIL_13					(19, 3, 4),
 	//Hoshino Ability 2
-	HOSHINO_ABIL_21(116, 4), HOSHINO_ABIL_22(117, 4), HOSHINO_ABIL_23(118, 4),
+	HOSHINO_ABIL_21					(20, 3, 4),
+	HOSHINO_ABIL_22					(21, 3, 4),
+	HOSHINO_ABIL_23					(22, 3, 4),
 	//Hoshino Ability 3
-	HOSHINO_ABIL_31(119, 4), HOSHINO_ABIL_32(120, 4), HOSHINO_ABIL_33(121, 4),
+	HOSHINO_ABIL_31					(23, 3, 4),
+	HOSHINO_ABIL_32					(24, 3, 4),
+	HOSHINO_ABIL_33					(25, 3, 4),
 
 	//Shiroko T1
-	BICYCLE_CHARGE(128), AR_INTUITION(129), ENHANCED_EXPLODE(130), DEFENSIVE_FEEDBACK(131),
+	BICYCLE_CHARGE					(0,  4),
+	AR_INTUITION					(1,  4),
+	ENHANCED_EXPLODE				(2,  4),
+	DEFENSIVE_FEEDBACK				(3,  4),
 	//Shiroko T2
-	SPEEDY_MEAL(132), INHERENT_WILDNESS(133), ELECTRIC_BICYCLE(134), RAPID_SHOOTING(135), AR_MASTER(136),
+	SPEEDY_MEAL						(4,  4),
+	INHERENT_WILDNESS				(5,  4),
+	ELECTRIC_BICYCLE				(6,  4),
+	RAPID_SHOOTING					(7,  4),
+	AR_MASTER						(8,  4),
 	//Shiroko T3
-	AR_FAST_RELOAD(137, 3), SHOOTING_WEAKNESS(138, 3),
+	AR_FAST_RELOAD					(9,  4, 3),
+	SHOOTING_WEAKNESS				(10, 4, 3),
 	//ElementalBullet T3
-	ELEMENTAL_BULLET_1(139, 3), ELEMENTAL_BULLET_2(140, 3), ELEMENTAL_BULLET_3(141, 3),
+	ELEMENTAL_BULLET_1				(11, 4, 3),
+	ELEMENTAL_BULLET_2				(12, 4, 3),
+	ELEMENTAL_BULLET_3				(13, 4, 3),
 	//ProfessionalRide T3
-	PROFESSIONAL_RIDE_1(142, 3), PROFESSIONAL_RIDE_2(143, 3), PROFESSIONAL_RIDE_3(144, 3),
+	PROFESSIONAL_RIDE_1				(14, 4, 3),
+	PROFESSIONAL_RIDE_2				(15, 4, 3),
+	PROFESSIONAL_RIDE_3				(16, 4, 3),
 	//Shiroko Ability 1
-	SHIROKO_ABIL_11(145, 4), SHIROKO_ABIL_12(146, 4), SHIROKO_ABIL_13(147, 4),
+	SHIROKO_ABIL_11					(17, 4, 4),
+	SHIROKO_ABIL_12					(18, 4, 4),
+	SHIROKO_ABIL_13					(19, 4, 4),
 	//Shiroko Ability 2
-	SHIROKO_ABIL_21(148, 4), SHIROKO_ABIL_22(149, 4), SHIROKO_ABIL_23(150, 4),
+	SHIROKO_ABIL_21					(20, 4, 4),
+	SHIROKO_ABIL_22					(21, 4, 4),
+	SHIROKO_ABIL_23					(22, 4, 4),
 	//Shiroko Ability 3
-	SHIROKO_ABIL_31(151, 4), SHIROKO_ABIL_32(152, 4), SHIROKO_ABIL_33(153, 4),
+	SHIROKO_ABIL_31					(23, 4, 4),
+	SHIROKO_ABIL_32					(24, 4, 4),
+	SHIROKO_ABIL_33					(25, 4, 4),
 
 	//Noa T1
-	SPEEDY_MOVE(160), HG_INTUITION(161), HEALING_FACTOR(162), LAST_BULLET(163),
+	SPEEDY_MOVE						(0,  5),
+	HG_INTUITION					(1,  5),
+	HEALING_FACTOR					(2,  5),
+	LAST_BULLET						(3,  5),
 	//Noa T2
-	HEALING_MEAL(164), PATH_PREDICTION(165), SKILLED_SEARCH(166), DOUBLE_TAP(167), HG_MASTER(168),
+	HEALING_MEAL					(4,  5),
+	PATH_PREDICTION					(5,  5),
+	SKILLED_SEARCH					(6,  5),
+	DOUBLE_TAP						(7,  5),
+	HG_MASTER						(8,  5),
 	//Noa T3
-	HG_FAST_RELOAD(169, 3), HG_SWEEP(170, 3),
+	HG_FAST_RELOAD					(9,  5, 3),
+	HG_SWEEP						(10, 5, 3),
 	//LargeMagazine T3
-	LARGE_MAGAZINE_1(171, 3), LARGE_MAGAZINE_2(172, 3), LARGE_MAGAZINE_3(173, 3),
+	LARGE_MAGAZINE_1				(11, 5, 3),
+	LARGE_MAGAZINE_2				(12, 5, 3),
+	LARGE_MAGAZINE_3				(13, 5, 3),
 	//DoubleBarrel T3
-	DOUBLE_BARREL_1(174, 3), DOUBLE_BARREL_2(175, 3), DOUBLE_BARREL_3(176, 3),
+	DOUBLE_BARREL_1					(14, 5, 3),
+	DOUBLE_BARREL_2					(15, 5, 3),
+	DOUBLE_BARREL_3					(16, 5, 3),
 	//Noa Ability 1
-	NOA_ABIL_11(177, 4), NOA_ABIL_12(178, 4), NOA_ABIL_13(179, 4),
+	NOA_ABIL_11						(17, 5, 4),
+	NOA_ABIL_12						(18, 5, 4),
+	NOA_ABIL_13						(19, 5, 4),
 	//Noa Ability 2
-	NOA_ABIL_21(180, 4), NOA_ABIL_22(181, 4), NOA_ABIL_23(182, 4),
+	NOA_ABIL_21						(20, 5, 4),
+	NOA_ABIL_22						(21, 5, 4),
+	NOA_ABIL_23						(22, 5, 4),
 	//Noa Ability 3
-	NOA_ABIL_31(183, 4), NOA_ABIL_32(184, 4), NOA_ABIL_33(185, 4),
+	NOA_ABIL_31						(23, 5, 4),
+	NOA_ABIL_32						(24, 5, 4),
+	NOA_ABIL_33						(25, 5, 4),
+
+	//Miyu T1
+	FAST_HAND						(0,  6),
+	SR_INTUITION					(1,  6),
+	CLAM_BREATHING					(2,  6),
+	NATURE_FRIENDLY					(3,  6),
+	//Miyu T2
+	INVISIBLE_PRESENCE				(4,  6),
+	BLURRY_FIGURE					(5,  6),
+	HIDE_ON_BUSH					(6,  6),
+	BEST_SNIPER						(7,  6),
+	SR_MASTER						(8,  6),
+	//Miyu T3
+	SR_FAST_RELOAD					(9,  6, 3),
+	SNIPERS_INTUITION				(10, 6, 3),
+	//PenetrationShot T3
+	PENETRATION_SHOT_1				(11, 6, 3),
+	PENETRATION_SHOT_2				(12, 6, 3),
+	PENETRATION_SHOT_3				(13, 6, 3),
+	//SnipingBullet T3
+	SNIPING_BULLET_1				(14, 6, 3),
+	SNIPING_BULLET_2				(15, 6, 3),
+	SNIPING_BULLET_3				(16, 6, 3),
+	//Miyu Ability 1
+	MIYU_ABIL_11					(17, 6, 4),
+	MIYU_ABIL_12					(18, 6, 4),
+	MIYU_ABIL_13					(19, 6, 4),
+	//Miyu Ability 2
+	MIYU_ABIL_21					(20, 6, 4),
+	MIYU_ABIL_22					(21, 6, 4),
+	MIYU_ABIL_23					(22, 6, 4),
+	//Miyu Ability 3
+	MIYU_ABIL_31					(23, 6, 4),
+	MIYU_ABIL_32					(24, 6, 4),
+	MIYU_ABIL_33					(25, 6, 4),
+
+
+
+
+
 
 
 
 	//Rogue T1
-	CACHED_RATIONS(-1), THIEFS_INTUITION(-1), SUCKER_PUNCH(-1), PROTECTIVE_SHADOWS(-1),
+	CACHED_RATIONS					(-1, 0),
+	THIEFS_INTUITION				(-1, 0),
+	SUCKER_PUNCH					(-1, 0),
+	PROTECTIVE_SHADOWS				(-1, 0),
 	//Rogue T2
-	MYSTICAL_MEAL(-1), MYSTICAL_UPGRADE(-1), WIDE_SEARCH(-1), SILENT_STEPS(-1), ROGUES_FORESIGHT(-1),
+	MYSTICAL_MEAL					(-1, 0),
+	MYSTICAL_UPGRADE				(-1, 0),
+	WIDE_SEARCH						(-1, 0),
+	SILENT_STEPS					(-1, 0),
+	ROGUES_FORESIGHT				(-1, 0),
 	//Rogue T3
-	ENHANCED_RINGS(-1, 3), LIGHT_CLOAK(-1, 3),
+	ENHANCED_RINGS					(-1, 0, 3),
+	LIGHT_CLOAK						(-1, 0, 3),
 	//Assassin T3
-	ENHANCED_LETHALITY(-1, 3), ASSASSINS_REACH(-1, 3), BOUNTY_HUNTER(-1, 3),
+	ENHANCED_LETHALITY				(-1, 0, 3),
+	ASSASSINS_REACH					(-1, 0, 3),
+	BOUNTY_HUNTER					(-1, 0, 3),
 	//Freerunner T3
-	EVASIVE_ARMOR(-1, 3), PROJECTILE_MOMENTUM(-1, 3), SPEEDY_STEALTH(-1, 3),
+	EVASIVE_ARMOR					(-1, 0, 3),
+	PROJECTILE_MOMENTUM				(-1, 0, 3),
+	SPEEDY_STEALTH					(-1, 0, 3),
 	//Smoke Bomb T4
-	HASTY_RETREAT(-1, 4), BODY_REPLACEMENT(-1, 4), SHADOW_STEP(-1, 4),
+	HASTY_RETREAT					(-1, 0, 4),
+	BODY_REPLACEMENT				(-1, 0, 4),
+	SHADOW_STEP						(-1, 0, 4),
 	//Death Mark T4
-	FEAR_THE_REAPER(-1, 4), DEATHLY_DURABILITY(-1, 4), DOUBLE_MARK(-1, 4),
+	FEAR_THE_REAPER					(-1, 0, 4),
+	DEATHLY_DURABILITY				(-1, 0, 4),
+	DOUBLE_MARK						(-1, 0, 4),
 	//Shadow Clone T4
-	SHADOW_BLADE(-1, 4), CLONED_ARMOR(-1, 4), PERFECT_COPY(-1, 4),
+	SHADOW_BLADE					(-1, 0, 4),
+	CLONED_ARMOR					(-1, 0, 4),
+	PERFECT_COPY					(-1, 0, 4),
 
 	//Huntress T1
-	NATURES_BOUNTY(-1), SURVIVALISTS_INTUITION(-1), FOLLOWUP_STRIKE(-1), NATURES_AID(-1),
+	NATURES_BOUNTY					(-1, 0),
+	SURVIVALISTS_INTUITION			(-1, 0),
+	FOLLOWUP_STRIKE					(-1, 0),
+	NATURES_AID						(-1, 0),
 	//Huntress T2
-	INVIGORATING_MEAL(-1), RESTORED_NATURE(-1), REJUVENATING_STEPS(-1), HEIGHTENED_SENSES(-1), DURABLE_PROJECTILES(-1),
+	INVIGORATING_MEAL				(-1, 0),
+	RESTORED_NATURE					(-1, 0),
+	REJUVENATING_STEPS				(-1, 0),
+	HEIGHTENED_SENSES				(-1, 0),
+	DURABLE_PROJECTILES				(-1, 0),
 	//Huntress T3
-	POINT_BLANK(-1, 3), SEER_SHOT(-1, 3),
+	POINT_BLANK						(-1, 0, 3),
+	SEER_SHOT						(-1, 0, 3),
 	//Sniper T3
-	FARSIGHT(-1, 3), SHARED_ENCHANTMENT(-1, 3), SHARED_UPGRADES(-1, 3),
+	FARSIGHT						(-1, 0, 3),
+	SHARED_ENCHANTMENT				(-1, 0, 3),
+	SHARED_UPGRADES					(-1, 0, 3),
 	//Warden T3
-	DURABLE_TIPS(-1, 3), BARKSKIN(-1, 3), SHIELDING_DEW(-1, 3),
+	DURABLE_TIPS					(-1, 0, 3),
+	BARKSKIN						(-1, 0, 3),
+	SHIELDING_DEW					(-1, 0, 3),
 	//Spectral Blades T4
-	FAN_OF_BLADES(-1, 4), PROJECTING_BLADES(-1, 4), SPIRIT_BLADES(-1, 4),
+	FAN_OF_BLADES					(-1, 0, 4),
+	PROJECTING_BLADES				(-1, 0, 4),
+	SPIRIT_BLADES					(-1, 0, 4),
 	//Natures Power T4
-	GROWING_POWER(-1, 4), NATURES_WRATH(-1, 4), WILD_MOMENTUM(-1, 4),
+	GROWING_POWER					(-1, 0, 4),
+	NATURES_WRATH					(-1, 0, 4),
+	WILD_MOMENTUM					(-1, 0, 4),
 	//Spirit Hawk T4
-	EAGLE_EYE(-1, 4), GO_FOR_THE_EYES(-1, 4), SWIFT_SPIRIT(-1, 4),
+	EAGLE_EYE						(-1, 0, 4),
+	GO_FOR_THE_EYES					(-1, 0, 4),
+	SWIFT_SPIRIT					(-1, 0, 4),
 
 	//Duelist T1
-	STRENGTHENING_MEAL(-1), ADVENTURERS_INTUITION(-1), PATIENT_STRIKE(-1), AGGRESSIVE_BARRIER(-1),
+	STRENGTHENING_MEAL				(-1, 0),
+	ADVENTURERS_INTUITION			(-1, 0),
+	PATIENT_STRIKE					(-1, 0),
+	AGGRESSIVE_BARRIER				(-1, 0),
 	//Duelist T2
-	FOCUSED_MEAL(-1), RESTORED_AGILITY(-1), WEAPON_RECHARGING(-1), LETHAL_HASTE(-1), SWIFT_EQUIP(-1),
+	FOCUSED_MEAL					(-1, 0),
+	RESTORED_AGILITY				(-1, 0),
+	WEAPON_RECHARGING				(-1, 0),
+	LETHAL_HASTE					(-1, 0),
+	SWIFT_EQUIP						(-1, 0),
 	//Duelist T3
-	PRECISE_ASSAULT(-1, 3), DEADLY_FOLLOWUP(-1, 3),
+	PRECISE_ASSAULT					(-1, 0, 3),
+	DEADLY_FOLLOWUP					(-1, 0, 3),
 	//Champion T3
-	SECONDARY_CHARGE(-1, 3), TWIN_UPGRADES(-1, 3), COMBINED_LETHALITY(-1, 3),
+	SECONDARY_CHARGE				(-1, 0, 3),
+	TWIN_UPGRADES					(-1, 0, 3),
+	COMBINED_LETHALITY				(-1, 0, 3),
 	//Monk T3
-	UNENCUMBERED_SPIRIT(-1, 3), MONASTIC_VIGOR(-1, 3), COMBINED_ENERGY(-1, 3),
+	UNENCUMBERED_SPIRIT				(-1, 0, 3),
+	MONASTIC_VIGOR					(-1, 0, 3),
+	COMBINED_ENERGY					(-1, 0, 3),
 	//Challenge T4
-	CLOSE_THE_GAP(-1, 4), INVIGORATING_VICTORY(-1, 4), ELIMINATION_MATCH(-1, 4),
+	CLOSE_THE_GAP					(-1, 0, 4),
+	INVIGORATING_VICTORY			(-1, 0, 4),
+	ELIMINATION_MATCH				(-1, 0, 4),
 	//Elemental Strike T4
-	ELEMENTAL_REACH(-1, 4), STRIKING_FORCE(-1, 4), DIRECTED_POWER(-1, 4),
+	ELEMENTAL_REACH					(-1, 0, 4),
+	STRIKING_FORCE					(-1, 0, 4),
+	DIRECTED_POWER					(-1, 0, 4),
 	//Duelist A3 T4
-	FEIGNED_RETREAT(-1, 4), EXPOSE_WEAKNESS(-1, 4), COUNTER_ABILITY(-1, 4),
+	FEIGNED_RETREAT					(-1, 0, 4),
+	EXPOSE_WEAKNESS					(-1, 0, 4),
+	COUNTER_ABILITY					(-1, 0, 4),
 
 	//universal T4
-	HEROIC_ENERGY(26, 4), //See icon() and title() for special logic for this one
+	HEROIC_ENERGY					(26, 0, 4), //See icon() and title() for special logic for this one
 	//Ratmogrify T4
-	RATSISTANCE(215, 4), RATLOMACY(216, 4), RATFORCEMENTS(217, 4);
+	RATSISTANCE						(23, 8, 4),
+	RATLOMACY						(24, 8, 4),
+	RATFORCEMENTS					(25, 8, 4);
+
+	public static final int TALENT_NUMBER = 32;
 
 	public static class NoWayCooldown extends FlavourBuff{
 		public int icon() { return BuffIndicator.TIME; }
@@ -441,6 +642,21 @@ public enum Talent {
 	};
 
 	public static class DoubleTapTracker extends Buff{};
+	public static class FastHandTracker extends Buff{};
+	public static class SuppressingFireCooldown extends FlavourBuff{
+		public int icon() { return BuffIndicator.TIME; }
+		public void tintIcon(Image icon) { icon.hardlight(0xFFC61A); }
+		public float iconFadePercent() { return Math.max(0, visualcooldown() / 20); }
+	};
+	public static class PerfectHandTracker extends Buff{
+		int killed = 0;
+		public void set(int killed) {
+			this.killed = killed;
+		}
+		public int getKilled() {
+			return this.killed;
+		}
+	};
 
 	int icon;
 	int maxPoints;
@@ -448,35 +664,40 @@ public enum Talent {
 	// tiers 1/2/3/4 start at levels 2/7/13/21
 	public static int[] tierLevelThresholds = new int[]{0, 2, 7, 13, 21, 31};
 
-	Talent( int icon ){
-		this(icon, 2);
+	Talent( int x, int y ){
+		this(x, y, 2);
 	}
 
-	Talent( int icon, int maxPoints ){
-		this.icon = icon;
+	Talent( int x, int y, int maxPoints ){
+		this.icon = x+TALENT_NUMBER*y;
 		this.maxPoints = maxPoints;
 	}
 
 	public int icon(){
 		if (this == HEROIC_ENERGY){
+			int x = 26;
+			int y = 0;
 			if (Ratmogrify.useRatroicEnergy){
-				return 218;
+				y = 8;
 			}
 			HeroClass cls = Dungeon.hero != null ? Dungeon.hero.heroClass : GamesInProgress.selectedClass;
 			switch (cls){
 				case ARIS: default:
-					return 26;
+					y = 0;
 				case NONOMI:
-					return 58;
+					y = 1;
 				case MIYAKO:
-					return 90;
+					y = 2;
 				case HOSHINO:
-					return 122;
+					y = 3;
 				case SHIROKO:
-					return 154;
+					y = 4;
 				case NOA:
-					return 186;
+					y = 5;
+				case MIYU:
+					y = 6;
 			}
+			return x+TALENT_NUMBER*y;
 		} else {
 			return icon;
 		}
@@ -561,7 +782,7 @@ public enum Talent {
 			Buff.affect(hero, Talent.ProtectiveShadowsTracker.class);
 		}
 
-		if (talent == INTELLIGENCE || talent == FARSIGHT){
+		if (talent == INTELLIGENCE || talent == SNIPERS_INTUITION || talent == SNIPING_BULLET_2){
 			Dungeon.observe();
 		}
 
@@ -652,6 +873,12 @@ public enum Talent {
 		}
 		if (hero.hasTalent(HEALING_MEAL)) {
 			Buff.affect(hero, Healing.class).setHeal(1+7*hero.pointsInTalent(HEALING_MEAL), 0, 1);
+		}
+		if (hero.hasTalent(FAST_HAND)) {
+			Buff.affect(hero, FastHandTracker.class);
+		}
+		if (hero.hasTalent(INVISIBLE_PRESENCE)) {
+			Buff.affect(hero, Invisibility.class, 1+2*hero.pointsInTalent(INVISIBLE_PRESENCE));
 		}
 //		if (hero.hasTalent(FOCUSED_MEAL)){
 //			if (hero.heroClass == HeroClass.DUELIST){
@@ -775,6 +1002,9 @@ public enum Talent {
 		if (hero.pointsInTalent(HG_INTUITION) == 2 && item instanceof HG){
 			item.identify();
 		}
+		if (hero.pointsInTalent(SR_INTUITION) == 2 && item instanceof SR){
+			item.identify();
+		}
 		if (hero.hasTalent(THIEFS_INTUITION) && item instanceof Ring){
 			if (hero.pointsInTalent(THIEFS_INTUITION) == 2){
 				item.identify();
@@ -802,6 +1032,9 @@ public enum Talent {
 		}
 		if (hero.hasTalent(HG_INTUITION)){
 			if (item instanceof HG) item.cursedKnown = true;
+		}
+		if (hero.hasTalent(SR_INTUITION)){
+			if (item instanceof SR) item.cursedKnown = true;
 		}
 		if (hero.pointsInTalent(THIEFS_INTUITION) == 2){
 			if (item instanceof Ring) ((Ring) item).setKnown();
@@ -949,6 +1182,9 @@ public enum Talent {
 			case NOA:
 				Collections.addAll(tierTalents, SPEEDY_MOVE, HG_INTUITION, HEALING_FACTOR, LAST_BULLET);
 				break;
+			case MIYU:
+				Collections.addAll(tierTalents, FAST_HAND, SR_INTUITION, CLAM_BREATHING, NATURE_FRIENDLY);
+				break;
 		}
 		for (Talent talent : tierTalents){
 			if (replacements.containsKey(talent)){
@@ -978,6 +1214,9 @@ public enum Talent {
 			case NOA:
 				Collections.addAll(tierTalents, HEALING_MEAL, PATH_PREDICTION, SKILLED_SEARCH, DOUBLE_TAP, HG_MASTER);
 				break;
+			case MIYU:
+				Collections.addAll(tierTalents, INVISIBLE_PRESENCE, BLURRY_FIGURE, HIDE_ON_BUSH, BEST_SNIPER, SR_MASTER);
+				break;
 		}
 		for (Talent talent : tierTalents){
 			if (replacements.containsKey(talent)){
@@ -1006,6 +1245,9 @@ public enum Talent {
 				break;
 			case NOA:
 				Collections.addAll(tierTalents, HG_FAST_RELOAD, HG_SWEEP);
+				break;
+			case MIYU:
+				Collections.addAll(tierTalents, SR_FAST_RELOAD, SNIPERS_INTUITION);
 				break;
 		}
 		for (Talent talent : tierTalents){
@@ -1070,6 +1312,12 @@ public enum Talent {
 				break;
 			case NOA_EX_DOUBLE_BARREL:
 				Collections.addAll(tierTalents, DOUBLE_BARREL_1, DOUBLE_BARREL_2, DOUBLE_BARREL_3);
+				break;
+			case MIYU_EX_PENETRATION_SHOT:
+				Collections.addAll(tierTalents, PENETRATION_SHOT_1, PENETRATION_SHOT_2, PENETRATION_SHOT_3);
+				break;
+			case MIYU_EX_SNIPING_BULLET:
+				Collections.addAll(tierTalents, SNIPING_BULLET_1, SNIPING_BULLET_2, SNIPING_BULLET_3);
 				break;
 		}
 		for (Talent talent : tierTalents){

@@ -40,6 +40,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.Ho
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.Miyako_1;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.Miyako_2;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.Miyako_3;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyu.Miyu_1;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyu.Miyu_2;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyu.Miyu_3;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.noa.Noa_1;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.noa.Noa_2;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.noa.Noa_3;
@@ -49,6 +52,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Non
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.Shiroko_1;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.Shiroko_2;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.Shiroko_3;
+import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
 import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.EXSkillDisc;
@@ -63,8 +67,10 @@ import com.shatteredpixel.shatteredpixeldungeon.items.active.HPGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.HandGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Laser;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.RegrowGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.SmokeGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Teleporter;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.TrashBin;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.PlateArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.VelvetPouch;
@@ -104,6 +110,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_tie
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_tier1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_tier2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_tier1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_tier1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingSpike;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingStone;
@@ -118,7 +125,8 @@ public enum HeroClass {
 	MIYAKO( HeroSubClass.MIYAKO_EX_STUNDRONE, HeroSubClass.MIYAKO_EX_DRONESTRIKE ),
 	HOSHINO( HeroSubClass.HOSHINO_EX_TACTICAL_PRESS, HeroSubClass.HOSHINO_EX_TACTICAL_SHIELD ),
 	SHIROKO( HeroSubClass.SHIROKO_EX_ELEMENTAL_BULLET, HeroSubClass.SHIROKO_EX_PROFESSIONAL_RIDE ),
-	NOA(HeroSubClass.NOA_EX_LARGE_MAGAZINE, HeroSubClass.NOA_EX_DOUBLE_BARREL);
+	NOA(HeroSubClass.NOA_EX_LARGE_MAGAZINE, HeroSubClass.NOA_EX_DOUBLE_BARREL),
+	MIYU(HeroSubClass.MIYU_EX_PENETRATION_SHOT, HeroSubClass.MIYU_EX_SNIPING_BULLET);
 
 	private HeroSubClass[] subClasses;
 
@@ -158,6 +166,7 @@ public enum HeroClass {
 			new KingsCrown().collect();
 			new Pasty().quantity(200).collect();
 			new ScrollOfEnchantment().identify().quantity(200).collect();
+			new Amulet().collect();
 		}
 
 		new ScrollOfIdentify().identify();
@@ -186,6 +195,10 @@ public enum HeroClass {
 			case NOA:
 				initNoa( hero );
 				break;
+
+			case MIYU:
+				initMiyu( hero );
+				break;
 		}
 
 		if (SPDSettings.quickslotWaterskin()) {
@@ -213,6 +226,8 @@ public enum HeroClass {
 				return Badges.Badge.MASTERY_SHIROKO;
 			case NOA:
 				return Badges.Badge.MASTERY_NOA;
+			case MIYU:
+				return Badges.Badge.MASTERY_MIYU;
 		}
 		return null;
 	}
@@ -350,6 +365,30 @@ public enum HeroClass {
 		new ScrollOfMagicMapping().identify();
 	}
 
+	private static void initMiyu( Hero hero ) {
+		SR_tier1 sr = new SR_tier1();
+
+		(hero.belongings.weapon = sr).identify();
+		hero.belongings.weapon.activate(hero);
+
+		RegrowGrenade regrowGrenade = new RegrowGrenade();
+		regrowGrenade.collect();
+
+		TrashBin trashBin = new TrashBin();
+		trashBin.collect();
+
+		ThrowingKnife knives = new ThrowingKnife();
+		knives.quantity(3).collect();
+
+		Dungeon.quickslot.setSlot(0, sr);
+		Dungeon.quickslot.setSlot(1, trashBin);
+		Dungeon.quickslot.setSlot(2, regrowGrenade);
+		Dungeon.quickslot.setSlot(3, knives);
+
+		new PotionOfStrength().identify();
+		new ScrollOfUpgrade().identify();
+	}
+
 	public String title() {
 		return Messages.get(HeroClass.class, name());
 	}
@@ -380,6 +419,8 @@ public enum HeroClass {
 				return new ArmorAbility[]{new Shiroko_1(), new Shiroko_2(), new Shiroko_3()};
 			case NOA:
 				return new ArmorAbility[]{new Noa_1(), new Noa_2(), new Noa_3()};
+			case MIYU:
+				return new ArmorAbility[]{new Miyu_1(), new Miyu_2(), new Miyu_3()};
 		}
 	}
 
@@ -397,6 +438,8 @@ public enum HeroClass {
 				return Assets.Sprites.SHIROKO;
 			case NOA:
 				return Assets.Sprites.NOA;
+			case MIYU:
+				return Assets.Sprites.MIYU;
 		}
 	}
 
@@ -414,6 +457,8 @@ public enum HeroClass {
 				return Assets.Splashes.SHIROKO;
 			case NOA:
 				return Assets.Splashes.NOA;
+			case MIYU:
+				return Assets.Splashes.MIYU;
 		}
 	}
 	
@@ -434,6 +479,8 @@ public enum HeroClass {
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_SHIROKO);
 			case NOA:
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_NOA);
+			case MIYU:
+				return Badges.isUnlocked(Badges.Badge.UNLOCK_MIYU);
 		}
 	}
 	

@@ -56,6 +56,7 @@ public class Badges {
 		MASTERY_HOSHINO,
 		MASTERY_SHIROKO,
 		MASTERY_NOA,
+		MASTERY_MIYU,
 		FOUND_RATMOGRIFY,
 
 		//bronze
@@ -64,102 +65,105 @@ public class Badges {
 		UNLOCK_HOSHINO              ( 3 ),
 		UNLOCK_SHIROKO              ( 4 ),
 		UNLOCK_NOA             		( 5 ),
-		MONSTERS_SLAIN_1            ( 6 ),
-		MONSTERS_SLAIN_2            ( 7 ),
-		GOLD_COLLECTED_1            ( 8 ),
-		GOLD_COLLECTED_2            ( 9 ),
-		ITEM_LEVEL_1                ( 10 ),
-		LEVEL_REACHED_1             ( 11 ),
-		STRENGTH_ATTAINED_1         ( 12 ),
-		FOOD_EATEN_1                ( 13 ),
-		ITEMS_CRAFTED_1             ( 14 ),
-		BOSS_SLAIN_1                ( 15 ),
-		DEATH_FROM_FIRE             ( 16 ),
-		DEATH_FROM_POISON           ( 17 ),
-		DEATH_FROM_GAS              ( 18 ),
-		DEATH_FROM_HUNGER           ( 19 ),
-		DEATH_FROM_FALLING          ( 20 ),
-		GAMES_PLAYED_1              ( 21, true ),
-		HIGH_SCORE_1                ( 22 ),
+		UNLOCK_MIYU            		( 6 ),
+		MONSTERS_SLAIN_1            ( 16+6 ),
+		MONSTERS_SLAIN_2            ( 16+7 ),
+		GOLD_COLLECTED_1            ( 16+8 ),
+		GOLD_COLLECTED_2            ( 16+9 ),
+		ITEM_LEVEL_1                ( 16+10 ),
+		LEVEL_REACHED_1             ( 16+11 ),
+		STRENGTH_ATTAINED_1         ( 16+12 ),
+		FOOD_EATEN_1                ( 16+13 ),
+		ITEMS_CRAFTED_1             ( 16+14 ),
+		BOSS_SLAIN_1                ( 16+15 ),
+		DEATH_FROM_FIRE             ( 16+16 ),
+		DEATH_FROM_POISON           ( 16+17 ),
+		DEATH_FROM_GAS              ( 16+18 ),
+		DEATH_FROM_HUNGER           ( 16+19 ),
+		DEATH_FROM_FALLING          ( 16+20 ),
+		GAMES_PLAYED_1              ( 16+21, true ),
+		HIGH_SCORE_1                ( 16+22 ),
 
 		//silver
-		NO_MONSTERS_SLAIN           ( 32 ),
-		MONSTERS_SLAIN_3            ( 33 ),
-		MONSTERS_SLAIN_4            ( 34 ),
-		GOLD_COLLECTED_3            ( 35 ),
-		GOLD_COLLECTED_4            ( 36 ),
-		ITEM_LEVEL_2                ( 37 ),
-		ITEM_LEVEL_3                ( 38 ),
-		LEVEL_REACHED_2             ( 39 ),
-		LEVEL_REACHED_3             ( 40 ),
-		STRENGTH_ATTAINED_2         ( 41 ),
-		STRENGTH_ATTAINED_3         ( 42 ),
-		FOOD_EATEN_2                ( 43 ),
-		FOOD_EATEN_3                ( 44 ),
-		ITEMS_CRAFTED_2             ( 45 ),
-		ITEMS_CRAFTED_3             ( 46 ),
-		BOSS_SLAIN_2                ( 47 ),
-		BOSS_SLAIN_3                ( 48 ),
-		ALL_POTIONS_IDENTIFIED      ( 49 ),
-		ALL_SCROLLS_IDENTIFIED      ( 50 ),
-		DEATH_FROM_ENEMY_MAGIC      ( 51 ),
-		DEATH_FROM_FRIENDLY_MAGIC   ( 52 ),
-		DEATH_FROM_SACRIFICE        ( 53 ),
+		NO_MONSTERS_SLAIN           ( 16+32 ),
+		MONSTERS_SLAIN_3            ( 16+33 ),
+		MONSTERS_SLAIN_4            ( 16+34 ),
+		GOLD_COLLECTED_3            ( 16+35 ),
+		GOLD_COLLECTED_4            ( 16+36 ),
+		ITEM_LEVEL_2                ( 16+37 ),
+		ITEM_LEVEL_3                ( 16+38 ),
+		LEVEL_REACHED_2             ( 16+39 ),
+		LEVEL_REACHED_3             ( 16+40 ),
+		STRENGTH_ATTAINED_2         ( 16+41 ),
+		STRENGTH_ATTAINED_3         ( 16+42 ),
+		FOOD_EATEN_2                ( 16+43 ),
+		FOOD_EATEN_3                ( 16+44 ),
+		ITEMS_CRAFTED_2             ( 16+45 ),
+		ITEMS_CRAFTED_3             ( 16+46 ),
+		BOSS_SLAIN_2                ( 16+47 ),
+		BOSS_SLAIN_3                ( 16+48 ),
+		ALL_POTIONS_IDENTIFIED      ( 16+49 ),
+		ALL_SCROLLS_IDENTIFIED      ( 16+50 ),
+		DEATH_FROM_ENEMY_MAGIC      ( 16+51 ),
+		DEATH_FROM_FRIENDLY_MAGIC   ( 16+52 ),
+		DEATH_FROM_SACRIFICE        ( 16+53 ),
 		BOSS_SLAIN_1_ARIS,
 		BOSS_SLAIN_1_NONOMI,
 		BOSS_SLAIN_1_MIYAKO,
 		BOSS_SLAIN_1_HOSHINO,
 		BOSS_SLAIN_1_SHIROKO,
 		BOSS_SLAIN_1_NOA,
-		BOSS_SLAIN_1_ALL_CLASSES    ( 54, true ),
-		GAMES_PLAYED_2              ( 55, true ),
-		HIGH_SCORE_2                ( 56 ),
+		BOSS_SLAIN_1_MIYU,
+		BOSS_SLAIN_1_ALL_CLASSES    ( 16+54, true ),
+		GAMES_PLAYED_2              ( 16+55, true ),
+		HIGH_SCORE_2                ( 16+56 ),
 
 		//gold
-		PIRANHAS                    ( 64 ),
-		GRIM_WEAPON                 ( 65 ),
+		PIRANHAS                    ( 16+64 ),
+		GRIM_WEAPON                 ( 16+65 ),
 		BAG_BOUGHT_VELVET_POUCH,
 		BAG_BOUGHT_SCROLL_HOLDER,
 		BAG_BOUGHT_POTION_BANDOLIER,
 		BAG_BOUGHT_MAGICAL_HOLSTER,
-		ALL_BAGS_BOUGHT             ( 66 ),
-		MASTERY_COMBO               ( 67 ),
-		MONSTERS_SLAIN_5            ( 68 ),
-		GOLD_COLLECTED_5            ( 69 ),
-		ITEM_LEVEL_4                ( 70 ),
-		LEVEL_REACHED_4             ( 71 ),
-		STRENGTH_ATTAINED_4         ( 72 ),
-		STRENGTH_ATTAINED_5         ( 73 ),
-		FOOD_EATEN_4                ( 74 ),
-		FOOD_EATEN_5                ( 75 ),
-		ITEMS_CRAFTED_4             ( 76 ),
-		ITEMS_CRAFTED_5             ( 77 ),
-		BOSS_SLAIN_4                ( 78 ),
-		ALL_RINGS_IDENTIFIED        ( 79 ),
-		ALL_ARTIFACTS_IDENTIFIED    ( 80 ),
-		DEATH_FROM_GRIM_TRAP        ( 81 ), //also disintegration traps
-		VICTORY                     ( 82 ),
-		BOSS_CHALLENGE_1            ( 83 ),
-		BOSS_CHALLENGE_2            ( 84 ),
-		GAMES_PLAYED_3              ( 85, true ),
-		HIGH_SCORE_3                ( 86 ),
+		ALL_BAGS_BOUGHT             ( 16+66 ),
+		MASTERY_COMBO               ( 16+67 ),
+		MONSTERS_SLAIN_5            ( 16+68 ),
+		GOLD_COLLECTED_5            ( 16+69 ),
+		ITEM_LEVEL_4                ( 16+70 ),
+		LEVEL_REACHED_4             ( 16+71 ),
+		STRENGTH_ATTAINED_4         ( 16+72 ),
+		STRENGTH_ATTAINED_5         ( 16+73 ),
+		FOOD_EATEN_4                ( 16+74 ),
+		FOOD_EATEN_5                ( 16+75 ),
+		ITEMS_CRAFTED_4             ( 16+76 ),
+		ITEMS_CRAFTED_5             ( 16+77 ),
+		BOSS_SLAIN_4                ( 16+78 ),
+		ALL_RINGS_IDENTIFIED        ( 16+79 ),
+		ALL_ARTIFACTS_IDENTIFIED    ( 16+80 ),
+		DEATH_FROM_GRIM_TRAP        ( 16+81 ), //also disintegration traps
+		VICTORY                     ( 16+82 ),
+		BOSS_CHALLENGE_1            ( 16+83 ),
+		BOSS_CHALLENGE_2            ( 16+84 ),
+		GAMES_PLAYED_3              ( 16+85, true ),
+		HIGH_SCORE_3                ( 16+86 ),
 
 		//platinum
-		ITEM_LEVEL_5                ( 96 ),
-		LEVEL_REACHED_5             ( 97 ),
-		HAPPY_END                   ( 98 ),
-		ALL_WEAPONS_IDENTIFIED      ( 99 ),
-		ALL_ARMOR_IDENTIFIED        ( 100 ),
-		ALL_WANDS_IDENTIFIED        ( 101 ),
-		ALL_ITEMS_IDENTIFIED        ( 102, true ),
+		ITEM_LEVEL_5                ( 16+96 ),
+		LEVEL_REACHED_5             ( 16+97 ),
+		HAPPY_END                   ( 16+98 ),
+		ALL_WEAPONS_IDENTIFIED      ( 16+99 ),
+		ALL_ARMOR_IDENTIFIED        ( 16+100 ),
+		ALL_WANDS_IDENTIFIED        ( 16+101 ),
+		ALL_ITEMS_IDENTIFIED        ( 16+102, true ),
 		VICTORY_ARIS,
 		VICTORY_NONOMI,
 		VICTORY_MIYAKO,
 		VICTORY_HOSHINO,
 		VICTORY_SHIROKO,
 		VICTORY_NOA,
-		VICTORY_ALL_CLASSES         ( 103, true ),
-		DEATH_FROM_ALL              ( 104, true ),
+		VICTORY_MIYU,
+		VICTORY_ALL_CLASSES         ( 16+103, true ),
+		DEATH_FROM_ALL              ( 16+104, true ),
 		BOSS_SLAIN_3_GLADIATOR,
 		BOSS_SLAIN_3_BERSERKER,
 		BOSS_SLAIN_3_WARLOCK,
@@ -170,19 +174,19 @@ public class Badges {
 		BOSS_SLAIN_3_WARDEN,
 		BOSS_SLAIN_3_CHAMPION,
 		BOSS_SLAIN_3_MONK,
-		BOSS_SLAIN_3_ALL_SUBCLASSES ( 105, true ),
-		BOSS_CHALLENGE_3            ( 106 ),
-		BOSS_CHALLENGE_4            ( 107 ),
-		GAMES_PLAYED_4              ( 108, true ),
-		HIGH_SCORE_4                ( 109 ),
-		CHAMPION_1                  ( 110 ),
+		BOSS_SLAIN_3_ALL_SUBCLASSES ( 16+105, true ),
+		BOSS_CHALLENGE_3            ( 16+106 ),
+		BOSS_CHALLENGE_4            ( 16+107 ),
+		GAMES_PLAYED_4              ( 16+108, true ),
+		HIGH_SCORE_4                ( 16+109 ),
+		CHAMPION_1                  ( 16+110 ),
 
 		//diamond
-		BOSS_CHALLENGE_5            ( 120 ),
-		GAMES_PLAYED_5              ( 121, true ),
-		HIGH_SCORE_5                ( 122 ),
-		CHAMPION_2                  ( 123 ),
-		CHAMPION_3                  ( 124 );
+		BOSS_CHALLENGE_5            ( 16+120 ),
+		GAMES_PLAYED_5              ( 16+121, true ),
+		HIGH_SCORE_5                ( 16+122 ),
+		CHAMPION_2                  ( 16+123 ),
+		CHAMPION_3                  ( 16+124 );
 
 		public boolean meta;
 
@@ -709,6 +713,7 @@ public class Badges {
 		firstBossClassBadges.put(HeroClass.HOSHINO, Badge.BOSS_SLAIN_1_HOSHINO);
 		firstBossClassBadges.put(HeroClass.SHIROKO, Badge.BOSS_SLAIN_1_SHIROKO);
 		firstBossClassBadges.put(HeroClass.NOA, Badge.BOSS_SLAIN_1_NOA);
+		firstBossClassBadges.put(HeroClass.MIYU, Badge.BOSS_SLAIN_1_MIYU);
 	}
 
 	private static LinkedHashMap<HeroClass, Badge> victoryClassBadges = new LinkedHashMap<>();
@@ -719,6 +724,7 @@ public class Badges {
 		victoryClassBadges.put(HeroClass.HOSHINO, Badge.VICTORY_HOSHINO);
 		victoryClassBadges.put(HeroClass.SHIROKO, Badge.VICTORY_SHIROKO);
 		victoryClassBadges.put(HeroClass.NOA, Badge.VICTORY_NOA);
+		victoryClassBadges.put(HeroClass.MIYU, Badge.VICTORY_MIYU);
 	}
 
 	private static LinkedHashMap<HeroSubClass, Badge> thirdBossSubclassBadges = new LinkedHashMap<>();
@@ -848,6 +854,9 @@ public class Badges {
 			case NOA:
 				badge = Badge.MASTERY_NOA;
 				break;
+			case MIYU:
+				badge = Badge.MASTERY_MIYU;
+				break;
 		}
 		
 		unlock(badge);
@@ -884,6 +893,12 @@ public class Badges {
 	public static void validateNoaUnlock(){
 		if (Statistics.noaUnlocked && !isUnlocked(Badge.UNLOCK_NOA)){
 			displayBadge( Badge.UNLOCK_NOA );
+		}
+	}
+
+	public static void validateMiyuUnlock(){
+		if (Statistics.miyuUnlocked && !isUnlocked(Badge.UNLOCK_MIYU)){
+			displayBadge( Badge.UNLOCK_MIYU );
 		}
 	}
 	

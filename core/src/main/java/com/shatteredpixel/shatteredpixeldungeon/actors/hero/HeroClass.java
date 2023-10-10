@@ -94,6 +94,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRage;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfEnchantment;
+import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfAugmentation;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Rapier;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
@@ -155,8 +156,9 @@ public enum HeroClass {
 			new PotionOfExperience().identify().quantity(30).collect();
 			new RingOfMight().identify().upgrade(10).collect();
 			new EXSkillDisc().collect();
+			new GL_tier2().identify().collect();
 			new ScrollOfUpgrade().identify().quantity(200).collect();
-			new HG_tier2().identify().collect();
+			new StoneOfAugmentation().quantity(200).collect();
 			new PotionOfMindVision().identify().quantity(200).collect();
 			new RingOfWealth().identify().upgrade(100).collect();
 			new PlateArmor().identify().upgrade(100).collect();

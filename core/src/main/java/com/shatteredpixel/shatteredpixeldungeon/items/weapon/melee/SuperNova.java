@@ -145,6 +145,9 @@ public class SuperNova extends MeleeWeapon {
         if (hero.buff(SuperNovaCharge.class) != null && hero.hasTalent(Talent.CHARGE_ACCEL)) {
             coolDown *= (1-0.05f*hero.pointsInTalent(Talent.CHARGE_ACCEL)*hero.buff(SuperNovaCharge.class).chargeLevel());
         }
+        if (hero.subClass == HeroSubClass.ARIS_EX_CHARGE) {
+            coolDown *= 0.5f;
+        }
         return coolDown;
     }
 

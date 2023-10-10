@@ -54,11 +54,11 @@ public class TrashBin extends Item {
 						new FlavourBuff(){
 							{actPriority = VFX_PRIO;}
 							public boolean act() {
-								if (((Mob) ch).state == ((Mob) ch).HUNTING || ((Mob) ch).state == ((Mob) ch).FLEEING){
+								if (((Mob) ch).state == ((Mob) ch).HUNTING){
 									((Mob) ch).state = ((Mob) ch).WANDERING;
+									((Mob) ch).beckon(Dungeon.level.randomDestination(ch));
+									ch.sprite.showLost();
 								}
-								((Mob) ch).beckon(Dungeon.level.randomDestination(ch));
-								ch.sprite.showLost();
 								return super.act();
 							}
 						}.attachTo(ch);

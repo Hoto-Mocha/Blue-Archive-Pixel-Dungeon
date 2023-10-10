@@ -1,5 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.depth;
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.scalingDepth;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
@@ -100,7 +102,7 @@ public class DroneStrike extends Buff implements ActionIndicator.Action {
         if (mainCh != null) {
             Buff.affect(mainCh, Slow.class, 10f);
             Buff.affect(mainCh, Vulnerable.class, 5f);
-            int dmg = Random.NormalIntRange(hero.lvl*2, hero.lvl*3);
+            int dmg = Random.NormalIntRange(hero.lvl*2 + scalingDepth(), hero.lvl*3 + 2*scalingDepth());
             if (mainCh.HP < dmg && Random.Float() < 0.4f*hero.pointsInTalent(Talent.DRONESTRIKE_3)/3f) {
                 reUse = true;
             }

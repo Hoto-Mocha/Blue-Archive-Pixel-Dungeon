@@ -49,6 +49,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Shocki
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dagger;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
@@ -326,8 +327,10 @@ public class Gun extends MeleeWeapon {
         int damage = Random.NormalIntRange(bulletMin(), bulletMax());
         if (doubleBarrelSpecial) {
             damage = Math.round(damage * 0.667f);
-            //TODO: 증강에 따라 변화하는 효과?
+
         }
+
+        damage = augment.damageFactor(damage);  //증강에 따라 변화하는 효과
         return damage;
     }
 
@@ -335,7 +338,6 @@ public class Gun extends MeleeWeapon {
     protected float baseDelay(Char owner) {
         if (doubleBarrelSpecial){
             return 0f;
-            //TODO: 증강에 따라 변화하는 효과?
         } else{
             return super.baseDelay(owner);
         }
@@ -348,13 +350,13 @@ public class Gun extends MeleeWeapon {
         //근접 무기의 설명을 모두 가져옴, 여기에서 할 것은 근접 무기의 설명에 추가로 생기는 문장을 더하는 것
         if (levelKnown) { //감정되어 있을 때
             info += "\n\n" + Messages.get(Gun.class, "gun_desc",
-                    bulletMin(buffedLvl()), bulletMax(buffedLvl()), shotPerShoot(), round, maxRound(), new DecimalFormat("#.##").format(reloadTime()));
+                    augment.damageFactor(bulletMin(buffedLvl())), augment.damageFactor(bulletMax(buffedLvl())), shotPerShoot(), round, maxRound(), new DecimalFormat("#.##").format(reloadTime()));
         } else { //감정되어 있지 않을 때
             info += "\n\n" + Messages.get(Gun.class, "gun_typical_desc",
-                    bulletMin(0), bulletMax(0), shotPerShoot(), round, maxRound(), new DecimalFormat("#.##").format(reloadTime()));
+                    augment.damageFactor(bulletMin(0)), augment.damageFactor(bulletMax(0)), shotPerShoot(), round, maxRound(), new DecimalFormat("#.##").format(reloadTime()));
         }
         //DecimalFormat("#.##")은 .format()에 들어가는 매개변수(실수)를 "#.##"형식으로 표시하는데 사용된다.
-        // 가령 5.55555가 .format()안에 들어가서 .format(5.55555)라면, new DecimalFormat("#.##").format(5.55555)는 5.55라는 String 타입의 값을 반환한다.
+        //가령 5.55555가 .format()안에 들어가서 .format(5.55555)라면, new DecimalFormat("#.##").format(5.55555)는 5.55라는 String 타입의 값을 반환한다.
 
         return info;
     }
@@ -528,7 +530,7 @@ public class Gun extends MeleeWeapon {
             if (explode) {
                 ArrayList<Char> targets = new ArrayList<>();
                 if (Actor.findChar(cell) != null) targets.add(Actor.findChar(cell));
-                for (int i : PathFinder.NEIGHBOURS9){
+                for (int i : PathFinder.NEIGHBOURS8){
                     if (Actor.findChar(cell + i) != null) targets.add(Actor.findChar(cell + i));
                 }
                 for (Char target : targets){
@@ -638,6 +640,10 @@ public class Gun extends MeleeWeapon {
                             bullet.proc(curUser, ch, bullet.damageRoll(curUser) + damageBonus);
                             bullet.onThrow(ch.pos);
                             if (!ch.isAlive()) killed++;
+                        }
+                        if (Gun.this instanceof GL && chars.isEmpty()) {
+                            Bullet bullet = knockBullet();
+                            bullet.onThrow(beam.collisionPos);
                         }
                         if (hero.hasTalent(Talent.PENETRATION_SHOT_3) && killed > 0 && hero.buff(Talent.PerfectHandTracker.class) == null) {
                             Buff.affect(curUser, Talent.PerfectHandTracker.class).set(killed);

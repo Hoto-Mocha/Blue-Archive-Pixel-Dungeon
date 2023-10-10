@@ -528,7 +528,7 @@ public class Bicycle extends Item {
 			BitmapText txt = new BitmapText(PixelScene.pixelFont);
 			Bicycle bicycle = Dungeon.hero.belongings.getItem(Bicycle.class);
 			if (bicycle != null) {
-				txt.text( Float.toString(bicycle.charge()) );
+				txt.text( Messages.decimalFormat("#.##", bicycle.charge()));
 				txt.hardlight(CharSprite.POSITIVE);
 				txt.measure();
 				return txt;

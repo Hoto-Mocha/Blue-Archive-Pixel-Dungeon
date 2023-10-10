@@ -19,15 +19,15 @@ public class SR extends Gun {
 
     @Override
     public int bulletMin(int lvl) {
-        return 2 * tier +
+        return tier +
                 lvl +
                 RingOfSharpshooting.levelDamageBonus(hero);
     }
 
     @Override
     public int bulletMax(int lvl) {
-        return 6 * (tier+2) +
-                lvl * (tier+2) +
+        return 6 * (tier+1) +
+                lvl * (tier+1) +
                 RingOfSharpshooting.levelDamageBonus(hero);
     }
 

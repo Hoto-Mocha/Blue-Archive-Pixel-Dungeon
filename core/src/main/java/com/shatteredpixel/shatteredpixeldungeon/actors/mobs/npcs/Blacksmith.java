@@ -89,7 +89,7 @@ public class Blacksmith extends NPC {
 				msg1 = Quest.alternative ? Messages.get(Blacksmith.this, "blood_1") : Messages.get(Blacksmith.this, "gold_1");
 			} else {
 
-				msg1 += Messages.get(Blacksmith.this, "intro_quest_all"); break;
+				msg1 += Messages.get(Blacksmith.this, "intro_quest_all");
 
 				msg1 += "\n\n" + Messages.get(Blacksmith.this, "intro_quest_start");
 

@@ -89,14 +89,7 @@ public class Blacksmith extends NPC {
 				msg1 = Quest.alternative ? Messages.get(Blacksmith.this, "blood_1") : Messages.get(Blacksmith.this, "gold_1");
 			} else {
 
-				switch (Dungeon.hero.heroClass){
-					case WARRIOR:   msg1 += Messages.get(Blacksmith.this, "intro_quest_warrior"); break;
-					case MAGE:      msg1 += Messages.get(Blacksmith.this, "intro_quest_mage"); break;
-					case ROGUE:     msg1 += Messages.get(Blacksmith.this, "intro_quest_rogue"); break;
-					case HUNTRESS:  msg1 += Messages.get(Blacksmith.this, "intro_quest_huntress"); break;
-					case DUELIST:   msg1 += Messages.get(Blacksmith.this, "intro_quest_duelist"); break;
-					//case CLERIC: msg1 += Messages.get(Blacksmith.this, "intro_quest_cleric"); break;
-				}
+				msg1 += Messages.get(Blacksmith.this, "intro_quest_all"); break;
 
 				msg1 += "\n\n" + Messages.get(Blacksmith.this, "intro_quest_start");
 

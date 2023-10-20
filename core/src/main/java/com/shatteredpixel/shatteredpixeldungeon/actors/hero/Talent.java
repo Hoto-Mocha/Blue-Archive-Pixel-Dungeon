@@ -684,18 +684,25 @@ public enum Talent {
 			switch (cls){
 				case ARIS: default:
 					y = 0;
+					break;
 				case NONOMI:
 					y = 1;
+					break;
 				case MIYAKO:
 					y = 2;
+					break;
 				case HOSHINO:
 					y = 3;
+					break;
 				case SHIROKO:
 					y = 4;
+					break;
 				case NOA:
 					y = 5;
+					break;
 				case MIYU:
 					y = 6;
+					break;
 			}
 			return x+TALENT_NUMBER*y;
 		} else {

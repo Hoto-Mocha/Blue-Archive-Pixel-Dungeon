@@ -10,6 +10,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Daze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -71,17 +72,22 @@ public class SG extends Gun {
     @Override
     public void execute(Hero hero, String action) {
         if (action.equals(AC_RELOAD)) {
-            if (round == maxRound()+1) {
-                GLog.w(Messages.get(Gun.class, "already_loaded"));
-                return;
-            } else if (round == maxRound()){
-                manualReload(1, true);
-                hero.busy();
-                hero.sprite.operate(hero.pos);
-                Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
-                hero.spendAndNext(reloadTime());
-                hero.yellP(Messages.get(Hero.class, hero.heroClass.name() + "_over_reload"));
-                return;
+            if (hero.heroClass == HeroClass.HOSHINO) {
+                if (round == maxRound()+1) {
+                    GLog.w(Messages.get(Gun.class, "already_loaded"));
+                    return;
+                } else if (round == maxRound()){
+                    manualReload(1, true);
+                    hero.busy();
+                    hero.sprite.operate(hero.pos);
+                    Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
+                    hero.spendAndNext(reloadTime());
+                    hero.yellP(Messages.get(Hero.class, hero.heroClass.name() + "_over_reload"));
+                    return;
+                } else {
+                    reload();
+                    return;
+                }
             } else {
                 reload();
                 return;

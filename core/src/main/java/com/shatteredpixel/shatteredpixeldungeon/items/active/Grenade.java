@@ -29,6 +29,7 @@ public class Grenade extends Item {
     protected int amount;
     protected int max_amount;
     public static final String TXT_STATUS = "%d/%d";
+    public boolean special = false;         //일반적인 수류탄이 아닌 클래스에서 활성화. 습득 시 다른 문장을 출력하도록 만듦
 
     {
         defaultAction = AC_LIGHTTHROW;
@@ -105,7 +106,13 @@ public class Grenade extends Item {
         }
         Item.updateQuickslot();
         if (oldAmt != amount) {
-            Dungeon.hero.yellP(Messages.get(Hero.class, Dungeon.hero.heroClass.name() + "_grenade_collect_" + (Random.Int(3)+1)));
+            if (!special) {
+                Dungeon.hero.yellP(Messages.get(Hero.class, Dungeon.hero.heroClass.name() + "_grenade_collect_" + (Random.Int(3)+1)));
+            } else {
+                if (this instanceof Claymore) {
+                    Dungeon.hero.yellP(Messages.get(Hero.class, Dungeon.hero.heroClass.name() + "_claymore_collect_" + (Random.Int(3)+1)));
+                }
+            }
         }
     }
 

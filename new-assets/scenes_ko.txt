@@ -1,0 +1,35 @@
+scenes.supporterscene.title=지원/피드백
+scenes.supporterscene.intro=이것은 아직 완성되지 않은 게임입니다.
+scenes.supporterscene.patreon_msg=그럼에도 이 게임을 즐겨 주셔서 감사합니다. 궁금한 점, 피드백이 있다면 아래 링크를 통해 github에 이슈를 남겨 주시거나, Discord 서버에 참여해 실시간으로 개발에 동참해 주세요.
+scenes.supporterscene.supporter_link=GitHub 페이지로 이동
+scenes.supporterscene.discord_link=Discord 서버
+
+scenes.welcomescene.update_intro=Blue Archive Pixel Dungeon이 업데이트되었습니다!
+scenes.welcomescene.update_msg=Github 페이지에서 모든 세부사항을 확인해보세요.
+scenes.welcomescene.patch_intro=Blue Archive Pixel Dungeon이 패치되었습니다!
+scenes.welcomescene.patch_bugfixes=버그 수정이 있습니다.
+scenes.welcomescene.patch_translations=번역 업데이트가 있습니다.
+scenes.welcomescene.patch_balance=게임 밸런스의 수정이 있습니다.
+scenes.welcomescene.patch_msg=이 업데이트는 몇가지 자잘한 수정과 성능 향상을 포함합니다.
+scenes.welcomescene.what_msg=현재 저장된 게임은 Blue Archive Pixel Dungeon의 나중 버전에서 나온 것입니다!\n\n현재 버전에 등장하지 않는 요소들이 충돌을 일으킬 수 있으니, 조심하십시오!
+scenes.welcomescene.lang_warning_title=미완성된 번역
+scenes.welcomescene.lang_warning_msg=이 업데이트로 추가된 몇 가지 항목이 번역되지 않았습니다.\n\n몇몇 문장이 영어로 나타날 수 있습니다.\n\n번역팀이 이를 해결하기 위해 작업 중이며 조만간 완전한 번역을 볼 수 있을 것입니다.\n\n기다려 주셔서 감사합니다.
+scenes.welcomescene.continue=계속
+scenes.welcomescene.changelist=변경사항
+scenes.welcomescene.save_warning=최근에 게임 데이터를 저장하는 동안 게임이 중단되었습니다. 섀터드 픽셀 던전에는 이에 대한 보호 기능이 내장되어 있기 때문에 게임 데이터는 안전합니다.\n\n일반적으로 이 문제는 디바이스의 전원이 갑자기 끊기거나 게임이 정상적으로 종료되지 않았을 때 발생합니다. 대부분의 경우 모바일 디바이스에서 배터리 절약 기능으로 인해 이 문제가 발생할 수 있습니다. 이 오류가 반복될 경우 디바이스를 재시작해 보십시오.
+scenes.welcomescene.controller_title=컨트롤러 입력
+scenes.welcomescene.controller_body=컨트롤러로 플레이하나요? 오른쪽 스틱을 이용해 스크린 커서를 조작하세요.\n\nRT/R2 혹은 오른쪽 스틱을 눌러 커서로 선택하세요.
+scenes.welcomescene.controller_okay=좋습니다.
+
+scenes.changesscene.github_link=Github 페이지로 이동
+scenes.changesscene.changes=이 게임은 아직 불완전한 상태로, 업데이트 주기가 짧으며 같거나 비슷한 변경사항이 잦을 수 있습니다. 따라서 게임 내에 이를 일일이 표기하는 것은 비효율적이기 때문에 게임 내에는 따로 변경사항을 기록하지 않습니다.\n\n자세한 변경사항은 Github 릴리즈에서 버전별로 확인이 가능합니다.
+
+scenes.titlescene.seed_find=시드 탐색
+scenes.titlescene.seed_analysis=시드 분석
+
+scenes.seedfindscene.title=시드 찾기
+scenes.seedfindscene.body=원하는 아이템들을 줄바꿈(Enter)으로 구분지어 입력해주세요.
+scenes.seedfindscene.initial_value=26층까지 탐색\n
+scenes.seedfindscene.find=찾기
+
+scenes.seedanalysisscene.title=동일한 게임 버전의 동일한 시드는 언제나 같은 던전을 생성합니다! _분석할 시드를 입력해주세요_.

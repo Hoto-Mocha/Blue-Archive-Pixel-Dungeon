@@ -1,0 +1,911 @@
+
+
+###new buffs
+actors.hero.talent$nowaycooldown.name=재사용 대기 시간: 안 돼요!
+actors.hero.talent$nowaycooldown.desc=당신은 최근에 이 특성을 사용하여, 다시 사용하는 데에 시간이 필요합니다.\n\n남은 턴: %s.
+actors.hero.talent$emergencyhealingcooldown.name=재사용 대기 시간: 응급 치료
+actors.hero.talent$emergencyhealingcooldown.desc=당신은 최근에 이 특성을 사용하여, 다시 사용하는 데에 시간이 필요합니다.\n\n남은 턴: %s.
+actors.hero.talent$shootingweaknesscooldown.name=재사용 대기 시간: 약점 사격
+actors.hero.talent$shootingweaknesscooldown.desc=당신은 최근에 이 특성을 사용하여, 다시 사용하는 데에 시간이 필요합니다.\n\n남은 턴: %s.
+actors.hero.talent$scancooldown.name=재사용 대기 시간: 지형 스캔
+actors.hero.talent$scancooldown.desc=당신은 최근에 이 특성을 사용하여, 다시 사용하는 데에 시간이 필요합니다.\n\n남은 턴: %s.
+actors.hero.talent$bullettimecooldown.name=재사용 대기 시간: 불릿 타임
+actors.hero.talent$bullettimecooldown.desc=당신은 최근에 이 특성을 사용하여, 다시 사용하는 데에 시간이 필요합니다.\n\n남은 턴: %s.
+actors.hero.talent$suppressingfirecooldown.name=재사용 대기 시간: 제압 사격
+actors.hero.talent$suppressingfirecooldown.desc=당신은 최근에 이 특성을 사용하여, 다시 사용하는 데에 시간이 필요합니다.\n\n남은 턴: %s.
+actors.hero.talent$shockbulletcooldown.name=재사용 대기 시간: 충격 탄환
+actors.hero.talent$shockbulletcooldown.desc=당신은 최근에 이 특성을 사용하여, 다시 사용하는 데에 시간이 필요합니다.\n\n재사용에 필요한 적 처치 수: _%1$d_/_%2$d_.
+
+
+actors.buffs.stundrone.action_name=섬광 드론 전개!
+
+actors.buffs.stundronecooldown.name=재사용 대기 시간: 섬광 드론 전개
+actors.buffs.stundronecooldown.desc=최근에 섬광 드론을 사용하여, 충전이 필요합니다.\n\n충전에 필요한 적 처치 수: _%1$d_/_%2$d_.
+
+actors.buffs.dronestrike.action_name=비행 드론 타격!
+
+actors.buffs.dronestrikecooldown.name=재사용 대기 시간: 비행 드론 타격
+actors.buffs.dronestrikecooldown.desc=최근에 비행 드론을 사용하여, 충전이 필요합니다.\n\n충전에 필요한 적 처치 수: _%1$d_/_%2$d_.
+
+actors.buffs.elementalbullet.action_name=속성탄 장전!
+actors.buffs.elementalbullet$elementalreload.ap_bullet.name=철갑탄
+actors.buffs.elementalbullet$elementalreload.ap_bullet.desc=시로코는 _철갑탄_을 장전해 적의 방어력을 관통하는 피해를 입히는 탄환을 발사할 수 있습니다.\n탄환 피해량이 (20-5*성능 단계)%%만큼 감소합니다.\n현재 성능 단계: _%d단계_.
+actors.buffs.elementalbullet$elementalreload.incendiary_bullet.name=소이탄
+actors.buffs.elementalbullet$elementalreload.incendiary_bullet.desc=시로코는 _소이탄_을 장전해 적에게 불을 붙이는 탄환을 발사할 수 있습니다.\n발화 확률은 (20+10*성능 단계)%%입니다.\n현재 성능 단계: _%d단계_.
+actors.buffs.elementalbullet$elementalreload.explosive_bullet.name=폭발탄
+actors.buffs.elementalbullet$elementalreload.explosive_bullet.desc=시로코는 _폭발탄_을 장전해 폭발 속성으로 발생하는 추가 타격의 횟수가 늘어난 탄환을 발사할 수 있습니다.\n추가 타격 횟수는 (2+성능 단계)회입니다.\n현재 성능 단계: _%d단계_.
+actors.buffs.elementalbullet$elementalreload.ice_bullet.name=빙결탄
+actors.buffs.elementalbullet$elementalreload.ice_bullet.desc=시로코는 _빙결탄_을 장전해 적을 냉동시키고 물 위의 대상을 얼리는 탄환을 발사할 수 있습니다.\n탄환 명중 시 부여하는 한기는 (2+성능 단계)턴이며, 물 위의 대상에게 탄환 명중 시 대상이 (20-3*성능 단계)턴 이상의 한기가 있으면 대상을 빙결시킵니다.\n현재 성능 단계: _%d단계_.
+actors.buffs.elementalbullet$elementalreload.electric_bullet.name=전격탄
+actors.buffs.elementalbullet$elementalreload.electric_bullet.desc=시로코는 _전격탄_을 장전해 연쇄 번개를 일으켜 주변 적들에게 연쇄 피해를 주는 탄환을 발사할 수 있습니다.\n연쇄 번개의 피해량은 입힌 피해의 (20+10*성능 단계)%%입니다.\n현재 성능 단계: _%d단계_.
+
+actors.buffs.elementals.apbullet.name=철갑탄
+actors.buffs.elementals.apbullet.desc=...방금 장전한 건 철갑탄이야.\n\n적을 관통하는 능력이 매우 뛰어난 총알이지. 음... 관통력이 뛰어나서 적의 방어 능력 정도는 무시하고 공격이 가능하지만, 데미지 자체는 다소 떨어지는 게 단점이야.\n\n철갑탄은 다음 재장전 시까지 사용할 수 있어.
+actors.buffs.elementals.incendiarybullet.name=소이탄
+actors.buffs.elementals.incendiarybullet.desc=...방금 장전한 건 소이탄이야.\n\n이건 적에게 불을 붙이는 데 사용해. 불이 항상 붙는 건 아니지만, 일단 불을 붙이면 꽤나 위협적인 공격 수단이 될 거야.\n\n소이탄은 다음 재장전 시까지 사용할 수 있어.
+actors.buffs.elementals.explosivebullet.name=폭발탄
+actors.buffs.elementals.explosivebullet.desc=...방금 장전한 건 폭발탄이야.\n\n착탄 시 터지는 특성이 있어서, 추가적인 피해를 발생시키기 좋아.\n\n폭발탄은 다음 재장전 시까지 사용할 수 있어.
+actors.buffs.elementals.icebullet.name=빙결탄
+actors.buffs.elementals.icebullet.desc=...방금 장전한 건 빙결탄이야.\n\n특수한 촉매를 사용해서 명중한 대상을 빠르게 냉동시키고, 느려지게 만들 수 있어. 물 위에 있다면 얼릴 수도 있을 거야.\n\n빙결탄은 다음 재장전 시까지 사용할 수 있어.
+actors.buffs.elementals.electricbullet.name=전격탄
+actors.buffs.elementals.electricbullet.desc=...방금 장전한 건 전격탄이야.\n\n음... 나도 자세히는 잘 모르지만, 이걸 맞히면 전기 충격이 발생해서 다른 대상에게도 피해를 입히나 봐.\n\n전격탄은 다음 재장전 시까지 사용할 수 있어.
+
+actors.buffs.infinitebullet.name=확장 탄창
+actors.buffs.infinitebullet.desc=지금 총을 쏘게 된다면 확장 탄창의 예비 탄환을 사용할 거예요. 시간이 지나면 사라지니까 조심하세요.\n\n확장 탄창 효과는 앞으로 _%s_턴 후에 사라질 거예요.
+actors.buffs.infinitebullet$infinitebulletcooldown.name=재사용 대기 시간: 확장 탄창
+actors.buffs.infinitebullet$infinitebulletcooldown.desc=최근에 확장 탄창을 사용하여, 준비가 필요합니다.\n\n준비에 필요한 적 처치 수: _%1$d_/_%2$d_.
+actors.buffs.doublebarrelmark.name=더블 배럴
+actors.buffs.doublebarrelmark.desc=방금 총을 맞춘 적에게 집중하고 있어요. 원한다면 홀스터에 있는 권총을 재빨리 꺼내서 쏠 수도 있지만, 평소같은 피해를 주진 못 할 거예요.\n\n권총을 쏘기 전에 탄창에 탄환이 남아 있는지 확인하세요.
+actors.buffs.doublebarrelmark.action_name=보조 무기 발사!
+
+actors.buffs.snipingbullet.name=저격용 특수 탄환
+actors.buffs.snipingbullet.desc=...지금 장전한 건 저격용 특수 탄환이예요.\n\n목표가 멀리 있을 수록 커다란 피해를 줄 수 있어요.\n...하지만 너무 근접하면 오히려 일반적인 총알보다 피해가 적으니 주의해 주세요.
+
+###new classes
+actors.hero.heroclass.aris=아리스
+actors.hero.heroclass.aris_desc_short=오늘은 어떤 모험을 떠나실 건가요? 아리스는 함께 떠날 준비가 되어있습니다.
+actors.hero.heroclass.aris_desc=아리스는 방어막을 생성하는 _밀레니엄 엠블럼_을 가지고 시작합니다. 건전지가 아니에요! 아리스의 엠블럼은 교복들 간에 옮겨 붙일 수 있으며, 엠블럼에 붙은 _1만큼의 강화 수치_를 옮겨 가져갈 수 있습니다.\n\n아리스는 던전을 탐험하는 용사로서, 총기가 아닌 근접 무기를 사용합니다. 던전에서 총기가 아닌 근접 무기가 나옵니다.\n\n아리스는 또한 _낡은 소검_, _세 개의 투척용 돌_, _빛의 검: 슈퍼노바_, 천 교복, 가죽 물통, 벨벳 주머니를 가지고 던전에 입장합니다.\n\n아리스는 다음 아이템을 감정한 채로 시작합니다.\n_-_ 감정의 주문서\n_-_ 치유 물약\n_-_ 분노의 주문서
+actors.hero.heroclass.aris_unlock=아리스는 자동으로 해금됩니다.
+
+actors.hero.heroclass.nonomi=노노미
+actors.hero.heroclass.nonomi_desc_short=오늘도 좋은 하루~ 선생님! 뭐든지 맡겨주세요.
+actors.hero.heroclass.nonomi_desc=노노미는 잠시 동안 넓은 지역에 연막을 뿌려 시야를 가릴 수 있는 _연막탄_을 가지고 시작합니다. 레벨이 오르면서 더 많은 연막탄을 지닐 수 있으며, 적을 처치할 때마다 일정 확률로 연막탄을 다시 얻습니다.\n\n노노미는 _MG(기관총)_를 잘 다룹니다. MG의 명중률이 다른 학생보다 높으며, 재장전 속도가 빠릅니다.\n노노미는 관통 속성의 탄을 사용하여 생물이 아닌 적에게 _1.5배의 탄환 피해_를 입힙니다.\n\n노노미는 또한 _1티어 MG_, _3개의 투척용 단검_, 천 교복, 가죽 물통, 벨벳 주머니를 가지고 던전에 입장합니다.\n\n노노미는 다음 아이템을 감정한 채로 시작합니다.\n_-_ 감정의 주문서\n_-_ 액체 화염 물약\n_-_ 강화의 주문서
+actors.hero.heroclass.nonomi_unlock=노노미를 해금하려면 적 하나를 처치하세요.
+
+actors.hero.heroclass.miyako=미야코
+actors.hero.heroclass.miyako_desc_short=SRT 특수학원, RABBIT 소대의 츠키유키 미야코입니다. 선생님, 지시를.
+actors.hero.heroclass.miyako_desc=미야코는 넓은 지역에 피해를 주고 대상을 불구로 만드는 _클레이모어_와 3x3지역에 폭발 피해를 입히는 _수류탄_을 가지고 시작합니다. 레벨이 오르면서 더 많은 수류탄을 지닐 수 있으며, 적을 처치할 때마다 일정 확률로 클레이모어 또는 수류탄을 다시 얻습니다.\n\n미야코는 _SMG(기관단총)_를 잘 다룹니다. SMG의 명중률이 다른 학생보다 높으며, 발사 시 공격 횟수가 1회 더 많습니다.\n미야코는 관통 속성의 탄을 사용하여 탄환 명중 시 낮은 확률로 잠시 동안 _적의 방어력을 약화_시킵니다.\n\n미야코는 또한 _1티어 SMG_, _3개의 투척용 단검_, 천 교복, 가죽 물통, 벨벳 주머니를 가지고 던전에 입장합니다.\n\n미야코는 다음 아이템을 감정한 채로 시작합니다.\n_-_ 감정의 주문서\n_-_ 투명화의 물약\n_-_ 마법 지도의 주문서
+actors.hero.heroclass.miyako_unlock=미야코를 해금하려면 적 하나를 처치하세요.
+
+actors.hero.heroclass.hoshino=호시노
+actors.hero.heroclass.hoshino_desc_short=하아~암. 적당히 하자고. 여유가 중요한 거니까.
+actors.hero.heroclass.hoshino_desc=호시노는 움직이기 전까지 추가 방어력을 얻는 _진압 방패 '아이언 호루스'_와 주변 지역의 대상을 밀쳐내는 _충격탄_을 가지고 시작합니다. 레벨이 오르면서 더 많은 충격탄을 지닐 수 있으며, 적을 처치할 때마다 일정 확률로 충격탄을 다시 얻습니다.\n\n호시노는 _SG(산탄총)_를 잘 다룹니다. SG가 최대로 장전되어 있을 때 장전하면 추가로 한 발을 더 장전할 수 있으며, 이 때 장전 시 추가 효과는 발동하지 않습니다.\n호시노는 관통 속성의 탄을 사용하여 탄환 피해가 _대상의 방어를 무시_합니다.\n\n호시노는 또한 _1티어 SG_, _3개의 투척용 단검_, 천 교복, 가죽 물통, 벨벳 주머니를 가지고 던전에 입장합니다.\n\n호시노는 다음 아이템을 감정한 채로 시작합니다.\n_-_ 감정의 주문서\n_-_ 심안의 물약\n_-_ 자장가의 주문서
+actors.hero.heroclass.hoshino_unlock=호시노를 해금하려면 적 하나를 처치하세요.
+
+actors.hero.heroclass.shiroko=시로코
+actors.hero.heroclass.shiroko_desc_short=아비도스 대책위원회 2학년 스나오오카미 시로코야. 잘 부탁해.
+actors.hero.heroclass.shiroko_desc=시로코는 일정 거리를 빠르게 이동할 수 있는 _자전거_와 3x3지역에 큰 폭발 피해를 입히는 _고폭 수류탄_을 가지고 시작합니다. 레벨이 오르면서 더 많은 고폭 수류탄을 지닐 수 있으며, 적을 처치할 때마다 일정 확률로 고폭 수류탄을 다시 얻습니다.\n\n시로코는 _AR(돌격소총)_을 잘 다룹니다. AR의 명중률이 다른 학생보다 높으며, 발사 시 30% 확률로 탄을 소모하지 않습니다.\n시로코는 폭발 속성의 탄을 사용하여 _탄환 명중 시 현재 층수에 비례한 낮은 추가 피해를 입힙니다_.\n\n시로코는 또한 _1티어 AR_, _3개의 투척용 단검_, 천 교복, 가죽 물통, 벨벳 주머니를 가지고 던전에 입장합니다.\n\n시로코는 다음 아이템을 감정한 채로 시작합니다.\n_-_ 감정의 주문서\n_-_ 힘의 물약\n_-_ 거울상의 주문서
+actors.hero.heroclass.shiroko_unlock=시로코를 해금하려면 적 하나를 처치하세요.
+
+actors.hero.heroclass.noa=노아
+actors.hero.heroclass.noa_desc_short=세미나의 서기, 우시오 노아입니다. 잘 부탁드리겠습니다, 선생님. ...여러모로요.
+actors.hero.heroclass.noa_desc=노아는 하나의 대상에 대해 높은 추가 명중률을 얻을 수 있는 _레이저 조준기_와 5x5지역에 있는 모든 대상을 실명시키는 _섬광탄_을 가지고 시작합니다. 레벨이 오르면서 더 많은 섬광탄을 지닐 수 있으며, 적을 처치할 때마다 일정 확률로 섬광탄을 다시 얻습니다.\n\n노아는 _HG(권총)_를 잘 다룹니다. HG의 명중률이 다른 학생보다 높으며, 최대 장탄수가 2발 더 많습니다. HG를 장착하면 +1만큼 더 성능이 좋아집니다.\n노아는 신비 속성의 탄환을 사용하여 주변 _5x5지역에 있는 대상을 장애물의 방해 없이 맞출 수 있습니다_.\n\n노아는 또한 _1티어 HG_, _3개의 투척용 단검_, 천 교복, 가죽 물통, 벨벳 주머니를 가지고 던전에 입장합니다.\n\n노아는 다음 아이템을 감정한 채로 시작합니다.\n_-_ 감정의 주문서\n_-_ 심안의 물약\n_-_ 마법 지도의 주문서
+actors.hero.heroclass.noa_unlock=노아를 해금하려면 적 하나를 처치하세요.
+
+actors.hero.heroclass.miyu=미유
+actors.hero.heroclass.miyu_desc_short=SRT 특수학원, RABBIT 소대의 카스미자와 미유입니다... 저... 이만 돌아가면... 안 되겠죠...?
+actors.hero.heroclass.miyu_desc=미유는 스스로를 추적해 오는 적을 교란시키는 _은폐 장치_와 착탄지점 주변 3x3지역에 풀을 자라나게 하는 _생장 폭탄_을 가지고 시작합니다. 레벨이 오르면서 더 많은 생장 폭탄을 지닐 수 있으며, 적을 처치할 때마다 일정 확률로 생장 폭탄을 다시 얻습니다.\n\n미유는 _SR(저격소총)_을 잘 다룹니다. SR의 탄환으로 기습 시 최소 피해량이 최대 피해량의 25%가 됩니다. 미유는 적들의 눈에 잘 띄지 않으며, 이 효과는 레벨이 올라갈수록 강화됩니다. 또한 길게 자란 풀을 짓밟지 않습니다.\n미유는 관통 속성의 탄환을 사용해 _적을 탄환으로 처치 시 턴을 소모하지 않습니다_.\n\n미유는 또한 _1티어 SR_, _3개의 투척용 단검_, 천 교복, 가죽 물통, 벨벳 주머니를 가지고 던전에 입장합니다.\n\n미유는 다음 아이템을 감정한 채로 시작합니다.\n_-_ 감정의 주문서\n_-_ 치유의 물약\n_-_ 강화의 주문서
+actors.hero.heroclass.miyu_unlock=미유를 해금하려면 적 하나를 처치하세요.
+
+
+
+###new subclass
+actors.hero.herosubclass.aris_ex_supernova=EX: 슈퍼노바
+actors.hero.herosubclass.aris_ex_supernova_short_desc=아리스는 EX 능력인 _슈퍼노바_를 얻어 밸런스 붕괴를 발사할 때 지정한 위치에 폭발을 일으켜 폭발에 휘말린 모든 적에게 피해를 입힐 수 있습니다.
+actors.hero.herosubclass.aris_ex_supernova_desc=_EX 능력: 슈퍼노바_를 얻은 아리스는 밸런스 붕괴를 발사할 때 사정거리의 제한이 사라지며, 레이저도 지정한 위치까지만 발사됩니다.\n\n레이저의 끝에는 폭발이 발생해 주변 5x5타일 내의 모든 적들에게 피해를 입히고 불을 붙입니다.
+
+actors.hero.herosubclass.aris_ex_charge=EX: 과충전
+actors.hero.herosubclass.aris_ex_charge_short_desc=아리스는 EX 능력인 _과충전_을 얻어 밸런스 붕괴의 충전 속도를 대폭 늘리고, 또한 밸런스 붕괴를 과충전시킬 수 있습니다. 과충전된 밸런스 붕괴는 다양한 추가 효과를 얻습니다.
+actors.hero.herosubclass.aris_ex_charge_desc=_EX 능력: 과충전_을 얻은 아리스는 밸런스 붕괴를 두 배 빠르게 충전하며, 밸런스 붕괴가 완전히 준비되었을 때 추가로 충전을 시작합니다.\n\n충전 단계가 1단계가 되었을 때 레이저에 닿는 모든 대상을 불태웁니다.\n\n충전 단계가 2단계가 되었을 때 추가로 레이저가 지나간 자리에 폭발을 발생시켜 주변 적들에게도 피해를 입힙니다.\n\n충전 단계가 3단계가 되었을 때 밸런스 붕괴의 사정거리가 50% 증가합니다.
+
+actors.hero.herosubclass.nonomi_ex_riot=EX: 난사
+actors.hero.herosubclass.nonomi_ex_riot_short_desc=노노미는 EX 능력인 _난사_를 얻어 MG의 명중 횟수를 1회로 줄이는 대신 부채꼴 범위의 모든 적을 공격할 수 있습니다.
+actors.hero.herosubclass.nonomi_ex_riot_desc=_EX 능력: 난사_를 얻은 노노미는 MG의 명중 횟수가 3회에서 1회로 감소하는 대신 부채꼴 범위에 있는 모든 적들에게 피해를 입힐 수 있는 난사를 사용할 수 있습니다.\n\nMG 장착 후 해당 기능을 On/Off할 수 있습니다.
+
+actors.hero.herosubclass.nonomi_ex_shootall=EX: 전탄 발사
+actors.hero.herosubclass.nonomi_ex_shootall_short_desc=노노미는 EX 능력인 _전탄 발사_를 얻어 MG의 남은 탄창을 전부 소모해 하나의 대상을 집중적으로 공격할 수 있습니다.
+actors.hero.herosubclass.nonomi_ex_shootall_desc=_EX 능력: 전탄 발사_를 얻은 노노미는 MG의 남은 탄창을 전부 소모해 하나의 대상을 집중적으로 공격할 수 있습니다. 반동으로 인해 명중률이 크게 감소하지만, 여전히 기습은 가능합니다.\n\nMG 장착 후 해당 기능을 On/Off할 수 있습니다.
+
+actors.hero.herosubclass.miyako_ex_stundrone=EX: 섬광 드론 전개
+actors.hero.herosubclass.miyako_ex_stundrone_short_desc=미야코는 EX 능력인 _섬광 드론 전개_를 얻어 시야 내의 원하는 위치에 섬광을 발생시켜 대상을 실명시킬 수 있습니다.
+actors.hero.herosubclass.miyako_ex_stundrone_desc=_EX 능력: 섬광 드론 전개_를 얻은 미야코는 섬광 드론을 사용해 원하는 위치에 있는 적을 10턴 동안 실명시키고 5턴 동안 불구로 만들며, 주변 3x3범위에 있는 적들은 5턴의 실명에 걸리게 할 수 있습니다.\n\n섬광 드론 사용 후 적 10체를 처치하면 다시 사용이 가능합니다.
+
+actors.hero.herosubclass.miyako_ex_dronestrike=EX: 비행 드론 가격
+actors.hero.herosubclass.miyako_ex_dronestrike_short_desc=미야코는 EX 능력인 _비행 드론 가격_을 얻어 시야 내의 원하는 위치에 있는 적을 공격할 수 있습니다.
+actors.hero.herosubclass.miyako_ex_dronestrike_desc=_EX 능력: 비행 드론 가격_을 얻은 미야코는 비행 드론을 사용해 원하는 위치에 있는 적을 가격하여 느려짐 10턴, 취약 5턴을 부여하고 _영웅 레벨*2+현재 층 수-영웅 레벨*3+현재 층 수*2_의 피해를 입힙니다.\n\n비행 드론 사용 후 적 10체를 처치하면 다시 사용이 가능합니다.
+
+actors.hero.herosubclass.hoshino_ex_tactical_press=EX: 전술 진압
+actors.hero.herosubclass.hoshino_ex_tactical_press_short_desc=호시노는 EX 능력인 _전술 진압_을 얻어 SG를 발사할 때 전방 2칸의 대상을 모두 공격할 수 있습니다.
+actors.hero.herosubclass.hoshino_ex_tactical_press_desc=_EX 능력: 전술 진압_을 얻은 호시노는 SG를 발사할 때 전방 2칸의 대상을 모두 공격할 수 있게 됩니다.
+
+actors.hero.herosubclass.hoshino_ex_tactical_shield=EX: 전술 방패 전개!
+actors.hero.herosubclass.hoshino_ex_tactical_shield_short_desc=호시노는 EX 능력인 _전술 방패 전개!_를 얻어 진압 방패 '아이언 호루스' 사용 중 총기 재장전이 턴을 소모하지 않으며, 총기 명중 시 약간의 방어막을 얻습니다.
+actors.hero.herosubclass.hoshino_ex_tactical_shield_desc=_EX 능력: 전술 방패 전개!_를 얻은 호시노는 진압 방패 '아이언 호루스' 사용 중 총기를 재장전할 때 턴을 소모하지 않으며, 탄환이 명중할 때마다 1의 방어막을 최대 10까지 얻을 수 있습니다.
+
+actors.hero.herosubclass.shiroko_ex_elemental_bullet=EX: 속성탄 장전!
+actors.hero.herosubclass.shiroko_ex_elemental_bullet_short_desc=시로코는 EX 능력인 _속성탄 장전!_을 얻어 총기 재장전 직후 다양한 효과를 가진 탄환을 발사할 수 있는 속성탄을 장전할 수 있게 됩니다.
+actors.hero.herosubclass.shiroko_ex_elemental_bullet_desc=_EX 능력: 속성탄 장전!_을 얻은 시로코는 총기를 재장전한 후 1턴 동안 속성탄을 장전할 수 있게 됩니다. 속성탄은 1턴을 추가로 사용하여 장전하며, 재장전 시간에 영향을 받지 않습니다.
+
+actors.hero.herosubclass.shiroko_ex_professional_ride=EX: 프로페셔널 라이딩
+actors.hero.herosubclass.shiroko_ex_professional_ride_short_desc=시로코는 EX 능력인 _프로페셔널 라이딩_을 얻어 자전거를 탑승하는 동안 충전량을 사용해 다양한 액션을 수행할 수 있습니다.
+actors.hero.herosubclass.shiroko_ex_professional_ride_desc=_EX 능력: 프로페셔널 라이딩_을 얻은 시로코는 자전거 탑승의 달인이 됩니다. 시로코는 자전거 탑승 중 명중률 저하가 사라지며, 추가적인 충전량을 사용해 다양한 액션을 사용할 수 있습니다.
+
+actors.hero.herosubclass.noa_ex_large_magazine=EX: 확장 탄창 장전!
+actors.hero.herosubclass.noa_ex_large_magazine_short_desc=노아는 EX 능력인 _확장 탄창 장전!_을 얻어 재장전 시 짧은 시간 동안 발사에 탄환을 소모하지 않습니다.
+actors.hero.herosubclass.noa_ex_large_magazine_desc=_EX 능력: 확장 탄창 장전!_을 얻은 노아는 재장전 시 신비로운 확장 탄창을 장전해 다음 3턴 동안 총기 발사에 탄환을 소모하지 않게 됩니다.
+
+actors.hero.herosubclass.noa_ex_double_barrel=EX: 더블 배럴
+actors.hero.herosubclass.noa_ex_double_barrel_short_desc=노아는 EX 능력인 _더블 배럴_을 얻어 탄환 명중 후 보조 무기로 추가 공격을 가할 수 있습니다.
+actors.hero.herosubclass.noa_ex_double_barrel_desc=_EX 능력: 더블 배럴_을 얻은 노아는 보조 무기로 HG를 장착할 수 있게 되며, 탄환이 명중한 이후 짧은 시간 내에 보조 무기를 발사해 턴 소모 없이 약한 피해를 줄 수 있습니다. 보조 무기의 탄창이 비어 있을 경우 발사가 불가능합니다.
+
+actors.hero.herosubclass.miyu_ex_penetration_shot=EX: 관통 사격
+actors.hero.herosubclass.miyu_ex_penetration_shot_short_desc=미유는 EX 능력인 _관통 사격_을 얻어 한 번의 발사로 여러 명의 적을 관통해서 공격할 수 있습니다.
+actors.hero.herosubclass.miyu_ex_penetration_shot_desc=_EX 능력: 관통 사격_을 얻은 미유는 탄환 발사 시 탄환의 궤적에 있는 모든 대상에게 피해를 입힐 수 있습니다. 폭발하는 탄환의 경우 관통 사격으로 피해를 입은 모든 대상의 위치에서 폭발합니다.
+
+actors.hero.herosubclass.miyu_ex_sniping_bullet=EX: 저격용 특수 탄환
+actors.hero.herosubclass.miyu_ex_sniping_bullet_short_desc=미유는 EX 능력인 _저격용 특수 탄환_을 얻어 거리에 따른 추가 공격력 배율을 얻습니다.
+actors.hero.herosubclass.miyu_ex_sniping_bullet_desc=_EX 능력: 저격용 특수 탄환_을 얻은 미유는 재장전 시 다음 발사가 대상과의 거리에 따른 공격력을 가지게 됩니다.\n\n5타일 떨어진 적에 대해 1배의 피해량 배율을 가지며, 최대 12타일 떨어진 적에 대해 2배의 배율을 얻습니다.
+
+
+
+###new class ability
+actors.hero.abilities.aris.aris_1.name=몰?루
+actors.hero.abilities.aris.aris_1.short_desc=쥐 대왕의 능력을 사용하세요.
+actors.hero.abilities.aris.aris_1.desc=현재는 기능이 없습니다. 쥐 대왕의 능력을 사용하세요.
+actors.hero.abilities.aris.aris_2.name=몰?루
+actors.hero.abilities.aris.aris_2.short_desc=쥐 대왕의 능력을 사용하세요
+actors.hero.abilities.aris.aris_2.desc=현재는 기능이 없습니다. 쥐 대왕의 능력을 사용하세요.
+actors.hero.abilities.aris.aris_3.name=몰?루
+actors.hero.abilities.aris.aris_3.short_desc=쥐 대왕의 능력을 사용하세요
+actors.hero.abilities.aris.aris_3.desc=현재는 기능이 없습니다. 쥐 대왕의 능력을 사용하세요.
+
+actors.hero.abilities.nonomi.nonomi_1.name=몰?루
+actors.hero.abilities.nonomi.nonomi_1.short_desc=쥐 대왕의 능력을 사용하세요.
+actors.hero.abilities.nonomi.nonomi_1.desc=현재는 기능이 없습니다. 쥐 대왕의 능력을 사용하세요.
+actors.hero.abilities.nonomi.nonomi_2.name=몰?루
+actors.hero.abilities.nonomi.nonomi_2.short_desc=쥐 대왕의 능력을 사용하세요
+actors.hero.abilities.nonomi.nonomi_2.desc=현재는 기능이 없습니다. 쥐 대왕의 능력을 사용하세요.
+actors.hero.abilities.nonomi.nonomi_3.name=몰?루
+actors.hero.abilities.nonomi.nonomi_3.short_desc=쥐 대왕의 능력을 사용하세요
+actors.hero.abilities.nonomi.nonomi_3.desc=현재는 기능이 없습니다. 쥐 대왕의 능력을 사용하세요.
+
+actors.hero.abilities.miyako.miyako_1.name=몰?루
+actors.hero.abilities.miyako.miyako_1.short_desc=쥐 대왕의 능력을 사용하세요.
+actors.hero.abilities.miyako.miyako_1.desc=현재는 기능이 없습니다. 쥐 대왕의 능력을 사용하세요.
+actors.hero.abilities.miyako.miyako_2.name=몰?루
+actors.hero.abilities.miyako.miyako_2.short_desc=쥐 대왕의 능력을 사용하세요
+actors.hero.abilities.miyako.miyako_2.desc=현재는 기능이 없습니다. 쥐 대왕의 능력을 사용하세요.
+actors.hero.abilities.miyako.miyako_3.name=몰?루
+actors.hero.abilities.miyako.miyako_3.short_desc=쥐 대왕의 능력을 사용하세요
+actors.hero.abilities.miyako.miyako_3.desc=현재는 기능이 없습니다. 쥐 대왕의 능력을 사용하세요.
+
+actors.hero.abilities.hoshino.hoshino_1.name=몰?루
+actors.hero.abilities.hoshino.hoshino_1.short_desc=쥐 대왕의 능력을 사용하세요.
+actors.hero.abilities.hoshino.hoshino_1.desc=현재는 기능이 없습니다. 쥐 대왕의 능력을 사용하세요.
+actors.hero.abilities.hoshino.hoshino_2.name=몰?루
+actors.hero.abilities.hoshino.hoshino_2.short_desc=쥐 대왕의 능력을 사용하세요
+actors.hero.abilities.hoshino.hoshino_2.desc=현재는 기능이 없습니다. 쥐 대왕의 능력을 사용하세요.
+actors.hero.abilities.hoshino.hoshino_3.name=몰?루
+actors.hero.abilities.hoshino.hoshino_3.short_desc=쥐 대왕의 능력을 사용하세요
+actors.hero.abilities.hoshino.hoshino_3.desc=현재는 기능이 없습니다. 쥐 대왕의 능력을 사용하세요.
+
+actors.hero.abilities.shiroko.shiroko_1.name=몰?루
+actors.hero.abilities.shiroko.shiroko_1.short_desc=쥐 대왕의 능력을 사용하세요.
+actors.hero.abilities.shiroko.shiroko_1.desc=현재는 기능이 없습니다. 쥐 대왕의 능력을 사용하세요.
+actors.hero.abilities.shiroko.shiroko_2.name=몰?루
+actors.hero.abilities.shiroko.shiroko_2.short_desc=쥐 대왕의 능력을 사용하세요
+actors.hero.abilities.shiroko.shiroko_2.desc=현재는 기능이 없습니다. 쥐 대왕의 능력을 사용하세요.
+actors.hero.abilities.shiroko.shiroko_3.name=몰?루
+actors.hero.abilities.shiroko.shiroko_3.short_desc=쥐 대왕의 능력을 사용하세요
+actors.hero.abilities.shiroko.shiroko_3.desc=현재는 기능이 없습니다. 쥐 대왕의 능력을 사용하세요.
+
+actors.hero.abilities.noa.noa_1.name=몰?루
+actors.hero.abilities.noa.noa_1.short_desc=쥐 대왕의 능력을 사용하세요.
+actors.hero.abilities.noa.noa_1.desc=현재는 기능이 없습니다. 쥐 대왕의 능력을 사용하세요.
+actors.hero.abilities.noa.noa_2.name=몰?루
+actors.hero.abilities.noa.noa_2.short_desc=쥐 대왕의 능력을 사용하세요
+actors.hero.abilities.noa.noa_2.desc=현재는 기능이 없습니다. 쥐 대왕의 능력을 사용하세요.
+actors.hero.abilities.noa.noa_3.name=몰?루
+actors.hero.abilities.noa.noa_3.short_desc=쥐 대왕의 능력을 사용하세요
+actors.hero.abilities.noa.noa_3.desc=현재는 기능이 없습니다. 쥐 대왕의 능력을 사용하세요.
+
+actors.hero.abilities.miyu.miyu_1.name=몰?루
+actors.hero.abilities.miyu.miyu_1.short_desc=쥐 대왕의 능력을 사용하세요.
+actors.hero.abilities.miyu.miyu_1.desc=현재는 기능이 없습니다. 쥐 대왕의 능력을 사용하세요.
+actors.hero.abilities.miyu.miyu_2.name=몰?루
+actors.hero.abilities.miyu.miyu_2.short_desc=쥐 대왕의 능력을 사용하세요
+actors.hero.abilities.miyu.miyu_2.desc=현재는 기능이 없습니다. 쥐 대왕의 능력을 사용하세요.
+actors.hero.abilities.miyu.miyu_3.name=몰?루
+actors.hero.abilities.miyu.miyu_3.short_desc=쥐 대왕의 능력을 사용하세요
+actors.hero.abilities.miyu.miyu_3.desc=현재는 기능이 없습니다. 쥐 대왕의 능력을 사용하세요.
+
+###new subclass talent
+
+#aris
+actors.hero.talent.for_light.title=빛이여!
+actors.hero.talent.for_light.desc=_+1:_ 적을 처음 공격할 때 적을 _2턴_ 동안 실명시킵니다.\n\n_+2:_ 적을 처음 공격할 때 적을 _3턴_ 동안 실명시킵니다.
+actors.hero.talent.robots_intuition.title=용사의 직감
+actors.hero.talent.robots_intuition.desc=_+1:_ 무기와 방어구를 _2.5배 빠르게_ 감정합니다.\n\n_+2:_ 무기와 방어구를 _착용하는 즉시_ 감정합니다.
+actors.hero.talent.test_subject.title=실험용 로봇이 아닙니다!
+actors.hero.talent.test_subject.desc=_+1:_ 아이템을 감정할 때마다 _2 HP_만큼 회복합니다.\n\n_+2:_ 아이템을 감정할 때마다 _3 HP_만큼 회복합니다.
+actors.hero.talent.accel_energy.title=에너지 충전 가속!
+actors.hero.talent.accel_energy.desc=_+1:_ 밸런스 붕괴의 재사용 대기 시간이 _10턴_ 감소합니다.\n\n_+2:_ 밸런스 붕괴의 재사용 대기 시간이 _20턴_ 감소합니다.
+
+actors.hero.talent.iron_stomach.title=든든합니다!
+actors.hero.talent.iron_stomach.desc=_+1:_ 식사 시 1 턴만 소모되며 식사 중에 받는 피해가 _75%_ 감소합니다.\n\n_+2:_ 식사 시 1 턴만 소모되며 식사 중에 받는 피해가 _100%_ 감소합니다.
+actors.hero.talent.restored_willpower.title=보호막 가동입니다!
+actors.hero.talent.restored_willpower.desc=_+1:_ 치유의 물약을 마시면 밀레니엄 엠블럼이 제공하는 방어막 최대치의 _75%에 해당하는 방어막_을 즉시 얻습니다.\n\n_+2:_ 치유의 물약을 마시면 밀레니엄 엠블럼이 제공하는 방어막 최대치의 _100%에 해당하는 방어막_을 즉시 얻습니다.
+actors.hero.talent.runic_transference.title=이 마법은 쓸모 있을지도...
+actors.hero.talent.runic_transference.desc=_+1:_ 아리스의 밀레니엄 엠블럼이 강화수치를 옮길 때와 같은 방식으로 _평범한 상형문자_를 옮길 수 있습니다.\n\n_+2:_ 아리스의 밀레니엄 엠블럼이 강화수치를 옮길 때와 같은 방식으로 _평범한, 강력한, 저주 상형문자_를 옮길 수 있습니다.
+actors.hero.talent.empowering_magic.title=강화 마법입니다!
+actors.hero.talent.empowering_magic.desc=_+1:_ 밸런스 붕괴 사용 후 5턴 동안 공격력이 _13%_ 증가합니다.\n\n_+2:_ 밸런스 붕괴 사용 후 5턴 동안 공격력이 _25%_ 증가합니다.
+actors.hero.talent.balance_collapse.title=약점 조준
+actors.hero.talent.balance_collapse.desc=_+1:_ 밸런스 붕괴의 피해량이 _5%_ 증가합니다.\n\n_+2:_ 밸런스 붕괴의 피해량이 _10%_ 증가합니다.
+
+actors.hero.talent.hold_fast.title=굳건한 태세
+actors.hero.talent.hold_fast.desc=_+1:_ 아리스는 대기 시  _0-2의 방어력_을 이동하기 전까지 얻습니다.\n\n_+2:_ 아리스는 대기 시 _0-4의 방어력_을 이동하기 전까지 얻습니다.\n\n_+3:_ 아리스는 대기 시 _0-6의 방어력_을 이동하기 전까지 얻습니다.
+actors.hero.talent.strongman.title=초인적인 힘의 비결
+actors.hero.talent.strongman.desc=_+1:_ 아리스의 힘이 _8%_ 만큼 증가합니다. 소수점 미만은 버립니다.\n\n_+2:_ 아리스의 힘이 _13%_ 만큼 증가합니다. 소수점 미만은 버립니다.\n\n_+3:_ 아리스의 힘이 _18%_ 만큼 증가합니다. 소수점 미만은 버립니다.
+actors.hero.talent.robot_cleaner.title=로봇 청소기
+actors.hero.talent.robot_cleaner.desc=_+1:_ 이동 속도가 _+10%_ 증가합니다.\n\n_+2:_ 이동 속도가 _+20%_ 증가합니다.\n\n_+3:_ 이동 속도가 _+30%_ 증가합니다.
+
+actors.hero.talent.energy_drain.title=엑스트라 스킬: 에너지 드레인
+actors.hero.talent.energy_drain.desc=_+1:_ 밸런스 붕괴 레이저에 피해를 입은 적 하나 당 _1_의 체력을 회복합니다.\n\n_+2:_ 밸런스 붕괴 레이저에 피해를 입은 적 하나 당 _2_의 체력을 회복합니다.\n\n_+3:_ 밸런스 붕괴 레이저에 피해를 입은 적 하나 당 _3_의 체력을 회복합니다.
+actors.hero.talent.piezoelectricity.title=압전 소자
+actors.hero.talent.piezoelectricity.desc=_+1:_ 적을 공격할 때마다 밸런스 붕괴의 재사용 대기 시간이 _1턴_ 감소합니다.\n\n_+2:_ 적을 공격할 때마다 밸런스 붕괴의 재사용 대기 시간이 _2턴_ 감소합니다.\n\n_+3:_ 적을 공격할 때마다 밸런스 붕괴의 재사용 대기 시간이 _3턴_ 감소합니다.
+actors.hero.talent.holysword.title=전설의 성검
+actors.hero.talent.holysword.desc=_+1:_ 빛의 검: 슈퍼노바를 _장착할 수 있게 됩니다_.\n\n_+2:_ +1의 효과에 더불어, 빛의 검: 슈퍼노바를 _강화할 수 있게 됩니다_.\n\n_+3:_ +2의 효과에 더불어, 빛의 검: 슈퍼노바가 _레벨에 따라 추가적인 강화 수치를 얻습니다_.
+
+actors.hero.talent.increasing_output.title=엑스트라 스킬: 출력 증가!
+actors.hero.talent.increasing_output.desc=_+1:_ 밸런스 붕괴의 사정거리가 _25%_ 증가합니다.\n\n_+2:_ 밸런스 붕괴의 사정거리가 _50%_ 증가합니다.\n\n_+3:_ 밸런스 붕괴의 사정거리가 _75%_ 증가합니다.
+actors.hero.talent.overcharge.title=오버 차지
+actors.hero.talent.overcharge.desc=_+1:_ 충전 단계 1당 밸런스 붕괴가 _+5%_의 추가 피해를 입힙니다.\n\n_+2:_ 충전 단계 1당 밸런스 붕괴가 _+10%_의 추가 피해를 입힙니다.\n\n_+3:_ 충전 단계 1당 밸런스 붕괴가 _+15%_의 추가 피해를 입힙니다.
+actors.hero.talent.charge_accel.title=충전 가속
+actors.hero.talent.charge_accel.desc=_+1:_ 충전 단계 1당 다음 밸런스 붕괴의 재사용 대기 시간이 _5%_ 감소합니다.\n\n_+2:_ 충전 단계 1당 다음 밸런스 붕괴의 재사용 대기 시간이 _10%_ 감소합니다.\n\n_+3:_ 충전 단계 1당 다음 밸런스 붕괴의 재사용 대기 시간이 _15%_ 감소합니다.
+
+actors.hero.talent.aris_abil_11.title=특성 1
+actors.hero.talent.aris_abil_11.desc=몰?루
+actors.hero.talent.aris_abil_12.title=특성 2
+actors.hero.talent.aris_abil_12.desc=몰?루
+actors.hero.talent.aris_abil_13.title=특성 3
+actors.hero.talent.aris_abil_13.desc=몰?루
+
+actors.hero.talent.aris_abil_21.title=특성 1
+actors.hero.talent.aris_abil_21.desc=몰?루
+actors.hero.talent.aris_abil_22.title=특성 2
+actors.hero.talent.aris_abil_22.desc=몰?루
+actors.hero.talent.aris_abil_23.title=특성 3
+actors.hero.talent.aris_abil_23.desc=몰?루
+
+actors.hero.talent.aris_abil_31.title=특성 1
+actors.hero.talent.aris_abil_31.desc=몰?루
+actors.hero.talent.aris_abil_32.title=특성 2
+actors.hero.talent.aris_abil_32.desc=몰?루
+actors.hero.talent.aris_abil_33.title=특성 3
+actors.hero.talent.aris_abil_33.desc=몰?루
+
+#nonomi
+actors.hero.talent.resting.title=휴식 시간
+actors.hero.talent.resting.desc=_+1:_ 음식을 섭취할 때 체력이 50% 이하라면 _2 HP_ , 25% 이하라면 _3 HP_를 회복합니다.\n\n_+2:_ 음식을 섭취할 때 체력이 50% 이하라면  _3 HP_ , 25% 이하라면 _5 HP_를 회복합니다.
+actors.hero.talent.mg_intuition.title=기관총 전문가
+actors.hero.talent.mg_intuition.desc=_+1:_ MG를 획득하는 즉시 _저주 여부를 감정_합니다.\n\n_+2:_ +1의 효과에 더불어, MG를 _착용하는 즉시_ 감정합니다.
+actors.hero.talent.max_health.title=건강해지는 거예요
+actors.hero.talent.max_health.desc=_+1:_ 최대 체력이 _5_ 만큼 증가합니다.\n\n_+2:_ 최대 체력이 _10_ 만큼 증가합니다.
+actors.hero.talent.no_way.title=안 돼요!
+actors.hero.talent.no_way.desc=_+1:_ 근접한 적을 공격하면 _2타일_만큼 밀쳐냅니다.\n\n_+2:_ 근접한 적을 공격하면 _3타일_만큼 밀쳐냅니다.\n\n30턴의 재사용 대기 시간이 있습니다.
+
+actors.hero.talent.reloading_meal.title=틈틈이 정비하는 거예요~
+actors.hero.talent.reloading_meal.desc=_+1:_ 식사 시 1 턴만 소모되며 장착 중인 총기의 현재 장탄수가 _1발_ 증가합니다.\n\n_+2:_ 식사 시 1 턴만 소모되며 장착 중인 총기의 현재 장탄수가 _2발_ 증가합니다.\n\n최대 장탄수를 넘어서 장전이 가능하지만, 중첩은 불가능합니다.
+actors.hero.talent.gold_card.title=골드 카드
+actors.hero.talent.gold_card.desc=_+1:_ 상점에서 판매하는 물건의 가격이 _20%_ 감소합니다.\n\n_+2:_ 상점에서 판매하는 물건의 가격이 _40%_ 감소합니다.
+actors.hero.talent.large_magazine.title=대용량 탄창
+actors.hero.talent.large_magazine.desc=_+1:_ 총기의 최대 장탄수가 _1발_ 증가하며, 재장전 시간이 _1턴_ 증가합니다.\n\n_+2:_ 총기의 최대 장탄수가 _2발_ 증가하며, 재장전 시간이 _2턴_ 증가합니다.
+actors.hero.talent.surprise.title=서프라이즈~
+actors.hero.talent.surprise.desc=_+1:_ 기습 공격 시 _5%_의 추가 피해를 입힙니다.\n\n_+2:_ 기습 공격 시 _10%_의 추가 피해를 입힙니다.
+actors.hero.talent.mg_master.title=내 손에 딱 맞는 무기
+actors.hero.talent.mg_master.desc=_+1:_ _3단계_ 이하의 MG의 요구 힘 수치가 1 감소합니다.\n\n_+2:_ _5단계_ 이하의 MG의 요구 힘 수치가 1 감소합니다.
+
+actors.hero.talent.mg_fast_reload.title=능숙한 손놀림
+actors.hero.talent.mg_fast_reload.desc=_+1:_ MG의 재장전 속도가 _10%_ 증가합니다.\n\n_+2:_ MG의 재장전 속도가 _20%_ 증가합니다.\n\n_+3:_ MG의 재장전 속도가 _30%_ 증가합니다.
+actors.hero.talent.ally_warp.title=신속한 백업
+actors.hero.talent.ally_warp.desc=_+1:_ 노노미는 _2타일_ 내의 아군을 터치하여 즉시 위치를 바꿀 수 있습니다.\n\n_+2:_ 노노미는 _4타일_ 내의 아군을 터치하여 즉시 위치를 바꿀 수 있습니다.\n\n_+3:_ 노노미는 _6타일_ 내의 아군을 터치하여 즉시 위치를 바꿀 수 있습니다.\n\n이 특성은 움직일 수 없는 아군에게는 사용할 수 없습니다.
+
+actors.hero.talent.riot_1.title=혼날 시간이예요~
+actors.hero.talent.riot_1.desc=_+1:_ 범위 내의 적 1체당 난사의 피해량이 _+10%_ 증가합니다.\n\n_+2:_ 범위 내의 적 1체당 난사의 피해량이 _+20%_ 증가합니다.\n\n_+3:_ 범위 내의 적 1체당 난사의 피해량이 _+30%_ 증가합니다.\n\n피해량은 최대 +150%까지 증가합니다.
+actors.hero.talent.riot_2.title=화력 집중
+actors.hero.talent.riot_2.desc=_+1:_ 난사 범위의 반경이 _2타일_ 증가하고, 각도가 _15도_ 감소합니다.\n\n_+2:_ 난사 범위의 반경이 _4타일_ 증가하고, 각도가 _30도_ 감소합니다.\n\n_+3:_ 난사 범위의 반경이 _6타일_ 증가하고, 각도가 _45도_ 감소합니다.
+actors.hero.talent.riot_3.title=떽~이에요!
+actors.hero.talent.riot_3.desc=_+1:_ 가까운 적이 난사에 맞으면 _낮은 확률_로 밀려납니다.\n\n_+2:_ 가까운 적이 난사에 맞으면 _보통 확률_로 밀려납니다.\n\n_+3:_ 가까운 적이 난사에 맞으면 _높은 확률_로 밀려납니다.\n\n대상과의 거리가 가까울수록 확률이 증가합니다.
+
+actors.hero.talent.shootall_1.title=전탄 발사~!
+actors.hero.talent.shootall_1.desc=_+1:_ 전탄 발사 시 _0~1발_의 탄환을 추가로 발사합니다.\n\n_+2:_ 전탄 발사 시 _0~2발_의 탄환을 추가로 발사합니다.\n\n_+3:_ 전탄 발사 시 _0~3발_의 탄환을 추가로 발사합니다.
+actors.hero.talent.shootall_2.title=피버 타임이예요~!
+actors.hero.talent.shootall_2.desc=_+1:_ 전탄 발사로 적을 처치할 경우 _13%_ 확률로 장착한 MG가 즉시 재장전됩니다.\n\n_+2:_ 전탄 발사로 적을 처치할 경우 _27%_ 확률로 장착한 MG가 즉시 재장전됩니다.\n\n_+3:_ 전탄 발사로 적을 처치할 경우 _40%_ 확률로 장착한 MG가 즉시 재장전됩니다.
+actors.hero.talent.shootall_3.title=임기 응변
+actors.hero.talent.shootall_3.desc=_+1:_ 장착한 MG의 탄창이 비었을 때 최대 근접 공격력이 _7%_ 증가합니다.\n\n_+2:_ 장착한 MG의 탄창이 비었을 때 최대 근접 공격력이 _13%_ 증가합니다.\n\n_+3:_ 장착한 MG의 탄창이 비었을 때 최대 근접 공격력이 _20%_ 증가합니다.
+
+actors.hero.talent.nonomi_abil_11.title=특성 1
+actors.hero.talent.nonomi_abil_11.desc=몰?루
+actors.hero.talent.nonomi_abil_12.title=특성 2
+actors.hero.talent.nonomi_abil_12.desc=몰?루
+actors.hero.talent.nonomi_abil_13.title=특성 3
+actors.hero.talent.nonomi_abil_13.desc=몰?루
+
+actors.hero.talent.nonomi_abil_21.title=특성 1
+actors.hero.talent.nonomi_abil_21.desc=몰?루
+actors.hero.talent.nonomi_abil_22.title=특성 2
+actors.hero.talent.nonomi_abil_22.desc=몰?루
+actors.hero.talent.nonomi_abil_23.title=특성 3
+actors.hero.talent.nonomi_abil_23.desc=몰?루
+
+actors.hero.talent.nonomi_abil_31.title=특성 1
+actors.hero.talent.nonomi_abil_31.desc=몰?루
+actors.hero.talent.nonomi_abil_32.title=특성 2
+actors.hero.talent.nonomi_abil_32.desc=몰?루
+actors.hero.talent.nonomi_abil_33.title=특성 3
+actors.hero.talent.nonomi_abil_33.desc=몰?루
+
+#miyako
+actors.hero.talent.plate_add.title=특수 방탄판 장착
+actors.hero.talent.plate_add.desc=_+1:_ 받는 피해가 _0-1_ 감소하고, 25% 확률로 공격자에게 1의 피해를 입힙니다.\n\n_+2:_ 받는 피해가 _1-2_ 감소하고, 25% 확률로 공격자에게 1의 피해를 입힙니다.
+actors.hero.talent.smg_intuition.title=기관단총 전문가
+actors.hero.talent.smg_intuition.desc=_+1:_ SMG를 획득하는 즉시 _저주 여부를 감정_합니다.\n\n_+2:_ +1의 효과에 더불어, SMG를 _착용하는 즉시_ 감정합니다.
+actors.hero.talent.supply.title=전투 보급품
+actors.hero.talent.supply.desc=_+1:_ 적을 쓰러뜨렸을 때 수류탄, 클레이모어를 얻을 확률이 각각 _+5%, +2.5%_ 증가합니다.\n\n_+2:_ 적을 쓰러뜨렸을 때 수류탄, 클레이모어를 얻을 확률이 각각 _+10%, +5%_ 증가합니다.\n\n기본 확률은 각각 20%, 12.5%입니다.
+actors.hero.talent.disturb.title=교란 작전
+actors.hero.talent.disturb.desc=_+1:_ 적을 기습 공격하면 _2턴_의 현기증을 부여합니다.\n\n_+2:_ 적을 기습 공격하면 _3턴_의 현기증을 부여합니다.
+
+actors.hero.talent.tactical_meal.title=전투 식량
+actors.hero.talent.tactical_meal.desc=_+1:_ 식사 시 1 턴만 소모되며 식사 시 최대 체력의 _10%_만큼 방어막을 얻습니다.\n\n_+2:_ 식사 시 1 턴만 소모되며 식사 시 최대 체력의 _20%_만큼 방어막을 얻습니다.
+actors.hero.talent.intelligence.title=첩보 입수
+actors.hero.talent.intelligence.desc=_+1:_ 주변 _2 타일_에 있는 모든 적에 대해 심안 효과를 얻습니다.\n\n_+2:_ 주변 _3 타일_에 있는 모든 적에 대해 심안 효과를 얻습니다.
+actors.hero.talent.cqc.title=CQC
+actors.hero.talent.cqc.desc=_+1:_ 장착 중인 SMG의 최대 근접 공격력이 _10%_ 증가합니다.\n\n_+2:_ 장착 중인 SMG의 최대 근접 공격력이 _20%_ 증가합니다.
+actors.hero.talent.tactical_move.title=전술 기동
+actors.hero.talent.tactical_move.desc=_+1:_ 공격을 회피할 때마다 _25%_ 확률로 장착한 총기에 탄환이 1발 장전됩니다.\n\n_+2:_ 공격을 회피할 때마다 _50%_ 확률로 장착한 총기에 탄환이 1발 장전됩니다.
+actors.hero.talent.smg_master.title=내 손에 딱 맞는 무기
+actors.hero.talent.smg_master.desc=_+1:_ _3단계_ 이하의 SMG의 요구 힘 수치가 1 감소합니다.\n\n_+2:_ _5단계_ 이하의 SMG의 요구 힘 수치가 1 감소합니다.
+
+actors.hero.talent.smg_fast_reload.title=능숙한 손놀림
+actors.hero.talent.smg_fast_reload.desc=_+1:_ SMG의 재장전 속도가 _10%_ 증가합니다.\n\n_+2:_ SMG의 재장전 속도가 _20%_ 증가합니다.\n\n_+3:_ SMG의 재장전 속도가 _30%_ 증가합니다.
+actors.hero.talent.rabbit_open_up.title=RABBIT Open Up!
+actors.hero.talent.rabbit_open_up.desc=_+1:_ 문에서 클레이모어를 사용할 경우 문을 파괴하며 클레이모어의 범위와 피해량이 _100%_ 증가합니다.\n\n_+2:_ 문에서 클레이모어를 사용할 경우 문을 파괴하며 클레이모어의 범위와 피해량이 _200%_ 증가합니다.\n\n_+3:_ 문에서 클레이모어를 사용할 경우 문을 파괴하며 클레이모어의 범위와 피해량이 _300%_ 증가합니다.
+
+actors.hero.talent.stundrone_1.title=전기장 방출
+actors.hero.talent.stundrone_1.desc=_+1:_ 섬광 드론 사용 시 대상 지점 주변 5x5지역에 _3턴_ 동안 스파크가 발생합니다.\n\n_+2:_ 섬광 드론 사용 시 대상 지점 주변 5x5지역에 _6턴_ 동안 스파크가 발생합니다.\n\n_+3:_ 섬광 드론 사용 시 대상 지점 주변 5x5지역에 _9턴_ 동안 스파크가 발생합니다.
+actors.hero.talent.stundrone_2.title=고속 충전
+actors.hero.talent.stundrone_2.desc=_+1:_ 섬광 드론 재사용에 필요한 적 처치 수가 _20%_ 감소합니다.\n\n_+2:_ 섬광 드론 재사용에 필요한 적 처치 수가 _40%_ 감소합니다.\n\n_+3:_ 섬광 드론 재사용에 필요한 적 처치 수가 _60%_ 감소합니다.
+actors.hero.talent.stundrone_3.title=섬광탄
+actors.hero.talent.stundrone_3.desc=_+1:_ 섬광 드론을 사용한 후 다음에 사용하는 수류탄이 대상에게 _2턴_의 실명을 부여합니다.\n\n_+2:_ 섬광 드론을 사용한 후 다음에 사용하는 수류탄이 대상에게 _3턴_의 실명을 부여합니다.\n\n_+3:_ 섬광 드론을 사용한 후 다음에 사용하는 수류탄이 대상에게 _4턴_의 실명을 부여합니다.
+
+actors.hero.talent.dronestrike_1.title=폭발 드론
+actors.hero.talent.dronestrike_1.desc=_+1:_ 비행 드론 사용 시 대상 지점 주변 3x3 지역에 폭발이 발생하여 _3-30_ 피해를 입힙니다.\n\n_+2:_ 비행 드론 사용 시 대상 지점 주변 3x3 지역에 폭발이 발생하여 _6-40_ 피해를 입힙니다.\n\n_+3:_ 비행 드론 사용 시 대상 지점 주변 3x3 지역에 폭발이 발생하여 _9-50_ 피해를 입힙니다.
+actors.hero.talent.dronestrike_2.title=지형 스캔
+actors.hero.talent.dronestrike_2.desc=_+1:_ 비행 드론 가격 사용 시 1턴의 마법 시야를 얻습니다. _50턴_의 재사용 대기 시간이 있습니다.\n\n_+2:_ 비행 드론 가격 사용 시 1턴의 마법 시야를 얻습니다. _40턴_의 재사용 대기 시간이 있습니다.\n\n_+3:_ 비행 드론 가격 사용 시 1턴의 마법 시야를 얻습니다. _30턴_의 재사용 대기 시간이 있습니다.\n\n대상 지점을 선택하지 않아도 우선 발동합니다.
+actors.hero.talent.dronestrike_3.title=임무 완수
+actors.hero.talent.dronestrike_3.desc=_+1:_ 비행 드론 가격으로 적 처치 시 _13%_ 확률로 비행 드론 가격을 즉시 재사용할 수 있습니다.\n\n_+2:_ 비행 드론 가격으로 적 처치 시 _27%_ 확률로 비행 드론 가격을 즉시 재사용할 수 있습니다.\n\n_+3:_ 비행 드론 가격으로 적 처치 시 _40%_ 확률로 비행 드론 가격을 즉시 재사용할 수 있습니다.
+
+actors.hero.talent.miyako_abil_11.title=특성 1
+actors.hero.talent.miyako_abil_11.desc=몰?루
+actors.hero.talent.miyako_abil_12.title=특성 2
+actors.hero.talent.miyako_abil_12.desc=몰?루
+actors.hero.talent.miyako_abil_13.title=특성 3
+actors.hero.talent.miyako_abil_13.desc=몰?루
+
+actors.hero.talent.miyako_abil_21.title=특성 1
+actors.hero.talent.miyako_abil_21.desc=몰?루
+actors.hero.talent.miyako_abil_22.title=특성 2
+actors.hero.talent.miyako_abil_22.desc=몰?루
+actors.hero.talent.miyako_abil_23.title=특성 3
+actors.hero.talent.miyako_abil_23.desc=몰?루
+
+actors.hero.talent.miyako_abil_31.title=특성 1
+actors.hero.talent.miyako_abil_31.desc=몰?루
+actors.hero.talent.miyako_abil_32.title=특성 2
+actors.hero.talent.miyako_abil_32.desc=몰?루
+actors.hero.talent.miyako_abil_33.title=특성 3
+actors.hero.talent.miyako_abil_33.desc=몰?루
+
+###hoshino
+actors.hero.talent.emergency_healing.title=응급 치료
+actors.hero.talent.emergency_healing.desc=_+1:_ 피격으로 인해 체력이 25% 미만이 되면 _5 HP_를 즉시 회복합니다.\n\n_+2:_ 피격으로 인해 체력이 25% 미만이 되면 _8 HP_를 즉시 회복합니다.\n\n50턴의 재사용 대기 시간이 있습니다.
+actors.hero.talent.sg_intuition.title=산탄총 전문가
+actors.hero.talent.sg_intuition.desc=_+1:_ SG를 획득하는 즉시 _저주 여부를 감정_합니다.\n\n_+2:_ +1의 효과에 더불어, SG를 _착용하는 즉시_ 감정합니다.
+actors.hero.talent.additional_shot.title=추가 산탄
+actors.hero.talent.additional_shot.desc=_+1:_ SG 발사 시 타격 횟수가 _1회_ 증가합니다.\n\n_+2:_ SG 발사 시 타격 횟수가 _2회_ 증가합니다.
+actors.hero.talent.reloading_shield.title=진압 숙련
+actors.hero.talent.reloading_shield.desc=_+1:_ 총기를 재장전할 때 _3_의 방어막을 얻습니다.\n\n_+2:_ 총기를 재장전할 때 _5_의 방어막을 얻습니다.
+
+actors.hero.talent.sleeping_meal.title=밥만 먹으면 졸려...
+actors.hero.talent.sleeping_meal.desc=_+1:_ 식사에 1턴만 소모하며, 식사 시 _70턴_의 졸림을 얻습니다.\n\n_+2:_ 식사에 1턴만 소모하며, 식사 시 _50턴_의 졸림을 얻습니다.
+actors.hero.talent.quick_retreat.title=재빠른 정리
+actors.hero.talent.quick_retreat.desc=_+1:_ 진압 방패 '아이언 호루스'의 재사용 대기 시간이 _20%_ 감소합니다.\n\n_+2:_ 진압 방패 '아이언 호루스'의 재사용 대기 시간이 _40%_ 감소합니다.
+actors.hero.talent.foresight_eyes.title=세상을 꿰뚫어 보는 눈
+actors.hero.talent.foresight_eyes.desc=_+1:_ 비밀 방이 있는 층에 처음 진입할 때, _50% 의 확률_로 해당 층에 숨겨진 비밀이 있음을 눈치챕니다.\n\n_+2:_ 비밀 방이 있는 층에 처음 진입할 때, _75% 의 확률_로 해당 층에 숨겨진 비밀이 있음을 눈치챕니다.
+actors.hero.talent.magic_shield.title=방어막 전개
+actors.hero.talent.magic_shield.desc=_+1:_ 진압 방패 '아이언 호루스'가 사용 중 제공하는 방어력의 _50%_만큼 마법 방어력을 얻습니다.\n\n_+2:_ 진압 방패 '아이언 호루스'가 사용 중 제공하는 방어력의 _75%_만큼 마법 방어력을 얻습니다.
+actors.hero.talent.sg_master.title=내 손에 딱 맞는 무기
+actors.hero.talent.sg_master.desc=_+1:_ _3단계_ 이하의 SG의 요구 힘 수치가 1 감소합니다.\n\n_+2:_ _5단계_ 이하의 SG의 요구 힘 수치가 1 감소합니다.
+
+actors.hero.talent.sg_fast_reload.title=능숙한 손놀림
+actors.hero.talent.sg_fast_reload.desc=_+1:_ SG의 재장전 속도가 _10%_ 증가합니다.\n\n_+2:_ SG의 재장전 속도가 _20%_ 증가합니다.\n\n_+3:_ SG의 재장전 속도가 _30%_ 증가합니다.
+actors.hero.talent.hard_shield.title=튼튼한 방패
+actors.hero.talent.hard_shield.desc=_+1:_ 진압 방패 '아이언 호루스'가 제공하는 최대 방어력이 _25%_ 증가합니다.\n\n_+2:_ 진압 방패 '아이언 호루스'가 제공하는 최대 방어력이 _50%_ 증가합니다.\n\n_+3:_ 진압 방패 '아이언 호루스'가 제공하는 최대 방어력이 _75%_ 증가합니다.
+
+actors.hero.talent.tactical_press_1.title=화력 강화!
+actors.hero.talent.tactical_press_1.desc=_+1:_ SG 발사 시 타격 범위가 _33%_ 확률로 1타일 증가합니다.\n\n_+2:_ SG 발사 시 타격 범위가 _67%_ 확률로 1타일 증가합니다.\n\n_+3:_ SG 발사 시 타격 범위가 _100%_ 확률로 1타일 증가합니다.
+actors.hero.talent.tactical_press_2.title=무력화
+actors.hero.talent.tactical_press_2.desc=_+1:_ SG 탄환 명중 시 각 10% 확률로 대상에게 _2턴_의 멍해짐을 부여합니다.\n\n_+2:_ SG 탄환 명중 시 각 10% 확률로 대상에게 _4턴_의 멍해짐을 부여합니다.\n\n_+3:_ SG 탄환 명중 시 각 10% 확률로 대상에게 _6턴_의 멍해짐을 부여합니다.
+actors.hero.talent.tactical_press_3.title=방해하지 말라구~
+actors.hero.talent.tactical_press_3.desc=_+1:_ 근접한 적에게 SG 명중 시 명중 횟수 당 _1타일_만큼 대상을 밀쳐냅니다.\n\n_+2:_ 근접한 적에게 SG 명중 시 명중 횟수 당 _2타일_만큼 대상을 밀쳐냅니다.\n\n_+3:_ 근접한 적에게 SG 명중 시 명중 횟수 당 _3타일_만큼 대상을 밀쳐냅니다.\n\n인벤토리에서 on/off가 가능합니다.
+
+actors.hero.talent.tactical_shield_1.title=제압 사격
+actors.hero.talent.tactical_shield_1.desc=_+1:_ 진압 방패 '아이언 호루스' 사용 중 SG 탄환 명중 시 각 _3%_ 확률로 대상을 2턴 동안 기절시킵니다.\n\n_+2:_ 진압 방패 '아이언 호루스' 사용 중 SG 탄환 명중 시 각 _6%_ 확률로 대상을 2턴 동안 기절시킵니다.\n\n_+3:_ 진압 방패 '아이언 호루스' 사용 중 SG 탄환 명중 시 각 _9%_ 확률로 대상을 2턴 동안 기절시킵니다.
+actors.hero.talent.tactical_shield_2.title=전술 보호막
+actors.hero.talent.tactical_shield_2.desc=_+1:_ 탄환 명중 시 중첩 가능한 방어막의 최대치가 _50%_ 증가합니다.\n\n_+2:_ 탄환 명중 시 중첩 가능한 방어막의 최대치가 _100%_ 증가합니다.\n\n_+3:_ 탄환 명중 시 중첩 가능한 방어막의 최대치가 _150%_ 증가합니다.
+actors.hero.talent.tactical_shield_3.title=느긋하게 있자구~
+actors.hero.talent.tactical_shield_3.desc=_+1:_ 진압 방패 '아이언 호루스' 사용 중 재장전 시 _3턴_의 투명화를 얻습니다.\n\n_+2:_ 진압 방패 '아이언 호루스' 사용 중 재장전 시 _6턴_의 투명화를 얻습니다.\n\n_+3:_ 진압 방패 '아이언 호루스' 사용 중 재장전 시 _9턴_의 투명화를 얻습니다.\n\n사용 시 진압 방패 '아이언 호루스'의 다음 재사용 대기 시간이 300%로 증가하며, 다음에 진압 방패 '아이언 호루스'를 사용할 때 다시 사용이 가능합니다.
+
+actors.hero.talent.hoshino_abil_11.title=특성 1
+actors.hero.talent.hoshino_abil_11.desc=몰?루
+actors.hero.talent.hoshino_abil_12.title=특성 2
+actors.hero.talent.hoshino_abil_12.desc=몰?루
+actors.hero.talent.hoshino_abil_13.title=특성 3
+actors.hero.talent.hoshino_abil_13.desc=몰?루
+
+actors.hero.talent.hoshino_abil_21.title=특성 1
+actors.hero.talent.hoshino_abil_21.desc=몰?루
+actors.hero.talent.hoshino_abil_22.title=특성 2
+actors.hero.talent.hoshino_abil_22.desc=몰?루
+actors.hero.talent.hoshino_abil_23.title=특성 3
+actors.hero.talent.hoshino_abil_23.desc=몰?루
+
+actors.hero.talent.hoshino_abil_31.title=특성 1
+actors.hero.talent.hoshino_abil_31.desc=몰?루
+actors.hero.talent.hoshino_abil_32.title=특성 2
+actors.hero.talent.hoshino_abil_32.desc=몰?루
+actors.hero.talent.hoshino_abil_33.title=특성 3
+actors.hero.talent.hoshino_abil_33.desc=몰?루
+
+###shiroko
+actors.hero.talent.bicycle_charge.title=잠깐 휴식...
+actors.hero.talent.bicycle_charge.desc=_+1:_ 식사 시 자전거의 충전량이 _13_만큼 회복됩니다.\n\n_+2:_ 식사 시 자전거의 충전량이 _25_만큼 회복됩니다.
+actors.hero.talent.ar_intuition.title=돌격소총 전문가
+actors.hero.talent.ar_intuition.desc=_+1:_ AR을 획득하는 즉시 _저주 여부를 감정_합니다.\n\n_+2:_ +1의 효과에 더불어, AR을 _착용하는 즉시_ 감정합니다.
+actors.hero.talent.enhanced_explode.title=폭발탄 강화
+actors.hero.talent.enhanced_explode.desc=_+1:_ 시로코의 폭발 속성으로 인해 발생하는 추가 피해량이 _1_ 증가합니다.\n\n_+2:_ 시로코의 폭발 속성으로 인해 발생하는 추가 피해량이 _2_ 증가합니다.
+actors.hero.talent.defensive_feedback.title=방어적인 피드백
+actors.hero.talent.defensive_feedback.desc=_+1:_ 적을 처치하면 _5_의 방어막을 얻습니다.\n\n_+2:_ 적을 처치하면 _8_의 방어막을 얻습니다.
+
+actors.hero.talent.speedy_meal.title=에너지 보충
+actors.hero.talent.speedy_meal.desc=_+1:_ 식사에 1턴만 소모하며, 식사 시 _8_턴의 지구력을 얻습니다.\n\n_+2:_ 식사에 1턴만 소모하며, 식사 시 _15_턴의 지구력을 얻습니다.
+actors.hero.talent.inherent_wildness.title=내재된 야생성
+actors.hero.talent.inherent_wildness.desc=_+1:_ 길게 자란 풀을 밟을 때 _2턴_의 투명화를 얻습니다.\n\n_+2:_ 길게 자란 풀을 밟을 때 _3턴_의 투명화를 얻습니다.
+actors.hero.talent.electric_bicycle.title=전기 자전거
+actors.hero.talent.electric_bicycle.desc=_+1:_ 자전거 탑승 중에 이동 시 _5%_ 확률로 3턴의 충전 효과를 얻습니다.\n\n_+2:_ +1의 효과에 더불어, 자전거 탑승 중에 이동 시 _3%_ 확률로 2턴의 유물 충전 효과를 얻습니다.
+actors.hero.talent.rapid_shooting.title=고속 연사
+actors.hero.talent.rapid_shooting.desc=_+1:_ 시로코의 폭발 속성으로 인해 발동하는 추가 피해가 _50%_ 확률로 1회 추가됩니다.\n\n_+2:_ 시로코의 폭발 속성으로 인해 발동하는 추가 피해가 _100%_ 확률로 1번 더 발동합니다.\n\n한 번에 여러 발의 탄환을 발사하는 경우 그만큼 확률이 낮아집니다.
+actors.hero.talent.ar_master.title=내 손에 꼭 맞는 무기
+actors.hero.talent.ar_master.desc=_+1:_ _3단계_ 이하의 AR의 요구 힘 수치가 1 감소합니다.\n\n_+2:_ _5단계_ 이하의 AR의 요구 힘 수치가 1 감소합니다.
+
+actors.hero.talent.ar_fast_reload.title=능숙한 손놀림
+actors.hero.talent.ar_fast_reload.desc=_+1:_ AR의 재장전 속도가 _10%_ 증가합니다.\n\n_+2:_ AR의 재장전 속도가 _20%_ 증가합니다.\n\n_+3:_ AR의 재장전 속도가 _30%_ 증가합니다.
+actors.hero.talent.shooting_weakness.title=약점 노리기
+actors.hero.talent.shooting_weakness.desc=_+1:_ 탄환 명중 시 대상에게 3턴의 취약을 부여합니다. _30턴_의 재사용 대기 시간이 있습니다.\n\n_+2:_ 탄환 명중 시 대상에게 3턴의 취약을 부여합니다. _20턴_의 재사용 대기 시간이 있습니다.\n\n_+3:_ 탄환 명중 시 대상에게 3턴의 취약을 부여합니다. _10턴_의 재사용 대기 시간이 있습니다.
+
+actors.hero.talent.elemental_bullet_1.title=속성 강화
+actors.hero.talent.elemental_bullet_1.desc=_+1:_ 속성 탄환의 성능이 _1단계_ 강화됩니다.\n\n_+2:_ 속성 탄환의 성능이 _2단계_ 강화됩니다.\n\n_+3:_ 속성 탄환의 성능이 _3단계_ 강화됩니다.
+actors.hero.talent.elemental_bullet_2.title=전술 재장전
+actors.hero.talent.elemental_bullet_2.desc=_+1:_ AR의 최대 탄창이 _1발_ 증가합니다.\n\n_+2:_ +1의 효과에 더불어, AR의 재장전 시간이 _1턴_ 감소합니다.\n\n_+3:_ +2의 효과에 더불어, _속성 탄환 장전에 턴을 소모하지 않습니다_.
+actors.hero.talent.elemental_bullet_3.title=간파 사격
+actors.hero.talent.elemental_bullet_3.desc=_+1:_ 해로운 효과를 가진 적에게 입히는 탄환 피해량이 _+7%_ 증가합니다.\n\n_+2:_ 해로운 효과를 가진 적에게 입히는 탄환 피해량이 _+13%_ 증가합니다.\n\n_+3:_ 해로운 효과를 가진 적에게 입히는 탄환 피해량이 _+20%_ 증가합니다.
+
+actors.hero.talent.professional_ride_1.title=빠른 충전
+actors.hero.talent.professional_ride_1.desc=_+1:_ 자전거에서 내린 채로 이동 시 얻는 충전량이 _+17%_ 증가합니다.\n\n_+2:_ 자전거에서 내린 채로 이동 시 얻는 충전량이 _+33%_ 증가합니다.\n\n_+3:_ 자전거에서 내린 채로 이동 시 얻는 충전량이 _+50%_ 증가합니다.
+actors.hero.talent.professional_ride_2.title=잔상
+actors.hero.talent.professional_ride_2.desc=_+1:_ 자전거 탑승 중 현재 이동 속도의 _17%_만큼의 추가 회피를 얻습니다.\n\n_+2:_ 자전거 탑승 중 현재 이동 속도의 _33%_만큼의 추가 회피를 얻습니다.\n\n_+3:_ 자전거 탑승 중 현재 이동 속도의 _50%_만큼의 추가 회피를 얻습니다.
+actors.hero.talent.professional_ride_3.title=에코 드라이브
+actors.hero.talent.professional_ride_3.desc=_+1:_ 프로페셔널 라이딩 액션의 소모 충전량이 _17%_ 감소합니다.\n\n_+2:_ 프로페셔널 라이딩 액션의 소모 충전량이 _33%_ 감소합니다.\n\n_+3:_ 프로페셔널 라이딩 액션의 소모 충전량이 _50%_ 감소합니다.
+
+actors.hero.talent.shiroko_abil_11.title=특성 1
+actors.hero.talent.shiroko_abil_11.desc=몰?루
+actors.hero.talent.shiroko_abil_12.title=특성 2
+actors.hero.talent.shiroko_abil_12.desc=몰?루
+actors.hero.talent.shiroko_abil_13.title=특성 3
+actors.hero.talent.shiroko_abil_13.desc=몰?루
+
+actors.hero.talent.shiroko_abil_21.title=특성 1
+actors.hero.talent.shiroko_abil_21.desc=몰?루
+actors.hero.talent.shiroko_abil_22.title=특성 2
+actors.hero.talent.shiroko_abil_22.desc=몰?루
+actors.hero.talent.shiroko_abil_23.title=특성 3
+actors.hero.talent.shiroko_abil_23.desc=몰?루
+
+actors.hero.talent.shiroko_abil_31.title=특성 1
+actors.hero.talent.shiroko_abil_31.desc=몰?루
+actors.hero.talent.shiroko_abil_32.title=특성 2
+actors.hero.talent.shiroko_abil_32.desc=몰?루
+actors.hero.talent.shiroko_abil_33.title=특성 3
+actors.hero.talent.shiroko_abil_33.desc=몰?루
+
+#noa
+actors.hero.talent.speedy_move.title=기록의 생명은 속도
+actors.hero.talent.speedy_move.desc=_+1:_ 주 무기로 HG를 장착하고 있는 동안 이동 속도가 _10%_ 증가합니다.\n\n_+2:_ 주 무기로 HG를 장착하고 있는 동안 이동 속도가 _20%_ 증가합니다.
+actors.hero.talent.hg_intuition.title=자동권총 전문가
+actors.hero.talent.hg_intuition.desc=_+1:_ HG를 획득하는 즉시 _저주 여부를 감정_합니다.\n\n_+2:_ +1의 효과에 더불어, HG를 _착용하는 즉시_ 감정합니다.
+actors.hero.talent.healing_factor.title=힐링 팩터
+actors.hero.talent.healing_factor.desc=_+1:_ 체력의 자연 회복 속도가 _13%_ 증가합니다.\n\n_+2:_ 체력의 자연 회복 속도가 _25%_ 증가합니다.
+actors.hero.talent.last_bullet.title=최후의 탄환
+actors.hero.talent.last_bullet.desc=_+1:_ 총기 발사 후 장탄수가 0이 되면 _5_의 방어막을 얻습니다.\n\n_+2:_ 총기 발사 후 장탄수가 0이 되면 _8_의 방어막을 얻습니다.
+
+actors.hero.talent.healing_meal.title=휴식도 업무의 일부
+actors.hero.talent.healing_meal.desc=_+1:_ 식사에 1턴만 소모하며, 식사 시 _8턴_의 회복 중 효과를 얻습니다.\n\n_+2:_ 식사에 1턴만 소모하며, 식사 시 _15턴_의 회복 중 효과를 얻습니다.
+actors.hero.talent.path_prediction.title=이동 경로 예측
+actors.hero.talent.path_prediction.desc=_+1:_ 체력이 _25%_ 이하인 적들에 대해 심안 효과를 얻습니다.\n\n_+2:_ 체력이 _50%_ 이하인 적들에 대해 심안 효과를 얻습니다.
+actors.hero.talent.skilled_search.title=능숙한 탐색
+actors.hero.talent.skilled_search.desc=_+1:_ 탐색 범위가 _5x5 사각형_으로 증가합니다.\n\n_+2:_ 탐색 범위가 _7x7 사각형_으로 증가합니다.
+actors.hero.talent.double_tap.title=더블 탭
+actors.hero.talent.double_tap.desc=_+1:_ 총기의 첫 탄환이 명중하면 다음에 발사하는 탄환이 _반드시 명중_합니다.\n\n_+2:_ +1의 효과에 더불어, 총기의 첫 탄환이 명중하면 다음에 발사하는 탄환이 적을 3턴 동안 _불구_로 만듭니다.
+actors.hero.talent.hg_master.title=내 손에 꼭 맞는 무기
+actors.hero.talent.hg_master.desc=_+1:_ _3단계_ 이하의 HG의 요구 힘 수치가 1 감소합니다.\n\n_+2:_ _5단계_ 이하의 HG의 요구 힘 수치가 1 감소합니다.
+
+actors.hero.talent.hg_fast_reload.title=능숙한 손놀림
+actors.hero.talent.hg_fast_reload.desc=_+1:_ HG의 재장전 속도가 _10%_ 증가합니다.\n\n_+2:_ HG의 재장전 속도가 _20%_ 증가합니다.\n\n_+3:_ HG의 재장전 속도가 _30%_ 증가합니다.
+actors.hero.talent.hg_sweep.title=총기 손질
+actors.hero.talent.hg_sweep.desc=_+1:_ _3단계_ 이하의 +2이하 HG 장착 시 +3의 성능이 됩니다.\n\n_+2:_ _4단계_ 이하의 +2이하 HG 장착 시 +3의 성능이 됩니다.\n\n_+3:_ _5단계_ 이하의 +2이하 HG 장착 시 +3의 성능이 됩니다.
+
+actors.hero.talent.large_magazine_1.title=침착한 재장전
+actors.hero.talent.large_magazine_1.desc=_+1:_ 현재 시야 내의 적 하나 당 재장전 속도가 _5%_씩 증가합니다.\n\n_+2:_ 현재 시야 내의 적 하나 당 재장전 속도가 _10%_씩 증가합니다.\n\n_+3:_ 현재 시야 내의 적 하나 당 재장전 속도가 _15%_씩 증가합니다.
+actors.hero.talent.large_magazine_2.title=다중 표적
+actors.hero.talent.large_magazine_2.desc=_+1:_ 확장 탄창 효과 중에 적을 처치하면 무한 탄환의 지속 시간이 1턴 증가합니다. 최대 _+2턴_까지 늘릴 수 있습니다.\n\n_+2:_ 확장 탄창 효과 중에 적을 처치하면 무한 탄환의 지속 시간이 1턴 증가합니다. 최대 _+4턴_까지 늘릴 수 있습니다.\n\n_+3:_ 확장 탄창 효과 중에 적을 처치하면 무한 탄환의 지속 시간이 1턴 증가합니다. 최대 _+6턴_까지 늘릴 수 있습니다.\n\n무한 탄환 효과는 3턴을 넘어서 중첩되지 않습니다.
+actors.hero.talent.large_magazine_3.title=불릿 타임
+actors.hero.talent.large_magazine_3.desc=_+1:_ 재장전 시 시야 내의 모든 적에게 _재장전 시간 + 3턴_의 느려짐을 부여합니다.\n\n_+2:_ 재장전 시 시야 내의 모든 적에게 _재장전 시간 + 6턴_의 느려짐을 부여합니다.\n\n_+3:_ 재장전 시 시야 내의 모든 적에게 _재장전 시간 + 9턴_의 느려짐을 부여합니다.\n\n30턴의 재사용 대기 시간이 있습니다.
+
+actors.hero.talent.double_barrel_1.title=이중 강화
+actors.hero.talent.double_barrel_1.desc=_+1:_ 장착한 두 총기 중 강화 수치가 더 낮은 총기의 단계가 더 높은 강화 수치를 가진 총기의 단계보다 _2단계 이상 낮을 경우_ 해당 총기의 강화 수치가 더 높은 강화수치를 가진 총기의 강화 수치로 증가합니다.\n\n_+2:_ 장착한 두 총기 중 강화 수치가 더 낮은 총기의 단계가 더 높은 강화 수치를 가진 총기의 단계보다 _1단계 이상 낮을 경우_ 해당 총기의 강화 수치가 더 높은 강화수치를 가진 총기의 강화 수치로 증가합니다.\n\n_+3:_ 장착한 두 총기 중 강화 수치가 더 낮은 총기의 단계가 더 높은 강화 수치를 가진 총기의 단계와 _같거나 낮을 경우_ 해당 총기의 강화 수치가 더 높은 강화수치를 가진 총기의 강화 수치로 증가합니다.
+actors.hero.talent.double_barrel_2.title=동시 재장전
+actors.hero.talent.double_barrel_2.desc=_+1:_ 주 무기를 재장전할 때 _2턴_을 추가로 소모해 보조 무기를 장전합니다.\n\n_+2:_ 주 무기를 재장전할 때 _1턴_을 추가로 소모해 보조 무기를 장전합니다.\n\n_+3:_ 주 무기를 재장전할 때 _0턴_을 추가로 소모해 보조 무기를 장전합니다.\n\n보조 무기가 이미 재장전되어 있을 경우 발동하지 않습니다.\n\n이 효과는 재장전 속도에 영향을 받지 않습니다.
+actors.hero.talent.double_barrel_3.title=고속탄
+actors.hero.talent.double_barrel_3.desc=_+1:_ 탄환이 적의 방어력을 _33%_ 무시합니다.\n\n_+2:_ 탄환이 적의 방어력을 _67%_ 무시합니다.\n\n_+3:_ 탄환이 적의 방어력을 _100%_ 무시합니다.
+
+actors.hero.talent.noa_abil_11.title=특성 1
+actors.hero.talent.noa_abil_11.desc=몰?루
+actors.hero.talent.noa_abil_12.title=특성 2
+actors.hero.talent.noa_abil_12.desc=몰?루
+actors.hero.talent.noa_abil_13.title=특성 3
+actors.hero.talent.noa_abil_13.desc=몰?루
+
+actors.hero.talent.noa_abil_21.title=특성 1
+actors.hero.talent.noa_abil_21.desc=몰?루
+actors.hero.talent.noa_abil_22.title=특성 2
+actors.hero.talent.noa_abil_22.desc=몰?루
+actors.hero.talent.noa_abil_23.title=특성 3
+actors.hero.talent.noa_abil_23.desc=몰?루
+
+actors.hero.talent.noa_abil_31.title=특성 1
+actors.hero.talent.noa_abil_31.desc=몰?루
+actors.hero.talent.noa_abil_32.title=특성 2
+actors.hero.talent.noa_abil_32.desc=몰?루
+actors.hero.talent.noa_abil_33.title=특성 3
+actors.hero.talent.noa_abil_33.desc=몰?루
+
+#miyu
+
+actors.hero.talent.fast_hand.title=재빠른 손놀림
+actors.hero.talent.fast_hand.desc=_+1:_ 식사 이후 처음 하는 재장전 시간이 _1턴_ 감소합니다.\n\n_+2:_ 식사 이후 처음 하는 재장전 시간이 _2턴_ 감소합니다.
+actors.hero.talent.sr_intuition.title=저격소총 전문가
+actors.hero.talent.sr_intuition.desc=_+1:_ SR을 획득하는 즉시 _저주 여부를 감정_합니다.\n\n_+2:_ +1의 효과에 더불어, SR을 _착용하는 즉시_ 감정합니다.
+actors.hero.talent.clam_breathing.title=침착한 호흡
+actors.hero.talent.clam_breathing.desc=_+1:_ SR의 탄환으로 적을 기습할 때 최소 피해량이 최대 피해량의 _33%_가 됩니다.\n\n_+2:_ SR의 탄환으로 적을 기습할 때 최소 피해량이 최대 피해량의 _50%_가 됩니다.
+actors.hero.talent.nature_friendly.title=자연 친화
+actors.hero.talent.nature_friendly.desc=_+1:_ 길게 자란 풀을 밟으면 3턴 마다 감소하며 _0-2_의 방어력을 제공하는 나무껍질 효과를 얻습니다.\n\n_+2:_ 길게 자란 풀을 밟으면 3턴 마다 감소하며 _0-3_의 방어력을 제공하는 나무껍질 효과를 얻습니다.
+
+actors.hero.talent.invisible_presence.title=투명한 존재감
+actors.hero.talent.invisible_presence.desc=_+1:_ 식사에 1턴만 소모하며, 식사 시 _3턴_의 투명화를 얻습니다.\n\n_+2:_ 식사에 1턴만 소모하며, 식사 시 _5턴_의 투명화를 얻습니다.
+actors.hero.talent.blurry_figure.title=흐릿한 형체
+actors.hero.talent.blurry_figure.desc=_+1:_ 적들의 눈에 _조금 더_ 안 띄게 됩니다.\n\n_+2:_ 적들의 눈에 _훨씬 더_ 안 띄게 됩니다.
+actors.hero.talent.hide_on_bush.title=낙엽에 숨어서
+actors.hero.talent.hide_on_bush.desc=_+1:_ 길게 자란 풀을 밟으면 _2턴_의 신속을 얻습니다.\n\n_+2:_ 길게 자란 풀을 밟으면 _3턴_의 신속을 얻습니다.
+actors.hero.talent.best_sniper.title=최고의 저격수
+actors.hero.talent.best_sniper.desc=_+1:_ 한 번의 탄환 공격 피해량이 적의 최대 체력의 _80%_를 넘으면, 대신 적의 최대 체력만큼의 피해를 입힙니다.\n\n_+2:_ 한 번의 탄환 공격 피해량이 적의 최대 체력의 _75%_를 넘으면, 대신 적의 최대 체력만큼의 피해를 입힙니다.
+actors.hero.talent.sr_master.title=내 손에 꼭 맞는 무기
+actors.hero.talent.sr_master.desc=_+1:_ _3단계_ 이하의 SR의 요구 힘 수치가 1 감소합니다.\n\n_+2:_ _5단계_ 이하의 SR의 요구 힘 수치가 1 감소합니다.
+
+actors.hero.talent.sr_fast_reload.title=능숙한 손놀림
+actors.hero.talent.sr_fast_reload.desc=_+1:_ SR의 재장전 속도가 _10%_ 증가합니다.\n\n_+2:_ SR의 재장전 속도가 _20%_ 증가합니다.\n\n_+3:_ SR의 재장전 속도가 _30%_ 증가합니다.
+actors.hero.talent.snipers_intuition.title=저격수의 직감
+actors.hero.talent.snipers_intuition.desc=_+1:_ 주변 _2타일_ 이내에 있는 모든 적에 대해 심안 효과를 얻습니다.\n\n_+2:_ +1의 효과에 더불어, 길게 자란 풀을 밟을 때 _20%_ 확률로 1턴의 심안을 얻습니다.\n\n_+3:_ +2의 효과에 더불어, _길게 자란 풀이 시야를 방해하지 않습니다_.
+
+actors.hero.talent.penetration_shot_1.title=파괴적인 관통력
+actors.hero.talent.penetration_shot_1.desc=_+1:_ 관통 사격에 피해를 입은 대상 1체마다 피해량이 _+1_씩 증가합니다.\n\n_+2:_ 관통 사격에 피해를 입은 대상 1체마다 피해량이 _+2_씩 증가합니다.\n\n_+3:_ 관통 사격에 피해를 입은 대상 1체마다 피해량이 _+3_씩 증가합니다.\n\n최대 추가 피해량은 _+15_입니다.
+actors.hero.talent.penetration_shot_2.title=제압 사격
+actors.hero.talent.penetration_shot_2.desc=_+1:_ 총기를 발사하면 주변 _3x3_지역의 모든 대상에게 3턴의 공포를 부여합니다.\n\n_+2:_ 총기를 발사하면 주변 _5x3_지역의 모든 대상에게 3턴의 공포를 부여합니다.\n\n_+3:_ 총기를 발사하면 주변 _7x7_지역의 모든 대상에게 3턴의 공포를 부여합니다.\n\n20턴의 재사용 대기 시간이 있습니다.
+actors.hero.talent.penetration_shot_3.title=완벽한 재장전
+actors.hero.talent.penetration_shot_3.desc=_+1:_ 관통 사격으로 처치한 적 1체마다 다음 재장전 시간이 _20%_ 감소합니다.\n\n_+2:_ 관통 사격으로 처치한 적 1체마다 다음 재장전 시간이 _40%_ 감소합니다.\n\n_+3:_ 관통 사격으로 처치한 적 1체마다 다음 재장전 시간이 _60%_ 감소합니다.
+
+actors.hero.talent.sniping_bullet_1.title=탄속 강화
+actors.hero.talent.sniping_bullet_1.desc=_+1:_ 피해 배율이 1이 되는 최소 거리가 _1타일_ 감소합니다.\n\n_+2:_ 피해 배율이 1이 되는 최소 거리가 _2타일_ 감소합니다.\n\n_+3:_ 피해 배율이 1이 되는 최소 거리가 _3타일_ 감소합니다.
+actors.hero.talent.sniping_bullet_2.title=텔레스코프
+actors.hero.talent.sniping_bullet_2.desc=_+1:_ 시야가 _25%_ 증가합니다.\n\n_+2:_ 시야가 _50%_ 증가합니다.\n\n_+3:_ 시야가 _75%_ 증가합니다.
+actors.hero.talent.sniping_bullet_3.title=충격 탄환
+actors.hero.talent.sniping_bullet_3.desc=_+1:_ 저격용 특수 탄환으로 _10타일_ 너머에 있는 적을 명중시키면 대상을 3턴 동안 기절시킵니다.\n\n_+2:_ 저격용 특수 탄환으로 _8타일_ 너머에 있는 적을 명중시키면 대상을 3턴 동안 기절시킵니다.\n\n_+3:_ 저격용 특수 탄환으로 _6타일_ 너머에 있는 적을 명중시키면 대상을 3턴 동안 기절시킵니다.\n\n적을 3체 처치하면 다시 사용할 수 있습니다.
+
+actors.hero.talent.miyu_abil_11.title=특성 1
+actors.hero.talent.miyu_abil_11.desc=몰?루
+actors.hero.talent.miyu_abil_12.title=특성 2
+actors.hero.talent.miyu_abil_12.desc=몰?루
+actors.hero.talent.miyu_abil_13.title=특성 3
+actors.hero.talent.miyu_abil_13.desc=몰?루
+
+actors.hero.talent.miyu_abil_21.title=특성 1
+actors.hero.talent.miyu_abil_21.desc=몰?루
+actors.hero.talent.miyu_abil_22.title=특성 2
+actors.hero.talent.miyu_abil_22.desc=몰?루
+actors.hero.talent.miyu_abil_23.title=특성 3
+actors.hero.talent.miyu_abil_23.desc=몰?루
+
+actors.hero.talent.miyu_abil_31.title=특성 1
+actors.hero.talent.miyu_abil_31.desc=몰?루
+actors.hero.talent.miyu_abil_32.title=특성 2
+actors.hero.talent.miyu_abil_32.desc=몰?루
+actors.hero.talent.miyu_abil_33.title=특성 3
+actors.hero.talent.miyu_abil_33.desc=몰?루
+
+
+
+###unique message
+actors.hero.hero.aris_cannot_self=이건 아리스에겐 발사할 수 없습니다!
+actors.hero.hero.aris_supernova_1=빛이여! 에너지 오버로드... 릴리즈!
+actors.hero.hero.aris_supernova_2=이 빛에 의지를 담아... 꿰뚫어라! 밸런스 붕괴!
+actors.hero.hero.aris_supernova_3=아리스, 전력으로 갑니다!
+actors.hero.hero.aris_supernova_cooldown=스킬 충전 중입니다!
+actors.hero.hero.aris_supernova_ready_1=빛의 검: 슈퍼노바가 준비되었습니다!
+actors.hero.hero.aris_supernova_ready_2=궁극기 준비 완료. 지시를 기다립니다.
+actors.hero.hero.aris_supernova_ready_3=스킬 충전 완료! 발사 준비되었습니다!
+actors.hero.hero.aris_supernova_charge_1=1단계 충전 완료. 적을 불태울 수 있습니다.
+actors.hero.hero.aris_supernova_charge_2=2단계 충전이 완료되었습니다. 폭발에 대비하세요.
+actors.hero.hero.aris_supernova_charge_3=3단계 충전이 완료되었습니다! 언제든지 준비 OK입니다!
+
+actors.hero.hero.nonomi_grenade_collect_1=응? 저건 뭘까요? 어머, 연막탄이 이런 곳에...
+actors.hero.hero.nonomi_grenade_collect_2=안 쓰는 연막탄이 있네요. 고마워라~
+actors.hero.hero.nonomi_grenade_collect_3=연막탄을 얻었어요~ 재정비 완료!
+actors.hero.hero.nonomi_riot_on=난사, 준비 완료입니다~!
+actors.hero.hero.nonomi_riot_off=이제 그만 하는 건가요? 아쉽네요~
+actors.hero.hero.nonomi_shootall_on=전탄 발사, 준비 완료입니다~!
+actors.hero.hero.nonomi_shootall_off=무리하지 않는 것도 중요하지요~
+
+actors.hero.hero.miyako_grenade_collect_1=수류탄을 얻었습니다. 유용하게 사용할 수 있겠네요.
+actors.hero.hero.miyako_grenade_collect_2=수류탄 일발 준비 완료.
+actors.hero.hero.miyako_grenade_collect_3=응? 이런 곳에 수류탄이...
+actors.hero.hero.miyako_stundrone_use_1=드론 가동. 엄호 부탁드립니다.
+actors.hero.hero.miyako_stundrone_use_2=전원, 충격에 주의해 주세요.
+actors.hero.hero.miyako_stundrone_use_3=섬광탄, 투하합니다.
+actors.hero.hero.miyako_dronestrike_use_1=비행 드론, 기동 개시.
+actors.hero.hero.miyako_dronestrike_use_2=새로운 드론을 시험해보죠.
+actors.hero.hero.miyako_dronestrike_use_3=착탄을 확인했습니다.
+actors.hero.hero.miyako_no_target=보이지 않는 장소입니다. 다른 지점을 선택해 주세요.
+
+actors.hero.hero.hoshino_grenade_collect_1=으헤~ 충격탄이다~ 내가 먼저 주웠다구.
+actors.hero.hero.hoshino_grenade_collect_2=오, 이런 곳에 충격탄이라니. 횡재했구만.
+actors.hero.hero.hoshino_grenade_collect_3=충격탄은 말이야, 흔하게 얻는게 아니야~ 소중히 써야 한다구.
+actors.hero.hero.hoshino_cannot_self=여기에는 쏠 수 없다구. 다른 곳을 쏘는 편이 좋을 것 같아.
+actors.hero.hero.hoshino_shield_cooldown=아직 준비가 덜 됐어~ 기다려 달라구~
+actors.hero.hero.hoshino_over_reload=추가 탄환 장전~
+actors.hero.hero.hoshino_throw_away_on=으헤~ 날려 버릴 준비 됐다구~
+actors.hero.hero.hoshino_throw_away_off=이제 그만 하는 거야~? 아쉽네~
+
+actors.hero.hero.shiroko_grenade_collect_1=...고폭 수류탄을 주웠어.
+actors.hero.hero.shiroko_grenade_collect_2=고폭 수류탄을 주웠어. 조심히 다뤄야 해.
+actors.hero.hero.shiroko_grenade_collect_3=...고폭 수류탄. 나중에 쓸모있을 거야.
+actors.hero.hero.shiroko_ride_cooldown=지금은 자전거를 탈 수 없어.
+actors.hero.hero.shiroko_cannot_ride=자전거를 타려면 조금 휴식이 필요해.
+actors.hero.hero.shiroko_no_charge=...더 이상 자전거를 타는 건 무리야.
+actors.hero.hero.shiroko_dash_bad_position=그 쪽으로는 할 수 없어.
+actors.hero.hero.shiroko_cannot_slam=그렇게는 할 수 없어.
+actors.hero.hero.shiroko_rooted=...발이 묶여 있어서 안 될 것 같은데...
+actors.hero.hero.shiroko_ap_bullet=철갑탄 장전완료.
+actors.hero.hero.shiroko_incendiary_bullet=소이탄 장전완료.
+actors.hero.hero.shiroko_explosive_bullet=폭발탄 장전완료.
+actors.hero.hero.shiroko_ice_bullet=빙결탄 장전완료.
+actors.hero.hero.shiroko_electric_bullet=전격탄 장전완료.
+
+actors.hero.hero.noa_grenade_collect_1=어라, 섬광탄이네요.
+actors.hero.hero.noa_grenade_collect_2=이런 곳에 섬광탄이 있네요. 기록해 두겠습니다.
+actors.hero.hero.noa_grenade_collect_3=...방금 뭘 주웠냐고요? 후훗, 비밀이랍니다.
+actors.hero.hero.noa_laser_cooldown=레이저 충전 중이에요. 그렇게 보채도 소용 없답니다?
+actors.hero.hero.noa_secondwep_no_ammo=탄약이 다 떨어졌어요!
+actors.hero.hero.noa_out_of_fov=보이지 않는 곳이에요.
+actors.hero.hero.noa_no_enemy=적대적인 대상에게만 조준이 가능해요.
+
+actors.hero.hero.miyu_grenade_collect_1=생장 폭탄이 이런 곳에...?
+actors.hero.hero.miyu_grenade_collect_2=생장 폭탄을 하나 주웠어요...
+actors.hero.hero.miyu_grenade_collect_3=...이건 나중에 요긴하게 쓰일 거예요.
+actors.hero.hero.miyu_bin_use_1=교란 작전을 수행하겠습니다...
+actors.hero.hero.miyu_bin_use_2=적의 추적을 교란합니다...
+actors.hero.hero.miyu_bin_use_3=가...갔나요...?
+actors.hero.hero.miyu_bin_cooldown=...아직은 사용할 수 없어요...
+
+###universal message
+actors.hero.hero.aris_health_critical_1=치명적인 오작동 감지. 진단 중... HP 위험.
+actors.hero.hero.aris_health_critical_2=치명적인 시스템 에러! 위험합니다!
+actors.hero.hero.aris_health_critical_3=HP 회복 엘릭서가 필요합니다!
+
+actors.hero.hero.aris_health_warn_1=아리스의 HP 회복이 필요합니다.
+actors.hero.hero.aris_health_warn_2=휴식이 필요합니다.
+actors.hero.hero.aris_health_warn_3=시스템 오작동 감지. HP가 부족합니다.
+
+actors.hero.hero.aris_die=시스템... 정지...
+
+actors.hero.hero.aris_enemy_defeated_1=용기, 그것은 최고의 마법입니다.
+actors.hero.hero.aris_enemy_defeated_2=선생님, 지금 아리스는 이 세계 최강의 전사입니다.
+actors.hero.hero.aris_enemy_defeated_3=경험치를 많이 얻었습니다!
+actors.hero.hero.aris_enemy_defeated_4=용사 아리스은(는) 경험치를 얻었습니다!
+actors.hero.hero.aris_enemy_defeated_5=용사여... 힘을 원하는가... 앗, 제가 용사네요.
+
+actors.hero.hero.aris_levelup_1=레벨 업. 경험치를 많이 획득했습니다.
+actors.hero.hero.aris_levelup_2=한층 성장한 아리스입니다!
+actors.hero.hero.aris_levelup_3=새로운 능력을 가질 준비가 되었습니다!
+actors.hero.hero.aris_levelup_4=아리스.레벨++; ...앗, 이게 아닌가요.
+actors.hero.hero.aris_levelup_5=뽜밤뽜밤! 용사 아리스의 레벨이 올랐습니다!
+actors.hero.hero.aris_levelup_rare=신기하지 않나요, 숫자가 1 오른다고 신체 능력이 뿅 하고 증가한다는 게... 앗, 제 4의 벽이 무너지고 있습니다! 취소! 취소!
+
+
+
+actors.hero.hero.nonomi_health_critical_1=어디 안전한 곳에서 잠시 쉬지 않을래요? 조금 힘드네요...
+actors.hero.hero.nonomi_health_critical_2=이제 한계예요...
+actors.hero.hero.nonomi_health_critical_3=상태는 괜찮으신가요? 저는 조금 위험한 것 같아요...
+
+actors.hero.hero.nonomi_health_warn_1=조금 위험할지도...
+actors.hero.hero.nonomi_health_warn_2=조금 힘이 드네요. 잠시 회복이 필요할 것 같아요.
+actors.hero.hero.nonomi_health_warn_3=무리하지 않는 편이 좋을 것 같아요.
+
+actors.hero.hero.nonomi_die=으으... 죄송합니다...
+
+actors.hero.hero.nonomi_enemy_defeated_1=벌 받을 시간이에요~
+actors.hero.hero.nonomi_enemy_defeated_2=흐흥~ 최고의 전투였어요~
+actors.hero.hero.nonomi_enemy_defeated_3=최고의 지휘였어요!
+actors.hero.hero.nonomi_enemy_defeated_4=다친 곳은 없나요~?
+actors.hero.hero.nonomi_enemy_defeated_5=이 정도는 식은 죽 먹기죠!
+
+actors.hero.hero.nonomi_levelup_1=지금 이 순간에도 성장하고 있으니까요!
+actors.hero.hero.nonomi_levelup_2=후후, 일보전진했네요!
+actors.hero.hero.nonomi_levelup_3=저, 더 노력할게요!
+actors.hero.hero.nonomi_levelup_4=더 강해진 기분이에요.
+actors.hero.hero.nonomi_levelup_5=후후, 최고의 컨디션이랍니다!
+actors.hero.hero.nonomi_levelup_rare=응응. 힘이라는 건 양날의 검이지만, 선생님과 모두를 위해서라면 필요하다고 생각해요. 소중하게 쓸 테니 지켜봐주세요, 선생님.
+
+
+
+actors.hero.hero.miyako_health_critical_1=상태가 위험합니다. 회복이 필요합니다.
+actors.hero.hero.miyako_health_critical_2=윽... 위험한 것 같네요.
+actors.hero.hero.miyako_health_critical_3=전... 괜찮... 아니, 괜찮지 않네요...
+
+actors.hero.hero.miyako_health_warn_1=조금 상태가 좋지 않습니다... 잠시 쉴 자리를 찾는 편이 좋아 보이네요.
+actors.hero.hero.miyako_health_warn_2=임무 성공의 지름길은 컨디션 조절에 있습니다. 조금 휴식하는 편이 좋을 것 같네요.
+actors.hero.hero.miyako_health_warn_3=잠깐 재정비를 하는 편이 좋을 것 같습니다.
+
+actors.hero.hero.miyako_die=임무... 실패...
+
+actors.hero.hero.miyako_enemy_defeated_1=무의미한 저항입니다.
+actors.hero.hero.miyako_enemy_defeated_2=임무는 아직 끝나지 않았습니다.
+actors.hero.hero.miyako_enemy_defeated_3=다음 적은 어디 있나요?
+actors.hero.hero.miyako_enemy_defeated_4=전투 보고, 이상 무. 전진하겠습니다.
+actors.hero.hero.miyako_enemy_defeated_5=처치 확인. 항상 경계를 늦추지 말아야 합니다.
+
+actors.hero.hero.miyako_levelup_1=더욱 강해진 느낌이 듭니다.
+actors.hero.hero.miyako_levelup_2=이것도... 성장...?
+actors.hero.hero.miyako_levelup_3=성장이라는 건, 이렇게 기분 좋은 일이었던 거군요.
+actors.hero.hero.miyako_levelup_4=기대에 따를 수 있도록, 더 힘내겠습니다.
+actors.hero.hero.miyako_levelup_5=반드시 기대에 부응하겠습니다.
+actors.hero.hero.miyako_levelup_rare=낯선 공간이지만, 그럭저럭 적응하고 있는 것 같네요. 점점 나아지고 있습니다.
+
+
+
+actors.hero.hero.hoshino_health_critical_1=으헤, 싸우는 건 익숙하지만, 내 몸 상태는 그렇지 않은가 보네.
+actors.hero.hero.hoshino_health_critical_2=저기~ 어디 가서 좀 자면 안 될까?
+actors.hero.hero.hoshino_health_critical_3=저기 말이야. 나를 너무 험하게 굴리는 것 같은데, 그러지 말라구.
+
+actors.hero.hero.hoshino_health_warn_1=힘들지 않아~? 저기 가서 낮잠 좀 자자~
+actors.hero.hero.hoshino_health_warn_2=좀만 자고 가자~ 응~?
+actors.hero.hero.hoshino_health_warn_3=힘들어~ 졸려~ 쉬자~
+
+actors.hero.hero.hoshino_die=이럴 생각은 아니었는데...
+
+actors.hero.hero.hoshino_enemy_defeated_1=소용없어.
+actors.hero.hero.hoshino_enemy_defeated_2=후암~ 승리승리~
+actors.hero.hero.hoshino_enemy_defeated_3=소용없다구~
+actors.hero.hero.hoshino_enemy_defeated_4=후암~ 적당히 이겨버렸네.
+actors.hero.hero.hoshino_enemy_defeated_5=으아~ 귀찮아-
+
+actors.hero.hero.hoshino_levelup_1=후아, 더 강해진 건가.
+actors.hero.hero.hoshino_levelup_2=응, 좋은 느낌~
+actors.hero.hero.hoshino_levelup_3=하~ 더 강해져버렸나.
+actors.hero.hero.hoshino_levelup_4=으헤~ 이걸로 더 튼튼해졌어.
+actors.hero.hero.hoshino_levelup_5=응? 나쁘지 않구만.
+actors.hero.hero.hoshino_levelup_rare=흐음. 나쁘지 않을지도. 이래봬도 점점 강해지고 있다구.
+
+
+
+actors.hero.hero.shiroko_health_critical_1=조금 상태가 안 좋은데.
+actors.hero.hero.shiroko_health_critical_2=휴식이 필요할 것 같아.
+actors.hero.hero.shiroko_health_critical_3=조금 지치는데.
+
+actors.hero.hero.shiroko_health_warn_1=윽... 조금 위험할지도.
+actors.hero.hero.shiroko_health_warn_2=체력을 회복할 만한 물건이 필요해.
+actors.hero.hero.shiroko_health_warn_3=몸 상태가 많이 안 좋아...
+
+actors.hero.hero.shiroko_die=조금, 역부족이었나...
+
+actors.hero.hero.shiroko_enemy_defeated_1=흥.
+actors.hero.hero.shiroko_enemy_defeated_2=타겟의 무력화를 확인.
+actors.hero.hero.shiroko_enemy_defeated_3=전술의 승리다.
+actors.hero.hero.shiroko_enemy_defeated_4=클리어.
+actors.hero.hero.shiroko_enemy_defeated_5=이동하자.
+
+actors.hero.hero.shiroko_levelup_1=조금 성장한 것 같아.
+actors.hero.hero.shiroko_levelup_2=성장하는 걸 알 수 있어.
+actors.hero.hero.shiroko_levelup_3=강해지고 있어...
+actors.hero.hero.shiroko_levelup_4=기분이 좀 낫네.
+actors.hero.hero.shiroko_levelup_5=더 강해진 기분이야.
+actors.hero.hero.shiroko_levelup_rare=음... 여기엔 은행은 없는 건가... 아쉽네.
+
+
+
+actors.hero.hero.noa_health_critical_1=조금 위험, 할지도... 모르겠네요...
+actors.hero.hero.noa_health_critical_2=이제 한계예요...
+actors.hero.hero.noa_health_critical_3=잠시 쉬는 건 어떨까요...?
+
+actors.hero.hero.noa_health_warn_1=슬슬 힘에 부치기 시작했어요.
+actors.hero.hero.noa_health_warn_2=체력이 부족해요. 이것도 기록해야 하려나...
+actors.hero.hero.noa_health_warn_3=이 상태로는 기록이 어려워질 수도 있을 것 같아요.
+
+actors.hero.hero.noa_die=조금 과신했을지도 모르겠어요...
+
+actors.hero.hero.noa_enemy_defeated_1=정리는 이 정도로 해 둘까요.
+actors.hero.hero.noa_enemy_defeated_2=이 앞에 어떤 변수가 기다리고 있을까요?
+actors.hero.hero.noa_enemy_defeated_3=과연... 거기가 약점이었군요.
+actors.hero.hero.noa_enemy_defeated_4=가끔씩은 몸을 움직여야겠죠!
+actors.hero.hero.noa_enemy_defeated_5=신속하게 제압하겠습니다.
+
+actors.hero.hero.noa_levelup_1=새로운 것을 습득하는 일은, 언제라도 즐거워요.
+actors.hero.hero.noa_levelup_2=후훗, 이건 조금 즐거울지도.
+actors.hero.hero.noa_levelup_3=확신할 수는 없지만... 전보다 조금 성장한 걸지도 모르겠어요, 후후.
+actors.hero.hero.noa_levelup_4=겉보기엔 변함이 없어 보여도, 꽤나 강해졌답니다?
+actors.hero.hero.noa_levelup_5=후훗, 역시 성장한다는 건 언제나 즐겁네요.
+actors.hero.hero.noa_levelup_rare=이런 기분도 나쁘지 않네요. 기록해 둬야지...
+
+
+
+actors.hero.hero.miyu_health_critical_1=으으... 슬슬 아슬아슬해요.
+actors.hero.hero.miyu_health_critical_2=저격수라면 이 정도는 괜찮아...야 하는데...
+actors.hero.hero.miyu_health_critical_3=슬슬 한계일지도 모르겠어요...
+
+actors.hero.hero.miyu_health_warn_1=아얏... 앗, 이 정도는 괜찮아요...
+actors.hero.hero.miyu_health_warn_2=조금 다쳤어요...
+actors.hero.hero.miyu_health_warn_3=숨어서 조금 쉬고 싶네요...
+
+actors.hero.hero.miyu_die=싫어... 미안합니다...
+
+actors.hero.hero.miyu_enemy_defeated_1=이동하겠습니다.
+actors.hero.hero.miyu_enemy_defeated_2=포지션 변경하겠습니다.
+actors.hero.hero.miyu_enemy_defeated_3=뭔가 적들이 저를 보고도 지나치는 것 같은데... 기분 탓이겠죠?
+actors.hero.hero.miyu_enemy_defeated_4=대상의 무력화를 확인.
+actors.hero.hero.miyu_enemy_defeated_5=처치 확인. 이상 없습니다.
+
+actors.hero.hero.miyu_levelup_1=전술에 대한 이해가 보다 깊어졌어요.
+actors.hero.hero.miyu_levelup_2=적어도, SRT라는 이름이 부끄럽지 않도록... 힘내겠습니다.
+actors.hero.hero.miyu_levelup_3=열심히 성장하겠습니다... 모두의 발목을 잡지 않도록.
+actors.hero.hero.miyu_levelup_4=저, 잘 하고 있는 걸까요...?
+actors.hero.hero.miyu_levelup_5=강해진 기분...
+actors.hero.hero.miyu_levelup_rare=따뜻한 코코아나 한 잔 마셨으면...
+

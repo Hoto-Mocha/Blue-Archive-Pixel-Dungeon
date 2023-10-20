@@ -9,6 +9,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -50,7 +51,7 @@ public class TrashBin extends Item {
 		if (action.equals(AC_USE)) {
 			if (Dungeon.hero.buff(TrashBinCooldown.class) == null) {
 				for (Char ch : Actor.chars()) {
-					if (ch instanceof Mob) {
+					if (ch instanceof Mob && !(ch instanceof NPC) && ch.alignment == Char.Alignment.ENEMY) {
 						new FlavourBuff(){
 							{actPriority = VFX_PRIO;}
 							public boolean act() {

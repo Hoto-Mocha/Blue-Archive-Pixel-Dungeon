@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.scenes;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Chrome;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
@@ -172,6 +173,28 @@ public class TitleScene extends PixelScene {
 		};
 		btnAbout.icon(Icons.get(Icons.ARIS));
 		add(btnAbout);
+
+		StyledButton btnSeedTest = new StyledButton(GREY_TR, Messages.get(this, "seed_find")){
+			@Override
+			protected void onClick() {
+				ShatteredPixelDungeon.switchScene( SeedFindScene.class );
+			}
+		};
+		btnSeedTest.icon(Icons.get(Icons.SEED_FIND));
+		if (DeviceCompat.isDebug() || Badges.isUnlocked(Badges.Badge.VICTORY)){
+			add(btnSeedTest);
+		}
+
+		StyledButton btnSeedAnalysis = new StyledButton(GREY_TR, Messages.get(this, "seed_analysis")){
+			@Override
+			protected void onClick() {
+				ShatteredPixelDungeon.switchScene( SeedAnalysisScene.class );
+			}
+		};
+		btnSeedAnalysis.icon(Icons.get(Icons.MAGNIFY));
+		if (DeviceCompat.isDebug() || Badges.isUnlocked(Badges.Badge.VICTORY)){
+			add(btnSeedAnalysis);
+		}
 		
 		final int BTN_HEIGHT = 20;
 		int GAP = (int)(h - topRegion - (landscape() ? 3 : 4)*BTN_HEIGHT)/3;
@@ -179,25 +202,58 @@ public class TitleScene extends PixelScene {
 		GAP = Math.max(GAP, 2);
 
 		if (landscape()) {
-			btnPlay.setRect(title.x-50, topRegion+GAP, ((title.width()+100)/2)-1, BTN_HEIGHT);
-			align(btnPlay);
-			btnSupport.setRect(btnPlay.right()+2, btnPlay.top(), btnPlay.width(), BTN_HEIGHT);
-			btnRankings.setRect(btnPlay.left(), btnPlay.bottom()+ GAP, btnPlay.width(), BTN_HEIGHT);
-			btnBadges.setRect(btnRankings.left(), btnRankings.bottom()+GAP, (btnPlay.width()*.67f)-1, BTN_HEIGHT);
-			btnChanges.setRect(btnBadges.right()+2, btnBadges.top(), btnBadges.width(), BTN_HEIGHT);
-			btnSettings.setRect(btnRankings.right()+2, btnRankings.top(), btnRankings.width(), BTN_HEIGHT);
-			btnAbout.setRect(btnChanges.right()+2, btnSettings.bottom() + GAP, btnBadges.width(), BTN_HEIGHT);
+			if (DeviceCompat.isDebug() || Badges.isUnlocked(Badges.Badge.VICTORY)){
+				btnPlay.setRect(title.x-50, topRegion+GAP, ((((title.width()+100)/2)-1)*.67f)-1, BTN_HEIGHT);
+				align(btnPlay);
+				btnSeedTest.setRect(btnPlay.right()+2, btnPlay.top(), btnPlay.width(), BTN_HEIGHT);
+				btnSupport.setRect(btnSeedTest.right()+2, btnPlay.top(), btnPlay.width(), BTN_HEIGHT);
+
+				btnRankings.setRect(btnPlay.left(), btnPlay.bottom()+ GAP, btnPlay.width(), BTN_HEIGHT);
+				btnSeedAnalysis.setRect(btnRankings.right()+2, btnRankings.top(), btnPlay.width(), BTN_HEIGHT);
+				btnSettings.setRect(btnSeedAnalysis.right()+2, btnRankings.top(), btnPlay.width(), BTN_HEIGHT);
+
+				btnBadges.setRect(btnPlay.left(), btnRankings.bottom()+GAP, btnPlay.width(), BTN_HEIGHT);
+				btnChanges.setRect(btnBadges.right()+2, btnBadges.top(), btnPlay.width(), BTN_HEIGHT);
+				btnAbout.setRect(btnChanges.right()+2, btnBadges.top(), btnPlay.width(), BTN_HEIGHT);
+			} else {
+				btnPlay.setRect(title.x-50, topRegion+GAP, ((title.width()+100)/2)-1, BTN_HEIGHT);
+				align(btnPlay);
+				btnSupport.setRect(btnPlay.right()+2, btnPlay.top(), btnPlay.width(), BTN_HEIGHT);
+
+				btnRankings.setRect(btnPlay.left(), btnPlay.bottom()+ GAP, btnPlay.width(), BTN_HEIGHT);
+				btnSettings.setRect(btnRankings.right()+2, btnRankings.top(), btnRankings.width(), BTN_HEIGHT);
+
+				btnBadges.setRect(btnRankings.left(), btnRankings.bottom()+GAP, (btnPlay.width()*.67f)-1, BTN_HEIGHT);
+				btnChanges.setRect(btnBadges.right()+2, btnBadges.top(), btnBadges.width(), BTN_HEIGHT);
+				btnAbout.setRect(btnChanges.right()+2, btnBadges.top(), btnBadges.width(), BTN_HEIGHT);
+			}
 		} else {
-			btnPlay.setRect(title.x, topRegion+GAP, title.width(), BTN_HEIGHT);
-			align(btnPlay);
-			btnSupport.setRect(btnPlay.left(), btnPlay.bottom()+ GAP, btnPlay.width(), BTN_HEIGHT);
-			btnRankings.setRect(btnPlay.left(), btnSupport.bottom()+ GAP, btnPlay.width(), BTN_HEIGHT);
+			if (DeviceCompat.isDebug() || Badges.isUnlocked(Badges.Badge.VICTORY)){
+				btnPlay.setRect(title.x, topRegion+GAP, title.width(), BTN_HEIGHT);
+				align(btnPlay);
+				btnSupport.setRect(btnPlay.left(), btnPlay.bottom()+ GAP, btnPlay.width(), BTN_HEIGHT);
+				btnRankings.setRect(btnPlay.left(), btnSupport.bottom()+ GAP, btnPlay.width(), BTN_HEIGHT);
 
-			btnBadges.setRect(btnRankings.left(), btnRankings.bottom()+ GAP, (btnPlay.width()/2)-1, BTN_HEIGHT);
-			btnChanges.setRect(btnBadges.right()+2, btnBadges.top(), btnBadges.width(), BTN_HEIGHT);
+				btnSeedTest.setRect(btnRankings.left(), btnRankings.bottom()+ GAP, (btnPlay.width()/2)-1, BTN_HEIGHT);
+				btnSeedAnalysis.setRect(btnSeedTest.right()+2, btnSeedTest.top(), btnSeedTest.width(), BTN_HEIGHT);
 
-			btnSettings.setRect(btnBadges.left(), btnBadges.bottom()+GAP, btnBadges.width(), BTN_HEIGHT);
-			btnAbout.setRect(btnSettings.right()+2, btnSettings.top(), btnSettings.width(), BTN_HEIGHT);
+				btnBadges.setRect(btnRankings.left(), btnSeedTest.bottom()+ GAP, (btnPlay.width()/2)-1, BTN_HEIGHT);
+				btnChanges.setRect(btnBadges.right()+2, btnBadges.top(), btnBadges.width(), BTN_HEIGHT);
+
+				btnSettings.setRect(btnBadges.left(), btnBadges.bottom()+GAP, btnBadges.width(), BTN_HEIGHT);
+				btnAbout.setRect(btnSettings.right()+2, btnSettings.top(), btnSettings.width(), BTN_HEIGHT);
+			} else {
+				btnPlay.setRect(title.x, topRegion+GAP, title.width(), BTN_HEIGHT);
+				align(btnPlay);
+				btnSupport.setRect(btnPlay.left(), btnPlay.bottom()+ GAP, btnPlay.width(), BTN_HEIGHT);
+				btnRankings.setRect(btnPlay.left(), btnSupport.bottom()+ GAP, btnPlay.width(), BTN_HEIGHT);
+
+				btnBadges.setRect(btnRankings.left(), btnRankings.bottom()+ GAP, (btnPlay.width()/2)-1, BTN_HEIGHT);
+				btnChanges.setRect(btnBadges.right()+2, btnBadges.top(), btnBadges.width(), BTN_HEIGHT);
+
+				btnSettings.setRect(btnBadges.left(), btnBadges.bottom()+GAP, btnBadges.width(), BTN_HEIGHT);
+				btnAbout.setRect(btnSettings.right()+2, btnSettings.top(), btnSettings.width(), BTN_HEIGHT);
+			}
 		}
 
 		BitmapText version = new BitmapText( "v" + Game.version, pixelFont);
@@ -297,7 +353,7 @@ public class TitleScene extends PixelScene {
 				ShatteredPixelDungeon.scene().addToFront( new WndOptions(
 						Icons.get(Icons.CHANGES),
 						update.versionName == null ? Messages.get(this,"title") : Messages.get(this,"versioned_title", update.versionName),
-						update.desc == null ? Messages.get(this,"desc") : update.desc,
+						update.desc == null ? Messages.get(this,"desc") : update.desc,	//업데이트 문장이 없다면 내장 문장 출력, 받아온 문장이 있다면 받아온 문장을 출력
 						Messages.get(this,"update"),
 						Messages.get(this,"changes")
 				) {

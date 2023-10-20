@@ -164,7 +164,7 @@ public class HighGrass {
 			}
 
 			if (ch instanceof Hero && Dungeon.hero.hasTalent(Talent.HIDE_ON_BUSH)) {
-				Buff.affect(Dungeon.hero, Haste.class, 1+Dungeon.hero.pointsInTalent(Talent.HIDE_ON_BUSH));
+				Buff.prolong(Dungeon.hero, Haste.class, 1+Dungeon.hero.pointsInTalent(Talent.HIDE_ON_BUSH));
 			}
 
 			if (ch instanceof Hero && Dungeon.hero.pointsInTalent(Talent.SNIPERS_INTUITION) > 1 && Random.Float() < 0.20f) {

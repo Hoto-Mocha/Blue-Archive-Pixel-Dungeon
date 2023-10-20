@@ -17,6 +17,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.ConeAOE;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Random;
@@ -64,6 +65,7 @@ public class Claymore extends Grenade {
             int openUpMulti = 1;
             if ((Dungeon.level.map[curUser.pos] == Terrain.DOOR || Dungeon.level.map[curUser.pos] == Terrain.OPEN_DOOR) && hero.hasTalent(Talent.RABBIT_OPEN_UP)) {
                 Dungeon.level.destroy(curUser.pos);
+                GameScene.updateMap( curUser.pos );
                 openUpMulti += hero.pointsInTalent(Talent.RABBIT_OPEN_UP);
             }
             Ballistica aim = new Ballistica(hero.pos, cell, Ballistica.WONT_STOP);

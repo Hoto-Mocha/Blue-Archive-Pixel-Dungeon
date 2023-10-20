@@ -169,6 +169,7 @@ public enum HeroClass {
 			new Pasty().quantity(200).collect();
 			new ScrollOfEnchantment().identify().quantity(200).collect();
 			new Amulet().collect();
+			new ScrollOfTransmutation().identify().collect();
 		}
 
 		new ScrollOfIdentify().identify();

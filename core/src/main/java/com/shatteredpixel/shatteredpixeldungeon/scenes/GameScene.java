@@ -60,7 +60,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportat
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Journal;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
-import com.shatteredpixel.shatteredpixeldungeon.levels.MiningLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.RegularLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.Room;
@@ -140,6 +139,7 @@ import com.watabou.utils.RectF;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Locale;
 
 public class GameScene extends PixelScene {
@@ -168,6 +168,7 @@ public class GameScene extends PixelScene {
 	private Group terrain;
 	private Group customTiles;
 	private Group levelVisuals;
+	private Group levelWallVisuals;
 	private Group customWalls;
 	private Group ripples;
 	private Group plants;
@@ -313,6 +314,9 @@ public class GameScene extends PixelScene {
 			addCustomWall(visual);
 		}
 
+		levelWallVisuals = Dungeon.level.addWallVisuals();
+		add( levelWallVisuals );
+
 		wallBlocking = new WallBlockingTilemap();
 		add (wallBlocking);
 
@@ -429,9 +433,6 @@ public class GameScene extends PixelScene {
 							break;
 					}
 				}
-				if (Dungeon.level instanceof MiningLevel){
-					add(new WndStory(Messages.get(this, "blacksmith_quest_window_title") + ":\n\n" + Messages.get(this, "blacksmith_quest_window")).setDelays(0.4f, 0.4f));
-				}
 				if (Dungeon.hero.isAlive()) {
 					Badges.validateNoKilling();
 				}
@@ -508,7 +509,7 @@ public class GameScene extends PixelScene {
 			}
 
 			if (Dungeon.hero.hasTalent(Talent.FORESIGHT_EYES)
-					&& Dungeon.level instanceof RegularLevel){
+					&& Dungeon.level instanceof RegularLevel && Dungeon.branch == 0){
 				int reqSecrets = Dungeon.level.feeling == Level.Feeling.SECRETS ? 2 : 1;
 				for (Room r : ((RegularLevel) Dungeon.level).rooms()){
 					if (r instanceof SecretRoom) reqSecrets--;
@@ -672,6 +673,9 @@ public class GameScene extends PixelScene {
 	private float notifyDelay = 1/60f;
 
 	public static boolean updateItemDisplays = false;
+
+	public static boolean tagDisappeared = false;
+	public static boolean updateTags = false;
 	
 	@Override
 	public synchronized void update() {
@@ -723,12 +727,19 @@ public class GameScene extends PixelScene {
 			log.newLine();
 		}
 
-		if (tagAttack != attack.active ||
+		if (updateTags){
+			tagAttack = attack.active;
+			tagLoot = loot.visible;
+			tagAction = action.visible;
+			tagResume = resume.visible;
+
+			layoutTags();
+
+		} else if (tagAttack != attack.active ||
 				tagLoot != loot.visible ||
 				tagAction != action.visible ||
 				tagResume != resume.visible) {
 
-			//we only want to change the layout when new tags pop in, not when existing ones leave.
 			boolean tagAppearing = (attack.active && !tagAttack) ||
 									(loot.visible && !tagLoot) ||
 									(action.visible && !tagAction) ||
@@ -739,13 +750,11 @@ public class GameScene extends PixelScene {
 			tagAction = action.visible;
 			tagResume = resume.visible;
 
-			//except if action is the only tag left, then let it drop to the bottom
-			// this is because the action tag can sometimes be persistent
-			if (tagAction && !tagAttack && !tagLoot && !tagResume){
-				tagAppearing = true;
-			}
+			//if a new tag appears, re-layout tags immediately
+			//otherwise, wait until the hero acts, so as to not suddenly change their position
+			if (tagAppearing)   layoutTags();
+			else                tagDisappeared = true;
 
-			if (tagAppearing) layoutTags();
 		}
 
 		cellSelector.enable(Dungeon.hero.ready);
@@ -773,6 +782,8 @@ public class GameScene extends PixelScene {
 	private boolean tagResume    = false;
 
 	public static void layoutTags() {
+
+		updateTags = false;
 
 		if (scene == null) return;
 
@@ -881,11 +892,36 @@ public class GameScene extends PixelScene {
 		}
 	}
 	
-	private void addMobSprite( Mob mob ) {
+	private synchronized void addMobSprite( Mob mob ) {
 		CharSprite sprite = mob.sprite();
 		sprite.visible = Dungeon.level.heroFOV[mob.pos];
 		mobs.add( sprite );
 		sprite.link( mob );
+		sortMobSprites();
+	}
+
+	//ensures that mob sprites are drawn from top to bottom, in case of overlap
+	public static void sortMobSprites(){
+		if (scene != null){
+			synchronized (scene) {
+				scene.mobs.sort(new Comparator() {
+					@Override
+					public int compare(Object a, Object b) {
+						//elements that aren't visual go to the end of the list
+						if (a instanceof Visual && b instanceof Visual) {
+							return (int) Math.signum((((Visual) a).y + ((Visual) a).height())
+									- (((Visual) b).y + ((Visual) b).height()));
+						} else if (a instanceof Visual){
+							return -1;
+						} else if (b instanceof Visual){
+							return 1;
+						} else {
+							return 0;
+						}
+					}
+				});
+			}
+		}
 	}
 	
 	private synchronized void prompt( String text ) {
@@ -1392,6 +1428,10 @@ public class GameScene extends PixelScene {
 		QuickSlotButton.cancel();
 		InventoryPane.cancelTargeting();
 		if (scene != null && scene.toolbar != null) scene.toolbar.examining = false;
+		if (tagDisappeared) {
+			tagDisappeared = false;
+			updateTags = true;
+		}
 	}
 	
 	public static void checkKeyHold(){
@@ -1470,13 +1510,13 @@ public class GameScene extends PixelScene {
 	public static void examineObject(Object o){
 		if (o == Dungeon.hero){
 			GameScene.show( new WndHero() );
-		} else if ( o instanceof Mob ){
+		} else if ( o instanceof Mob && ((Mob) o).isActive() ){
 			GameScene.show(new WndInfoMob((Mob) o));
 			if (o instanceof Snake && !Document.ADVENTURERS_GUIDE.isPageRead(Document.GUIDE_SURPRISE_ATKS)){
 				GLog.p(Messages.get(Guidebook.class, "hint"));
 				GameScene.flashForDocument(Document.ADVENTURERS_GUIDE, Document.GUIDE_SURPRISE_ATKS);
 			}
-		} else if ( o instanceof Heap ){
+		} else if ( o instanceof Heap && !((Heap) o).isEmpty() ){
 			GameScene.show(new WndInfoItem((Heap)o));
 		} else if ( o instanceof Plant ){
 			GameScene.show( new WndInfoPlant((Plant) o) );

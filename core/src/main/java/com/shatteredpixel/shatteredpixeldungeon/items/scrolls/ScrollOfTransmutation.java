@@ -59,6 +59,8 @@ public class ScrollOfTransmutation extends InventoryScroll {
 		icon = ItemSpriteSheet.Icons.SCROLL_TRANSMUTE;
 		
 		bones = true;
+
+		talentFactor = 2f;
 	}
 
 	@Override
@@ -66,7 +68,8 @@ public class ScrollOfTransmutation extends InventoryScroll {
 		return item instanceof MeleeWeapon ||
 				(item instanceof MissileWeapon && (!(item instanceof Dart) || item instanceof TippedDart)) ||
 				(item instanceof Potion && !(item instanceof Elixir || item instanceof Brew || item instanceof AlchemicalCatalyst)) ||
-				item instanceof Scroll ||
+				//the extra check here prevents a single scroll being used on itself
+				(item instanceof Scroll && (!(item instanceof ScrollOfTransmutation) || item.quantity() > 1)) ||
 				item instanceof Ring ||
 				item instanceof Wand ||
 				item instanceof Plant.Seed ||
@@ -131,7 +134,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 		if (item instanceof MagesStaff) {
 			return changeStaff((MagesStaff) item);
 		}else if (item instanceof TippedDart){
-			return changeTippeDart( (TippedDart)item );
+			return changeTippedDart( (TippedDart)item );
 		} else if (item instanceof MeleeWeapon || item instanceof MissileWeapon) {
 			return changeWeapon( (Weapon)item );
 		} else if (item instanceof Scroll) {
@@ -182,7 +185,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 		return staff;
 	}
 
-	private static TippedDart changeTippeDart( TippedDart dart ){
+	private static TippedDart changeTippedDart( TippedDart dart ){
 		TippedDart n;
 		do {
 			n = TippedDart.randomTipped(1);
@@ -192,7 +195,6 @@ public class ScrollOfTransmutation extends InventoryScroll {
 	}
 	
 	private static Weapon changeWeapon( Weapon w ) {
-		
 		Weapon n;
 		Generator.Category c;
 		if (w instanceof MeleeWeapon) {
@@ -276,10 +278,9 @@ public class ScrollOfTransmutation extends InventoryScroll {
 	}
 	
 	private static Wand changeWand( Wand w ) {
-		
 		Wand n;
 		do {
-			n = (Wand)Generator.random( Generator.Category.WAND );
+			n = (Wand)Generator.randomUsingDefaults( Generator.Category.WAND );
 		} while ( Challenges.isItemBlocked(n) || n.getClass() == w.getClass());
 		
 		n.level( 0 );
@@ -300,7 +301,6 @@ public class ScrollOfTransmutation extends InventoryScroll {
 	}
 	
 	private static Plant.Seed changeSeed( Plant.Seed s ) {
-		
 		Plant.Seed n;
 		
 		do {
@@ -311,7 +311,6 @@ public class ScrollOfTransmutation extends InventoryScroll {
 	}
 	
 	private static Runestone changeStone( Runestone r ) {
-		
 		Runestone n;
 		
 		do {
@@ -320,7 +319,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 		
 		return n;
 	}
-	
+
 	private static Scroll changeScroll( Scroll s ) {
 		if (s instanceof ExoticScroll) {
 			return Reflection.newInstance(ExoticScroll.exoToReg.get(s.getClass()));
@@ -328,7 +327,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 			return Reflection.newInstance(ExoticScroll.regToExo.get(s.getClass()));
 		}
 	}
-	
+
 	private static Potion changePotion( Potion p ) {
 		if	(p instanceof ExoticPotion) {
 			return Reflection.newInstance(ExoticPotion.exoToReg.get(p.getClass()));

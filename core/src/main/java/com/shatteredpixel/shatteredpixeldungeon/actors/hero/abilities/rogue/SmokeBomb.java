@@ -50,7 +50,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MobSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.shatteredpixel.shatteredpixeldungeon.utils.BArray;
+import com.watabou.utils.BArray;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.audio.Sample;
@@ -126,6 +126,7 @@ public class SmokeBomb extends ArmorAbility {
 					NinjaLog n = new NinjaLog();
 					n.pos = hero.pos;
 					GameScene.add(n);
+					Dungeon.level.occupyCell(n);
 				}
 
 				if (hero.hasTalent(Talent.HASTY_RETREAT)){

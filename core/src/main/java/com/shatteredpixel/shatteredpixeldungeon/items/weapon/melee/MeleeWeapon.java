@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MonkEnergy;
@@ -72,11 +71,6 @@ public class MeleeWeapon extends Weapon {
 
 	@Override
 	public String defaultAction() {
-//		if (Dungeon.hero != null && Dungeon.hero.heroClass == HeroClass.DUELIST){
-//			return AC_ABILITY;
-//		} else {
-//			return super.defaultAction();
-//		}
 		return super.defaultAction();
 	}
 
@@ -103,30 +97,22 @@ public class MeleeWeapon extends Weapon {
 		super.execute(hero, action);
 
 		if (action.equals(AC_ABILITY)){
+			usesTargeting = false;
 			if (!isEquipped(hero)) {
 				if (hero.hasTalent(Talent.SWIFT_EQUIP)){
 					if (hero.buff(Talent.SwiftEquipCooldown.class) == null
 						|| hero.buff(Talent.SwiftEquipCooldown.class).hasSecondUse()){
 						execute(hero, AC_EQUIP);
-					} else {
-						GLog.w(Messages.get(this, "ability_need_equip"));
-						usesTargeting = false;
 					}
-				} else {
-					GLog.w(Messages.get(this, "ability_need_equip"));
-					usesTargeting = false;
 				}
 			} else if (STRReq() > hero.STR()){
 				GLog.w(Messages.get(this, "ability_low_str"));
-				usesTargeting = false;
 			} else if (hero.belongings.weapon == this &&
 					(Buff.affect(hero, Charger.class).charges + Buff.affect(hero, Charger.class).partialCharge) < abilityChargeUse(hero, null)) {
 				GLog.w(Messages.get(this, "ability_no_charge"));
-				usesTargeting = false;
 			} else if (hero.belongings.secondWep == this &&
 					(Buff.affect(hero, Charger.class).secondCharges + Buff.affect(hero, Charger.class).secondPartialCharge) < abilityChargeUse(hero, null)) {
 				GLog.w(Messages.get(this, "ability_no_charge"));
-				usesTargeting = false;
 			} else {
 
 				if (targetingPrompt() == null){
@@ -393,7 +379,10 @@ public class MeleeWeapon extends Weapon {
 
 		if (enchantment != null && (cursedKnown || !enchantment.curse())){
 			info += "\n\n" + Messages.capitalize(Messages.get(Weapon.class, "enchanted", enchantment.name()));
+			if (enchantHardened) info += " " + Messages.get(Weapon.class, "enchant_hardened");
 			info += " " + enchantment.desc();
+		} else if (enchantHardened){
+			info += "\n\n" + Messages.get(Weapon.class, "hardened_no_enchant");
 		}
 
 		if (cursed && isEquipped( Dungeon.hero )) {

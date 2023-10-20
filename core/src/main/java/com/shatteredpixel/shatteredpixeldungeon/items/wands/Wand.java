@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Degrade;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
@@ -129,13 +130,7 @@ public abstract class Wand extends Item {
 	}
 
 	public boolean tryToZap( Hero owner, int target ){
-
-		if (owner.buff(MagicImmune.class) != null){
-			GLog.w( Messages.get(this, "no_magic") );
-			return false;
-		}
-
-		if ( curCharges >= chargesPerCast()){
+		if (curCharges >= chargesPerCast()){
 			return true;
 		} else {
 			GLog.w(Messages.get(this, "fizzles"));
@@ -327,19 +322,16 @@ public abstract class Wand extends Item {
 		int lvl = super.buffedLvl();
 
 		if (charger != null && charger.target != null) {
-//			if (charger.target.buff(WildMagic.WildMagicTracker.class) != null){
-//				int bonus = 4 + ((Hero)charger.target).pointsInTalent(Talent.WILD_POWER);
-//				if (Random.Int(2) == 0) bonus++;
-//				bonus /= 2; // +2/+2.5/+3/+3.5/+4 at 0/1/2/3/4 talent points
-//
-//				int maxBonusLevel = 3 + ((Hero)charger.target).pointsInTalent(Talent.WILD_POWER);
-//				if (lvl < maxBonusLevel) {
-//					lvl = Math.min(lvl + bonus, maxBonusLevel);
-//				}
-//			}
+
+			//inside staff, still need to apply degradation
+			if (charger.target == Dungeon.hero
+					&& !Dungeon.hero.belongings.contains(this)
+					&& Dungeon.hero.buff( Degrade.class ) != null){
+				lvl = Degrade.reduceLevel(lvl);
+			}
 
 			if (charger.target.buff(ScrollEmpower.class) != null){
-				lvl += 3;
+				lvl += 2;
 			}
 
 			WandOfMagicMissile.MagicCharge buff = charger.target.buff(WandOfMagicMissile.MagicCharge.class);

@@ -46,7 +46,7 @@ public class Miyu_3 extends ArmorAbility {
 
 	@Override
 	public int icon() {
-		return HeroIcon.NOA_3;
+		return HeroIcon.MIYU_3;
 	}
 
 	@Override

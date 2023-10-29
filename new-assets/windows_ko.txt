@@ -1,7 +1,0 @@
-
-
-windows.wndchoosesubclass.message=전술교육 DB를 사용하자, 새로운 힘의 비전이 당신의 마음 속으로 밀려듭니다. 어떤 능력을 배우시겠습니까?
-windows.wndchoosesubclass.cancel=나중에 결정
-windows.wndchoosesubclass.are_you_sure=정말로 이 EX 능력을 선택하시겠습니까?
-windows.wndchoosesubclass.yes=예, 결정했습니다.
-windows.wndchoosesubclass.no=아니요, 나중에 결정하겠습니다.

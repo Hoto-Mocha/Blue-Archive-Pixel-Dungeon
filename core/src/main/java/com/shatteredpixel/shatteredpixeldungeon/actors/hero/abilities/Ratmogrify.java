@@ -31,6 +31,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.QuestEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
@@ -146,12 +147,23 @@ public class Ratmogrify extends ArmorAbility {
 				}
 			}
 
+			HashSet<QuestEnemy> questBuffs = ch.buffs(QuestEnemy.class);
+			for (QuestEnemy quest : questBuffs){
+				if (ch.remove(quest)) {
+					ch.sprite.clearAura();
+				}
+			}
+
 			Actor.remove( ch );
 			ch.sprite.killAndErase();
 			Dungeon.level.mobs.remove(ch);
 
 			for (ChampionEnemy champ : champBuffs){
 				ch.add(champ);
+			}
+
+			for (QuestEnemy quest : questBuffs){
+				ch.add(quest);
 			}
 
 			GameScene.add(rat);

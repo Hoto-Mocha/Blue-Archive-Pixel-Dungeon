@@ -28,6 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.SacrificialFire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.QuestEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
@@ -138,6 +139,10 @@ public class Ghoul extends Mob {
 					Buff.affect( child, b.getClass());
 				}
 
+				for (Buff b : buffs(QuestEnemy.class)){
+					Buff.affect( child, b.getClass());
+				}
+
 			}
 			
 		}
@@ -183,6 +188,7 @@ public class Ghoul extends Mob {
 					Buff.prolong(this, SacrificialFire.Marked.class, timesDowned*5);
 				} else if (buff instanceof AllyBuff
 						|| buff instanceof ChampionEnemy
+						|| buff instanceof QuestEnemy
 						|| buff instanceof DwarfKing.KingDamager) {
 					//don't remove
 				} else {

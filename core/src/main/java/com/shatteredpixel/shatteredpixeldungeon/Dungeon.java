@@ -181,6 +181,7 @@ public class Dungeon {
 
 	public static int challenges;
 	public static int mobsToChampion;
+	public static int mobsToQuest;
 
 	public static Hero hero;
 	public static Level level;
@@ -217,6 +218,7 @@ public class Dungeon {
 		initialVersion = version = Game.versionCode;
 		challenges = SPDSettings.challenges();
 		mobsToChampion = -1;
+		mobsToQuest = -1;
 
 		if (daily) {
 			//Ensures that daily seeds are not in the range of user-enterable seeds
@@ -554,6 +556,7 @@ public class Dungeon {
 	private static final String DAILY_REPLAY= "daily_replay";
 	private static final String CHALLENGES	= "challenges";
 	private static final String MOBS_TO_CHAMPION	= "mobs_to_champion";
+	private static final String MOBS_TO_QUEST	= "mobs_to_quest";
 	private static final String HERO		= "hero";
 	private static final String DEPTH		= "depth";
 	private static final String BRANCH		= "branch";
@@ -580,6 +583,7 @@ public class Dungeon {
 			bundle.put( DAILY_REPLAY, dailyReplay );
 			bundle.put( CHALLENGES, challenges );
 			bundle.put( MOBS_TO_CHAMPION, mobsToChampion );
+			bundle.put( MOBS_TO_QUEST, mobsToQuest );
 			bundle.put( HERO, hero );
 			bundle.put( DEPTH, depth );
 			bundle.put( BRANCH, branch );
@@ -693,7 +697,8 @@ public class Dungeon {
 
 		Dungeon.challenges = bundle.getInt( CHALLENGES );
 		Dungeon.mobsToChampion = bundle.getInt( MOBS_TO_CHAMPION );
-		
+		Dungeon.mobsToQuest = bundle.getInt( MOBS_TO_QUEST );
+
 		Dungeon.level = null;
 		Dungeon.depth = -1;
 		

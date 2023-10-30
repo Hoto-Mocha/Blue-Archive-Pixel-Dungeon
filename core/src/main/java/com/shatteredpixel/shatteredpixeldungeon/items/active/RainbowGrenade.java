@@ -4,6 +4,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.RainbowParticle;
@@ -67,7 +68,7 @@ public class RainbowGrenade extends Grenade {
                         CellEmitter.get(c).burst(RainbowParticle.FACTORY, 10);
                     }
                     Char ch = Actor.findChar(c);
-                    if (ch != null) {
+                    if (ch instanceof Mob) {
                         Buff.affect(ch, Charm.class, 5+2*RainbowGrenade.this.buffedLvl());
                     }
                 }

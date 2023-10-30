@@ -24,6 +24,7 @@ public class RegrowGrenade extends Grenade {
 
         max_amount = 2;
         amount = max_amount;
+        dropChance = 0.20f;
 
         unique = true;
         bones = false;

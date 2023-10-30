@@ -8,6 +8,7 @@ public class HPGrenade extends Grenade {
 
         max_amount = 1;
         amount = max_amount;
+        dropChance = 0.15f;
 
         unique = true;
         bones = false;

@@ -22,6 +22,7 @@ public class HandGrenade extends Grenade {
 
         max_amount = 1;
         amount = max_amount;
+        dropChance = 0.20f;
 
         unique = true;
         bones = false;

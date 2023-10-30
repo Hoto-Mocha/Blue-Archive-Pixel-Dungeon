@@ -28,6 +28,7 @@ public class SmokeGrenade extends Grenade {
 
         max_amount = 3;
         amount = max_amount;
+        dropChance = 0.25f;
 
         unique = true;
         bones = false;

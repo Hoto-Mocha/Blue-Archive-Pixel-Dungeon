@@ -826,37 +826,37 @@ public abstract class Mob extends Char {
 			}
 
 			SmokeGrenade smoke = Dungeon.hero.belongings.getItem(SmokeGrenade.class);
-			if (smoke != null && Random.Float() < 0.25f) {
+			if (smoke != null && Random.Float() < smoke.dropChance) {
 				smoke.reload();
 			}
 
 			HandGrenade grenade = Dungeon.hero.belongings.getItem(HandGrenade.class);
-			if (grenade != null && Random.Float() < 0.20f+0.05f*Dungeon.hero.pointsInTalent(Talent.SUPPLY)) {
+			if (grenade != null && Random.Float() < grenade.dropChance+0.05f*Dungeon.hero.pointsInTalent(Talent.SUPPLY)) {
 				grenade.reload();
 			}
 
 			Claymore claymore = Dungeon.hero.belongings.getItem(Claymore.class);
-			if (claymore != null && Random.Float() < 0.125f+0.025f*Dungeon.hero.pointsInTalent(Talent.SUPPLY)) {
+			if (claymore != null && Random.Float() < claymore.dropChance+0.025f*Dungeon.hero.pointsInTalent(Talent.SUPPLY)) {
 				claymore.reload();
 			}
 
 			BlastGrenade blast = Dungeon.hero.belongings.getItem(BlastGrenade.class);
-			if (blast != null && Random.Float() < 0.15f) {
+			if (blast != null && Random.Float() < blast.dropChance) {
 				blast.reload();
 			}
 
 			HPGrenade hpGrenade = Dungeon.hero.belongings.getItem(HPGrenade.class);
-			if (hpGrenade != null && Random.Float() < 0.15f) {
+			if (hpGrenade != null && Random.Float() < hpGrenade.dropChance) {
 				hpGrenade.reload();
 			}
 
 			FlashGrenade flashGrenade = Dungeon.hero.belongings.getItem(FlashGrenade.class);
-			if (flashGrenade != null && Random.Float() < 0.10f) {
+			if (flashGrenade != null && Random.Float() < flashGrenade.dropChance) {
 				flashGrenade.reload();
 			}
 
 			RegrowGrenade regrowGrenade = Dungeon.hero.belongings.getItem(RegrowGrenade.class);
-			if (regrowGrenade != null && Random.Float() < 0.20f) {
+			if (regrowGrenade != null && Random.Float() < regrowGrenade.dropChance) {
 				regrowGrenade.reload();
 			}
 		}
@@ -920,6 +920,10 @@ public abstract class Mob extends Char {
 			if (!Statistics.miyuUnlocked) {
 				Statistics.miyuUnlocked = true;
 				Badges.validateMiyuUnlock();
+			}
+			if (!Statistics.yuzuUnlocked) {
+				Statistics.yuzuUnlocked = true;
+				Badges.validateYuzuUnlock();
 			}
 		}
 

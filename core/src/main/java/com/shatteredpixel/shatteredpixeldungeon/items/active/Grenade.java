@@ -25,6 +25,7 @@ import java.util.ArrayList;
 public class Grenade extends Item {
 
     protected static final String AC_LIGHTTHROW = "LIGHTTHROW";
+    public float dropChance;
 
     protected int amount;
     protected int max_amount;
@@ -41,12 +42,14 @@ public class Grenade extends Item {
 
     private static final String AMOUNT = "amount";
     private static final String MAX_AMOUNT = "max_amount";
+    private static final String DROP_CHANCE = "dropChance";
 
     @Override
     public void storeInBundle(Bundle bundle) {
         super.storeInBundle(bundle);
         bundle.put(AMOUNT, amount);
         bundle.put(MAX_AMOUNT, max_amount);
+        bundle.put(DROP_CHANCE, dropChance);
     }
 
     @Override
@@ -54,6 +57,7 @@ public class Grenade extends Item {
         super.restoreFromBundle(bundle);
         amount = bundle.getInt(AMOUNT);
         max_amount = bundle.getInt(MAX_AMOUNT);
+        dropChance = bundle.getFloat(DROP_CHANCE);
     }
 
     @Override

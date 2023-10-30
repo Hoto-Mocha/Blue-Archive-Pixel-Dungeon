@@ -28,6 +28,13 @@ import com.watabou.utils.Random;
 
 public class RainbowParticle extends PixelParticle {
 
+	public static final Emitter.Factory FACTORY = new Emitter.Factory() {
+		@Override
+		public void emit( Emitter emitter, int index, float x, float y ) {
+			((RainbowParticle)emitter.recycle( RainbowParticle.class )).reset( x, y );
+		}
+	};
+
 	public static final Emitter.Factory BURST = new Emitter.Factory() {
 		@Override
 		public void emit( Emitter emitter, int index, float x, float y ) {

@@ -68,6 +68,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.active.FlashGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.HPGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.HandGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Laser;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.LevelAnalyzer;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.RegrowGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.SmokeGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.TrashBin;
@@ -859,6 +860,8 @@ public abstract class Mob extends Char {
 			if (regrowGrenade != null && Random.Float() < regrowGrenade.dropChance) {
 				regrowGrenade.reload();
 			}
+
+
 		}
 
 		InfiniteBullet infiniteBullet = Dungeon.hero.buff(InfiniteBullet.class);
@@ -889,6 +892,11 @@ public abstract class Mob extends Char {
 		TrashBin.TrashBinCooldown trashBinCooldown = Dungeon.hero.buff(TrashBin.TrashBinCooldown.class);
 		if (trashBinCooldown != null) {
 			trashBinCooldown.kill();
+		}
+
+		LevelAnalyzer.LevelAnalyzerCooldown levelAnalyzerCooldown = Dungeon.hero.buff(LevelAnalyzer.LevelAnalyzerCooldown.class);
+		if (levelAnalyzerCooldown != null) {
+			levelAnalyzerCooldown.kill();
 		}
 
 		ShockBulletCooldown shockBulletCooldown = Dungeon.hero.buff(ShockBulletCooldown.class);

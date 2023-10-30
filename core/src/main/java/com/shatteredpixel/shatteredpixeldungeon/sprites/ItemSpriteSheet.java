@@ -741,6 +741,7 @@ public class ItemSpriteSheet {
 	public static final int REGROW_GRENADE	= UNIQUE_ITEM+10;
 	public static final int TRASH_BIN		= UNIQUE_ITEM+11;
 	public static final int RAINBOW_GRENADE	= UNIQUE_ITEM+12;
+	public static final int ANALYZER		= UNIQUE_ITEM+12;
 	static {
 		assignItemRect(SUPER_NOVA, 		16, 16);
 		assignItemRect(SMOKE_GRENADE, 	12, 12);
@@ -755,6 +756,7 @@ public class ItemSpriteSheet {
 		assignItemRect(REGROW_GRENADE, 	12, 12);
 		assignItemRect(TRASH_BIN, 		16, 16);
 		assignItemRect(RAINBOW_GRENADE, 12, 12);
+		assignItemRect(ANALYZER, 		16, 14);
 	}
 
 	//for smaller 8x8 icons that often accompany an item sprite

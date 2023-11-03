@@ -192,6 +192,7 @@ public class Gun extends MeleeWeapon {
                     Dungeon.level.drop(new AmmoBox(1+2*hero.pointsInTalent(Talent.AMMO_BOX)), hero.pos);
                     hero.spendAndNext(Actor.TICK);
                     hero.yellP(Messages.get(Hero.class, hero.heroClass.name() + "_ammo_place"));    //"탄약 상자를 설치하겠습니다...!"
+                    Buff.affect(hero, AmmoBox.AmmoBoxCooldown.class).set();
                 }
             }
         }

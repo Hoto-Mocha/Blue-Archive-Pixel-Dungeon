@@ -57,6 +57,7 @@ import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
+import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
@@ -311,7 +312,8 @@ public abstract class Elemental extends Mob {
 					}
 
 					GLog.n(Messages.get(this, "charging"));
-					spend(TICK);
+					spend(GameMath.gate(TICK, (int)Math.ceil(Dungeon.hero.cooldown()), 3*TICK));
+					Dungeon.hero.interrupt();
 					return true;
 				} else {
 					rangedCooldown = 1;
@@ -327,26 +329,28 @@ public abstract class Elemental extends Mob {
 
 		@Override
 		protected void zap() {
-			spend( 1f );
+			if (targetingPos != -1) {
+				spend(1f);
 
-			Invisibility.dispel(this);
+				Invisibility.dispel(this);
 
-			for (int i : PathFinder.NEIGHBOURS9){
-				if (!Dungeon.level.solid[targetingPos + i]) {
-					CellEmitter.get(targetingPos+i).burst(ElmoParticle.FACTORY, 5);
-					if (Dungeon.level.water[targetingPos+i]){
-						GameScene.add(Blob.seed(targetingPos+i, 2, Fire.class));
-					} else {
-						GameScene.add(Blob.seed(targetingPos+i, 8, Fire.class));
-					}
+				for (int i : PathFinder.NEIGHBOURS9) {
+					if (!Dungeon.level.solid[targetingPos + i]) {
+						CellEmitter.get(targetingPos + i).burst(ElmoParticle.FACTORY, 5);
+						if (Dungeon.level.water[targetingPos + i]) {
+							GameScene.add(Blob.seed(targetingPos + i, 2, Fire.class));
+						} else {
+							GameScene.add(Blob.seed(targetingPos + i, 8, Fire.class));
+						}
 
-					Char target = Actor.findChar(targetingPos+i);
-					if (target != null && target != this){
-						Buff.affect(target, Burning.class).reignite(target);
+						Char target = Actor.findChar(targetingPos + i);
+						if (target != null && target != this) {
+							Buff.affect(target, Burning.class).reignite(target);
+						}
 					}
 				}
+				Sample.INSTANCE.play(Assets.Sounds.BURNING);
 			}
-			Sample.INSTANCE.play(Assets.Sounds.BURNING);
 
 			targetingPos = -1;
 			rangedCooldown = Random.NormalIntRange( 3, 5 );

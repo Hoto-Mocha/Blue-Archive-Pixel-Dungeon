@@ -80,7 +80,7 @@ public class TalentButton extends Button {
 	protected void createChildren() {
 		super.createChildren();
 
-		fill = new ColorBlock(0, 4, 0xFFFFFF44);
+		fill = new ColorBlock(0, 4, 0xFF9ccdff);
 		add(fill);
 
 		bg = new Image(Assets.Interfaces.TALENT_BUTTON);

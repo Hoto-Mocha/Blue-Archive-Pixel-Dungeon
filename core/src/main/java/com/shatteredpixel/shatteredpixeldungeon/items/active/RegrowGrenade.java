@@ -44,7 +44,7 @@ public class RegrowGrenade extends Grenade {
         protected void activate(int cell) {
             Sample.INSTANCE.play( Assets.Sounds.BLAST );
 
-            float plants = Random.NormalIntRange(1, 3+buffedLvl());
+            float plants = Random.NormalIntRange(1+buffedLvl(), 3+buffedLvl());
 
             if (plantGrass(cell)){
                 plants--;

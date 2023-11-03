@@ -607,7 +607,7 @@ public class Gun extends MeleeWeapon {
             if (explode || hero.subClass == HeroSubClass.YUZU_EX_GAME_START) {
                 Char chInPos = Actor.findChar(cell);
                 if (hero.subClass == HeroSubClass.YUZU_EX_STICKY_GRENADE && chInPos != null) {
-                    Buff.affect(chInPos, StickyGrenade.class).attach(this, curUser);
+                    Buff.affect(chInPos, StickyGrenade.class).attach(this);
                     chInPos.sprite.flash();
                     Sample.INSTANCE.play(Assets.Sounds.HIT);
                     if (chInPos instanceof Mob) ((Mob)chInPos).beckon(curUser.pos);

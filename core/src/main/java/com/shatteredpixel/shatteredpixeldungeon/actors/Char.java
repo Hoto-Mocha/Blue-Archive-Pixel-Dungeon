@@ -332,10 +332,14 @@ public abstract class Char extends Actor {
 	}
 
 	public boolean attack( Char enemy, float dmgMulti, float dmgBonus, float accMulti ) {
-		return attack( enemy, dmgMulti, dmgBonus, accMulti, false );
+		return attack( enemy, dmgMulti, dmgBonus, accMulti, false, true );
+	}
+
+	public boolean attack( Char enemy, float dmgMulti, float dmgBonus, float accMulti, boolean crit ) {
+		return attack( enemy, dmgMulti, dmgBonus, accMulti, crit, true );
 	}
 	
-	public boolean attack( Char enemy, float dmgMulti, float dmgBonus, float accMulti, boolean crit ) {
+	public boolean attack( Char enemy, float dmgMulti, float dmgBonus, float accMulti, boolean crit, boolean soundPlay ) {
 
 		boolean critAtk = false;
 
@@ -465,7 +469,7 @@ public abstract class Char extends Actor {
 
 				effectiveDamage = attackProc(enemy, effectiveDamage);
 			}
-			if (visibleFight) {
+			if (visibleFight && soundPlay) {
 				if (effectiveDamage > 0 || !enemy.blockSound(Random.Float(0.96f, 1.05f))) {
 					hitSound(Random.Float(0.87f, 1.15f));
 				}

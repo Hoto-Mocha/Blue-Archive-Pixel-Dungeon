@@ -1,4 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
@@ -10,6 +12,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
@@ -31,12 +34,10 @@ public class StickyGrenade extends Buff {
 
     private int timer = 3;
     private int stuck = 0;
-    private Gun.Bullet bulletUsed = null;
-    private Hero attacher = null;
+    public Gun.Bullet bulletUsed = null;
 
-    public void attach(Gun.Bullet bulletUsed, Hero attacher) {
+    public void attach(Gun.Bullet bulletUsed) {
         this.bulletUsed = bulletUsed;
-        this.attacher = attacher;
         stuck++;
     }
 
@@ -66,17 +67,18 @@ public class StickyGrenade extends Buff {
         } else if (timer == 1){
             if (Dungeon.level.heroFOV[pos]) FloatingText.show(p.x, p.y, pos, "1...", CharSprite.NEGATIVE);
         } else {
-            if (attacher != null && bulletUsed != null && stuck > 0) {
-                float dmgMulti = 1 + 0.05f*Dungeon.hero.pointsInTalent(Talent.STICKY_GRENADE_1);
+            if (stuck > 0) {
+                float dmgMulti = 1 + 0.05f* hero.pointsInTalent(Talent.STICKY_GRENADE_1);
+                float accMulti = 1 + hero.pointsInTalent(Talent.STICKY_GRENADE_3);
                 for (int c : PathFinder.NEIGHBOURS9) {
                     int cell = pos + c;
                     if (cell >= 0 && cell < Dungeon.level.length()) {
                         Char ch = Actor.findChar(cell);
                         if (ch != null) {
                             for (int i = 0; i < stuck; i++) {
-                                attacher.shoot(ch, bulletUsed, dmgMulti, 0, 1f, Dungeon.hero.heroClass == HeroClass.YUZU);
+                                hero.shoot(ch, bulletUsed, dmgMulti, 0, accMulti, hero.heroClass == HeroClass.YUZU, false);
 
-                                if (ch == Dungeon.hero){
+                                if (ch == hero){
                                     if (!ch.isAlive()) {
                                         Dungeon.fail(Gun.Bullet.class);
                                     }
@@ -107,8 +109,9 @@ public class StickyGrenade extends Buff {
         return true;
     }
 
-    protected static final String TIMER   = "timer";
-    protected static final String STUCK   = "stuck";
+    protected static final String TIMER         = "timer";
+    protected static final String STUCK         = "stuck";
+    protected static final String BULLET_USED   = "bulletUsed";
 
     @Override
     public void storeInBundle( Bundle bundle ) {
@@ -117,6 +120,7 @@ public class StickyGrenade extends Buff {
 
         bundle.put( TIMER, timer );
         bundle.put( STUCK, stuck );
+        bundle.put( BULLET_USED, bulletUsed );
     }
 
     @Override
@@ -126,5 +130,6 @@ public class StickyGrenade extends Buff {
 
         timer = bundle.getInt( TIMER );
         stuck = bundle.getInt( STUCK );
+        bulletUsed = (Gun.Bullet) bundle.get( BULLET_USED );
     }
 }

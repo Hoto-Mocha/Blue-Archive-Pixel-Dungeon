@@ -479,10 +479,14 @@ public class Hero extends Char {
 	}
 
 	public boolean shoot( Char enemy, MissileWeapon wep, float dmgMulti, float dmgBonus, float accMulti ) {
-		return shoot( enemy, wep, dmgMulti, dmgBonus, accMulti, false );
+		return shoot( enemy, wep, dmgMulti, dmgBonus, accMulti, false, true );
+	}
+
+	public boolean shoot( Char enemy, MissileWeapon wep, float dmgMulti, float dmgBonus, float accMulti, boolean crit ) {
+		return shoot( enemy, wep, dmgMulti, dmgBonus, accMulti, crit, true );
 	}
 	
-	public boolean shoot( Char enemy, MissileWeapon wep, float dmgMulti, float dmgBonus, float accMulti, boolean crit ) {
+	public boolean shoot( Char enemy, MissileWeapon wep, float dmgMulti, float dmgBonus, float accMulti, boolean crit, boolean soundPlay ) {
 
 		this.enemy = enemy;
 		boolean wasEnemy = enemy.alignment == Alignment.ENEMY
@@ -491,7 +495,7 @@ public class Hero extends Char {
 		//temporarily set the hero's weapon to the missile weapon being used
 		//TODO improve this!
 		belongings.thrownWeapon = wep;
-		boolean hit = attack( enemy, dmgMulti, dmgBonus, accMulti, crit );
+		boolean hit = attack( enemy, dmgMulti, dmgBonus, accMulti, crit, soundPlay );
 		Invisibility.dispel();
 		belongings.thrownWeapon = null;
 

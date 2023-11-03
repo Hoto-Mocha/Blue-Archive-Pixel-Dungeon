@@ -71,7 +71,7 @@ public class TrashBin extends Item {
 				CellEmitter.get( hero.pos ).burst( Speck.factory( Speck.WOOL ), 6 );
 				curUser.spendAndNext(Actor.TICK);
 
-				Buff.affect(hero, TrashBinCooldown.class).set();
+				Buff.affect(hero, TrashBinCooldown.class).set(5-buffedLvl());
 			} else {
 				Dungeon.hero.yellN(Messages.get(Hero.class, hero.heroClass.name() + "_bin_cooldown"));	//"...아직은 사용할 수 없어요..."
 			}
@@ -80,7 +80,7 @@ public class TrashBin extends Item {
 
 	@Override
 	public int level() {
-		int level = Dungeon.hero == null ? 0 : Dungeon.hero.lvl/5;
+		int level = Dungeon.hero == null ? 0 : Dungeon.hero.lvl/10;
 		return level;
 	}
 
@@ -143,8 +143,8 @@ public class TrashBin extends Item {
 			BuffIndicator.refreshHero();    //영웅의 버프창 갱신
 		}
 
-		public void set() {
-			maxCoolDown = 5;
+		public void set(int amt) {
+			maxCoolDown = amt;
 			coolDown = maxCoolDown;
 		}
 

@@ -76,7 +76,7 @@ public class SG extends Gun {
                 if (round == maxRound()+1) {
                     GLog.w(Messages.get(Gun.class, "already_loaded"));
                     return;
-                } else if (round == maxRound()){
+                } else if (isAllLoaded()){
                     manualReload(1, true);
                     hero.busy();
                     hero.sprite.operate(hero.pos);

@@ -90,8 +90,8 @@ public class HeroIcon extends Image {
 	public static final int NOA_EX_DOUBLE_BARREL			= 51;
 	public static final int MIYU_EX_PENETRATION_SHOT		= 52;
 	public static final int MIYU_EX_SNIPING_BULLET			= 53;
-//	public static final int 								= 54;
-//	public static final int 								= 55;
+	public static final int YUZU_EX_GAME_START				= 54;
+	public static final int YUZU_EX_STICKY_GRENADE			= 55;
 //	public static final int 								= 56;
 //	public static final int 								= 57;
 //	public static final int 								= 58;
@@ -122,9 +122,9 @@ public class HeroIcon extends Image {
 	public static final int MIYU_1			= 82;
 	public static final int MIYU_2			= 83;
 	public static final int MIYU_3			= 84;
-//	public static final int 				= 85;
-//	public static final int 				= 86;
-//	public static final int 				= 87;
+	public static final int YUZU_1			= 85;
+	public static final int YUZU_2			= 86;
+	public static final int YUZU_3			= 87;
 //	public static final int 				= 88;
 //	public static final int 				= 89;
 //	public static final int 				= 90;

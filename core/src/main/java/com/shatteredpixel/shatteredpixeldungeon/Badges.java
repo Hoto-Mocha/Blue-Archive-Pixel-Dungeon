@@ -57,6 +57,7 @@ public class Badges {
 		MASTERY_SHIROKO,
 		MASTERY_NOA,
 		MASTERY_MIYU,
+		MASTERY_YUZU,
 		FOUND_RATMOGRIFY,
 
 		//bronze
@@ -66,6 +67,7 @@ public class Badges {
 		UNLOCK_SHIROKO              ( 4 ),
 		UNLOCK_NOA             		( 5 ),
 		UNLOCK_MIYU            		( 6 ),
+		UNLOCK_YUZU            		( 7 ),
 		MONSTERS_SLAIN_1            ( 16+6 ),
 		MONSTERS_SLAIN_2            ( 16+7 ),
 		GOLD_COLLECTED_1            ( 16+8 ),
@@ -114,6 +116,7 @@ public class Badges {
 		BOSS_SLAIN_1_SHIROKO,
 		BOSS_SLAIN_1_NOA,
 		BOSS_SLAIN_1_MIYU,
+		BOSS_SLAIN_1_YUZU,
 		BOSS_SLAIN_1_ALL_CLASSES    ( 16+54, true ),
 		GAMES_PLAYED_2              ( 16+55, true ),
 		HIGH_SCORE_2                ( 16+56 ),
@@ -162,6 +165,7 @@ public class Badges {
 		VICTORY_SHIROKO,
 		VICTORY_NOA,
 		VICTORY_MIYU,
+		VICTORY_YUZU,
 		VICTORY_ALL_CLASSES         ( 16+103, true ),
 		DEATH_FROM_ALL              ( 16+104, true ),
 		BOSS_SLAIN_3_GLADIATOR,
@@ -714,6 +718,7 @@ public class Badges {
 		firstBossClassBadges.put(HeroClass.SHIROKO, Badge.BOSS_SLAIN_1_SHIROKO);
 		firstBossClassBadges.put(HeroClass.NOA, Badge.BOSS_SLAIN_1_NOA);
 		firstBossClassBadges.put(HeroClass.MIYU, Badge.BOSS_SLAIN_1_MIYU);
+		firstBossClassBadges.put(HeroClass.YUZU, Badge.BOSS_SLAIN_1_YUZU);
 	}
 
 	private static LinkedHashMap<HeroClass, Badge> victoryClassBadges = new LinkedHashMap<>();
@@ -725,6 +730,7 @@ public class Badges {
 		victoryClassBadges.put(HeroClass.SHIROKO, Badge.VICTORY_SHIROKO);
 		victoryClassBadges.put(HeroClass.NOA, Badge.VICTORY_NOA);
 		victoryClassBadges.put(HeroClass.MIYU, Badge.VICTORY_MIYU);
+		victoryClassBadges.put(HeroClass.YUZU, Badge.VICTORY_YUZU);
 	}
 
 	private static LinkedHashMap<HeroSubClass, Badge> thirdBossSubclassBadges = new LinkedHashMap<>();
@@ -857,6 +863,9 @@ public class Badges {
 			case MIYU:
 				badge = Badge.MASTERY_MIYU;
 				break;
+			case YUZU:
+				badge = Badge.MASTERY_YUZU;
+				break;
 		}
 		
 		unlock(badge);
@@ -899,6 +908,12 @@ public class Badges {
 	public static void validateMiyuUnlock(){
 		if (Statistics.miyuUnlocked && !isUnlocked(Badge.UNLOCK_MIYU)){
 			displayBadge( Badge.UNLOCK_MIYU );
+		}
+	}
+
+	public static void validateYuzuUnlock(){
+		if (Statistics.yuzuUnlocked && !isUnlocked(Badge.UNLOCK_YUZU)){
+			displayBadge( Badge.UNLOCK_YUZU );
 		}
 	}
 	

@@ -45,4 +45,12 @@ public class QuestEnemy extends Buff {
         }
     }
 
+    @Override
+    public void detach() {
+        super.detach();
+        Buff.affect(Dungeon.hero, QuestEnemy.QuestEnemyTracker.class);
+    }
+
+    public static class QuestEnemyTracker extends Buff {}
+
 }

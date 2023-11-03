@@ -52,6 +52,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Non
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.Shiroko_1;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.Shiroko_2;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.Shiroko_3;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.yuzu.Yuzu_1;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.yuzu.Yuzu_2;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.yuzu.Yuzu_3;
 import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
 import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
@@ -67,6 +70,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.active.HPGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.HandGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Laser;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.LevelAnalyzer;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.RainbowGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.RegrowGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.SmokeGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Teleporter;
@@ -99,6 +104,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Rapier;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_tier1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_tier1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_tier2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_tier1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_tier2;
@@ -115,6 +121,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_tie
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingSpike;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingStone;
+import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.utils.DungeonSeed;
 import com.watabou.utils.DeviceCompat;
@@ -127,7 +134,8 @@ public enum HeroClass {
 	HOSHINO( HeroSubClass.HOSHINO_EX_TACTICAL_PRESS, HeroSubClass.HOSHINO_EX_TACTICAL_SHIELD ),
 	SHIROKO( HeroSubClass.SHIROKO_EX_ELEMENTAL_BULLET, HeroSubClass.SHIROKO_EX_PROFESSIONAL_RIDE ),
 	NOA(HeroSubClass.NOA_EX_LARGE_MAGAZINE, HeroSubClass.NOA_EX_DOUBLE_BARREL),
-	MIYU(HeroSubClass.MIYU_EX_PENETRATION_SHOT, HeroSubClass.MIYU_EX_SNIPING_BULLET);
+	MIYU(HeroSubClass.MIYU_EX_PENETRATION_SHOT, HeroSubClass.MIYU_EX_SNIPING_BULLET),
+	YUZU(HeroSubClass.YUZU_EX_GAME_START, HeroSubClass.YUZU_EX_STICKY_GRENADE);
 
 	private HeroSubClass[] subClasses;
 
@@ -157,19 +165,20 @@ public enum HeroClass {
 			new RingOfMight().identify().upgrade(10).collect();
 			new EXSkillDisc().collect();
 			new GL_tier2().identify().collect();
+			new HG_tier2().identify().collect();
 			new ScrollOfUpgrade().identify().quantity(200).collect();
-			new StoneOfAugmentation().quantity(200).collect();
-			new PotionOfMindVision().identify().quantity(200).collect();
-			new RingOfWealth().identify().upgrade(100).collect();
+//			new StoneOfAugmentation().quantity(200).collect();
+//			new PotionOfMindVision().identify().quantity(200).collect();
+//			new RingOfWealth().identify().upgrade(100).collect();
 			new PlateArmor().identify().upgrade(100).collect();
 			new RingOfFuror().identify().upgrade(100).collect();
 			new RingOfHaste().identify().upgrade(100).collect();
 			new Teleporter().collect();
 			new KingsCrown().collect();
 			new Pasty().quantity(200).collect();
-			new ScrollOfEnchantment().identify().quantity(200).collect();
+//			new ScrollOfEnchantment().identify().quantity(200).collect();
 			new Amulet().collect();
-			new ScrollOfTransmutation().identify().collect();
+//			new ScrollOfTransmutation().identify().collect();
 		}
 
 		new ScrollOfIdentify().identify();
@@ -202,6 +211,10 @@ public enum HeroClass {
 			case MIYU:
 				initMiyu( hero );
 				break;
+
+			case YUZU:
+				initYuzu( hero );
+				break;
 		}
 
 		if (SPDSettings.quickslotWaterskin()) {
@@ -231,6 +244,8 @@ public enum HeroClass {
 				return Badges.Badge.MASTERY_NOA;
 			case MIYU:
 				return Badges.Badge.MASTERY_MIYU;
+			case YUZU:
+				return Badges.Badge.MASTERY_YUZU;
 		}
 		return null;
 	}
@@ -392,6 +407,30 @@ public enum HeroClass {
 		new ScrollOfUpgrade().identify();
 	}
 
+	private static void initYuzu( Hero hero ) {
+		GL_tier1 gl = new GL_tier1();
+
+		(hero.belongings.weapon = gl).identify();
+		hero.belongings.weapon.activate(hero);
+
+		RainbowGrenade rainbowGrenade = new RainbowGrenade();
+		rainbowGrenade.collect();
+
+		LevelAnalyzer analyzer = new LevelAnalyzer();
+		analyzer.collect();
+
+		ThrowingKnife knives = new ThrowingKnife();
+		knives.quantity(3).collect();
+
+		Dungeon.quickslot.setSlot(0, gl);
+		Dungeon.quickslot.setSlot(1, analyzer);
+		Dungeon.quickslot.setSlot(2, rainbowGrenade);
+		Dungeon.quickslot.setSlot(3, knives);
+
+		new PotionOfLiquidFlame().identify();
+		new ScrollOfMagicMapping().identify();
+	}
+
 	public String title() {
 		return Messages.get(HeroClass.class, name());
 	}
@@ -424,6 +463,8 @@ public enum HeroClass {
 				return new ArmorAbility[]{new Noa_1(), new Noa_2(), new Noa_3()};
 			case MIYU:
 				return new ArmorAbility[]{new Miyu_1(), new Miyu_2(), new Miyu_3()};
+			case YUZU:
+				return new ArmorAbility[]{new Yuzu_1(), new Yuzu_2(), new Yuzu_3()};
 		}
 	}
 
@@ -443,6 +484,8 @@ public enum HeroClass {
 				return Assets.Sprites.NOA;
 			case MIYU:
 				return Assets.Sprites.MIYU;
+			case YUZU:
+				return Assets.Sprites.YUZU;
 		}
 	}
 
@@ -462,6 +505,8 @@ public enum HeroClass {
 				return Assets.Splashes.NOA;
 			case MIYU:
 				return Assets.Splashes.MIYU;
+			case YUZU:
+				return Assets.Splashes.YUZU;
 		}
 	}
 	
@@ -484,6 +529,8 @@ public enum HeroClass {
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_NOA);
 			case MIYU:
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_MIYU);
+			case YUZU:
+				return Badges.isUnlocked(Badges.Badge.UNLOCK_YUZU);
 		}
 	}
 	

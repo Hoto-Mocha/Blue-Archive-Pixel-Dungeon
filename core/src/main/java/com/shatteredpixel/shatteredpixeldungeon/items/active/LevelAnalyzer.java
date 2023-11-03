@@ -97,6 +97,8 @@ public class LevelAnalyzer extends Item {
 				Sample.INSTANCE.play( Assets.Sounds.TELEPORT );
 				GameScene.updateFog();
 
+				Dungeon.hero.yellI(Messages.get(Hero.class, hero.heroClass.name() + "_analyzer_use"));	//"주변을 스캔합니다..."
+
 				curUser.sprite.operate(curUser.pos);
 				curUser.spendAndNext(Actor.TICK);
 				Buff.affect(curUser, LevelAnalyzerCooldown.class).set();

@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
@@ -38,6 +39,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Healing;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PhysicalEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RevealedArea;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
@@ -56,6 +58,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCleansing;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
@@ -63,6 +66,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gloves;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG;
@@ -335,6 +339,40 @@ public enum Talent {
 	MIYU_ABIL_32					(24, 6, 4),
 	MIYU_ABIL_33					(25, 6, 4),
 
+	//Yuzu T1
+	CRIT_DAMAGE						(0, 7),
+	GL_INTUITION					(1, 7),
+	AMMO_BOX						(2, 7),
+	DEFENSIVE_MATRIX				(3, 7),
+	//Yuzu T2
+	DEBUGGING_MEAL					(4, 7),
+	SERIAL_COMBO					(5, 7),
+	QUEST_CLEAR						(6, 7),
+	QUALITY_ASSURANCE				(7, 7),
+	GL_MASTER						(8, 7),
+	//Yuzu T3
+	GL_FAST_RELOAD					(9, 7, 3),
+	ROCKET_JUMP						(10, 7, 3),
+	//GameStart T3
+	GAME_START_1					(11, 7, 3),
+	GAME_START_2					(12, 7, 3),
+	GAME_START_3					(13, 7, 3),
+	//ArtilleryShot T3
+	STICKY_GRENADE_1				(14, 7, 3),
+	STICKY_GRENADE_2				(15, 7, 3),
+	STICKY_GRENADE_3				(16, 7, 3),
+	//Yuzu Ability 1
+	YUZU_ABIL_11					(17, 7, 4),
+	YUZU_ABIL_12					(18, 7, 4),
+	YUZU_ABIL_13					(19, 7, 4),
+	//Yuzu Ability 2
+	YUZU_ABIL_21					(17, 7, 4),
+	YUZU_ABIL_22					(18, 7, 4),
+	YUZU_ABIL_23					(19, 7, 4),
+	//Yuzu Ability 3
+	YUZU_ABIL_31					(17, 7, 4),
+	YUZU_ABIL_32					(18, 7, 4),
+	YUZU_ABIL_33					(19, 7, 4),
 
 
 
@@ -702,6 +740,9 @@ public enum Talent {
 				case MIYU:
 					y = 6;
 					break;
+				case YUZU:
+					y = 7;
+					break;
 			}
 			return x+TALENT_NUMBER*y;
 		} else {
@@ -886,6 +927,21 @@ public enum Talent {
 		if (hero.hasTalent(INVISIBLE_PRESENCE)) {
 			Buff.affect(hero, Invisibility.class, 1+2*hero.pointsInTalent(INVISIBLE_PRESENCE));
 		}
+		if (hero.hasTalent(DEBUGGING_MEAL)) {
+			for (Buff b : hero.buffs()){
+				if (b.type == Buff.buffType.NEGATIVE
+						&& !(b instanceof AllyBuff)
+						&& !(b instanceof LostInventory)){
+					b.detach();
+				}
+//				if (b instanceof Hunger){
+//					((Hunger) b).satisfy(Hunger.STARVING);
+//				}			//허기는 제거하지 않음
+			}
+		}
+		if (hero.pointsInTalent(DEBUGGING_MEAL) > 1) {
+			Buff.affect(hero, PotionOfCleansing.Cleanse.class, 2);
+		}
 //		if (hero.hasTalent(FOCUSED_MEAL)){
 //			if (hero.heroClass == HeroClass.DUELIST){
 //				//1/1.5 charge for the duelist
@@ -1021,6 +1077,9 @@ public enum Talent {
 		if (hero.pointsInTalent(SR_INTUITION) == 2 && item instanceof SR){
 			item.identify();
 		}
+		if (hero.pointsInTalent(GL_INTUITION) == 2 && item instanceof GL){
+			item.identify();
+		}
 		if (hero.hasTalent(THIEFS_INTUITION) && item instanceof Ring){
 			if (hero.pointsInTalent(THIEFS_INTUITION) == 2){
 				item.identify();
@@ -1051,6 +1110,9 @@ public enum Talent {
 		}
 		if (hero.hasTalent(SR_INTUITION)){
 			if (item instanceof SR) item.cursedKnown = true;
+		}
+		if (hero.hasTalent(GL_INTUITION)){
+			if (item instanceof GL) item.cursedKnown = true;
 		}
 		if (hero.pointsInTalent(THIEFS_INTUITION) == 2){
 			if (item instanceof Ring) ((Ring) item).setKnown();
@@ -1100,6 +1162,13 @@ public enum Talent {
 			Buff.affect(enemy, ForLightTracker.class);
 		}
 
+		if (hero.hasTalent(Talent.DEFENSIVE_MATRIX)
+				&& enemy instanceof Mob
+				&& enemy.buff(DefensiveMatrixTracker.class) == null){
+			Buff.affect(hero, Barrier.class).setShield(1+2*hero.pointsInTalent(Talent.DEFENSIVE_MATRIX));
+			Buff.affect(enemy, DefensiveMatrixTracker.class);
+		}
+
 		if (hero.hasTalent(Talent.FOLLOWUP_STRIKE) && enemy.isAlive() && enemy.alignment == Char.Alignment.ENEMY) {
 			if (hero.belongings.attackingWeapon() instanceof MissileWeapon) {
 				Buff.prolong(hero, FollowupStrikeTracker.class, 5f).object = enemy.id();
@@ -1141,6 +1210,7 @@ public enum Talent {
 
 	public static class SuckerPunchTracker extends Buff{};
 	public static class ForLightTracker extends Buff{};
+	public static class DefensiveMatrixTracker extends Buff{};
 
 	public static class FollowupStrikeTracker extends FlavourBuff{
 		public int object;
@@ -1201,6 +1271,9 @@ public enum Talent {
 			case MIYU:
 				Collections.addAll(tierTalents, FAST_HAND, SR_INTUITION, CLAM_BREATHING, NATURE_FRIENDLY);
 				break;
+			case YUZU:
+				Collections.addAll(tierTalents, CRIT_DAMAGE, GL_INTUITION, AMMO_BOX, DEFENSIVE_MATRIX);
+				break;
 		}
 		for (Talent talent : tierTalents){
 			if (replacements.containsKey(talent)){
@@ -1233,6 +1306,9 @@ public enum Talent {
 			case MIYU:
 				Collections.addAll(tierTalents, INVISIBLE_PRESENCE, BLURRY_FIGURE, HIDE_ON_BUSH, BEST_SNIPER, SR_MASTER);
 				break;
+			case YUZU:
+				Collections.addAll(tierTalents, DEBUGGING_MEAL, SERIAL_COMBO, QUEST_CLEAR, QUALITY_ASSURANCE, GL_MASTER);
+				break;
 		}
 		for (Talent talent : tierTalents){
 			if (replacements.containsKey(talent)){
@@ -1264,6 +1340,9 @@ public enum Talent {
 				break;
 			case MIYU:
 				Collections.addAll(tierTalents, SR_FAST_RELOAD, SNIPERS_INTUITION);
+				break;
+			case YUZU:
+				Collections.addAll(tierTalents, GL_FAST_RELOAD, ROCKET_JUMP);
 				break;
 		}
 		for (Talent talent : tierTalents){
@@ -1334,6 +1413,12 @@ public enum Talent {
 				break;
 			case MIYU_EX_SNIPING_BULLET:
 				Collections.addAll(tierTalents, SNIPING_BULLET_1, SNIPING_BULLET_2, SNIPING_BULLET_3);
+				break;
+			case YUZU_EX_GAME_START:
+				Collections.addAll(tierTalents, GAME_START_1, GAME_START_2, GAME_START_3);
+				break;
+			case YUZU_EX_STICKY_GRENADE:
+				Collections.addAll(tierTalents, STICKY_GRENADE_1, STICKY_GRENADE_2, STICKY_GRENADE_3);
 				break;
 		}
 		for (Talent talent : tierTalents){

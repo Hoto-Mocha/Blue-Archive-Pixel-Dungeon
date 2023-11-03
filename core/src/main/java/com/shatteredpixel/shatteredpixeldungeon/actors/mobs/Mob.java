@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
@@ -69,6 +71,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.active.HPGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.HandGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Laser;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.LevelAnalyzer;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.RainbowGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.RegrowGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.SmokeGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.TrashBin;
@@ -769,6 +772,11 @@ public abstract class Mob extends Char {
 				
 				int exp = Dungeon.hero.lvl <= maxLvl ? EXP : 0;
 
+				if (Dungeon.hero.hasTalent(Talent.QUEST_CLEAR) && Dungeon.hero.buff(QuestEnemy.QuestEnemyTracker.class) != null) {
+					exp *= 1+Dungeon.hero.pointsInTalent(Talent.QUEST_CLEAR);
+					Dungeon.hero.buff(QuestEnemy.QuestEnemyTracker.class).detach();
+				}
+
 				//during ascent, under-levelled enemies grant 10 xp each until level 30
 				// after this enemy kills which reduce the amulet curse still grant 10 effective xp
 				// for the purposes of on-exp effects, see AscensionChallenge.processEnemyKill
@@ -861,7 +869,17 @@ public abstract class Mob extends Char {
 				regrowGrenade.reload();
 			}
 
+			RainbowGrenade rainbowGrenade = Dungeon.hero.belongings.getItem(RainbowGrenade.class);
+			if (regrowGrenade != null && Random.Float() < regrowGrenade.dropChance) {
+				rainbowGrenade.reload();
+			}
 
+			if (hero.hasTalent(Talent.SERIAL_COMBO) && hero.belongings.weapon instanceof Gun) {
+				((Gun) hero.belongings.weapon).quickReload();
+				if (hero.pointsInTalent(Talent.SERIAL_COMBO) > 1) {
+					((Gun) hero.belongings.weapon).manualReload(1, true);
+				}
+			}
 		}
 
 		InfiniteBullet infiniteBullet = Dungeon.hero.buff(InfiniteBullet.class);
@@ -986,6 +1004,15 @@ public abstract class Mob extends Char {
 		if (buff(Lucky.LuckProc.class) != null){
 			Dungeon.level.drop(buff(Lucky.LuckProc.class).genLoot(), pos).sprite.drop();
 			Lucky.showFlare(sprite);
+		}
+
+		if (buff(QuestEnemy.class) != null) {
+			int rootAmount = 1;
+			rootAmount += Dungeon.hero.pointsInTalent(Talent.QUEST_CLEAR);
+			for (int i = 0; i < rootAmount; i++) {
+				Dungeon.level.drop(RingOfWealth.genConsumableDrop(Dungeon.hero.lvl/5), pos).sprite.drop();
+				Lucky.showFlare(sprite);
+			}
 		}
 
 		//soul eater talent

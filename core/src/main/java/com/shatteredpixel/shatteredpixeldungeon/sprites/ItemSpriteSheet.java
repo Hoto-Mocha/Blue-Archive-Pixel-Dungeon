@@ -371,7 +371,7 @@ public class ItemSpriteSheet {
 		assignItemRect(ARMOR_SHIROKO,   15, 12);
 		assignItemRect(ARMOR_NOA,	    14, 12);
 		assignItemRect(ARMOR_MIYU,	    13, 12);
-		assignItemRect(ARMOR_YUZU,	    16, 16);
+		assignItemRect(ARMOR_YUZU,	    13, 12);
 	}
 
 	                                                                                    //16 free slots
@@ -741,7 +741,8 @@ public class ItemSpriteSheet {
 	public static final int REGROW_GRENADE	= UNIQUE_ITEM+10;
 	public static final int TRASH_BIN		= UNIQUE_ITEM+11;
 	public static final int RAINBOW_GRENADE	= UNIQUE_ITEM+12;
-	public static final int ANALYZER		= UNIQUE_ITEM+12;
+	public static final int ANALYZER		= UNIQUE_ITEM+13;
+	public static final int AMMO_BOX		= UNIQUE_ITEM+14;
 	static {
 		assignItemRect(SUPER_NOVA, 		16, 16);
 		assignItemRect(SMOKE_GRENADE, 	12, 12);
@@ -757,6 +758,7 @@ public class ItemSpriteSheet {
 		assignItemRect(TRASH_BIN, 		16, 16);
 		assignItemRect(RAINBOW_GRENADE, 12, 12);
 		assignItemRect(ANALYZER, 		16, 14);
+		assignItemRect(AMMO_BOX, 		14, 11);
 	}
 
 	//for smaller 8x8 icons that often accompany an item sprite
@@ -927,12 +929,13 @@ public class ItemSpriteSheet {
 	}
 
 	private static final int BULLET  =                                   xy(1, 34);  //16 slots
-	public static final int SINGLE_BULLET  = BULLET+0;
-	public static final int TRIPLE_BULLET  = BULLET+1;
-	public static final int SNIPER_BULLET  = BULLET+2;
-	public static final int GRENADE_BULLET = BULLET+3;
-	public static final int ROCKET_BULLET  = BULLET+4;
-	public static final int NOTHING_BULLET = BULLET+5;
+	public static final int SINGLE_BULLET 		= BULLET+0;
+	public static final int TRIPLE_BULLET 		= BULLET+1;
+	public static final int SNIPER_BULLET 		= BULLET+2;
+	public static final int GRENADE_BULLET		= BULLET+3;
+	public static final int ROCKET_BULLET 		= BULLET+4;
+	public static final int NOTHING_BULLET		= BULLET+5;
+	public static final int EXPLOSIVE_BULLET	= BULLET+6;
 	static{
 		assignItemRect(SINGLE_BULLET,  8, 8);
 		assignItemRect(TRIPLE_BULLET,  8, 8);
@@ -940,6 +943,7 @@ public class ItemSpriteSheet {
 		assignItemRect(GRENADE_BULLET,  8, 8);
 		assignItemRect(ROCKET_BULLET,  8, 8);
 		assignItemRect(NOTHING_BULLET,  1, 1);
+		assignItemRect(EXPLOSIVE_BULLET,  4, 4);
 	}
 
 	private static final int AR  =                                   xy(1, 35);  //8 slots

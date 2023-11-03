@@ -70,6 +70,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Slow;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SnipersMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Speed;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Stamina;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.StickyGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vulnerable;
@@ -329,8 +330,14 @@ public abstract class Char extends Actor {
 	final public boolean attack( Char enemy ){
 		return attack(enemy, 1f, 0f, 1f);
 	}
-	
+
 	public boolean attack( Char enemy, float dmgMulti, float dmgBonus, float accMulti ) {
+		return attack( enemy, dmgMulti, dmgBonus, accMulti, false );
+	}
+	
+	public boolean attack( Char enemy, float dmgMulti, float dmgBonus, float accMulti, boolean crit ) {
+
+		boolean critAtk = false;
 
 		if (enemy == null) return false;
 		
@@ -432,6 +439,14 @@ public abstract class Char extends Actor {
 			if ( buff(Weakness.class) != null ){
 				dmg *= 0.67f;
 			}
+
+			if (crit) {
+				float criticalChance = 0.1f+0.01f*hero.lvl;
+				if (Random.Float() < criticalChance) {
+					dmg *= 1 + 0.2f + 0.05f * hero.pointsInTalent(Talent.CRIT_DAMAGE);
+					critAtk = true;
+				}
+			}
 			
 			int effectiveDamage = enemy.defenseProc( this, Math.round(dmg) );
 			//do not trigger on-hit logic if defenseProc returned a negative value
@@ -462,7 +477,7 @@ public abstract class Char extends Actor {
 				return true;
 			}
 
-			enemy.damage( effectiveDamage, this );
+			enemy.damage( effectiveDamage, this, critAtk );
 
 			if (buff(FireImbue.class) != null)  buff(FireImbue.class).proc(enemy);
 			if (buff(FrostImbue.class) != null) buff(FrostImbue.class).proc(enemy);
@@ -679,8 +694,12 @@ public abstract class Char extends Actor {
 		needsShieldUpdate = false;
 		return cachedShield;
 	}
-	
+
 	public void damage( int dmg, Object src ) {
+		damage(dmg, src, false);
+	}
+	
+	public void damage( int dmg, Object src, boolean crit ) {
 		
 		if (!isAlive() || dmg < 0) {
 			return;
@@ -817,10 +836,14 @@ public abstract class Char extends Actor {
 		}
 		
 		if (sprite != null) {
+			String damageText = Integer.toString(dmg + shielded);
+			if (crit) {
+				damageText += "!";
+			}
 			sprite.showStatus(HP > HT / 2 ?
 							CharSprite.WARNING :
 							CharSprite.NEGATIVE,
-					Integer.toString(dmg + shielded));
+							damageText);	//피해를 입으면 그 숫자를 띄움
 		}
 
 		if (HP < 0) HP = 0;
@@ -910,6 +933,9 @@ public abstract class Char extends Actor {
 		}
 		if (buff( Speed.class ) != null) {
 			timeScale *= 2.0f;
+		}
+		if (buff(StickyGrenade.class) != null && hero.hasTalent(Talent.STICKY_GRENADE_2)) {
+			timeScale *= 1-1/Math.pow(2, 4-hero.pointsInTalent(Talent.STICKY_GRENADE_2));
 		}
 		
 		super.spend( time / timeScale );

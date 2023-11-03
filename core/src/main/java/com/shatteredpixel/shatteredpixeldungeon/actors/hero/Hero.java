@@ -83,6 +83,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.CheckedCell;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
+import com.shatteredpixel.shatteredpixeldungeon.items.AmmoBox;
 import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
@@ -476,8 +477,12 @@ public class Hero extends Char {
 	public boolean shoot( Char enemy, MissileWeapon wep ) {
 		return shoot(enemy, wep, 1f, 0, 1f );
 	}
-	
+
 	public boolean shoot( Char enemy, MissileWeapon wep, float dmgMulti, float dmgBonus, float accMulti ) {
+		return shoot( enemy, wep, dmgMulti, dmgBonus, accMulti, false );
+	}
+	
+	public boolean shoot( Char enemy, MissileWeapon wep, float dmgMulti, float dmgBonus, float accMulti, boolean crit ) {
 
 		this.enemy = enemy;
 		boolean wasEnemy = enemy.alignment == Alignment.ENEMY
@@ -486,7 +491,7 @@ public class Hero extends Char {
 		//temporarily set the hero's weapon to the missile weapon being used
 		//TODO improve this!
 		belongings.thrownWeapon = wep;
-		boolean hit = attack( enemy, dmgMulti, dmgBonus, accMulti );
+		boolean hit = attack( enemy, dmgMulti, dmgBonus, accMulti, crit );
 		Invisibility.dispel();
 		belongings.thrownWeapon = null;
 
@@ -1112,7 +1117,8 @@ public class Hero extends Char {
 					if (item instanceof Dewdrop
 							|| item instanceof TimekeepersHourglass.sandBag
 							|| item instanceof DriedRose.Petal
-							|| item instanceof Key) {
+							|| item instanceof Key
+							|| item instanceof AmmoBox) {
 						//Do Nothing
 					} else {
 						GLog.newLine();
@@ -2482,10 +2488,16 @@ public class Hero extends Char {
 						//unintentional trap detection scales from 40% at floor 0 to 30% at floor 25
 						} else if (Dungeon.level.map[curr] == Terrain.SECRET_TRAP) {
 							chance = 0.4f - (Dungeon.depth / 250f);
+							if (hero.hasTalent(Talent.QUALITY_ASSURANCE)) {
+								chance *= 1 + 0.25f * hero.pointsInTalent(Talent.QUALITY_ASSURANCE);
+							}
 							
 						//unintentional door detection scales from 20% at floor 0 to 0% at floor 20
 						} else {
 							chance = 0.2f - (Dungeon.depth / 100f);
+							if (hero.hasTalent(Talent.QUALITY_ASSURANCE)) {
+								chance *= 1 + 0.25f * hero.pointsInTalent(Talent.QUALITY_ASSURANCE);
+							}
 						}
 
 						//don't want to let the player search though hidden doors in tutorial

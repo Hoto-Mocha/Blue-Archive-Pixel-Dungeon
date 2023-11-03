@@ -36,6 +36,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Awareness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicalSight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MindVision;
@@ -869,6 +870,9 @@ public abstract class Level implements Bundlable {
 		Blob web = blobs.get(Web.class);
 		if (web != null){
 			web.clear(pos);
+		}
+		if (Dungeon.hero.hasTalent(Talent.GAME_START_1)) {
+			Buff.prolong(Dungeon.hero, Haste.class, 1+Dungeon.hero.pointsInTalent(Talent.GAME_START_1));
 		}
 	}
 

@@ -4,6 +4,7 @@ import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
@@ -16,9 +17,11 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.InfiniteBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShockBulletCooldown;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Slow;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SnipingBullet;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.StickyGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vulnerable;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.elementals.APBullet;
@@ -32,14 +35,20 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Tengu;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Beam;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
+import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Lightning;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.YellowParticle;
+import com.shatteredpixel.shatteredpixeldungeon.items.AmmoBox;
+import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
+import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
+import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSharpshooting;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Shocking;
@@ -47,18 +56,26 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dagger;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.MissileSprite;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.BArray;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
+import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
 import java.text.DecimalFormat;
@@ -66,7 +83,9 @@ import java.util.ArrayList;
 
 public class Gun extends MeleeWeapon {
     public static final String AC_SHOOT		= "SHOOT";
-    public static final String AC_RELOAD = "RELOAD";
+    public static final String AC_RELOAD    = "RELOAD";
+    public static final String AC_AMMO      = "AMMO";
+    public static final String AC_JUMP      = "JUMP";
 
     protected int max_round; //최대 장탄수
     protected int round; //현재 장탄수
@@ -125,6 +144,12 @@ public class Gun extends MeleeWeapon {
         if (isEquipped( hero )) {
             actions.add(AC_SHOOT);
             actions.add(AC_RELOAD);
+            if (hero.hasTalent(Talent.AMMO_BOX)) {
+                actions.add(AC_AMMO);
+            }
+            if (this instanceof GL && hero.hasTalent(Talent.ROCKET_JUMP)) {
+                actions.add(AC_JUMP);
+            }
         }
         return actions;
     }
@@ -149,12 +174,41 @@ public class Gun extends MeleeWeapon {
             }
         }
         if (action.equals(AC_RELOAD)) {
-            if (round == maxRound()){
+            if (isAllLoaded()){
                 GLog.w(Messages.get(this, "already_loaded"));
             } else {
                 reload();
             }
         }
+        if (action.equals(AC_AMMO)) {
+            int cell = Dungeon.level.map[hero.pos];
+            if (cell == Terrain.CHASM || cell == Terrain.DOOR || cell == Terrain.OPEN_DOOR) {
+                hero.yellW(Messages.get(Hero.class, hero.heroClass.name() + "_cannot_ammo_place"));     //"이 곳엔 설치할 수 없어요..."
+            } else {
+                if (hero.buff(AmmoBox.AmmoBoxCooldown.class) != null) {
+                    hero.yellW(Messages.get(Hero.class, hero.heroClass.name() + "_ammo_place_cooldown"));     //"아직 사용할 수 없어요..."
+                } else {
+                    hero.sprite.operate(hero.pos);
+                    Dungeon.level.drop(new AmmoBox(1+2*hero.pointsInTalent(Talent.AMMO_BOX)), hero.pos);
+                    hero.spendAndNext(Actor.TICK);
+                    hero.yellP(Messages.get(Hero.class, hero.heroClass.name() + "_ammo_place"));    //"탄약 상자를 설치하겠습니다...!"
+                }
+            }
+        }
+        if (action.equals(AC_JUMP)) {
+            if (isAllLoaded()) {
+                usesTargeting = false;
+                curUser = hero;
+                curItem = this;
+                GameScene.selectCell(jumper);
+            } else {
+                hero.yellW(Messages.get(Hero.class, hero.heroClass.name() + "_ammo_lack"));    //장탄수가 부족해요..."
+            }
+        }
+    }
+
+    public boolean isAllLoaded() {
+        return round >= maxRound();
     }
 
     @Override
@@ -221,6 +275,32 @@ public class Gun extends MeleeWeapon {
         }
         if (hero.buff(Talent.FastHandTracker.class) != null) hero.buff(Talent.FastHandTracker.class).detach();
         if (hero.buff(Talent.PerfectHandTracker.class) != null) hero.buff(Talent.PerfectHandTracker.class).detach();
+        if (hero.hasTalent(Talent.GAME_START_3)) {
+            int area[];
+            switch (hero.pointsInTalent(Talent.GAME_START_3)) {
+                case 1: default:
+                    area = PathFinder.NEIGHBOURS9;
+                    break;
+                case 2:
+                    area = PathFinder.NEIGHBOURS25;
+                    break;
+                case 3:
+                    area = PathFinder.NEIGHBOURS49;
+                    break;
+            }
+            for (int i : area) {
+                int cell = hero.pos + i;
+                int terrain = Dungeon.level.map[cell];
+                if (terrain == Terrain.GRASS || terrain == Terrain.EMBERS) {
+                    int toTerrain = Terrain.FURROWED_GRASS;
+                    if (Random.Float() < 0.25f && Regeneration.regenOn()) {
+                        toTerrain = Terrain.HIGH_GRASS;
+                    }
+                    Level.set(cell, toTerrain);
+                    GameScene.updateMap( cell );
+                }
+            }
+        }
     }
 
     public void quickReload() {
@@ -455,7 +535,7 @@ public class Gun extends MeleeWeapon {
                     }
                 }
             }
-            if (Gun.this.round == maxRound() && hero.hasTalent(Talent.DOUBLE_TAP)) {
+            if (Gun.this.isAllLoaded() && hero.hasTalent(Talent.DOUBLE_TAP)) {
                 new FlavourBuff() {
                     {
                         actPriority = VFX_PRIO;
@@ -493,7 +573,8 @@ public class Gun extends MeleeWeapon {
 
         @Override
         public int damageRoll(Char owner) {
-            return bulletDamage();
+            int damage = bulletDamage();
+            return damage;
         }
 
         @Override
@@ -522,40 +603,89 @@ public class Gun extends MeleeWeapon {
 
         @Override
         protected void onThrow( int cell ) {
-            if (explode) {
-                ArrayList<Char> targets = new ArrayList<>();
-                if (Actor.findChar(cell) != null) targets.add(Actor.findChar(cell));
-                for (int i : PathFinder.NEIGHBOURS8){
-                    if (Actor.findChar(cell + i) != null) targets.add(Actor.findChar(cell + i));
-                }
-                for (Char target : targets){
-                    curUser.shoot(target, this);
-                    if (target == hero && !target.isAlive()){
-                        Dungeon.fail(getClass());
-                        GLog.n(Messages.get(this, "ondeath"));
+            if (explode || hero.subClass == HeroSubClass.YUZU_EX_GAME_START) {
+                Char chInPos = Actor.findChar(cell);
+                if (hero.subClass == HeroSubClass.YUZU_EX_STICKY_GRENADE && chInPos != null) {
+                    Buff.affect(chInPos, StickyGrenade.class).attach(this, curUser);
+                    chInPos.sprite.flash();
+                    Sample.INSTANCE.play(Assets.Sounds.HIT);
+                    if (chInPos instanceof Mob) ((Mob)chInPos).beckon(curUser.pos);
+                } else {
+                    ArrayList<Char> targets = new ArrayList<>();
+                    int shootArea[] = PathFinder.NEIGHBOURS9;
+                    if (explode && hero.subClass == HeroSubClass.YUZU_EX_GAME_START) {
+                        shootArea = PathFinder.NEIGHBOURS21;
                     }
-                }
-                CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
-                CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
-                ArrayList<Char> affected = new ArrayList<>();
-                for (int n : PathFinder.NEIGHBOURS9) {
-                    int c = cell + n;
-                    if (c >= 0 && c < Dungeon.level.length()) {
-                        if (Dungeon.level.heroFOV[c]) {
-                            CellEmitter.get(c).burst(SmokeParticle.FACTORY, 4);
-                            CellEmitter.center(cell).burst(BlastParticle.FACTORY, 4);
-                        }
-                        if (Dungeon.level.flamable[c]) {
-                            Dungeon.level.destroy(c);
-                            GameScene.updateMap(c);
-                        }
-                        Char ch = Actor.findChar(c);
-                        if (ch != null) {
-                            affected.add(ch);
+
+                    for (int i : shootArea){
+                        int c = cell + i;
+                        if (c >= 0 && c < Dungeon.level.length()) {
+                            if (Dungeon.level.heroFOV[c]) {
+                                CellEmitter.get(c).burst(SmokeParticle.FACTORY, 4);
+                                CellEmitter.center(cell).burst(BlastParticle.FACTORY, 4);
+                            }
+                            if (Dungeon.level.flamable[c]) {
+                                Dungeon.level.destroy(c);
+                                GameScene.updateMap(c);
+                            }
+                            Char ch = Actor.findChar(c);
+                            if (ch != null && !targets.contains(ch)) {
+                                targets.add(ch);
+                            }
                         }
                     }
+
+                    ArrayList<Char> additionalTargets = new ArrayList<>();
+                    if (hero.hasTalent(Talent.GAME_START_2)) {
+                        for (Char target : targets) {
+                            for (int i : PathFinder.NEIGHBOURS9) {
+                                int c = target.pos + i;
+                                if (c >= 0 && c < Dungeon.level.length()) {
+                                    if (Dungeon.level.heroFOV[c]) {
+                                        CellEmitter.get(c).burst(SmokeParticle.FACTORY, 4);
+                                        CellEmitter.center(cell).burst(BlastParticle.FACTORY, 4);
+                                    }
+                                    if (Dungeon.level.flamable[c]) {
+                                        Dungeon.level.destroy(c);
+                                        GameScene.updateMap(c);
+                                    }
+                                    Char ch = Actor.findChar(c);
+                                    if (ch != null && !additionalTargets.contains(ch) && !targets.contains(ch)) {   //기존 폭발에 데미지를 입을 대상은 제외함
+                                        additionalTargets.add(ch);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    for (Char target : targets){
+                        if (target == hero && hero.heroClass == HeroClass.YUZU) {
+                            curUser.shoot(target, this, 0.25f, 0, 1);
+                        } else {
+                            curUser.shoot(target, this, 1f, 0, 1f, hero.heroClass == HeroClass.YUZU);
+                        }
+                        if (target == hero && !target.isAlive()) {
+                            Dungeon.fail(getClass());
+                            GLog.n(Messages.get(this, "ondeath"));
+                        }
+                    }
+
+                    for (Char target : additionalTargets){
+                        if (target == hero && hero.heroClass == HeroClass.YUZU) {
+                            curUser.shoot(target, this, hero.pointsInTalent(Talent.GAME_START_2)/3f*0.25f, 0, 1);
+                        } else {
+                            curUser.shoot(target, this, hero.pointsInTalent(Talent.GAME_START_2)/3f, 0, 1, hero.heroClass == HeroClass.YUZU);
+                        }
+                        if (target == hero && !target.isAlive()) {
+                            Dungeon.fail(getClass());
+                            GLog.n(Messages.get(this, "ondeath"));
+                        }
+                    }
+
+                    CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
+                    CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
+                    Sample.INSTANCE.play( Assets.Sounds.BLAST );
                 }
-                Sample.INSTANCE.play( Assets.Sounds.BLAST );
             } else {
                 Char enemy = Actor.findChar( cell );
                 for (int i = 0; i < shotPerShoot(); i++) { //데미지 입히는 것과 발사 시 주변에서 나는 연기를 shotPerShoot만큼 반복
@@ -564,7 +694,7 @@ public class Gun extends MeleeWeapon {
                         CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
                         CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
                     } else {
-                        if (!curUser.shoot( enemy, this )) {
+                        if (!curUser.shoot( enemy, this, 1f, 0, 1f, hero.heroClass == HeroClass.YUZU )) {
                             CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
                             CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
                         }
@@ -692,6 +822,63 @@ public class Gun extends MeleeWeapon {
         @Override
         public String prompt() {
             return Messages.get(SpiritBow.class, "prompt");
+        }
+    };
+
+    private CellSelector.Listener jumper = new CellSelector.Listener() {
+        @Override
+        public void onSelect( Integer target ) {
+            if (target != null) {
+                if (target == curUser.pos) {
+                    hero.yellW(Messages.get(Hero.class, hero.heroClass.name() + "_cannot_jump"));   //"그런 곳으로... 점프를 하라고요...?"
+                } else {
+                    if (hero.rooted) {
+                        hero.yellW(Messages.get(Hero.class, hero.heroClass.name() + "_cannot_jump_rooted"));    //"발이 묶여버렸어요..."
+                        PixelScene.shake( 1, 1f );
+                        return;
+                    }
+
+                    Ballistica route = new Ballistica(hero.pos, target, Ballistica.STOP_TARGET | Ballistica.STOP_SOLID);
+                    int cell = route.collisionPos;
+
+                    //can't occupy the same cell as another char, so move back one.
+                    int backTrace = route.dist-1;
+                    while (Actor.findChar( cell ) != null && cell != hero.pos) {
+                        cell = route.path.get(backTrace);
+                        backTrace--;
+                    }
+
+                    final int dest = cell;
+                    hero.busy();
+                    hero.sprite.jump(hero.pos, cell, new Callback() {
+                        @Override
+                        public void call() {
+                            hero.move(dest);
+                            Dungeon.level.occupyCell(hero);
+                            Dungeon.observe();
+                            GameScene.updateFog();
+
+                            Invisibility.dispel();
+                            hero.spendAndNext(Actor.TICK);
+                        }
+                    });
+
+                    int damage = 40-10*hero.pointsInTalent(Talent.ROCKET_JUMP);
+                    damage -= hero.drRoll();
+                    CellEmitter.center(hero.pos).burst(BlastParticle.FACTORY, 1);
+                    CellEmitter.get(hero.pos).burst(SmokeParticle.FACTORY, 3);
+                    Sample.INSTANCE.play(Assets.Sounds.BLAST);
+                    if (damage >= hero.HP) damage = hero.HP-1;
+                    hero.damage(damage, this);
+
+                    round = 0;
+                    updateQuickslot();
+                }
+            }
+        }
+        @Override
+        public String prompt() {
+            return Messages.get(Hero.class, "rocketjump");
         }
     };
 }

@@ -119,6 +119,9 @@ abstract public class ClassArmor extends Armor {
 			case MIYU:
 				classArmor = new MiyuArmor();
 				break;
+			case YUZU:
+				classArmor = new YuzuArmor();
+				break;
 		}
 		
 		classArmor.level(armor.trueLevel());

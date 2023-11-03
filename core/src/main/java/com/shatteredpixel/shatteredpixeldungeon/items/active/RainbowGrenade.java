@@ -1,4 +1,5 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.active;
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -10,6 +11,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.RainbowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.PathFinder;
 
 public class RainbowGrenade extends Grenade {
@@ -69,10 +71,12 @@ public class RainbowGrenade extends Grenade {
                     }
                     Char ch = Actor.findChar(c);
                     if (ch instanceof Mob) {
-                        Buff.affect(ch, Charm.class, 5+2*RainbowGrenade.this.buffedLvl());
+                        Buff.affect(ch, Charm.class, 5+2*RainbowGrenade.this.buffedLvl()).object = curUser.id();
                     }
                 }
             }
+
+            Sample.INSTANCE.play(Assets.Sounds.BLAST);
         }
     }
 }

@@ -68,7 +68,7 @@ public class StickyGrenade extends Buff {
             if (Dungeon.level.heroFOV[pos]) FloatingText.show(p.x, p.y, pos, "1...", CharSprite.NEGATIVE);
         } else {
             if (stuck > 0) {
-                float dmgMulti = 1 + 0.05f* hero.pointsInTalent(Talent.STICKY_GRENADE_1);
+                float dmgMulti = 1 + (stuck-1) * 0.05f * hero.pointsInTalent(Talent.STICKY_GRENADE_1);
                 float accMulti = 1 + hero.pointsInTalent(Talent.STICKY_GRENADE_3);
                 for (int c : PathFinder.NEIGHBOURS9) {
                     int cell = pos + c;

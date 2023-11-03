@@ -42,7 +42,7 @@ public class SeedAnalysisScene extends PixelScene {
 	public void create() {
 		super.create();
 
-		final float colWidth = 180;
+		final float colWidth = 120;
 		final float fullWidth = colWidth * (landscape() ? 2 : 1);
 
 		int w = Camera.main.width;

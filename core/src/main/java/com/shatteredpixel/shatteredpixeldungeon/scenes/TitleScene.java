@@ -179,7 +179,7 @@ public class TitleScene extends PixelScene {
 		StyledButton btnSeedTest = new StyledButton(GREY_TR, Messages.get(this, "seed_find")){
 			@Override
 			protected void onClick() {
-				if (!Statistics.amuletObtained) {
+				if (!Statistics.amuletObtained && !DeviceCompat.isDebug()) {
 					ShatteredPixelDungeon.scene().addToFront( new WndMessage(Messages.get(TitleScene.this, "need_to_clear_test")));
 					return;
 				}
@@ -197,7 +197,7 @@ public class TitleScene extends PixelScene {
 		StyledButton btnSeedAnalysis = new StyledButton(GREY_TR, Messages.get(this, "seed_analysis")){
 			@Override
 			protected void onClick() {
-				if (!Statistics.amuletObtained) {
+				if (!Statistics.amuletObtained && !DeviceCompat.isDebug()) {
 					ShatteredPixelDungeon.scene().addToFront( new WndMessage(Messages.get(TitleScene.this, "need_to_clear_analysis")));
 					return;
 				}

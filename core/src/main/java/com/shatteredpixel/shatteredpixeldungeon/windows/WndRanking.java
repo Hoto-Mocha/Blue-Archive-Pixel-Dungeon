@@ -49,6 +49,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.TalentButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.TalentsPane;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.shatteredpixel.shatteredpixeldungeon.utils.DungeonSeed;
+import com.watabou.gltextures.TextureCache;
 import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
@@ -470,11 +471,9 @@ public class WndRanking extends WndTabbed {
 			
 			slot.item( item );
 			if (item.cursed && item.cursedKnown) {
-				bg.ra = +0.2f;
-				bg.ga = -0.1f;
+				bg.texture( TextureCache.createSolid( 0x60CE2323 ) );
 			} else if (!item.isIdentified()) {
-				bg.ra = 0.1f;
-				bg.ba = 0.1f;
+				bg.texture( TextureCache.createSolid( 0x60B846C6 ) );
 			}
 		}
 		
@@ -538,11 +537,9 @@ public class WndRanking extends WndTabbed {
 			this.item = item;
 
 			if (item.cursed && item.cursedKnown) {
-				bg.ra = +0.2f;
-				bg.ga = -0.1f;
+				bg.texture( TextureCache.createSolid( 0x60CE2323 ) );
 			} else if (!item.isIdentified()) {
-				bg.ra = 0.1f;
-				bg.ba = 0.1f;
+				bg.texture( TextureCache.createSolid( 0x60B846C6 ) );
 			}
 		}
 

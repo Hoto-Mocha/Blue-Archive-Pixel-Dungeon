@@ -125,7 +125,7 @@ public class SG extends Gun {
 
     @Override
     public int shotPerShoot() { //발사 당 탄환의 수
-        int amount = shotPerShoot;
+        int amount = super.shotPerShoot();
         if (hero.hasTalent(Talent.ADDITIONAL_SHOT)) amount += hero.pointsInTalent(Talent.ADDITIONAL_SHOT);
         return amount;
     }

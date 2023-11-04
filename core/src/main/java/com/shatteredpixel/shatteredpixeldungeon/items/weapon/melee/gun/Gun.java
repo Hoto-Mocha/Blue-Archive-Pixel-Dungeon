@@ -4,7 +4,6 @@ import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
@@ -35,21 +34,17 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Tengu;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Beam;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
-import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Lightning;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.YellowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.AmmoBox;
-import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
-import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSharpshooting;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Shocking;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dagger;
@@ -59,23 +54,19 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWea
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
+import com.shatteredpixel.shatteredpixeldungeon.mechanics.ConeAOE;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.MissileSprite;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.BArray;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
-import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
 import java.text.DecimalFormat;
@@ -86,6 +77,8 @@ public class Gun extends MeleeWeapon {
     public static final String AC_RELOAD    = "RELOAD";
     public static final String AC_AMMO      = "AMMO";
     public static final String AC_JUMP      = "JUMP";
+    public static final String AC_RIOT	 = "RIOT";
+    public static final String AC_SHOOTALL = "SHOOTALL";
 
     protected int max_round; //최대 장탄수
     protected int round; //현재 장탄수
@@ -95,6 +88,9 @@ public class Gun extends MeleeWeapon {
     protected float shootingAccuracy = 1f; //발사 시 탄환 정확성의 배율. 높을 수록 정확하다
     protected boolean explode = false; //탄환 폭발 여부
     public static final String TXT_STATUS = "%d/%d";
+
+    private boolean riot = false;
+    private boolean shootAll = false;
 
     public boolean doubleBarrelSpecial = false;
 
@@ -113,6 +109,8 @@ public class Gun extends MeleeWeapon {
     private static final String SHOOTING_SPEED = "shootingSpeed";
     private static final String SHOOTING_ACCURACY = "shootingAccuracy";
     private static final String EXPLODE = "explode";
+    private static final String RIOT = "riot";
+    private static final String SHOOTALL = "shootAll";
 
     @Override
     public void storeInBundle(Bundle bundle) {
@@ -124,6 +122,8 @@ public class Gun extends MeleeWeapon {
         bundle.put(SHOOTING_SPEED, shootingSpeed);
         bundle.put(SHOOTING_ACCURACY, shootingAccuracy);
         bundle.put(EXPLODE, explode);
+        bundle.put(RIOT, riot);
+        bundle.put(SHOOTALL, shootAll);
     }
 
     @Override
@@ -136,6 +136,8 @@ public class Gun extends MeleeWeapon {
         shootingSpeed = bundle.getFloat(SHOOTING_SPEED);
         shootingAccuracy = bundle.getFloat(SHOOTING_ACCURACY);
         explode = bundle.getBoolean(EXPLODE);
+        riot = bundle.getBoolean(RIOT);
+        shootAll = bundle.getBoolean(SHOOTALL);
     }
 
     @Override
@@ -149,6 +151,12 @@ public class Gun extends MeleeWeapon {
             }
             if (this instanceof GL && hero.hasTalent(Talent.ROCKET_JUMP)) {
                 actions.add(AC_JUMP);
+            }
+            if (hero.subClass == HeroSubClass.NONOMI_EX_RIOT) {
+                actions.add(AC_RIOT);
+            }
+            if (hero.subClass == HeroSubClass.NONOMI_EX_SHOOTALL) {
+                actions.add(AC_SHOOTALL);
             }
         }
         return actions;
@@ -204,6 +212,26 @@ public class Gun extends MeleeWeapon {
                 GameScene.selectCell(jumper);
             } else {
                 hero.yellW(Messages.get(Hero.class, hero.heroClass.name() + "_ammo_lack"));    //장탄수가 부족해요..."
+            }
+        }
+        if (action.equals(AC_RIOT)) {
+            riot = !riot;
+            hero.sprite.operate(hero.pos);
+            Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
+            if (riot) {
+                hero.yellI(Messages.get(Hero.class, hero.heroClass.name() + "_riot_on"));
+            } else {
+                hero.yellI(Messages.get(Hero.class, hero.heroClass.name() + "_riot_off"));
+            }
+        }
+        if (action.equals(AC_SHOOTALL)) {
+            shootAll = !shootAll;
+            hero.sprite.operate(hero.pos);
+            Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
+            if (shootAll) {
+                hero.yellI(Messages.get(Hero.class, hero.heroClass.name() + "_shootall_on"));
+            } else {
+                hero.yellI(Messages.get(Hero.class, hero.heroClass.name() + "_shootall_off"));
             }
         }
     }
@@ -329,6 +357,9 @@ public class Gun extends MeleeWeapon {
     }
 
     public int shotPerShoot() { //발사 당 탄환의 수
+        if (shootAll) {
+            return (round + Random.IntRange(0, hero.pointsInTalent(Talent.SHOOTALL_1))) * shotPerShoot;
+        }
         return shotPerShoot;
     }
 
@@ -378,8 +409,14 @@ public class Gun extends MeleeWeapon {
 
     @Override
     public int max(int lvl) {
-        return  3*(tier+1) +
-                lvl*(tier+1); //근접 무기로서의 최대 데미지
+        int damage = 3*(tier+1) +
+                     lvl*(tier+1); //근접 무기로서의 최대 데미지
+
+        if (isEquipped(hero) && round == 0 && hero.hasTalent(Talent.SHOOTALL_3)) {
+            damage *= 1f + 0.2f/3f*hero.pointsInTalent(Talent.SHOOTALL_3);
+        }
+        return damage;
+
     }
 
     public int bulletMin(int lvl) {
@@ -594,6 +631,9 @@ public class Gun extends MeleeWeapon {
             if (owner instanceof Hero) {
                 ACC *= shootingAccuracy;
             }
+            if (shootAll) {
+                ACC *= 0.5f;
+            }
             return ACC;
         }
 
@@ -604,6 +644,7 @@ public class Gun extends MeleeWeapon {
 
         @Override
         protected void onThrow( int cell ) {
+            boolean killedEnemy = false;
             if (explode || hero.subClass == HeroSubClass.YUZU_EX_GAME_START) {
                 Char chInPos = Actor.findChar(cell);
                 if (hero.subClass == HeroSubClass.YUZU_EX_STICKY_GRENADE && chInPos != null) {
@@ -659,6 +700,8 @@ public class Gun extends MeleeWeapon {
                         }
                     }
 
+                    targets.addAll(additionalTargets);
+
                     for (Char target : targets){
                         for (int i = 0; i < shotPerShoot(); i++) {
                             if (target == hero && hero.heroClass == HeroClass.YUZU) {
@@ -667,19 +710,8 @@ public class Gun extends MeleeWeapon {
                                 curUser.shoot(target, this, 1f, 0, 1f );
                             }
                         }
-                        if (target == hero && !target.isAlive()) {
-                            Dungeon.fail(getClass());
-                            GLog.n(Messages.get(this, "ondeath"));
-                        }
-                    }
-
-                    for (Char target : additionalTargets){
-                        for (int i = 0; i < shotPerShoot(); i++) {
-                            if (target == hero && hero.heroClass == HeroClass.YUZU) {
-                                curUser.shoot(target, this, hero.pointsInTalent(Talent.GAME_START_2)/3f*0.25f, 0, 1);
-                            } else {
-                                curUser.shoot(target, this, hero.pointsInTalent(Talent.GAME_START_2)/3f, 0, 1);
-                            }
+                        if (!target.isAlive()) {
+                            killedEnemy = true;
                         }
                         if (target == hero && !target.isAlive()) {
                             Dungeon.fail(getClass());
@@ -687,10 +719,6 @@ public class Gun extends MeleeWeapon {
                         }
                     }
 
-                    for (int i = 0; i < shotPerShoot(); i++) {
-                        CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
-                        CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
-                    }
                     Sample.INSTANCE.play( Assets.Sounds.BLAST );
                 }
             } else {
@@ -707,15 +735,27 @@ public class Gun extends MeleeWeapon {
                         }
                     }
                 }
+                if (enemy != null && !enemy.isAlive()) {
+                    killedEnemy = true;
+                }
             }
 
-            round --;
-            if (hero.buff(InfiniteBullet.class) != null) {
-                round ++;
+            if (shootAll) {
+                if ( hero.hasTalent(Talent.SHOOTALL_2) && killedEnemy && Random.Float() < 0.4f/3f*hero.pointsInTalent(Talent.SHOOTALL_2)) {
+                    quickReload();
+                } else {
+                    round = 0;
+                }
+            } else {
+                round --;
+                if (hero.buff(InfiniteBullet.class) != null) {
+                    round ++;
+                }
+                if (round == 0 && hero.hasTalent(Talent.LAST_BULLET)) {
+                    Buff.affect(hero, Barrier.class).setShield(2+3*hero.pointsInTalent(Talent.LAST_BULLET));
+                }
             }
-            if (round == 0 && hero.hasTalent(Talent.LAST_BULLET)) {
-                Buff.affect(hero, Barrier.class).setShield(2+3*hero.pointsInTalent(Talent.LAST_BULLET));
-            }
+
             for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) { //주변의 적들을 영웅의 위치로 모이게 하는 구문
                 if (mob.paralysed <= 0
                         && Dungeon.level.distance(curUser.pos, mob.pos) <= 4
@@ -738,7 +778,64 @@ public class Gun extends MeleeWeapon {
 
         public void cast(final Hero user, final int dst, boolean doubleBarrel) {
             isDoubleBarrel = doubleBarrel;
-            super.cast(user, dst);
+            if (riot) {
+                int cell = throwPos( user, dst );
+                riot(cell);
+            } else {
+                super.cast(user, dst);
+            }
+        }
+
+        private void riot(int cell) {
+            Ballistica aim = new Ballistica(hero.pos, cell, Ballistica.WONT_STOP);
+
+            int maxDist = 4+2*hero.pointsInTalent(Talent.RIOT_2);
+            int dist = Math.min(aim.dist, maxDist);
+
+            ConeAOE cone = new ConeAOE(aim,
+                    dist,
+                    90-15*hero.pointsInTalent(Talent.RIOT_2),
+                    Ballistica.STOP_SOLID | Ballistica.STOP_TARGET);
+
+            Invisibility.dispel();
+            hero.sprite.zap(cell);
+
+            ArrayList<Char> affected = new ArrayList<>();
+            for (int c : cone.cells){
+                CellEmitter.get(c).burst(SmokeParticle.FACTORY, 2);
+                CellEmitter.center(c).burst(BlastParticle.FACTORY, 2);
+                Char ch = Actor.findChar(c);
+                if (ch != null && ch.alignment != hero.alignment){
+                    affected.add(ch);
+                }
+            }
+            float dmgMulti = 1f;
+            float accMulti = 1f;
+            float multi = Math.min(1f + 0.1f * hero.pointsInTalent(Talent.RIOT_1) * affected.size(), 2.5f);
+            dmgMulti *= 1 + (shotPerShoot()-1)/2f;
+            dmgMulti *= multi;
+            accMulti *= multi;
+
+            for (Char ch : affected) {
+                curUser.shoot(ch, this, dmgMulti, 0, accMulti);
+
+                if (hero.hasTalent(Talent.RIOT_3)
+                        && Random.Float() < (hero.pointsInTalent(Talent.RIOT_3) * (5-Dungeon.level.distance(hero.pos, ch.pos)) * 5) / 100f) { //(5-거리)*5*n%
+                    Ballistica trajectory = new Ballistica(hero.pos, ch.pos, Ballistica.STOP_TARGET);
+                    trajectory = new Ballistica(trajectory.collisionPos, trajectory.path.get(trajectory.path.size()-1), Ballistica.PROJECTILE);
+                    WandOfBlastWave.throwChar(ch,
+                            trajectory,
+                            1+dist-Dungeon.level.distance(hero.pos, ch.pos), //현재 위치로부터 발사 거리까지의 남은 타일 수
+                            false,
+                            true,
+                            this);
+                }
+            }
+
+            hero.spendAndNext(delayFactor(hero));
+            updateQuickslot();
+            round --;
+            Sample.INSTANCE.play( Assets.Sounds.HIT_CRUSH, 1, Random.Float(0.33f, 0.66f) );
         }
     }
 

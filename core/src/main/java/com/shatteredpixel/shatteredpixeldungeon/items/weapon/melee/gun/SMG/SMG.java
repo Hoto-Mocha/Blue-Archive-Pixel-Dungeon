@@ -42,7 +42,7 @@ public class SMG extends Gun {
 
     @Override
     public int shotPerShoot() { //발사 당 탄환의 수
-        int amount = shotPerShoot;
+        int amount = super.shotPerShoot();
         if (hero.heroClass == HeroClass.MIYAKO) amount ++;
         return amount;
     }

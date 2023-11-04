@@ -37,6 +37,8 @@ public class InventorySlot extends ItemSlot {
 
 	private static final int NORMAL		= 0x60DFDFDF;
 	private static final int EQUIPPED	= 0x60999999;
+	private static final int UNIDENFIED	= 0x60B846C6;
+	private static final int CURSED		= 0x60CE2323;
 
 	private ColorBlock bg;
 
@@ -88,14 +90,17 @@ public class InventorySlot extends ItemSlot {
 			bg.texture( TextureCache.createSolid( equipped ? EQUIPPED : NORMAL ) );
 			bg.resetColor();
 			if (item.cursed && item.cursedKnown) {
-				bg.ra = +0.3f;
-				bg.ga = -0.15f;
+				bg.texture( TextureCache.createSolid( CURSED ) );
+				//bg.ra = +0.3f;
+				//bg.ga = -0.15f;
 			} else if (!item.isIdentified()) {
 				if ((item instanceof EquipableItem || item instanceof Wand) && item.cursedKnown){
+					bg.texture( TextureCache.createSolid( NORMAL ) );
 					bg.ba = 0.3f;
 				} else {
-					bg.ra = 0.3f;
-					bg.ba = 0.3f;
+					bg.texture( TextureCache.createSolid( UNIDENFIED ) );
+					//bg.ra = 0.3f;
+					//bg.ba = 0.3f;
 				}
 			}
 

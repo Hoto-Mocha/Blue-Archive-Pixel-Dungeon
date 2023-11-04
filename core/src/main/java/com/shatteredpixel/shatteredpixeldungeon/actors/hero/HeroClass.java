@@ -117,6 +117,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_tie
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_tier1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_tier2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_tier1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_tier2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_tier1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingSpike;
@@ -164,8 +165,8 @@ public enum HeroClass {
 			new PotionOfExperience().identify().quantity(30).collect();
 			new RingOfMight().identify().upgrade(10).collect();
 			new EXSkillDisc().collect();
-			new GL_tier2().identify().collect();
-			new HG_tier2().identify().collect();
+			new SMG_tier2().identify().collect();
+			new SG_tier2().identify().collect();
 			new ScrollOfUpgrade().identify().quantity(200).collect();
 //			new StoneOfAugmentation().quantity(200).collect();
 //			new PotionOfMindVision().identify().quantity(200).collect();
@@ -176,6 +177,7 @@ public enum HeroClass {
 			new Teleporter().collect();
 			new KingsCrown().collect();
 			new Pasty().quantity(200).collect();
+			new PotionOfMindVision().identify().quantity(200).collect();
 //			new ScrollOfEnchantment().identify().quantity(200).collect();
 			new Amulet().collect();
 //			new ScrollOfTransmutation().identify().collect();

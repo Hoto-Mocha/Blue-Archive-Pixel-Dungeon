@@ -33,7 +33,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArcaneArmor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barkskin;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Berserk;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bless;
@@ -55,7 +54,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Fury;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hex;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LifeLink;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicalSleep;
@@ -330,18 +328,8 @@ public abstract class Char extends Actor {
 	final public boolean attack( Char enemy ){
 		return attack(enemy, 1f, 0f, 1f);
 	}
-
-	public boolean attack( Char enemy, float dmgMulti, float dmgBonus, float accMulti ) {
-		return attack( enemy, dmgMulti, dmgBonus, accMulti, false, true );
-	}
-
-	public boolean attack( Char enemy, float dmgMulti, float dmgBonus, float accMulti, boolean crit ) {
-		return attack( enemy, dmgMulti, dmgBonus, accMulti, crit, true );
-	}
 	
-	public boolean attack( Char enemy, float dmgMulti, float dmgBonus, float accMulti, boolean crit, boolean soundPlay ) {
-
-		boolean critAtk = false;
+	public boolean attack( Char enemy, float dmgMulti, float dmgBonus, float accMulti ) {
 
 		if (enemy == null) return false;
 		
@@ -443,14 +431,6 @@ public abstract class Char extends Actor {
 			if ( buff(Weakness.class) != null ){
 				dmg *= 0.67f;
 			}
-
-			if (crit) {
-				float criticalChance = 0.1f+0.01f*hero.lvl;
-				if (Random.Float() < criticalChance) {
-					dmg *= 1 + 0.2f + 0.05f * hero.pointsInTalent(Talent.CRIT_DAMAGE);
-					critAtk = true;
-				}
-			}
 			
 			int effectiveDamage = enemy.defenseProc( this, Math.round(dmg) );
 			//do not trigger on-hit logic if defenseProc returned a negative value
@@ -469,7 +449,7 @@ public abstract class Char extends Actor {
 
 				effectiveDamage = attackProc(enemy, effectiveDamage);
 			}
-			if (visibleFight && soundPlay) {
+			if (visibleFight) {
 				if (effectiveDamage > 0 || !enemy.blockSound(Random.Float(0.96f, 1.05f))) {
 					hitSound(Random.Float(0.87f, 1.15f));
 				}
@@ -481,7 +461,7 @@ public abstract class Char extends Actor {
 				return true;
 			}
 
-			enemy.damage( effectiveDamage, this, critAtk );
+			enemy.damage( effectiveDamage, this );
 
 			if (buff(FireImbue.class) != null)  buff(FireImbue.class).proc(enemy);
 			if (buff(FrostImbue.class) != null) buff(FrostImbue.class).proc(enemy);
@@ -699,12 +679,10 @@ public abstract class Char extends Actor {
 		return cachedShield;
 	}
 
+	public static boolean criticalAtk = false;
+
 	public void damage( int dmg, Object src ) {
-		damage(dmg, src, false);
-	}
-	
-	public void damage( int dmg, Object src, boolean crit ) {
-		
+
 		if (!isAlive() || dmg < 0) {
 			return;
 		}
@@ -762,14 +740,14 @@ public abstract class Char extends Actor {
 		if (alignment != Alignment.ALLY && this.buff(DeathMark.DeathMarkTracker.class) != null){
 			dmg *= 1.25f;
 		}
-		
+
 		Class<?> srcClass = src.getClass();
 		if (isImmune( srcClass )) {
 			dmg = 0;
 		} else {
 			dmg = Math.round( dmg * resist( srcClass ));
 		}
-		
+
 		//TODO improve this when I have proper damage source logic
 		if (AntiMagic.RESISTS.contains(src.getClass()) && buff(ArcaneArmor.class) != null){
 			dmg -= Random.NormalIntRange(0, buff(ArcaneArmor.class).level());
@@ -794,7 +772,7 @@ public abstract class Char extends Actor {
 			buff(Sickle.HarvestBleedTracker.class).detach();
 			return;
 		}
-		
+
 		if (buff( Paralysis.class ) != null) {
 			buff( Paralysis.class ).processDamage(dmg);
 		}
@@ -838,16 +816,17 @@ public abstract class Char extends Actor {
 				((Char) src).buff(Kinetic.KineticTracker.class).detach();
 			}
 		}
-		
+
 		if (sprite != null) {
-			String damageText = Integer.toString(dmg + shielded);
-			if (crit) {
-				damageText += "!";
+			String dmgText = Integer.toString(dmg + shielded);
+			if (criticalAtk) {
+				dmgText += "!";
+				criticalAtk = false;
 			}
 			sprite.showStatus(HP > HT / 2 ?
 							CharSprite.WARNING :
 							CharSprite.NEGATIVE,
-							damageText);	//피해를 입으면 그 숫자를 띄움
+							dmgText);
 		}
 
 		if (HP < 0) HP = 0;

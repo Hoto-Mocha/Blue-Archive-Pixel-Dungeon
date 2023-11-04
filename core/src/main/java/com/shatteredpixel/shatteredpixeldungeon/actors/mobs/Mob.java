@@ -61,6 +61,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Fe
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.DirectableAlly;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Surprise;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Wound;
+import com.shatteredpixel.shatteredpixeldungeon.items.AmmoBox;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
@@ -870,7 +871,7 @@ public abstract class Mob extends Char {
 			}
 
 			RainbowGrenade rainbowGrenade = Dungeon.hero.belongings.getItem(RainbowGrenade.class);
-			if (regrowGrenade != null && Random.Float() < regrowGrenade.dropChance) {
+			if (rainbowGrenade != null && Random.Float() < rainbowGrenade.dropChance) {
 				rainbowGrenade.reload();
 			}
 
@@ -915,6 +916,11 @@ public abstract class Mob extends Char {
 		LevelAnalyzer.LevelAnalyzerCooldown levelAnalyzerCooldown = Dungeon.hero.buff(LevelAnalyzer.LevelAnalyzerCooldown.class);
 		if (levelAnalyzerCooldown != null) {
 			levelAnalyzerCooldown.kill();
+		}
+
+		AmmoBox.AmmoBoxCooldown ammoBoxCooldown = Dungeon.hero.buff(AmmoBox.AmmoBoxCooldown.class);
+		if (ammoBoxCooldown != null) {
+			ammoBoxCooldown.kill();
 		}
 
 		ShockBulletCooldown shockBulletCooldown = Dungeon.hero.buff(ShockBulletCooldown.class);

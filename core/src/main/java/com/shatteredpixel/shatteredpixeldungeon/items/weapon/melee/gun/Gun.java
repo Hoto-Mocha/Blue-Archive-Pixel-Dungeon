@@ -607,9 +607,9 @@ public class Gun extends MeleeWeapon {
             if (explode || hero.subClass == HeroSubClass.YUZU_EX_GAME_START) {
                 Char chInPos = Actor.findChar(cell);
                 if (hero.subClass == HeroSubClass.YUZU_EX_STICKY_GRENADE && chInPos != null) {
-                    Buff.affect(chInPos, StickyGrenade.class).attach(this);
+                    Buff.affect(chInPos, StickyGrenade.class).attach(Gun.this);
                     chInPos.sprite.flash();
-                    Sample.INSTANCE.play(Assets.Sounds.HIT);
+                    Sample.INSTANCE.play(Assets.Sounds.PUFF);
                     if (chInPos instanceof Mob) ((Mob)chInPos).beckon(curUser.pos);
                 } else {
                     ArrayList<Char> targets = new ArrayList<>();
@@ -660,10 +660,12 @@ public class Gun extends MeleeWeapon {
                     }
 
                     for (Char target : targets){
-                        if (target == hero && hero.heroClass == HeroClass.YUZU) {
-                            curUser.shoot(target, this, 0.25f, 0, 1);
-                        } else {
-                            curUser.shoot(target, this, 1f, 0, 1f, hero.heroClass == HeroClass.YUZU);
+                        for (int i = 0; i < shotPerShoot(); i++) {
+                            if (target == hero && hero.heroClass == HeroClass.YUZU) {
+                                curUser.shoot(target, this, 0.25f, 0, 1 );
+                            } else {
+                                curUser.shoot(target, this, 1f, 0, 1f );
+                            }
                         }
                         if (target == hero && !target.isAlive()) {
                             Dungeon.fail(getClass());
@@ -672,10 +674,12 @@ public class Gun extends MeleeWeapon {
                     }
 
                     for (Char target : additionalTargets){
-                        if (target == hero && hero.heroClass == HeroClass.YUZU) {
-                            curUser.shoot(target, this, hero.pointsInTalent(Talent.GAME_START_2)/3f*0.25f, 0, 1);
-                        } else {
-                            curUser.shoot(target, this, hero.pointsInTalent(Talent.GAME_START_2)/3f, 0, 1, hero.heroClass == HeroClass.YUZU);
+                        for (int i = 0; i < shotPerShoot(); i++) {
+                            if (target == hero && hero.heroClass == HeroClass.YUZU) {
+                                curUser.shoot(target, this, hero.pointsInTalent(Talent.GAME_START_2)/3f*0.25f, 0, 1);
+                            } else {
+                                curUser.shoot(target, this, hero.pointsInTalent(Talent.GAME_START_2)/3f, 0, 1);
+                            }
                         }
                         if (target == hero && !target.isAlive()) {
                             Dungeon.fail(getClass());
@@ -683,8 +687,10 @@ public class Gun extends MeleeWeapon {
                         }
                     }
 
-                    CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
-                    CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
+                    for (int i = 0; i < shotPerShoot(); i++) {
+                        CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
+                        CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
+                    }
                     Sample.INSTANCE.play( Assets.Sounds.BLAST );
                 }
             } else {
@@ -695,7 +701,7 @@ public class Gun extends MeleeWeapon {
                         CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
                         CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
                     } else {
-                        if (!curUser.shoot( enemy, this, 1f, 0, 1f, hero.heroClass == HeroClass.YUZU )) {
+                        if (!curUser.shoot( enemy, this, 1f, 0, 1f )) {
                             CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
                             CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
                         }

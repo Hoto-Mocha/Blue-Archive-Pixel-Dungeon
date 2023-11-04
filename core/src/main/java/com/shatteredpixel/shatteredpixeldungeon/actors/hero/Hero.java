@@ -477,16 +477,8 @@ public class Hero extends Char {
 	public boolean shoot( Char enemy, MissileWeapon wep ) {
 		return shoot(enemy, wep, 1f, 0, 1f );
 	}
-
-	public boolean shoot( Char enemy, MissileWeapon wep, float dmgMulti, float dmgBonus, float accMulti ) {
-		return shoot( enemy, wep, dmgMulti, dmgBonus, accMulti, false, true );
-	}
-
-	public boolean shoot( Char enemy, MissileWeapon wep, float dmgMulti, float dmgBonus, float accMulti, boolean crit ) {
-		return shoot( enemy, wep, dmgMulti, dmgBonus, accMulti, crit, true );
-	}
 	
-	public boolean shoot( Char enemy, MissileWeapon wep, float dmgMulti, float dmgBonus, float accMulti, boolean crit, boolean soundPlay ) {
+	public boolean shoot( Char enemy, MissileWeapon wep, float dmgMulti, float dmgBonus, float accMulti) {
 
 		this.enemy = enemy;
 		boolean wasEnemy = enemy.alignment == Alignment.ENEMY
@@ -495,7 +487,16 @@ public class Hero extends Char {
 		//temporarily set the hero's weapon to the missile weapon being used
 		//TODO improve this!
 		belongings.thrownWeapon = wep;
-		boolean hit = attack( enemy, dmgMulti, dmgBonus, accMulti, crit, soundPlay );
+		if (wep instanceof Gun.Bullet) {
+			if (hero.heroClass == HeroClass.YUZU) {
+				float critChance = 0.1f+0.01f*hero.lvl;
+				if (Random.Float() < critChance) {
+					dmgMulti *= 1.2f+0.5f*hero.pointsInTalent(Talent.CRIT_DAMAGE);
+					criticalAtk = true;
+				}
+			}
+		}
+		boolean hit = attack( enemy, dmgMulti, dmgBonus, accMulti );
 		Invisibility.dispel();
 		belongings.thrownWeapon = null;
 

@@ -166,8 +166,7 @@ public enum HeroClass {
 			new PotionOfExperience().identify().quantity(30).collect();
 			new RingOfMight().identify().upgrade(10).collect();
 			new EXSkillDisc().collect();
-			new SMG_tier2().collect();
-			new SG_tier2().identify().collect();
+//			new SG_tier2().identify().collect();
 			new CurseInfusion().quantity(200).collect();
 			new ScrollOfUpgrade().identify().quantity(200).collect();
 //			new StoneOfAugmentation().quantity(200).collect();
@@ -182,7 +181,7 @@ public enum HeroClass {
 			new PotionOfMindVision().identify().quantity(200).collect();
 //			new ScrollOfEnchantment().identify().quantity(200).collect();
 			new Amulet().collect();
-//			new ScrollOfTransmutation().identify().collect();
+			new ScrollOfTransmutation().quantity(200).identify().collect();
 		}
 
 		new ScrollOfIdentify().identify();

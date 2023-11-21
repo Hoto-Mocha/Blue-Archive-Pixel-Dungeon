@@ -50,8 +50,8 @@ public class AR extends Gun {
     @Override
     public int STRReq(int lvl) {
         int req = super.STRReq(lvl);
-        if (hero.hasTalent(Talent.AR_MASTER) && this.tier <= 1 + 2*hero.pointsInTalent(Talent.AR_MASTER)) {
-            req--;
+        if (hero.hasTalent(Talent.AR_MASTER) && this.tier <= 3) {
+            req -= hero.pointsInTalent(Talent.AR_MASTER);
         }
         return req;
     }

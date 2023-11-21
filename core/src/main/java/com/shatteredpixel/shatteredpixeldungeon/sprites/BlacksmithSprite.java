@@ -32,22 +32,26 @@ import com.watabou.noosa.particles.Emitter;
 public class BlacksmithSprite extends MobSprite {
 	
 	private Emitter emitter;
+	private Animation swarm;
 	
 	public BlacksmithSprite() {
 		super();
 		
-		texture( Assets.Sprites.TROLL );
+		texture( Assets.Sprites.CHERINO );
 		
-		TextureFilm frames = new TextureFilm( texture, 13, 16 );
+		TextureFilm frames = new TextureFilm( texture, 13, 18 );
 		
-		idle = new Animation( 15, true );
-		idle.frames( frames, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 3 );
+		idle = new Animation( 2, true );
+		idle.frames( frames, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 2, 3, 4, 2, 3, 4 );
 		
 		run = new Animation( 20, true );
 		run.frames( frames, 0 );
 		
 		die = new Animation( 20, false );
 		die.frames( frames, 0 );
+
+		swarm = new Animation( 20, false );
+		swarm.frames( frames, 5, 6, 7, 6, 5, 6, 7, 6, 5, 6, 7, 6, 5, 6, 7, 6, 5, 6, 7, 6, 5, 6, 7, 6, 5, 6, 7, 6, 5, 6, 7, 6, 5, 6, 7, 6, 5, 6, 7, 6, 5, 6, 7, 6, 5, 6, 7, 6, 5);
 		
 		play( idle );
 	}
@@ -70,16 +74,15 @@ public class BlacksmithSprite extends MobSprite {
 			emitter.visible = visible;
 		}
 	}
+
+	public void swarm() {
+		play( swarm );
+	}
 	
 	@Override
 	public void onComplete( Animation anim ) {
 		super.onComplete( anim );
-		
-		if (visible && emitter != null && anim == idle) {
-			emitter.burst( Speck.factory( Speck.FORGE ), 3 );
-			float volume = 0.2f / (Dungeon.level.distance( ch.pos, Dungeon.hero.pos ));
-			Sample.INSTANCE.play( Assets.Sounds.EVOKE, volume, volume, 0.8f  );
-		}
+		idle();
 	}
 
 }

@@ -36,8 +36,8 @@ public class GL extends Gun {
     @Override
     public int STRReq(int lvl) {
         int req = super.STRReq(lvl);
-        if (hero.hasTalent(Talent.GL_MASTER) && this.tier <= 1 + 2*hero.pointsInTalent(Talent.GL_MASTER)) {
-            req--;
+        if (hero.hasTalent(Talent.GL_MASTER) && this.tier <= 3) {
+            req -= hero.pointsInTalent(Talent.GL_MASTER);
         }
         return req;
     }

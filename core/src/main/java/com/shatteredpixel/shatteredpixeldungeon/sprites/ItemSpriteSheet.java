@@ -91,7 +91,7 @@ public class ItemSpriteSheet {
 	public static final int TENGU_BOMB      = UNCOLLECTIBLE+8;
 	public static final int TENGU_SHOCKER   = UNCOLLECTIBLE+9;
 	static{
-		assignItemRect(GOLD,        15, 13);
+		assignItemRect(GOLD,        16, 14);
 		assignItemRect(ENERGY,      16, 16);
 
 		assignItemRect(DEWDROP,     10, 10);
@@ -685,7 +685,7 @@ public class ItemSpriteSheet {
 		assignItemRect(CANDLE,  12, 12);
 		assignItemRect(EMBER,   12, 11);
 		assignItemRect(PICKAXE, 14, 14);
-		assignItemRect(ORE,     15, 15);
+		assignItemRect(ORE,     13, 14);
 		assignItemRect(TOKEN,   12, 12);
 		assignItemRect(BLOB,    10,  9);
 		assignItemRect(SHARD,    8, 10);
@@ -953,10 +953,10 @@ public class ItemSpriteSheet {
 	public static final int AR_TIER_4 = AR+3;
 	public static final int AR_TIER_5 = AR+4;
 	static{
-		assignItemRect(AR_TIER_1,	16, 16);	//needs to be redesigned
-		assignItemRect(AR_TIER_2,	16, 16);	//needs to be redesigned
-		assignItemRect(AR_TIER_3,	16, 16);	//needs to be redesigned
-		assignItemRect(AR_TIER_4,	16, 16);	//needs to be redesigned
+		assignItemRect(AR_TIER_1,	12, 13);
+		assignItemRect(AR_TIER_2,	13, 14);
+		assignItemRect(AR_TIER_3,	15, 16);
+		assignItemRect(AR_TIER_4,	16, 15);
 		assignItemRect(AR_TIER_5, 	15, 16);
 	}
 

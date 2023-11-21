@@ -34,6 +34,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndTextInput;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.ColorBlock;
+import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.ui.Component;
 
@@ -106,12 +107,21 @@ public class SeedFindScene extends PixelScene {
 
 				} else {
 					SPDSettings.customSeed("");
-					ShatteredPixelDungeon.switchNoFade(TitleScene.class);
+					ShatteredPixelDungeon.switchNoFade(HeroSelectScene.class);
 				}
 			}
 		});
 
-		ExitButton btnExit = new ExitButton();
+		ExitButton btnExit = new ExitButton() {
+			@Override
+			protected void onClick() {
+				if (Game.scene() instanceof TitleScene) {
+					Game.instance.finish();
+				} else {
+					ShatteredPixelDungeon.switchNoFade( HeroSelectScene.class );
+				}
+			}
+		};
 		btnExit.setPos(Camera.main.width - btnExit.width(), 0);
 		add(btnExit);
 
@@ -120,7 +130,7 @@ public class SeedFindScene extends PixelScene {
 
 	@Override
 	protected void onBackPressed() {
-		ShatteredPixelDungeon.switchScene(TitleScene.class);
+		ShatteredPixelDungeon.switchScene(HeroSelectScene.class);
 	}
 
 	private void addLine(float y, Group content) {

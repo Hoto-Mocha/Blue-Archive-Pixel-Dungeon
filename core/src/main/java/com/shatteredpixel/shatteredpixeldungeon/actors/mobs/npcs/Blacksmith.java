@@ -38,6 +38,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.quest.BlacksmithRoo
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.BlacksmithSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.EyeSprite;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBlacksmith;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndQuest;
@@ -184,6 +185,7 @@ public class Blacksmith extends NPC {
 			} else {
 
 				tell(Messages.get(this, "reminder"));
+				((BlacksmithSprite)sprite).swarm();
 
 			}
 		} else if (Quest.type == Quest.OLD && Quest.reforges == 0) {

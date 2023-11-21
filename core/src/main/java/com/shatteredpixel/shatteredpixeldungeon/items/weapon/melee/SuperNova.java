@@ -254,7 +254,7 @@ public class SuperNova extends MeleeWeapon {
                                 terrainAffected2 = true;
                             }
                             CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 4);
-                            if (Dungeon.level.map[target] != Terrain.WALL && Dungeon.level.map[target] != Terrain.WALL_DECO) {
+                            if (Dungeon.level.map[cell] != Terrain.WALL && Dungeon.level.map[cell] != Terrain.WALL_DECO) {
                                 GameScene.add( Blob.seed( cell, 3, Fire.class ) );
                             }
                         }

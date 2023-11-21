@@ -117,8 +117,8 @@ public class SG extends Gun {
     @Override
     public int STRReq(int lvl) {
         int req = super.STRReq(lvl);
-        if (hero.hasTalent(Talent.SG_MASTER) && this.tier <= 1 + 2*hero.pointsInTalent(Talent.SG_MASTER)) {
-            req--;
+        if (hero.hasTalent(Talent.SG_MASTER) && this.tier <= 3) {
+            req -= hero.pointsInTalent(Talent.SG_MASTER);
         }
         return req;
     }

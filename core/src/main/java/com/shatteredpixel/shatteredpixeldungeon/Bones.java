@@ -22,10 +22,12 @@
 package com.shatteredpixel.shatteredpixeldungeon;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.FileUtils;
@@ -209,6 +211,10 @@ public class Bones {
 					} else {
 						return new Gold(item.value());
 					}
+				}
+
+				if (item instanceof Gun && Dungeon.hero.heroClass == HeroClass.ARIS) {
+					item = Generator.random(Generator.Category.WEAPON);
 				}
 				
 				if (item.isUpgradable() && !(item instanceof MissileWeapon)) {

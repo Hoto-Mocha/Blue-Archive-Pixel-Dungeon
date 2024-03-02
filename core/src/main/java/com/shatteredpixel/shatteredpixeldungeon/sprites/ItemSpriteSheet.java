@@ -114,7 +114,7 @@ public class ItemSpriteSheet {
 	public static final int EBONY_CHEST     = CONTAINERS+7;
 	static{
 		assignItemRect(BONES,           14, 11);
-		assignItemRect(REMAINS,         14, 11);
+		assignItemRect(REMAINS,         13, 16);
 		assignItemRect(TOMB,            14, 15);
 		assignItemRect(GRAVE,           14, 15);
 		assignItemRect(CHEST,           16, 14);

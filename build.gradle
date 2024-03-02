@@ -15,8 +15,11 @@ allprojects {
         appName = 'Blue Archive Pixel Dungeon'
         appPackageName = 'com.bluearchivepixel.bluearchivepixeldungeon'
 
-        appVersionCode = 759
-        appVersionName = '2.2.1_based_0.2.2'
+        appVersionCode = 754
+        appVersionName = '2.2.1'
+        //for arranged version code and version name
+        appVersionCode += 6
+        appVersionName += '_based_0.2.3'
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 

@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.scenes;
 
 import com.shatteredpixel.shatteredpixeldungeon.Chrome;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Languages;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Archs;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ExitButton;
@@ -93,7 +94,10 @@ public class SupporterScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				super.onClick();
-				String link = "https://discord.gg/4bd9PN4WkX";
+				String link = "https://discord.gg/a7wNUDYHrJ";
+				if (Messages.lang() != Languages.KOREAN) {
+					link = "https://discord.gg/yHhXxbrsP3";
+				}
 				ShatteredPixelDungeon.platform.openURI(link);
 			}
 		};

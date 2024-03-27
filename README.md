@@ -4,6 +4,7 @@ Blue Archive Pixel Dungeon is a fan-game of blue archive made with shattered pix
 It is not completed yet, I'm developing it gradually.
 
 All dot assets that are new in this project is made by [myself](https://github.com/Hoto-Mocha).
+
 ---
 # Shattered Pixel Dungeon
 

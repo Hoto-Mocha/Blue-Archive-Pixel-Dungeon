@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2023 Evan Debenham
+ * Copyright (C) 2014-2024 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,13 +35,11 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.SacrificialFire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AdrenalineSurge;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AnkhInvulnerability;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Awareness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barkskin;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Berserk;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bless;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
@@ -49,10 +47,10 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BulletMomentumTrack
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Combo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CriticalAttack;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DoubleBarrelMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DroneStrike;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Foresight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HoldFast;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
@@ -71,9 +69,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.StunDrone;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vulnerable;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.ElementalStrike;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.NaturesPower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Monk;
@@ -82,10 +77,8 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CheckedCell;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
-import com.shatteredpixel.shatteredpixeldungeon.items.AmmoBox;
-import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
+import com.shatteredpixel.shatteredpixeldungeon.items.AmmoBox;
 import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
 import com.shatteredpixel.shatteredpixeldungeon.items.Dewdrop;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
@@ -144,7 +137,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Quarterstaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RoundShield;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Sai;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Scimitar;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
@@ -167,8 +159,6 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.AttackIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
@@ -183,7 +173,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.tweeners.Delayer;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
-import com.watabou.utils.ColorMath;
 import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Point;
@@ -492,7 +481,7 @@ public class Hero extends Char {
 				float critChance = 0.1f+0.01f*hero.lvl;
 				if (Random.Float() < critChance) {
 					dmgMulti *= 1.2f+0.5f*hero.pointsInTalent(Talent.CRIT_DAMAGE);
-					criticalAtk = true;
+					Buff.affect(hero, CriticalAttack.class);
 				}
 			}
 		}
@@ -721,11 +710,6 @@ public class Hero extends Char {
 			((HeroSprite)sprite).sprint( 1f );
 		}
 
-		NaturesPower.naturesPowerTracker natStrength = buff(NaturesPower.naturesPowerTracker.class);
-		if (natStrength != null){
-			speed *= (2f + 0.25f*pointsInTalent(Talent.GROWING_POWER));
-		}
-
 		Bicycle.BicycleBuff bicycleBuff = buff(Bicycle.BicycleBuff.class);
 		if (bicycleBuff != null) {
 			speed *= 2f;
@@ -867,6 +851,15 @@ public class Hero extends Char {
 			} else {
 				ready();
 			}
+
+			//if we just loaded into a level and have a search buff, make sure to process them
+			if(Actor.now() == 0){
+				if (buff(Foresight.class) != null){
+					search(false);
+				} else if (buff(TalismanOfForesight.Foresight.class) != null){
+					buff(TalismanOfForesight.Foresight.class).checkAwareness();
+				}
+			}
 			
 			actResult = false;
 			
@@ -959,6 +952,7 @@ public class Hero extends Char {
 		}
 		curAction = null;
 		GameScene.resetKeyHold();
+		resting = false;
 	}
 	
 	public void resume() {
@@ -1093,6 +1087,15 @@ public class Hero extends Char {
 							|| item instanceof Key
 							|| item instanceof Guidebook) {
 						//Do Nothing
+					} else if (item instanceof DarkGold) {
+						DarkGold existing = belongings.getItem(DarkGold.class);
+						if (existing != null){
+							if (existing.quantity() >= 40) {
+								GLog.p(Messages.get(DarkGold.class, "you_now_have", existing.quantity()));
+							} else {
+								GLog.i(Messages.get(DarkGold.class, "you_now_have", existing.quantity()));
+							}
+						}
 					} else {
 
 						//TODO make all unique items important? or just POS / SOU?
@@ -1303,9 +1306,9 @@ public class Hero extends Char {
 
 						//1 hunger spent total
 						} else if (Dungeon.level.map[action.dst] == Terrain.MINE_BOULDER){
-							Splash.at(action.dst, ColorMath.random( 0x444444, 0x777766 ), 5);
+							Splash.at(action.dst, 0x555555, 5);
 							Sample.INSTANCE.play( Assets.Sounds.MINE, 0.6f );
-							Level.set( action.dst, Terrain.EMPTY );
+							Level.set( action.dst, Terrain.EMPTY_DECO );
 						}
 
 						for (int i : PathFinder.NEIGHBOURS9) {
@@ -1400,7 +1403,9 @@ public class Hero extends Char {
 //					&& buff(Talent.AggressiveBarrierCooldown.class) == null
 //					&& (HP / (float)HT) < 0.20f*(1+pointsInTalent(Talent.AGGRESSIVE_BARRIER))){
 //				Buff.affect(this, Barrier.class).setShield(3);
+//				sprite.showStatusWithIcon(CharSprite.POSITIVE, "3", FloatingText.SHIELDING);
 //				Buff.affect(this, Talent.AggressiveBarrierCooldown.class, 50f);
+//
 //			}
 			sprite.attack( enemy.pos );
 
@@ -1569,7 +1574,6 @@ public class Hero extends Char {
 		// unless the player recently hit 'continue moving', in which case this is ignored
 		if (!(src instanceof Hunger || src instanceof Viscosity.DeferedDamage) && damageInterrupt) {
 			interrupt();
-			resting = false;
 		}
 
 		if (this.buff(Drowsy.class) != null){
@@ -1600,6 +1604,7 @@ public class Hero extends Char {
 		if (belongings.armor() != null && belongings.armor().hasGlyph(AntiMagic.class, this)
 				&& AntiMagic.RESISTS.contains(src.getClass())){
 			dmg -= AntiMagic.drRoll(this, belongings.armor().buffedLvl());
+			dmg = Math.max(dmg, 0);
 		}
 
 		if (buff(IronHorus.TacticalShieldBuff.class) != null && hasTalent(Talent.MAGIC_SHIELD)
@@ -1620,10 +1625,6 @@ public class Hero extends Char {
 		int effectiveDamage = preHP - postHP;
 
 		if (effectiveDamage <= 0) return;
-
-		if (buff(Challenge.DuelParticipant.class) != null){
-			buff(Challenge.DuelParticipant.class).addDamage(effectiveDamage);
-		}
 
 		//flash red when hit for serious damage.
 		float percentDMG = effectiveDamage / (float)preHP; //percent of current HP that was taken
@@ -1648,7 +1649,6 @@ public class Hero extends Char {
 				}
 				//hero gets interrupted on taking serious damage, regardless of any other factor
 				interrupt();
-				resting = false;
 				damageInterrupt = true;
 			}
 		}
@@ -1693,11 +1693,10 @@ public class Hero extends Char {
 		}
 		
 		if (newMob) {
-			interrupt();
 			if (resting){
 				Dungeon.observe();
-				resting = false;
 			}
+			interrupt();
 		}
 
 		visibleEnemies = visible;
@@ -1870,7 +1869,7 @@ public class Hero extends Char {
 			
 		} else if (fieldOfView[cell] && ch instanceof Mob) {
 
-			if (ch.alignment != Alignment.ENEMY && ch.buff(Amok.class) == null) {
+			if (((Mob) ch).heroShouldInteract()) {
 				curAction = new HeroAction.Interact( ch );
 			} else {
 				curAction = new HeroAction.Attack( ch );
@@ -1913,6 +1912,7 @@ public class Hero extends Char {
 				//moving to a transition doesn't automatically trigger it when enemies are near
 				&& (visibleEnemies.size() == 0 || cell == pos)
 				&& !Dungeon.level.locked
+				&& !Dungeon.level.plants.containsKey(cell)
 				&& (Dungeon.depth < 26 || Dungeon.level.getTransition(cell).type == LevelTransition.Type.REGULAR_ENTRANCE) ) {
 
 			curAction = new HeroAction.LvlTransition( cell );
@@ -1965,12 +1965,6 @@ public class Hero extends Char {
 				buff(Talent.RejuvenatingStepsFurrow.class).countDown(percent*200f);
 				if (buff(Talent.RejuvenatingStepsFurrow.class).count() <= 0){
 					buff(Talent.RejuvenatingStepsFurrow.class).detach();
-				}
-			}
-			if (buff(ElementalStrike.ElementalStrikeFurrowCounter.class) != null){
-				buff(ElementalStrike.ElementalStrikeFurrowCounter.class).countDown(percent*20f);
-				if (buff(ElementalStrike.ElementalStrikeFurrowCounter.class).count() <= 0){
-					buff(ElementalStrike.ElementalStrikeFurrowCounter.class).detach();
 				}
 			}
 		}
@@ -2114,7 +2108,6 @@ public class Hero extends Char {
 
 		if (ankh != null) {
 			interrupt();
-			resting = false;
 
 			if (ankh.isBlessed()) {
 				this.HP = HT / 4;
@@ -2413,12 +2406,12 @@ public class Hero extends Char {
 		
 		boolean smthFound = false;
 
-		boolean circular = pointsInTalent(Talent.WIDE_SEARCH) == 1;
-		int distance = 1;
+		boolean circular = pointsInTalent(Talent.WIDER_SEARCH) == 1;
+		int distance = heroClass == HeroClass.IZUNA ? 2 : 1;
 		if (hasTalent(Talent.SKILLED_SEARCH)) {
 			distance += pointsInTalent(Talent.SKILLED_SEARCH);
 		}
-		if (hasTalent(Talent.WIDE_SEARCH)) distance++;
+		if (hasTalent(Talent.WIDER_SEARCH)) distance++;
 		
 		boolean foresight = buff(Foresight.class) != null;
 		boolean foresightScan = foresight && !Dungeon.level.mapped[pos];
@@ -2558,6 +2551,10 @@ public class Hero extends Char {
 
 		if (foresight){
 			GameScene.updateFog(pos, Foresight.DISTANCE+1);
+		}
+
+		if (talisman != null){
+			talisman.checkAwareness();
 		}
 		
 		return smthFound;

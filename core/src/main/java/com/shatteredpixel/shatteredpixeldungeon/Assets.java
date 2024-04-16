@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2023 Evan Debenham
+ * Copyright (C) 2014-2024 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@ public class Assets {
 		public static final String FIREBALL     = "effects/fireball.png";
 		public static final String SPECKS       = "effects/specks.png";
 		public static final String SPELL_ICONS  = "effects/spell_icons.png";
+		public static final String TEXT_ICONS   = "effects/text_icons.png";
 	}
 
 	public static class Environment {
@@ -41,6 +42,9 @@ public class Assets {
 		public static final String TILES_CAVES  = "environment/tiles_caves2.png";
 		public static final String TILES_CITY   = "environment/tiles_city.png";
 		public static final String TILES_HALLS  = "environment/tiles_halls.png";
+
+		public static final String TILES_CAVES_CRYSTAL  = "environment/tiles_caves_crystal.png";
+		public static final String TILES_CAVES_GNOLL    = "environment/tiles_caves_gnoll.png";
 
 		public static final String WATER_SEWERS = "environment/water0.png";
 		public static final String WATER_PRISON = "environment/water1.png";
@@ -247,6 +251,7 @@ public class Assets {
 		public static final String NOA  	= "splashes/noa.jpg";
 		public static final String MIYU  	= "splashes/miyu.jpg";
 		public static final String YUZU  	= "splashes/yuzu.jpg";
+		public static final String IZUNA  	= "splashes/izuna.jpg";
 	}
 
 	public static class Sprites {
@@ -261,6 +266,7 @@ public class Assets {
 		public static final String NOA		= "sprites/noa.png";
 		public static final String MIYU		= "sprites/miyu.png";
 		public static final String YUZU		= "sprites/yuzu.png";
+		public static final String IZUNA	= "sprites/izuna.png";
 		public static final String AVATARS  = "sprites/avatars.png";
 		public static final String PET      = "sprites/pet.png";
 		public static final String AMULET   = "sprites/amulet.png";
@@ -317,12 +323,17 @@ public class Assets {
 		public static final String PYLON    = "sprites/pylon.png";
 		public static final String DM200    = "sprites/dm200.png";
 		public static final String LOTUS    = "sprites/lotus.png";
-		public static final String NINJA_LOG= "sprites/ninja_log.png";
-		public static final String SPIRIT_HAWK= "sprites/spirit_hawk.png";
-		public static final String RED_SENTRY= "sprites/red_sentry.png";
-		public static final String CRYSTAL_WISP= "sprites/crystal_wisp.png";
-		public static final String CRYSTAL_GUARDIAN= "sprites/crystal_guardian.png";
-		public static final String CRYSTAL_SPIRE= "sprites/crystal_spire.png";
-		public static final String GNOLL_GUARD= "sprites/gnoll_guard.png";
+		public static final String NINJA_LOG        = "sprites/ninja_log.png";
+		public static final String SPIRIT_HAWK      = "sprites/spirit_hawk.png";
+		public static final String RED_SENTRY       = "sprites/red_sentry.png";
+		public static final String CRYSTAL_WISP     = "sprites/crystal_wisp.png";
+		public static final String CRYSTAL_GUARDIAN = "sprites/crystal_guardian.png";
+		public static final String CRYSTAL_SPIRE    = "sprites/crystal_spire.png";
+		public static final String GNOLL_GUARD      = "sprites/gnoll_guard.png";
+		public static final String GNOLL_SAPPER     = "sprites/gnoll_sapper.png";
+		public static final String GNOLL_GEOMANCER  = "sprites/gnoll_geomancer.png";
+		public static final String FUNGAL_SPINNER   = "sprites/fungal_spinner.png";
+		public static final String FUNGAL_SENTRY    = "sprites/fungal_sentry.png";
+		public static final String FUNGAL_CORE      = "sprites/fungal_core.png";
 	}
 }

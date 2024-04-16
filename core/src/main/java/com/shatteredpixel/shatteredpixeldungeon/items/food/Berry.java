@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2023 Evan Debenham
+ * Copyright (C) 2014-2024 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,7 +52,9 @@ public class Berry extends Food {
 				|| Dungeon.hero.hasTalent(Talent.DEBUGGING_MEAL)
 				|| Dungeon.hero.hasTalent(Talent.MYSTICAL_MEAL)
 				|| Dungeon.hero.hasTalent(Talent.INVIGORATING_MEAL)
-				|| Dungeon.hero.hasTalent(Talent.FOCUSED_MEAL)){
+				|| Dungeon.hero.hasTalent(Talent.FOCUSED_MEAL)
+				|| Dungeon.hero.hasTalent(Talent.MEAL_SET)
+		){
 			return 0;
 		} else {
 			return 1;

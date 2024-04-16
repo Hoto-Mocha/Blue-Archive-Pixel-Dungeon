@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2023 Evan Debenham
+ * Copyright (C) 2014-2024 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,6 +35,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
@@ -121,6 +122,9 @@ abstract public class ClassArmor extends Armor {
 				break;
 			case YUZU:
 				classArmor = new YuzuArmor();
+				break;
+			case IZUNA:
+				classArmor = new IzunaArmor();
 				break;
 		}
 		
@@ -231,6 +235,9 @@ abstract public class ClassArmor extends Armor {
 								armor.detach(hero.belongings.backpack);
 								if (hero.belongings.armor == armor){
 									hero.belongings.armor = null;
+									if (hero.sprite instanceof HeroSprite) {
+										((HeroSprite) hero.sprite).updateArmor();
+									}
 								}
 								level(armor.trueLevel());
 								tier = armor.tier;

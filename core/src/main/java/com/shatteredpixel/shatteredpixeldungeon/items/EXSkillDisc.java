@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DroneStrike;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.StunDrone;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Teleport;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -96,6 +97,10 @@ public class EXSkillDisc extends TengusMask {
 
 		if (curUser.subClass == HeroSubClass.MIYAKO_EX_DRONESTRIKE && curUser.buff(DroneStrike.class) == null) {
 			Buff.affect(hero, DroneStrike.class);
+		}
+
+		if (curUser.subClass == HeroSubClass.IZUNA_EX_TELEPORT && curUser.buff(Teleport.class) == null) {
+			Buff.affect(hero, Teleport.class);
 		}
 		
 	}

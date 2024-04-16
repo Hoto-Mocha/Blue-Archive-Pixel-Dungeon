@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2023 Evan Debenham
+ * Copyright (C) 2014-2024 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,8 +92,8 @@ public class HeroIcon extends Image {
 	public static final int MIYU_EX_SNIPING_BULLET			= 53;
 	public static final int YUZU_EX_GAME_START				= 54;
 	public static final int YUZU_EX_STICKY_GRENADE			= 55;
-//	public static final int 								= 56;
-//	public static final int 								= 57;
+	public static final int IZUNA_EX_TELEPORT				= 56;
+	public static final int IZUNA_EX_EXPLOSION				= 57;
 //	public static final int 								= 58;
 //	public static final int 								= 59;
 //	public static final int 								= 60;
@@ -125,9 +125,9 @@ public class HeroIcon extends Image {
 	public static final int YUZU_1			= 85;
 	public static final int YUZU_2			= 86;
 	public static final int YUZU_3			= 87;
-//	public static final int 				= 88;
-//	public static final int 				= 89;
-//	public static final int 				= 90;
+	public static final int IZUNA_1			= 88;
+	public static final int IZUNA_2			= 89;
+	public static final int IZUNA_3			= 90;
 //	public static final int 				= 91;
 //	public static final int 				= 92;
 //	public static final int 				= 93;
@@ -141,6 +141,8 @@ public class HeroIcon extends Image {
 	public static final int ELEMENTAL_BULLET	= 99;
 	public static final int PROFESSIONAL_RIDE	= 100;
 	public static final int DOUBLE_BARREL		= 101;
+	public static final int TELEPORT			= 102;
+	public static final int BLAST_MISSILE		= 103;
 
 
 

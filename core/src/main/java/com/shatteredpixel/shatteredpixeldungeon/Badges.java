@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2023 Evan Debenham
+ * Copyright (C) 2014-2024 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.bags.MagicalHolster;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.PotionBandolier;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.ScrollHolder;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.VelvetPouch;
+import com.shatteredpixel.shatteredpixeldungeon.items.remains.RemainsItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -58,6 +59,7 @@ public class Badges {
 		MASTERY_NOA,
 		MASTERY_MIYU,
 		MASTERY_YUZU,
+		MASTERY_IZUNA,
 		FOUND_RATMOGRIFY,
 
 		//bronze
@@ -68,6 +70,7 @@ public class Badges {
 		UNLOCK_NOA             		( 5 ),
 		UNLOCK_MIYU            		( 6 ),
 		UNLOCK_YUZU            		( 7 ),
+		UNLOCK_IZUNA            	( 8 ),
 		MONSTERS_SLAIN_1            ( 16+6 ),
 		MONSTERS_SLAIN_2            ( 16+7 ),
 		GOLD_COLLECTED_1            ( 16+8 ),
@@ -88,27 +91,28 @@ public class Badges {
 
 		//silver
 		NO_MONSTERS_SLAIN           ( 16+32 ),
-		MONSTERS_SLAIN_3            ( 16+33 ),
-		MONSTERS_SLAIN_4            ( 16+34 ),
-		GOLD_COLLECTED_3            ( 16+35 ),
-		GOLD_COLLECTED_4            ( 16+36 ),
-		ITEM_LEVEL_2                ( 16+37 ),
-		ITEM_LEVEL_3                ( 16+38 ),
-		LEVEL_REACHED_2             ( 16+39 ),
-		LEVEL_REACHED_3             ( 16+40 ),
-		STRENGTH_ATTAINED_2         ( 16+41 ),
-		STRENGTH_ATTAINED_3         ( 16+42 ),
-		FOOD_EATEN_2                ( 16+43 ),
-		FOOD_EATEN_3                ( 16+44 ),
-		ITEMS_CRAFTED_2             ( 16+45 ),
-		ITEMS_CRAFTED_3             ( 16+46 ),
-		BOSS_SLAIN_2                ( 16+47 ),
-		BOSS_SLAIN_3                ( 16+48 ),
-		ALL_POTIONS_IDENTIFIED      ( 16+49 ),
-		ALL_SCROLLS_IDENTIFIED      ( 16+50 ),
-		DEATH_FROM_ENEMY_MAGIC      ( 16+51 ),
-		DEATH_FROM_FRIENDLY_MAGIC   ( 16+52 ),
-		DEATH_FROM_SACRIFICE        ( 16+53 ),
+		BOSS_SLAIN_REMAINS          ( 16+33 ),
+		MONSTERS_SLAIN_3            ( 16+34 ),
+		MONSTERS_SLAIN_4            ( 16+35 ),
+		GOLD_COLLECTED_3            ( 16+36 ),
+		GOLD_COLLECTED_4            ( 16+37 ),
+		ITEM_LEVEL_2                ( 16+38 ),
+		ITEM_LEVEL_3                ( 16+39 ),
+		LEVEL_REACHED_2             ( 16+40 ),
+		LEVEL_REACHED_3             ( 16+41 ),
+		STRENGTH_ATTAINED_2         ( 16+42 ),
+		STRENGTH_ATTAINED_3         ( 16+43 ),
+		FOOD_EATEN_2                ( 16+44 ),
+		FOOD_EATEN_3                ( 16+45 ),
+		ITEMS_CRAFTED_2             ( 16+46 ),
+		ITEMS_CRAFTED_3             ( 16+47 ),
+		BOSS_SLAIN_2                ( 16+48 ),
+		BOSS_SLAIN_3                ( 16+49 ),
+		ALL_POTIONS_IDENTIFIED      ( 16+50 ),
+		ALL_SCROLLS_IDENTIFIED      ( 16+51 ),
+		DEATH_FROM_ENEMY_MAGIC      ( 16+52 ),
+		DEATH_FROM_FRIENDLY_MAGIC   ( 16+53 ),
+		DEATH_FROM_SACRIFICE        ( 16+54 ),
 		BOSS_SLAIN_1_ARIS,
 		BOSS_SLAIN_1_NONOMI,
 		BOSS_SLAIN_1_MIYAKO,
@@ -117,9 +121,10 @@ public class Badges {
 		BOSS_SLAIN_1_NOA,
 		BOSS_SLAIN_1_MIYU,
 		BOSS_SLAIN_1_YUZU,
-		BOSS_SLAIN_1_ALL_CLASSES    ( 16+54, true ),
-		GAMES_PLAYED_2              ( 16+55, true ),
-		HIGH_SCORE_2                ( 16+56 ),
+		BOSS_SLAIN_1_IZUNA,
+		BOSS_SLAIN_1_ALL_CLASSES    ( 16+55, true ),
+		GAMES_PLAYED_2              ( 16+56, true ),
+		HIGH_SCORE_2                ( 16+57 ),
 
 		//gold
 		PIRANHAS                    ( 16+64 ),
@@ -154,10 +159,11 @@ public class Badges {
 		ITEM_LEVEL_5                ( 16+96 ),
 		LEVEL_REACHED_5             ( 16+97 ),
 		HAPPY_END                   ( 16+98 ),
-		ALL_WEAPONS_IDENTIFIED      ( 16+99 ),
-		ALL_ARMOR_IDENTIFIED        ( 16+100 ),
-		ALL_WANDS_IDENTIFIED        ( 16+101 ),
-		ALL_ITEMS_IDENTIFIED        ( 16+102, true ),
+		HAPPY_END_REMAINS           ( 16+99 ),
+		ALL_WEAPONS_IDENTIFIED      ( 16+100 ),
+		ALL_ARMOR_IDENTIFIED        ( 16+101 ),
+		ALL_WANDS_IDENTIFIED        ( 16+102 ),
+		ALL_ITEMS_IDENTIFIED        ( 16+103, true ),
 		VICTORY_ARIS,
 		VICTORY_NONOMI,
 		VICTORY_MIYAKO,
@@ -166,8 +172,9 @@ public class Badges {
 		VICTORY_NOA,
 		VICTORY_MIYU,
 		VICTORY_YUZU,
-		VICTORY_ALL_CLASSES         ( 16+103, true ),
-		DEATH_FROM_ALL              ( 16+104, true ),
+		VICTORY_IZUNA,
+		VICTORY_ALL_CLASSES         ( 16+104, true ),
+		DEATH_FROM_ALL              ( 16+105, true ),
 		BOSS_SLAIN_3_GLADIATOR,
 		BOSS_SLAIN_3_BERSERKER,
 		BOSS_SLAIN_3_WARLOCK,
@@ -178,12 +185,12 @@ public class Badges {
 		BOSS_SLAIN_3_WARDEN,
 		BOSS_SLAIN_3_CHAMPION,
 		BOSS_SLAIN_3_MONK,
-		BOSS_SLAIN_3_ALL_SUBCLASSES ( 16+105, true ),
-		BOSS_CHALLENGE_3            ( 16+106 ),
-		BOSS_CHALLENGE_4            ( 16+107 ),
-		GAMES_PLAYED_4              ( 16+108, true ),
-		HIGH_SCORE_4                ( 16+109 ),
-		CHAMPION_1                  ( 16+110 ),
+		BOSS_SLAIN_3_ALL_SUBCLASSES ( 16+106, true ),
+		BOSS_CHALLENGE_3            ( 16+107 ),
+		BOSS_CHALLENGE_4            ( 16+108 ),
+		GAMES_PLAYED_4              ( 16+109, true ),
+		HIGH_SCORE_4                ( 16+110 ),
+		CHAMPION_1                  ( 16+111 ),
 
 		//diamond
 		BOSS_CHALLENGE_5            ( 16+120 ),
@@ -233,9 +240,7 @@ public class Badges {
 	
 	private static final HashSet<String> removedBadges = new HashSet<>();
 	static{
-		//v1.3.0 (These were removed and re-added internally as new unlock reqs were added)
-		removedBadges.add("YASD");
-		removedBadges.add("DEATH_FROM_GLYPH");
+		//no removed badges currently
 	}
 
 	private static final HashMap<String, String> renamedBadges = new HashMap<>();
@@ -719,6 +724,7 @@ public class Badges {
 		firstBossClassBadges.put(HeroClass.NOA, Badge.BOSS_SLAIN_1_NOA);
 		firstBossClassBadges.put(HeroClass.MIYU, Badge.BOSS_SLAIN_1_MIYU);
 		firstBossClassBadges.put(HeroClass.YUZU, Badge.BOSS_SLAIN_1_YUZU);
+		firstBossClassBadges.put(HeroClass.IZUNA, Badge.BOSS_SLAIN_1_IZUNA);
 	}
 
 	private static LinkedHashMap<HeroClass, Badge> victoryClassBadges = new LinkedHashMap<>();
@@ -731,6 +737,7 @@ public class Badges {
 		victoryClassBadges.put(HeroClass.NOA, Badge.VICTORY_NOA);
 		victoryClassBadges.put(HeroClass.MIYU, Badge.VICTORY_MIYU);
 		victoryClassBadges.put(HeroClass.YUZU, Badge.VICTORY_YUZU);
+		victoryClassBadges.put(HeroClass.IZUNA, Badge.VICTORY_IZUNA);
 	}
 
 	private static LinkedHashMap<HeroSubClass, Badge> thirdBossSubclassBadges = new LinkedHashMap<>();
@@ -809,6 +816,14 @@ public class Badges {
 					}
 				}
 			}
+
+			if (Statistics.qualifiedForBossRemainsBadge && Dungeon.hero.belongings.getItem(RemainsItem.class) != null){
+				badge = Badge.BOSS_SLAIN_REMAINS;
+				if (!isUnlocked( badge )) {
+					displayBadge( badge );
+				}
+			}
+
 		}
 	}
 
@@ -865,6 +880,9 @@ public class Badges {
 				break;
 			case YUZU:
 				badge = Badge.MASTERY_YUZU;
+				break;
+			case IZUNA:
+				badge = Badge.MASTERY_IZUNA;
 				break;
 		}
 		
@@ -1025,10 +1043,17 @@ public class Badges {
 		if (!local.contains( Badge.HAPPY_END )){
 			local.add( Badge.HAPPY_END );
 		}
+
+		if(!local.contains( Badge.HAPPY_END_REMAINS ) && Dungeon.hero.belongings.getItem(RemainsItem.class) != null){
+			local.add( Badge.HAPPY_END_REMAINS );
+		}
 	}
 	
 	public static void validateHappyEnd() {
 		displayBadge( Badge.HAPPY_END );
+		if (local.contains(Badge.HAPPY_END_REMAINS)) {
+			displayBadge(Badge.HAPPY_END_REMAINS);
+		}
 	}
 
 	public static void validateChampion( int challenges ) {

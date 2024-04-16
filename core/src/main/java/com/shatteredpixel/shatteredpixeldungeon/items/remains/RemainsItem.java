@@ -1,0 +1,100 @@
+/*
+ * Pixel Dungeon
+ * Copyright (C) 2012-2015 Oleg Dolya
+ *
+ * Shattered Pixel Dungeon
+ * Copyright (C) 2014-2024 Evan Debenham
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+
+package com.shatteredpixel.shatteredpixeldungeon.items.remains;
+
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
+import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+
+import java.util.ArrayList;
+
+public abstract class RemainsItem extends Item {
+
+	{
+		bones = false;
+
+		defaultAction = AC_USE;
+	}
+
+	public static final String AC_USE =  "USE";
+
+	@Override
+	public ArrayList<String> actions(Hero hero) {
+		ArrayList<String> actions = super.actions(hero);
+		actions.add(AC_USE);
+		return actions;
+	}
+
+	@Override
+	public void execute(Hero hero, String action) {
+		super.execute(hero, action);
+
+		if (action.equals(AC_USE)){
+			hero.sprite.operate(hero.pos);
+
+			doEffect(hero);
+
+			hero.spendAndNext(Actor.TICK);
+			detach(hero.belongings.backpack);
+		}
+	}
+
+	protected abstract void doEffect(Hero hero);
+
+	@Override
+	public boolean isIdentified() {
+		return true;
+	}
+
+	@Override
+	public boolean isUpgradable() {
+		return false;
+	}
+
+	@Override
+	public int value() {
+		return 50;
+	}
+
+	public static RemainsItem get(HeroClass cls){
+		switch (cls){
+			case ARIS: default:
+				return new SealShard();
+			case NONOMI:
+				return new BrokenStaff();
+			case MIYAKO:
+				return new CloakScrap();
+			case HOSHINO:
+				return new BowFragment();
+			case SHIROKO:
+				return new BrokenHilt();
+			case NOA:
+				return new BrokenHilt();
+			case MIYU:
+				return new BrokenHilt();
+			case YUZU:
+				return new BrokenHilt();
+		}
+	}
+
+}

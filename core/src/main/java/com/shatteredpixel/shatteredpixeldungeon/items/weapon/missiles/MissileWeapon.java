@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2023 Evan Debenham
+ * Copyright (C) 2014-2024 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,29 +21,37 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BlastMissile;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PinCushion;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RevealedArea;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.MagicalHolster;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSharpshooting;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Projecting;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
+import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -96,7 +104,16 @@ abstract public class MissileWeapon extends Weapon {
 	}
 	
 	public int STRReq(int lvl){
-		return STRReq(tier, lvl) - 1; //1 less str than normal for their tier
+		return STRReq(tier, lvl) - 1 - Dungeon.hero.pointsInTalent(Talent.THROW_MASTER); //1 less str than normal for their tier
+	}
+
+	//use the parent item if this has been thrown from a parent
+	public int buffedLvl(){
+		if (parent != null) {
+			return parent.buffedLvl();
+		} else {
+			return super.buffedLvl();
+		}
 	}
 	
 	@Override
@@ -162,7 +179,7 @@ abstract public class MissileWeapon extends Weapon {
 			return dst;
 		}
 		if (projecting
-				&& (Dungeon.level.passable[dst] || Dungeon.level.avoid[dst])
+				&& (Dungeon.level.passable[dst] || Dungeon.level.avoid[dst] || Actor.findChar(dst) != null)
 				&& Dungeon.level.distance(user.pos, dst) <= Math.round(4 * Enchantment.genericProcChanceMultiplier(user))){
 			return dst;
 		} else {
@@ -205,6 +222,23 @@ abstract public class MissileWeapon extends Weapon {
 		Char enemy = Actor.findChar( cell );
 		if (enemy == null || enemy == curUser) {
 			parent = null;
+			if (Dungeon.hero.hasTalent(Talent.EXPLOSION_1) && enemy == null) {
+				if (Actor.findChar(cell) == null) {
+					Sample.INSTANCE.play( Assets.Sounds.BLAST );
+					WandOfBlastWave.BlastWave.blast(cell);
+					for (int i  : PathFinder.NEIGHBOURS8){
+						Char ch = Actor.findChar(cell + i);
+
+						if (ch != null){
+							if (ch.pos == cell + i) {
+								Ballistica trajectory = new Ballistica(ch.pos, ch.pos + i, Ballistica.MAGIC_BOLT);
+								int strength = Dungeon.hero.pointsInTalent(Talent.EXPLOSION_1);
+								WandOfBlastWave.throwChar(ch, trajectory, strength, false, true, this);
+							}
+						}
+					}
+				}
+			}
 
 			super.onThrow( cell );
 		} else {
@@ -229,6 +263,9 @@ abstract public class MissileWeapon extends Weapon {
 					damage = bow.enchantment.proc(this, attacker, defender, damage);
 				}
 			}
+		}
+		if (attacker == Dungeon.hero && Dungeon.hero.subClass == HeroSubClass.IZUNA_EX_EXPLOSION && defender instanceof Mob && !(defender instanceof NPC) && defender.isAlive()) {
+			Buff.affect(Dungeon.hero, BlastMissile.class).hit((Mob)defender);
 		}
 
 		return super.proc(attacker, defender, damage);
@@ -291,25 +328,37 @@ abstract public class MissileWeapon extends Weapon {
 	}
 	
 	public float durabilityPerUse(){
+		//classes that override durabilityPerUse can turn rounding off, to do their own rounding after more logic
+		return durabilityPerUse(true);
+	}
+
+	protected final float durabilityPerUse( boolean rounded){
 		float usages = baseUses * (float)(Math.pow(3, level()));
 
 		//+50%/75% durability
 		if (Dungeon.hero.hasTalent(Talent.DURABLE_PROJECTILES)){
 			usages *= 1.25f + (0.25f*Dungeon.hero.pointsInTalent(Talent.DURABLE_PROJECTILES));
 		}
+		if (Dungeon.hero.hasTalent(Talent.DURABLE_THROW)) {
+			usages *= 1 + (Dungeon.hero.pointsInTalent(Talent.DURABLE_THROW)/3f);
+		}
 		if (holster) {
 			usages *= MagicalHolster.HOLSTER_DURABILITY_FACTOR;
 		}
-		
+
 		usages *= RingOfSharpshooting.durabilityMultiplier( Dungeon.hero );
-		
+
 		//at 100 uses, items just last forever.
 		if (usages >= 100f) return 0;
 
-		usages = Math.round(usages);
-		
-		//add a tiny amount to account for rounding error for calculations like 1/3
-		return (MAX_DURABILITY/usages) + 0.001f;
+		if (rounded){
+			usages = Math.round(usages);
+			//add a tiny amount to account for rounding error for calculations like 1/3
+			return (MAX_DURABILITY/usages) + 0.001f;
+		} else {
+			//rounding can be disabled for classes that override durability per use
+			return MAX_DURABILITY/usages;
+		}
 	}
 	
 	protected void decrementDurability(){

@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2023 Evan Debenham
+ * Copyright (C) 2014-2024 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,11 +29,12 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.QuestEnemy;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
+import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.GhoulSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
@@ -266,10 +267,6 @@ public class Ghoul extends Mob {
 				return true;
 			}
 
-			//have to delay this manually here are a downed ghouls can't be directly frozen otherwise
-			if (target.buff(Challenge.DuelParticipant.class) == null) {
-				turnsToRevive--;
-			}
 			if (turnsToRevive <= 0){
 				if (Actor.findChar( ghoul.pos ) != null) {
 					ArrayList<Integer> candidates = new ArrayList<>();
@@ -298,6 +295,7 @@ public class Ghoul extends Mob {
 				Dungeon.level.mobs.add(ghoul);
 				Dungeon.level.occupyCell( ghoul );
 				ghoul.sprite.idle();
+				ghoul.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(Math.round(ghoul.HT/10f)), FloatingText.HEALING);
 				super.detach();
 				return true;
 			}
@@ -361,8 +359,7 @@ public class Ghoul extends Mob {
 			for (Char ch : Actor.chars()){
 				//don't count hero ally ghouls or duel frozen ghouls
 				if (ch != dieing && ch instanceof Ghoul
-						&& ch.alignment == dieing.alignment
-						&& ch.buff(Challenge.SpectatorFreeze.class) == null){
+						&& ch.alignment == dieing.alignment){
 					if (ch.fieldOfView == null){
 						ch.fieldOfView = new boolean[Dungeon.level.length()];
 						Dungeon.level.updateFieldOfView( ch, ch.fieldOfView );

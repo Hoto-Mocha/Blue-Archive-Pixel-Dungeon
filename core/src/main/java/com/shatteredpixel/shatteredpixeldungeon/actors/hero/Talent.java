@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2023 Evan Debenham
+ * Copyright (C) 2014-2024 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbili
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.Ratmogrify;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
+import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LeafParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
@@ -58,6 +58,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
+import com.shatteredpixel.shatteredpixeldungeon.items.food.Berry;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCleansing;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
@@ -78,10 +79,10 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
@@ -373,6 +374,41 @@ public enum Talent {
 	YUZU_ABIL_31					(17, 7, 4),
 	YUZU_ABIL_32					(18, 7, 4),
 	YUZU_ABIL_33					(19, 7, 4),
+
+	//Izuna T1
+	BASIC_NINJUTSU					(0, 8),
+	ARMOR_INTUITION					(1, 8),
+	SURPRISE_ATTACK					(2, 8),
+	ENERGY_COLLECT					(3, 8),
+	//Izuna T2
+	MEAL_SET						(4, 8),
+	HEALING_SCROLL					(5, 8),
+	WIDER_SEARCH					(6, 8),
+	QUIET_MOVE						(7, 8),
+	THROW_MASTER					(8, 8),
+	//Izuna T3
+	DURABLE_THROW					(9, 8, 3),
+	SECRET_WEAPON					(10, 8, 3),
+	//Teleport T3
+	TELEPORT_1						(11, 8, 3),
+	TELEPORT_2						(12, 8, 3),
+	TELEPORT_3						(13, 8, 3),
+	//Explosion T3
+	EXPLOSION_1						(14, 8, 3),
+	EXPLOSION_2						(15, 8, 3),
+	EXPLOSION_3						(16, 8, 3),
+	//Izuna Ability 1
+	IZUNA_ABIL_11					(17, 8, 4),
+	IZUNA_ABIL_12					(18, 8, 4),
+	IZUNA_ABIL_13					(19, 8, 4),
+	//Izuna Ability 2
+	IZUNA_ABIL_21					(17, 8, 4),
+	IZUNA_ABIL_22					(18, 8, 4),
+	IZUNA_ABIL_23					(19, 8, 4),
+	//Izuna Ability 3
+	IZUNA_ABIL_31					(17, 8, 4),
+	IZUNA_ABIL_32					(18, 8, 4),
+	IZUNA_ABIL_33					(19, 8, 4),
 
 
 
@@ -715,7 +751,7 @@ public enum Talent {
 			int x = 26;
 			int y = 0;
 			if (Ratmogrify.useRatroicEnergy){
-				y = 8;
+				y = 9;
 			}
 			HeroClass cls = Dungeon.hero != null ? Dungeon.hero.heroClass : GamesInProgress.selectedClass;
 			switch (cls){
@@ -742,6 +778,9 @@ public enum Talent {
 					break;
 				case YUZU:
 					y = 7;
+					break;
+				case IZUNA:
+					y = 8;
 					break;
 			}
 			return x+TALENT_NUMBER*y;
@@ -858,19 +897,18 @@ public enum Talent {
 	}
 
 	public static class CachedRationsDropped extends CounterBuff{{revivePersists = true;}};
-	public static class NatureBerriesAvailable extends CounterBuff{{revivePersists = true;}}; //for pre-1.3.0 saves
 	public static class NatureBerriesDropped extends CounterBuff{{revivePersists = true;}};
 
 	public static void onFoodEaten( Hero hero, float foodVal, Item foodSource ){
-		if (hero.hasTalent(RESTING)) {
-			//3/5 HP healed, when hero is below 25% health
-			if (hero.HP <= hero.HT / 4) {
-				hero.HP = Math.min(hero.HP + 1 + 2 * hero.pointsInTalent(RESTING), hero.HT);
-				hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1 + hero.pointsInTalent(RESTING));
+		if (hero.hasTalent(RESTING)){
+			if (hero.HP <= hero.HT/2) {
 				//2/3 HP healed, when hero is below 50% health
-			} else if (hero.HP <= hero.HT / 2) {
-				hero.HP = Math.min(hero.HP + 1 + hero.pointsInTalent(RESTING), hero.HT);
-				hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), hero.pointsInTalent(RESTING));
+				int healing = 1 + hero.pointsInTalent(RESTING);
+				//3/5 HP healed, when hero is below 25% health
+				if (hero.HP <= hero.HT/4) healing = 1 + 2 * hero.pointsInTalent(RESTING);
+
+				hero.HP = Math.min(hero.HP + healing, hero.HT);
+				hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(healing), FloatingText.HEALING);
 			}
 		}
 		if (hero.hasTalent(IRON_STOMACH)){
@@ -892,6 +930,11 @@ public enum Talent {
 		}
 		if (hero.hasTalent(SPEEDY_MEAL)) {
 			Buff.affect(hero, Stamina.class, 1+7*hero.pointsInTalent(Talent.SPEEDY_MEAL));
+		}
+		if (hero.hasTalent(MEAL_SET)) {
+			if (Random.Float() < 1/(float)(5-hero.pointsInTalent(MEAL_SET))) {
+				Dungeon.level.drop(new Berry(), hero.pos);
+			}
 		}
 
 		if (hero.hasTalent(MYSTICAL_MEAL)){
@@ -989,11 +1032,13 @@ public enum Talent {
 				if (shield != null) {
 					// 50/75% of total shield
 					int shieldToGive = Math.round(factor * shield.maxShield() * 0.25f * (1 + hero.pointsInTalent(LIQUID_WILLPOWER)));
+					hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(shieldToGive), FloatingText.SHIELDING);
 					shield.supercharge(shieldToGive);
 				}
 			} else {
 				// 5/7.5% of max HP
 				int shieldToGive = Math.round( factor * hero.HT * (0.025f * (1+hero.pointsInTalent(LIQUID_WILLPOWER))));
+				hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(shieldToGive), FloatingText.SHIELDING);
 				Buff.affect(hero, Barrier.class).setShield(shieldToGive);
 			}
 		}
@@ -1044,6 +1089,9 @@ public enum Talent {
 			Buff.affect(hero, Invisibility.class, factor * (1 + 2*hero.pointsInTalent(INSCRIBED_STEALTH)));
 			Sample.INSTANCE.play( Assets.Sounds.MELD );
 		}
+		if (hero.hasTalent(HEALING_SCROLL)) {
+			Buff.affect(hero, Healing.class).setHeal(5*hero.pointsInTalent(HEALING_SCROLL), 0, 1);
+		}
 	}
 
 	public static void onUpgradeScrollUsed( Hero hero ){
@@ -1080,6 +1128,9 @@ public enum Talent {
 		if (hero.pointsInTalent(GL_INTUITION) == 2 && item instanceof GL){
 			item.identify();
 		}
+		if (hero.hasTalent(Talent.ARMOR_INTUITION) && item instanceof Armor) {
+			item.identify();
+		}
 		if (hero.hasTalent(THIEFS_INTUITION) && item instanceof Ring){
 			if (hero.pointsInTalent(THIEFS_INTUITION) == 2){
 				item.identify();
@@ -1114,6 +1165,9 @@ public enum Talent {
 		if (hero.hasTalent(GL_INTUITION)){
 			if (item instanceof GL) item.cursedKnown = true;
 		}
+		if (hero.pointsInTalent(Talent.ARMOR_INTUITION) == 2) {
+			if (item instanceof Armor) item.cursedKnown = true;
+		}
 		if (hero.pointsInTalent(THIEFS_INTUITION) == 2){
 			if (item instanceof Ring) ((Ring) item).setKnown();
 		}
@@ -1125,8 +1179,7 @@ public enum Talent {
 			//heal for 2/3 HP
 			hero.HP = Math.min(hero.HP + 1 + hero.pointsInTalent(TEST_SUBJECT), hero.HT);
 			if (hero.sprite != null) {
-				Emitter e = hero.sprite.emitter();
-				if (e != null) e.burst(Speck.factory(Speck.HEALING), hero.pointsInTalent(TEST_SUBJECT));
+				hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(1 + hero.pointsInTalent(TEST_SUBJECT)), FloatingText.HEALING);
 			}
 		}
 //		if (hero.hasTalent(TESTED_HYPOTHESIS)){
@@ -1148,10 +1201,10 @@ public enum Talent {
 			Buff.prolong(enemy, Vertigo.class, 1+hero.pointsInTalent(Talent.DISTURB));
 		}
 
-		if (hero.hasTalent(Talent.SUCKER_PUNCH)
+		if (hero.hasTalent(Talent.SURPRISE_ATTACK)
 				&& enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)
 				&& enemy.buff(SuckerPunchTracker.class) == null){
-			dmg += Random.IntRange(hero.pointsInTalent(Talent.SUCKER_PUNCH) , 2);
+			dmg += Random.IntRange(hero.pointsInTalent(Talent.SURPRISE_ATTACK) , 2);
 			Buff.affect(enemy, SuckerPunchTracker.class);
 		}
 
@@ -1274,6 +1327,9 @@ public enum Talent {
 			case YUZU:
 				Collections.addAll(tierTalents, CRIT_DAMAGE, GL_INTUITION, AMMO_BOX, DEFENSIVE_MATRIX);
 				break;
+			case IZUNA:
+				Collections.addAll(tierTalents, BASIC_NINJUTSU, ARMOR_INTUITION, SURPRISE_ATTACK, ENERGY_COLLECT);
+				break;
 		}
 		for (Talent talent : tierTalents){
 			if (replacements.containsKey(talent)){
@@ -1309,6 +1365,9 @@ public enum Talent {
 			case YUZU:
 				Collections.addAll(tierTalents, DEBUGGING_MEAL, SERIAL_COMBO, QUEST_CLEAR, QUALITY_ASSURANCE, GL_MASTER);
 				break;
+			case IZUNA:
+				Collections.addAll(tierTalents, MEAL_SET, HEALING_SCROLL, QUIET_MOVE, WIDER_SEARCH, THROW_MASTER);
+				break;
 		}
 		for (Talent talent : tierTalents){
 			if (replacements.containsKey(talent)){
@@ -1343,6 +1402,9 @@ public enum Talent {
 				break;
 			case YUZU:
 				Collections.addAll(tierTalents, GL_FAST_RELOAD, ROCKET_JUMP);
+				break;
+			case IZUNA:
+				Collections.addAll(tierTalents, DURABLE_THROW, SECRET_WEAPON);
 				break;
 		}
 		for (Talent talent : tierTalents){
@@ -1420,6 +1482,12 @@ public enum Talent {
 			case YUZU_EX_STICKY_GRENADE:
 				Collections.addAll(tierTalents, STICKY_GRENADE_1, STICKY_GRENADE_2, STICKY_GRENADE_3);
 				break;
+			case IZUNA_EX_TELEPORT:
+				Collections.addAll(tierTalents, TELEPORT_1, TELEPORT_2, TELEPORT_3);
+				break;
+			case IZUNA_EX_EXPLOSION:
+				Collections.addAll(tierTalents, EXPLOSION_1, EXPLOSION_2, EXPLOSION_3);
+				break;
 		}
 		for (Talent talent : tierTalents){
 			talents.get(2).put(talent, 0);
@@ -1473,8 +1541,6 @@ public enum Talent {
 	static{
 		//v2.2.0
 		removedTalents.add("EMPOWERING_SCROLLS");
-		//v1.4.0
-		removedTalents.add("BERSERKING_STAMINA");
 	}
 
 	private static final HashMap<String, String> renamedTalents = new HashMap<>();

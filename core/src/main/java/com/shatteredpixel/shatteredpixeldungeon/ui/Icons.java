@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2023 Evan Debenham
+ * Copyright (C) 2014-2024 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,6 +52,7 @@ public enum Icons {
 	HERO_NOA,
 	HERO_MIYU,
 	HERO_YUZU,
+	HERO_IZUNA,
 
 	//grey icons, mainly used for buttons, spacing for 16x16
 	EXIT,
@@ -190,6 +191,9 @@ public enum Icons {
 				break;
 			case HERO_YUZU:
 				icon.frame( icon.texture.uvRectBySize( 128, 16, 16, 14 ) );
+				break;
+			case HERO_IZUNA:
+				icon.frame( icon.texture.uvRectBySize( 144, 16, 15, 15 ) );
 				break;
 
 			case EXIT:
@@ -434,6 +438,8 @@ public enum Icons {
 				return get( Icons.HERO_MIYU );
 			case YUZU:
 				return get( Icons.HERO_YUZU );
+			case IZUNA:
+				return get( Icons.HERO_IZUNA );
 			default:
 				return null;
 		}

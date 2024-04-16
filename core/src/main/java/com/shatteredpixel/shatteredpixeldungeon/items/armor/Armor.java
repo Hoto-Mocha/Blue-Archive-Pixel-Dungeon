@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2023 Evan Debenham
+ * Copyright (C) 2014-2024 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -371,6 +371,14 @@ public class Armor extends EquipableItem {
 		
 		if (hasGlyph(Obfuscation.class, owner)){
 			stealth += (1 + buffedLvl()/3f) * glyph.procChanceMultiplier(owner);
+		}
+
+		if (Dungeon.hero.heroClass == HeroClass.IZUNA) {
+			stealth += 2;
+		}
+
+		if (Dungeon.hero.hasTalent(Talent.BASIC_NINJUTSU)) {
+			stealth += Dungeon.hero.pointsInTalent(Talent.BASIC_NINJUTSU);
 		}
 		
 		return stealth;

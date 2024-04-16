@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2023 Evan Debenham
+ * Copyright (C) 2014-2024 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,12 +31,12 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbili
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Aris_1;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Aris_2;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Aris_3;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.ElementalStrike;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Feint;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.Hoshino_1;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.Hoshino_2;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.Hoshino_3;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.izuna.Izuna_1;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.izuna.Izuna_2;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.izuna.Izuna_3;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.Miyako_1;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.Miyako_2;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.Miyako_3;
@@ -56,7 +56,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.yuzu.Yuzu_
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.yuzu.Yuzu_2;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.yuzu.Yuzu_3;
 import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
-import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.EXSkillDisc;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -78,6 +77,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.active.Teleporter;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.TrashBin;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.PlateArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.VelvetPouch;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Food;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Pasty;
@@ -90,7 +90,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfStrength;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfFuror;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfHaste;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMight;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
@@ -98,34 +97,20 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMirrorImag
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRage;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfEnchantment;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.CurseInfusion;
-import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfAugmentation;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Rapier;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.ThrowingSet;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_tier1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_tier1;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_tier2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_tier1;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_tier2;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_tier3;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_tier4;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_tier5;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_tier1;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_tier2;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_tier5;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_tier1;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_tier2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_tier1;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_tier2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_tier1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingSpike;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingStone;
-import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.utils.DungeonSeed;
 import com.watabou.utils.DeviceCompat;
 
 public enum HeroClass {
@@ -137,7 +122,8 @@ public enum HeroClass {
 	SHIROKO( HeroSubClass.SHIROKO_EX_ELEMENTAL_BULLET, HeroSubClass.SHIROKO_EX_PROFESSIONAL_RIDE ),
 	NOA(HeroSubClass.NOA_EX_LARGE_MAGAZINE, HeroSubClass.NOA_EX_DOUBLE_BARREL),
 	MIYU(HeroSubClass.MIYU_EX_PENETRATION_SHOT, HeroSubClass.MIYU_EX_SNIPING_BULLET),
-	YUZU(HeroSubClass.YUZU_EX_GAME_START, HeroSubClass.YUZU_EX_STICKY_GRENADE);
+	YUZU(HeroSubClass.YUZU_EX_GAME_START, HeroSubClass.YUZU_EX_STICKY_GRENADE),
+	IZUNA(HeroSubClass.IZUNA_EX_TELEPORT, HeroSubClass.IZUNA_EX_EXPLOSION);
 
 	private HeroSubClass[] subClasses;
 
@@ -162,7 +148,7 @@ public enum HeroClass {
 		Waterskin waterskin = new Waterskin();
 		waterskin.collect();
 
-		if (SPDSettings.customSeed().equals("test")) {
+		if (DeviceCompat.isDebug() || SPDSettings.customSeed().equals("test")) {
 			new PotionOfExperience().identify().quantity(30).collect();
 			new RingOfMight().identify().upgrade(10).collect();
 			new EXSkillDisc().collect();
@@ -218,6 +204,10 @@ public enum HeroClass {
 			case YUZU:
 				initYuzu( hero );
 				break;
+
+			case IZUNA:
+				initIzuna( hero );
+				break;
 		}
 
 		if (SPDSettings.quickslotWaterskin()) {
@@ -249,6 +239,8 @@ public enum HeroClass {
 				return Badges.Badge.MASTERY_MIYU;
 			case YUZU:
 				return Badges.Badge.MASTERY_YUZU;
+			case IZUNA:
+				return Badges.Badge.MASTERY_IZUNA;
 		}
 		return null;
 	}
@@ -434,6 +426,31 @@ public enum HeroClass {
 		new ScrollOfMagicMapping().identify();
 	}
 
+	private static void initIzuna( Hero hero ) {
+		SMG_tier1 smg = new SMG_tier1();
+
+		(hero.belongings.weapon = smg).identify();
+		hero.belongings.weapon.activate(hero);
+
+		CloakOfShadows cloak = new CloakOfShadows();
+		(hero.belongings.artifact = cloak).identify();
+		hero.belongings.artifact.activate( hero );
+
+		ThrowingSet throwingSet = new ThrowingSet();
+		throwingSet.collect();
+
+		ThrowingKnife knives = new ThrowingKnife();
+		knives.quantity(3).collect();
+
+		Dungeon.quickslot.setSlot(0, smg);
+		Dungeon.quickslot.setSlot(1, cloak);
+		Dungeon.quickslot.setSlot(2, throwingSet);
+		Dungeon.quickslot.setSlot(3, knives);
+
+		new PotionOfLiquidFlame().identify();
+		new ScrollOfMagicMapping().identify();
+	}
+
 	public String title() {
 		return Messages.get(HeroClass.class, name());
 	}
@@ -468,6 +485,8 @@ public enum HeroClass {
 				return new ArmorAbility[]{new Miyu_1(), new Miyu_2(), new Miyu_3()};
 			case YUZU:
 				return new ArmorAbility[]{new Yuzu_1(), new Yuzu_2(), new Yuzu_3()};
+			case IZUNA:
+				return new ArmorAbility[]{new Izuna_1(), new Izuna_2(), new Izuna_3()};
 		}
 	}
 
@@ -489,6 +508,8 @@ public enum HeroClass {
 				return Assets.Sprites.MIYU;
 			case YUZU:
 				return Assets.Sprites.YUZU;
+			case IZUNA:
+				return Assets.Sprites.IZUNA;
 		}
 	}
 
@@ -510,6 +531,8 @@ public enum HeroClass {
 				return Assets.Splashes.MIYU;
 			case YUZU:
 				return Assets.Splashes.YUZU;
+			case IZUNA:
+				return Assets.Splashes.IZUNA;
 		}
 	}
 	
@@ -534,6 +557,8 @@ public enum HeroClass {
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_MIYU);
 			case YUZU:
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_YUZU);
+			case IZUNA:
+				return Badges.isUnlocked(Badges.Badge.UNLOCK_IZUNA);
 		}
 	}
 	

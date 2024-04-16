@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2023 Evan Debenham
+ * Copyright (C) 2014-2024 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,6 +82,9 @@ public class WndHeroInfo extends WndTabbed {
 				break;
 			case YUZU:
 				tabIcon = new ItemSprite(ItemSpriteSheet.GL_TIER_1, null);
+				break;
+			case IZUNA:
+				tabIcon = new ItemSprite(ItemSpriteSheet.KUNAI, null);
 				break;
 		}
 
@@ -226,6 +229,12 @@ public class WndHeroInfo extends WndTabbed {
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.ANALYZER),
 							new ItemSprite(ItemSpriteSheet.GL_TIER_5),
 							new ItemSprite(ItemSpriteSheet.RAINBOW_GRENADE),
+							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
+					break;
+				case IZUNA:
+					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.THROWING_SET),
+							new ItemSprite(ItemSpriteSheet.SPIRIT_SHURIKEN),
+							new ItemSprite(ItemSpriteSheet.SPIRIT_KUNAI),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
 			}

@@ -5,6 +5,7 @@ buildscript {
     }
     dependencies {
         //the R8 version bundled with AGP 8.1.0+ causes crashes on very old Android versions
+        //This affects ICS and Lollipop at least, maybe also KitKat
         classpath 'com.android.tools.build:gradle:8.0.2'
     }
 }
@@ -15,21 +16,21 @@ allprojects {
         appName = 'Blue Archive Pixel Dungeon'
         appPackageName = 'com.bluearchivepixel.bluearchivepixeldungeon'
 
-        appVersionCode = 754
-        appVersionName = '2.2.1'
+        appVersionCode = 768
+        appVersionName = '2.3.2'
         //for arranged version code and version name
-        appVersionCode += 6
-        appVersionName += '_based_0.2.3'
+        appVersionCode += 7
+        appVersionName += '_based_0.3.0'
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 
-        appAndroidCompileSDK = 33
+        appAndroidCompileSDK = 33 //compile SDK is still 33 atm as we're sticking with AGP 8.0.2
         appAndroidMinSDK = 14
-        appAndroidTargetSDK = 33
+        appAndroidTargetSDK = 34
 
-        gdxVersion = '1.11.0'
+        gdxVersion = '1.12.1'
         gdxControllersVersion = '2.2.4-SNAPSHOT'
-        robovmVersion = '2.3.19'
+        robovmVersion = '2.3.20'
     }
     version = appVersionName
 

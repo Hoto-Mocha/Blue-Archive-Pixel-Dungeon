@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2023 Evan Debenham
+ * Copyright (C) 2014-2024 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,8 +33,10 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Adrenaline;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BlastMissile;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BulletMomentumTracker;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
@@ -42,7 +44,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corruption;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DroneStrikeCooldown;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.InfiniteBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MindVision;
@@ -52,13 +53,14 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.QuestEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShockBulletCooldown;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Sleep;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.StunDroneCooldown;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Teleport;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Feint;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.DirectableAlly;
+import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Surprise;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Wound;
 import com.shatteredpixel.shatteredpixeldungeon.items.AmmoBox;
@@ -80,12 +82,12 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.MasterThievesArm
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfAggression;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.ThrowingSet;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Lucky;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
@@ -112,12 +114,6 @@ public abstract class Mob extends Char {
 		
 		alignment = Alignment.ENEMY;
 	}
-	
-	private static final String	TXT_DIED	= "You hear something died in the distance";
-	
-	protected static final String TXT_NOTICE1	= "?!";
-	protected static final String TXT_RAGE		= "#$%^";
-	protected static final String TXT_EXP		= "%+dEXP";
 
 	public AiState SLEEPING     = new Sleeping();
 	public AiState HUNTING		= new Hunting();
@@ -255,13 +251,6 @@ public abstract class Mob extends Char {
 		
 		boolean enemyInFOV = enemy != null && enemy.isAlive() && fieldOfView[enemy.pos] && enemy.invisible <= 0;
 
-		//prevents action, but still updates enemy seen status
-		if (buff(Feint.AfterImage.FeintConfusion.class) != null){
-			enemySeen = enemyInFOV;
-			spend( TICK );
-			return true;
-		}
-
 		return state.act( enemyInFOV, justAlerted );
 	}
 	
@@ -287,7 +276,7 @@ public abstract class Mob extends Char {
 		}
 		
 		//if we are an alert enemy, auto-hunt a target that is affected by aggression, even another enemy
-		if (alignment == Alignment.ENEMY && state != PASSIVE && state != SLEEPING) {
+		if ((alignment == Alignment.ENEMY || buff(Amok.class) != null ) && state != PASSIVE && state != SLEEPING) {
 			if (enemy != null && enemy.buff(StoneOfAggression.Aggression.class) != null){
 				state = HUNTING;
 				return enemy;
@@ -360,9 +349,10 @@ public abstract class Mob extends Char {
 				for (Mob mob : Dungeon.level.mobs)
 					if (mob.alignment == Alignment.ENEMY && fieldOfView[mob.pos]
 							&& mob.invisible <= 0 && !mob.isInvulnerable(getClass()))
-						//intelligent allies do not target mobs which are passive, wandering, or asleep
-						if (!intelligentAlly ||
-								(mob.state != mob.SLEEPING && mob.state != mob.PASSIVE && mob.state != mob.WANDERING)) {
+						//do not target passive mobs
+						//intelligent allies also don't target mobs which are wandering or asleep
+						if (mob.state != mob.PASSIVE &&
+								(!intelligentAlly || (mob.state != mob.SLEEPING && mob.state != mob.WANDERING))) {
 							enemies.add(mob);
 						}
 				
@@ -410,15 +400,6 @@ public abstract class Mob extends Char {
 						closest = curr;
 					}
 				}
-				//if we were going to target the hero, but an afterimage exists, target that instead
-				if (closest == Dungeon.hero){
-					for (Char ch : enemies){
-						if (ch instanceof Feint.AfterImage){
-							closest = ch;
-							break;
-						}
-					}
-				}
 
 				return closest;
 			}
@@ -449,7 +430,7 @@ public abstract class Mob extends Char {
 			if ((buff instanceof Terror && buff(Dread.class) == null)
 					|| (buff instanceof Dread && buff(Terror.class) == null)) {
 				if (enemySeen) {
-					sprite.showStatus(CharSprite.NEGATIVE, Messages.get(this, "rage"));
+					sprite.showStatus(CharSprite.WARNING, Messages.get(this, "rage"));
 					state = HUNTING;
 				} else {
 					state = WANDERING;
@@ -719,6 +700,11 @@ public abstract class Mob extends Char {
 				&& (!attacking || enemy.canSurpriseAttack());
 	}
 
+	//whether the hero should interact with the mob (true) or attack it (false)
+	public boolean heroShouldInteract(){
+		return alignment != Alignment.ENEMY && buff(Amok.class) == null;
+	}
+
 	public void aggro( Char ch ) {
 		enemy = ch;
 		if (state != PASSIVE){
@@ -739,11 +725,13 @@ public abstract class Mob extends Char {
 	@Override
 	public void damage( int dmg, Object src ) {
 
-		if (state == SLEEPING) {
-			state = WANDERING;
-		}
-		if (state != HUNTING && !(src instanceof Corruption)) {
-			alerted = true;
+		if (!isInvulnerable(src.getClass())) {
+			if (state == SLEEPING) {
+				state = WANDERING;
+			}
+			if (state != HUNTING && !(src instanceof Corruption)) {
+				alerted = true;
+			}
 		}
 		
 		super.damage( dmg, src );
@@ -787,7 +775,7 @@ public abstract class Mob extends Char {
 				}
 
 				if (exp > 0) {
-					Dungeon.hero.sprite.showStatus(CharSprite.POSITIVE, Messages.get(this, "exp", exp));
+					Dungeon.hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(exp), FloatingText.EXPERIENCE);
 				}
 				Dungeon.hero.earnExp(exp, getClass());
 
@@ -828,7 +816,7 @@ public abstract class Mob extends Char {
 
 		if (cause == Dungeon.hero) {
 			if (Dungeon.hero.hasTalent(Talent.DEFENSIVE_FEEDBACK)) {
-				Buff.affect(Dungeon.hero, Barrier.class).setShield(2+3*Dungeon.hero.pointsInTalent(Talent.DEFENSIVE_FEEDBACK));
+				Buff.affect(Dungeon.hero, Barrier.class).setShield(2 + 3 * Dungeon.hero.pointsInTalent(Talent.DEFENSIVE_FEEDBACK));
 			}
 
 			if (Dungeon.hero.buff(Bicycle.DriftCooldown.class) != null) {
@@ -841,12 +829,12 @@ public abstract class Mob extends Char {
 			}
 
 			HandGrenade grenade = Dungeon.hero.belongings.getItem(HandGrenade.class);
-			if (grenade != null && Random.Float() < grenade.dropChance+0.05f*Dungeon.hero.pointsInTalent(Talent.SUPPLY)) {
+			if (grenade != null && Random.Float() < grenade.dropChance + 0.05f * Dungeon.hero.pointsInTalent(Talent.SUPPLY)) {
 				grenade.reload();
 			}
 
 			Claymore claymore = Dungeon.hero.belongings.getItem(Claymore.class);
-			if (claymore != null && Random.Float() < claymore.dropChance+0.025f*Dungeon.hero.pointsInTalent(Talent.SUPPLY)) {
+			if (claymore != null && Random.Float() < claymore.dropChance + 0.025f * Dungeon.hero.pointsInTalent(Talent.SUPPLY)) {
 				claymore.reload();
 			}
 
@@ -880,6 +868,24 @@ public abstract class Mob extends Char {
 				if (hero.pointsInTalent(Talent.SERIAL_COMBO) > 1) {
 					((Gun) hero.belongings.weapon).manualReload(1, true);
 				}
+			}
+
+			ThrowingSet throwingSet = Dungeon.hero.belongings.getItem(ThrowingSet.class);
+			if (throwingSet != null) {
+				throwingSet.reload();
+			}
+
+			if (hero.hasTalent(Talent.ENERGY_COLLECT)) {
+				ArtifactRecharge.chargeArtifacts(hero, hero.pointsInTalent(Talent.ENERGY_COLLECT)/2f);
+				ScrollOfRecharging.charge(hero);
+			}
+
+			if (hero.buff(Teleport.TeleportCooldown.class) != null) {
+				hero.buff(Teleport.TeleportCooldown.class).kill();
+			}
+
+			if (hero.buff(BlastMissile.class) != null) {
+				hero.buff(BlastMissile.class).mobsUpdate(this);
 			}
 		}
 
@@ -1123,8 +1129,8 @@ public abstract class Mob extends Char {
 
 				float enemyStealth = enemy.stealth();
 
-				if (enemy instanceof Hero && ((Hero) enemy).hasTalent(Talent.SILENT_STEPS)){
-					if (Dungeon.level.distance(pos, enemy.pos) >= 4 - ((Hero) enemy).pointsInTalent(Talent.SILENT_STEPS)) {
+				if (enemy instanceof Hero && ((Hero) enemy).hasTalent(Talent.QUIET_MOVE)){
+					if (Dungeon.level.distance(pos, enemy.pos) >= 4 - ((Hero) enemy).pointsInTalent(Talent.QUIET_MOVE)) {
 						enemyStealth = Float.POSITIVE_INFINITY;
 					}
 				}
@@ -1251,7 +1257,7 @@ public abstract class Mob extends Char {
 				} else if (enemy == null) {
 					sprite.showLost();
 					state = WANDERING;
-					target = Dungeon.level.randomDestination( Mob.this );
+					target = ((Mob.Wandering)WANDERING).randomDestination();
 					spend( TICK );
 					return true;
 				}
@@ -1282,7 +1288,7 @@ public abstract class Mob extends Char {
 					if (!enemyInFOV) {
 						sprite.showLost();
 						state = WANDERING;
-						target = Dungeon.level.randomDestination( Mob.this );
+						target = ((Mob.Wandering)WANDERING).randomDestination();
 					}
 					return true;
 				}
@@ -1335,7 +1341,7 @@ public abstract class Mob extends Char {
 					&& buffs( AllyBuff.class ).isEmpty()
 					&& buff( Dread.class ) == null) {
 				if (enemySeen) {
-					sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Mob.class, "rage"));
+					sprite.showStatus(CharSprite.WARNING, Messages.get(Mob.class, "rage"));
 					state = HUNTING;
 				} else {
 					state = WANDERING;
@@ -1391,7 +1397,7 @@ public abstract class Mob extends Char {
 			
 			ArrayList<Integer> candidatePositions = new ArrayList<>();
 			for (int i : PathFinder.NEIGHBOURS8) {
-				if (!Dungeon.level.solid[i+pos] && level.findMob(i+pos) == null){
+				if (!Dungeon.level.solid[i+pos] && !Dungeon.level.avoid[i+pos] && level.findMob(i+pos) == null){
 					candidatePositions.add(i+pos);
 				}
 			}

@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2023 Evan Debenham
+ * Copyright (C) 2014-2024 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -137,7 +137,9 @@ public class HornOfPlenty extends Artifact {
 						|| Dungeon.hero.hasTalent(Talent.DEBUGGING_MEAL)
 						|| Dungeon.hero.hasTalent(Talent.MYSTICAL_MEAL)
 						|| Dungeon.hero.hasTalent(Talent.INVIGORATING_MEAL)
-						|| Dungeon.hero.hasTalent(Talent.FOCUSED_MEAL)){
+						|| Dungeon.hero.hasTalent(Talent.FOCUSED_MEAL)
+						|| Dungeon.hero.hasTalent(Talent.MEAL_SET)
+				){
 					hero.spend(Food.TIME_TO_EAT - 2);
 				} else {
 					hero.spend(Food.TIME_TO_EAT);

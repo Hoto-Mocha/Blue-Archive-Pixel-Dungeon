@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2023 Evan Debenham
+ * Copyright (C) 2014-2024 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -69,7 +69,10 @@ public enum HeroSubClass {
 	MIYU_EX_SNIPING_BULLET(HeroIcon.MIYU_EX_SNIPING_BULLET),
 
 	YUZU_EX_GAME_START(HeroIcon.YUZU_EX_GAME_START),
-	YUZU_EX_STICKY_GRENADE(HeroIcon.YUZU_EX_STICKY_GRENADE);
+	YUZU_EX_STICKY_GRENADE(HeroIcon.YUZU_EX_STICKY_GRENADE),
+
+	IZUNA_EX_TELEPORT(HeroIcon.IZUNA_EX_TELEPORT),
+	IZUNA_EX_EXPLOSION(HeroIcon.IZUNA_EX_EXPLOSION);
 
 	int icon;
 

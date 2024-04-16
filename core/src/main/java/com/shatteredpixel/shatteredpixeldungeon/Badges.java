@@ -934,6 +934,12 @@ public class Badges {
 			displayBadge( Badge.UNLOCK_YUZU );
 		}
 	}
+
+	public static void validateIzunaUnlock(){
+		if (Statistics.izunaUnlocked && !isUnlocked(Badge.UNLOCK_IZUNA)){
+			displayBadge( Badge.UNLOCK_IZUNA );
+		}
+	}
 	
 	public static void validateMasteryCombo( int n ) {
 		if (!local.contains( Badge.MASTERY_COMBO ) && n == 10) {

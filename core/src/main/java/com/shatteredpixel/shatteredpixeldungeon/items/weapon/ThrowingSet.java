@@ -414,6 +414,15 @@ public class ThrowingSet extends Weapon {
 						damage += Random.IntRange(0, exStr);
 					}
 					return damage;
+				} else {
+					int damage = augment.damageFactor(Random.NormalIntRange(
+							ThrowingSet.this.min(),
+							ThrowingSet.this.max()));
+					int exStr = hero.STR() - STRReq();
+					if (exStr > 0) {
+						damage += Random.IntRange(0, exStr);
+					}
+					return damage;
 				}
 			}
 			return super.damageRoll(owner);

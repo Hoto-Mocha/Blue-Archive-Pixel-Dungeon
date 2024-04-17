@@ -182,14 +182,14 @@ public class TitleScene extends PixelScene {
 		GAP = Math.max(GAP, 2);
 
 		if (landscape()) {
-			btnPlay.setRect(title.x-50, topRegion+GAP, ((title.width()+100)/2)-1, BTN_HEIGHT);
+			btnPlay.setRect(title.x-50+14, topRegion+GAP, ((title.width()-(28*title.scale.x)+100)/2)-1, BTN_HEIGHT);
 			align(btnPlay);
 			btnSupport.setRect(btnPlay.right()+2, btnPlay.top(), btnPlay.width(), BTN_HEIGHT);
 
 			btnRankings.setRect(btnPlay.left(), btnPlay.bottom()+ GAP, btnPlay.width(), BTN_HEIGHT);
 			btnSettings.setRect(btnRankings.right()+2, btnRankings.top(), btnRankings.width(), BTN_HEIGHT);
 
-			btnBadges.setRect(btnPlay.left(), btnRankings.bottom()+GAP, ((((title.width()+100)/2)-1)*.67f)-1, BTN_HEIGHT);
+			btnBadges.setRect(btnPlay.left(), btnRankings.bottom()+GAP, ((((title.width()-(28*title.scale.x)+100)/2)-1)*.67f)-1, BTN_HEIGHT);
 			btnChanges.setRect(btnBadges.right()+2, btnBadges.top(), btnBadges.width(), BTN_HEIGHT);
 			btnAbout.setRect(btnChanges.right()+2, btnBadges.top(), btnBadges.width(), BTN_HEIGHT);
 		} else {

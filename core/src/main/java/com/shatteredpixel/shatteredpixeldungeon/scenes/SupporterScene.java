@@ -96,7 +96,7 @@ public class SupporterScene extends PixelScene {
 				super.onClick();
 				String link = "https://discord.gg/a7wNUDYHrJ";
 				if (Messages.lang() != Languages.KOREAN) {
-					link = "https://discord.gg/yHhXxbrsP3";
+					link = "https://discord.gg/NUZJqkKEJf";
 				}
 				ShatteredPixelDungeon.platform.openURI(link);
 			}

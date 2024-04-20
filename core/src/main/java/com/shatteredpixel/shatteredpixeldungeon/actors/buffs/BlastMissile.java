@@ -161,7 +161,7 @@ public class BlastMissile extends Buff implements ActionIndicator.Action {
             hero.yellI(Messages.get(Hero.class, hero.heroClass.name() + "_blast_use_" + (1+Random.Int(3)))); //"비기! 폭발 수리검!", "갑니다! (샥 샥 샥 착) 인법! 폭발의 술!", "인술! 보여드리죠!"
             hero.busy();
             hero.sprite.operate(hero.pos);
-            hero.spendAndNext(3f);
+            hero.spendAndNext(2f);
         }
 
         detach();

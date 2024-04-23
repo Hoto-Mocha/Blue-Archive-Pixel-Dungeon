@@ -243,6 +243,7 @@ public class Shopkeeper extends NPC {
 							GameScene.show(new WndTitledMessage(sprite(), Messages.titleCase(name()), chatText()));
 						} else if (index > 1){
 							GLog.i(Messages.get(Shopkeeper.this, "buyback"));
+							sprite.operate(Dungeon.hero.pos);
 							Item returned = buybackItems.remove(index-2);
 							Dungeon.gold -= returned.value();
 							Statistics.goldCollected -= returned.value();

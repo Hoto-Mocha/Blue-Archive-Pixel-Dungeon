@@ -192,6 +192,11 @@ public class Teleporter extends Item {
                         } else {
                             //받은 문장을 엔터 단위로 끊는다.
                             String[] strInput = text.split("\n");
+                            if (strInput.length < 4) {
+                                GLog.w(Messages.get(Teleporter.class, "too_short"));
+                                hide();
+                                return;
+                            }
 
                             //아이템 이름 결정 메커니즘
                             String itemName = strInput[0]; //1번째 줄에 들어가는 문장(아이템 이름)을 저장

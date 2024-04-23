@@ -172,6 +172,15 @@ public class Wandmaker extends NPC {
 				case NOA:
 					msg1 += Messages.get(this, "intro_noa");
 					break;
+				case MIYU:
+					msg1 += Messages.get(this, "intro_miyu");
+					break;
+				case YUZU:
+					msg1 += Messages.get(this, "intro_yuzu");
+					break;
+				case IZUNA:
+					msg1 += Messages.get(this, "intro_izuna");
+					break;
 			}
 
 			msg1 += Messages.get(this, "intro_1");

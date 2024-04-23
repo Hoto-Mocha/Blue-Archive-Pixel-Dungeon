@@ -27,16 +27,19 @@ import com.watabou.noosa.particles.PixelParticle;
 
 public class ShopkeeperSprite extends MobSprite {
 	
-	private PixelParticle coin;
+//	private PixelParticle coin;
 	
 	public ShopkeeperSprite() {
 		super();
 		
 		texture( Assets.Sprites.KEEPER );
-		TextureFilm film = new TextureFilm( texture, 14, 14 );
+		TextureFilm film = new TextureFilm( texture, 13, 16 );
 		
-		idle = new Animation( 10, true );
-		idle.frames( film, 1, 1, 1, 1, 1, 0, 0, 0, 0 );
+		idle = new Animation( 4, true );
+		idle.frames( film, 1, 1, 1, 0 );
+
+		operate = new Animation( 4, false );
+		operate.frames( film, 2, 3, 2, 3);
 
 		die = new Animation( 20, false );
 		die.frames( film, 0 );
@@ -52,14 +55,14 @@ public class ShopkeeperSprite extends MobSprite {
 	public void onComplete( Animation anim ) {
 		super.onComplete( anim );
 		
-		if (visible && anim == idle) {
-			if (coin == null) {
-				coin = new PixelParticle();
-				parent.add( coin );
-			}
-			coin.reset( x + (flipHorizontal ? 0 : 13), y + 7, 0xFFFF00, 1, 0.5f );
-			coin.speed.y = -40;
-			coin.acc.y = +160;
-		}
+//		if (visible && anim == idle) {
+//			if (coin == null) {
+//				coin = new PixelParticle();
+//				parent.add( coin );
+//			}
+//			coin.reset( x + (flipHorizontal ? 0 : 13), y + 7, 0xFFFF00, 1, 0.5f );
+//			coin.speed.y = -40;
+//			coin.acc.y = +160;
+//		}
 	}
 }

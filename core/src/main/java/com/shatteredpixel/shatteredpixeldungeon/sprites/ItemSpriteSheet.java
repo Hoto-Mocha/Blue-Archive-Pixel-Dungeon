@@ -1006,8 +1006,8 @@ public class ItemSpriteSheet {
 	public static final int GL_TIER_4 = GL+3;
 	public static final int GL_TIER_5 = GL+4;
 	static{
-		assignItemRect(GL_TIER_1,	16, 16);	//needs to be redesigned
-		assignItemRect(GL_TIER_2,	16, 16);	//needs to be redesigned
+		assignItemRect(GL_TIER_1,	11, 13);
+		assignItemRect(GL_TIER_2,	15, 15);
 		assignItemRect(GL_TIER_3,	15, 15);
 		assignItemRect(GL_TIER_4,	15, 15);
 		assignItemRect(GL_TIER_5, 	16, 16);
@@ -1062,11 +1062,11 @@ public class ItemSpriteSheet {
 	public static final int SMG_TIER_4 = SMG+3;
 	public static final int SMG_TIER_5 = SMG+4;
 	static{
-		assignItemRect(SMG_TIER_1,	16, 16);	//needs to be redesigned
-		assignItemRect(SMG_TIER_2,	16, 16);	//needs to be redesigned
-		assignItemRect(SMG_TIER_3,	16, 16);	//needs to be redesigned
-		assignItemRect(SMG_TIER_4,	16, 16);	//needs to be redesigned
-		assignItemRect(SMG_TIER_5, 	16, 16);	//needs to be redesigned
+		assignItemRect(SMG_TIER_1,	12, 15);
+		assignItemRect(SMG_TIER_2,	15, 15);
+		assignItemRect(SMG_TIER_3,	13, 14);
+		assignItemRect(SMG_TIER_4,	15, 16);
+		assignItemRect(SMG_TIER_5, 	15, 15);
 	}
 
 	private static final int SR  =                                   xy(1, 38);  //8 slots
